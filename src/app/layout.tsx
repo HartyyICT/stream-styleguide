@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Open_Sans, Poppins, Space_Mono } from "next/font/google";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import "./globals.css";
 import ThemeProvider from "./theme/themeProvider";
 
@@ -36,7 +37,9 @@ export default function RootLayout({
       className={`${openSans.variable} ${poppins.variable} ${spaceMono.variable}`}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <AppRouterCacheProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
