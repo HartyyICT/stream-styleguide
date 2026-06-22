@@ -1,15 +1,40 @@
+"use client";
+
 import { Box, Chip, InputBase, Typography } from "@mui/material";
 import { BookOpen, Search } from "lucide-react";
 import Sidebar from "./Sidebar";
 import { colors, radius } from "../theme/tokens";
+import ThemeModeToggle from "./ThemeModeToggle";
+import { useColorMode } from "../theme/themeProvider";
 
 export default function DocumentationLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { mode } = useColorMode();
+  const isDarkMode = mode === "dark";
+  const pageBackground = isDarkMode
+    ? colors.neutral[900]
+    : colors.semantic.background;
+  const surface = isDarkMode
+    ? colors.neutral[800]
+    : colors.semantic.surface;
+  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
+  const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
+  const secondaryText = isDarkMode
+    ? colors.neutral[300]
+    : colors.neutral[600];
+  const subtleBackground = isDarkMode
+    ? colors.neutral[700]
+    : colors.neutral[100];
+  const selectedBackground = isDarkMode
+    ? colors.neutral[700]
+    : colors.primary[50];
+  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
+
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: colors.semantic.background }}>
+    <Box sx={{ minHeight: "100vh", backgroundColor: pageBackground }}>
       <Box
         component="header"
         sx={{
@@ -21,8 +46,9 @@ export default function DocumentationLayout({
           alignItems: "center",
           justifyContent: "space-between",
           px: { xs: 2, md: 3 },
-          backgroundColor: colors.semantic.surface,
-          borderBottom: `1px solid ${colors.neutral[200]}`,
+          backgroundColor: surface,
+          borderBottom: 1,
+          borderColor: border,
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -43,7 +69,7 @@ export default function DocumentationLayout({
             <Typography
               variant="subtitle1"
               sx={{
-                color: colors.neutral[900],
+                color: primaryText,
                 fontFamily: "var(--font-poppins), sans-serif",
                 fontWeight: 600,
                 lineHeight: 1.2,
@@ -51,7 +77,7 @@ export default function DocumentationLayout({
             >
               Stream Design System
             </Typography>
-            <Typography variant="caption" sx={{ color: colors.neutral[500] }}>
+            <Typography variant="caption" sx={{ color: secondaryText }}>
               Styleguide
             </Typography>
           </Box>
@@ -60,32 +86,37 @@ export default function DocumentationLayout({
             size="small"
             sx={{
               display: { xs: "none", sm: "inline-flex" },
-              backgroundColor: colors.primary[50],
-              color: colors.primary[700],
+              backgroundColor: selectedBackground,
+              color: accent,
               fontWeight: 700,
             }}
           />
         </Box>
 
-        <Box
-          sx={{
-            width: 280,
-            display: { xs: "none", sm: "flex" },
-            alignItems: "center",
-            gap: 1,
-            px: 1.5,
-            py: 0.5,
-            border: `1px solid ${colors.neutral[200]}`,
-            borderRadius: radius.medium,
-            backgroundColor: colors.neutral[50],
-          }}
-        >
-          <Search size={17} color={colors.neutral[500]} />
-          <InputBase
-            placeholder="Search documentation..."
-            inputProps={{ "aria-label": "Search documentation" }}
-            sx={{ flex: 1, fontSize: 14 }}
-          />
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box
+            sx={{
+              width: 280,
+              display: { xs: "none", sm: "flex" },
+              alignItems: "center",
+              gap: 1,
+              px: 1.5,
+              py: 0.5,
+              border: 1,
+              borderColor: border,
+              borderRadius: radius.medium,
+              backgroundColor: subtleBackground,
+              color: secondaryText,
+            }}
+          >
+            <Search size={17} />
+            <InputBase
+              placeholder="Search documentation..."
+              inputProps={{ "aria-label": "Search documentation" }}
+              sx={{ flex: 1, fontSize: 14, color: primaryText }}
+            />
+          </Box>
+          <ThemeModeToggle />
         </Box>
       </Box>
 

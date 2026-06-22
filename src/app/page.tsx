@@ -1,35 +1,89 @@
-import { Box, Divider, Typography } from "@mui/material";
+"use client";
+
+import { Box, Chip, Divider, Typography } from "@mui/material";
+import {
+  Accessibility,
+  Blocks,
+  BookOpen,
+  Braces,
+  Gauge,
+  Layers3,
+  RefreshCw,
+  Users,
+} from "lucide-react";
 import DocumentationLayout from "./components/DocumentationLayout";
-import ColorSwatch from "./components/ColorSwatch";
-import { colors } from "./theme/tokens";
+import { colors, radius, shadows } from "./theme/tokens";
+import { useColorMode } from "./theme/themeProvider";
 
-const primaryColors = Object.entries(colors.primary);
-const neutralColors = Object.entries(colors.neutral);
-
-const semanticColors = [
+const benefits = [
   {
-    name: "Success",
-    color: colors.semantic.success.main,
-    description: "Completed actions and positive states",
+    title: "Consistent experiences",
+    description:
+      "Shared foundations and interaction patterns create a predictable experience across Stream Software applications.",
+    icon: Layers3,
   },
   {
-    name: "Warning",
-    color: colors.semantic.warning.main,
-    description: "Important attention and caution states",
+    title: "Reusable components",
+    description:
+      "Central components reduce duplicate implementations and make proven interface patterns available to multiple teams.",
+    icon: Blocks,
   },
   {
-    name: "Error",
-    color: colors.semantic.error.main,
-    description: "Errors, destructive actions and failures",
+    title: "Maintainable front-end",
+    description:
+      "Tokens, theming and shared component structures keep visual and technical changes centrally manageable.",
+    icon: RefreshCw,
   },
   {
-    name: "Info",
-    color: colors.semantic.info.main,
-    description: "Informative messages and system guidance",
+    title: "Accessible by design",
+    description:
+      "WCAG 2.1 AA, keyboard navigation, visible focus and semantic HTML are built into the shared foundation.",
+    icon: Accessibility,
+  },
+  {
+    title: "Lower cognitive load",
+    description:
+      "Clear hierarchy, progressive disclosure and consistent feedback help users complete complex enterprise workflows.",
+    icon: Gauge,
+  },
+  {
+    title: "Better collaboration",
+    description:
+      "A shared language and central documentation support alignment between developers, stakeholders and future contributors.",
+    icon: Users,
   },
 ];
 
+const foundations = [
+  "Colors",
+  "Typography",
+  "Spacing",
+  "Border radius",
+  "Elevation & shadows",
+  "Iconography",
+  "Accessibility",
+  "Responsiveness",
+];
+
 export default function Home() {
+  const { mode } = useColorMode();
+  const isDarkMode = mode === "dark";
+  const surface = isDarkMode
+    ? colors.neutral[800]
+    : colors.semantic.surface;
+  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
+  const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
+  const secondaryText = isDarkMode
+    ? colors.neutral[300]
+    : colors.neutral[600];
+  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
+  const subtleBackground = isDarkMode
+    ? colors.neutral[700]
+    : colors.neutral[100];
+  const selectedBackground = isDarkMode
+    ? colors.neutral[700]
+    : colors.primary[50];
+
   return (
     <DocumentationLayout>
       <Box
@@ -40,20 +94,20 @@ export default function Home() {
           alignItems: "start",
         }}
       >
-        <Box component="article" id="colors" sx={{ maxWidth: 920 }}>
+        <Box component="article" id="overview" sx={{ maxWidth: 920 }}>
           <Typography
             variant="overline"
             sx={{
-              color: colors.primary[600],
+              color: accent,
               fontWeight: 700,
               letterSpacing: "0.08em",
             }}
           >
-            Design foundations
+            Getting started
           </Typography>
 
           <Typography variant="h1" sx={{ mt: 1, mb: 2 }}>
-            Colors
+            Stream Design System
           </Typography>
 
           <Typography
@@ -61,110 +115,73 @@ export default function Home() {
             sx={{
               maxWidth: 720,
               mb: 3,
-              color: colors.neutral[600],
+              color: secondaryText,
               fontSize: "1.0625rem",
               lineHeight: 1.75,
             }}
           >
-            Color tokens create a consistent visual language across Stream
-            Software applications. They support brand recognition, visual
-            hierarchy, system feedback and accessible interfaces.
+            A central design system and reusable UI foundation for building
+            consistent, accessible and maintainable enterprise applications
+            within Stream Software.
           </Typography>
 
           <Box
             sx={{
               p: 2.5,
               mb: 6,
-              borderLeft: `4px solid ${colors.semantic.info.main}`,
-              backgroundColor: colors.primary[50],
+              borderLeft: 4,
+              borderColor: accent,
+              backgroundColor: subtleBackground,
             }}
           >
-            <Typography variant="body2" sx={{ color: colors.neutral[700] }}>
-              All color combinations must meet WCAG 2.1 AA: at least 4.5:1
-              for regular text and 3:1 for large text and interactive
-              elements.
-            </Typography>
+            <Box sx={{ display: "flex", gap: 1.5, alignItems: "flex-start" }}>
+              <BookOpen size={20} />
+              <Typography variant="body2" sx={{ color: primaryText }}>
+                This styleguide translates the research, UI audit and Design
+                Foundations into practical tokens, guidelines and reusable
+                front-end patterns.
+              </Typography>
+            </Box>
           </Box>
 
-          <Box component="section" id="primary-colors" sx={{ scrollMarginTop: 96 }}>
+          <Box component="section" id="introduction" sx={{ scrollMarginTop: 96 }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
-              Primary colors
+              Introduction
             </Typography>
             <Typography
               variant="body1"
-              sx={{ color: colors.neutral[600], mb: 3, lineHeight: 1.7 }}
+              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
             >
-              The primary scale represents Stream Software and is used for
-              primary actions, selected navigation and key interactive states.
+              Stream Software develops and maintains multiple enterprise
+              applications for logistics, compliance and customs processes.
+              These applications share many components, layouts and workflows,
+              but the UI audit identified differences in styling, component
+              behaviour, feedback, navigation and accessibility.
             </Typography>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "repeat(2, minmax(0, 1fr))",
-                  sm: "repeat(3, minmax(0, 1fr))",
-                  lg: "repeat(5, minmax(0, 1fr))",
-                },
-                gap: 2,
-              }}
+            <Typography
+              variant="body1"
+              sx={{ color: secondaryText, lineHeight: 1.7 }}
             >
-              {primaryColors.map(([shade, color]) => (
-                <ColorSwatch
-                  key={shade}
-                  name={`Primary ${shade}`}
-                  color={color}
-                />
-              ))}
-            </Box>
+              This design system provides a central standard for design
+              decisions and front-end implementation. It begins with shared
+              foundations, continues into a MUI theme and documentation, and
+              forms the basis for Storybook and a reusable UI library.
+            </Typography>
           </Box>
 
           <Divider sx={{ my: 6 }} />
 
-          <Box component="section" id="neutral-colors" sx={{ scrollMarginTop: 96 }}>
+          <Box component="section" id="advantages" sx={{ scrollMarginTop: 96 }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
-              Neutral colors
+              Advantages for Stream Software
             </Typography>
             <Typography
               variant="body1"
-              sx={{ color: colors.neutral[600], mb: 3, lineHeight: 1.7 }}
+              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
             >
-              Neutral tokens provide structure for text, borders, backgrounds
-              and surfaces without competing with the interface content.
-            </Typography>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "repeat(2, minmax(0, 1fr))",
-                  sm: "repeat(3, minmax(0, 1fr))",
-                  lg: "repeat(5, minmax(0, 1fr))",
-                },
-                gap: 2,
-              }}
-            >
-              {neutralColors.map(([shade, color]) => (
-                <ColorSwatch
-                  key={shade}
-                  name={`Neutral ${shade}`}
-                  color={color}
-                />
-              ))}
-            </Box>
-          </Box>
-
-          <Divider sx={{ my: 6 }} />
-
-          <Box component="section" id="semantic-colors" sx={{ scrollMarginTop: 96 }}>
-            <Typography variant="h2" sx={{ mb: 1.5 }}>
-              Semantic colors
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{ color: colors.neutral[600], mb: 3, lineHeight: 1.7 }}
-            >
-              Semantic colors communicate a consistent meaning. Always combine
-              color with a label, icon or message so meaning never depends on
-              color alone.
+              The following benefits are based on the research findings,
+              literature study and analysis of existing Stream Software
+              applications.
             </Typography>
             <Box
               sx={{
@@ -172,14 +189,132 @@ export default function Home() {
                 gridTemplateColumns: {
                   xs: "1fr",
                   sm: "repeat(2, minmax(0, 1fr))",
-                  lg: "repeat(4, minmax(0, 1fr))",
                 },
                 gap: 2,
               }}
             >
-              {semanticColors.map((token) => (
-                <ColorSwatch key={token.name} {...token} />
+              {benefits.map(({ title, description, icon: Icon }) => (
+                <Box
+                  key={title}
+                  sx={{
+                    p: 3,
+                    backgroundColor: surface,
+                    border: 1,
+                    borderColor: border,
+                    borderRadius: radius.medium,
+                    boxShadow: shadows.level1,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      display: "grid",
+                      placeItems: "center",
+                      mb: 2,
+                      color: accent,
+                      backgroundColor: selectedBackground,
+                      borderRadius: radius.medium,
+                    }}
+                  >
+                    <Icon size={21} />
+                  </Box>
+                  <Typography variant="h3" sx={{ mb: 1 }}>
+                    {title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: secondaryText, lineHeight: 1.7 }}
+                  >
+                    {description}
+                  </Typography>
+                </Box>
               ))}
+            </Box>
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          <Box component="section" id="foundations" sx={{ scrollMarginTop: 96 }}>
+            <Typography variant="h2" sx={{ mb: 1.5 }}>
+              Design foundations
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
+            >
+              The foundations define the shared visual and behavioural rules
+              used by the MUI theme, documentation and future components.
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 2,
+              }}
+            >
+              {foundations.map((foundation) => (
+                <Chip
+                  key={foundation}
+                  label={foundation}
+                  variant="outlined"
+                  sx={{
+                    color: primaryText,
+                    borderColor: border,
+                    backgroundColor: surface,
+                    fontWeight: 600,
+                  }}
+                />
+              ))}
+            </Box>
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          <Box component="section" id="author" sx={{ scrollMarginTop: 96 }}>
+            <Typography variant="h2" sx={{ mb: 1.5 }}>
+              Author
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 2.5,
+                alignItems: { xs: "flex-start", sm: "center" },
+                p: 3,
+                backgroundColor: surface,
+                border: 1,
+                borderColor: border,
+                borderRadius: radius.medium,
+              }}
+            >
+              <Box
+                sx={{
+                  width: 56,
+                  height: 56,
+                  display: "grid",
+                  placeItems: "center",
+                  flexShrink: 0,
+                  color: colors.semantic.surface,
+                  backgroundColor: colors.primary[500],
+                  borderRadius: radius.extraLarge,
+                }}
+              >
+                <Braces size={27} />
+              </Box>
+              <Box>
+                <Typography variant="h3" sx={{ mb: 0.5 }}>
+                  Hartiessan Asep
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: secondaryText, lineHeight: 1.7 }}
+                >
+                  HBO-ICT graduation student at Stream Software. Responsible
+                  for the research, Design Foundations, MUI theme, styleguide
+                  and development of the central UI library.
+                </Typography>
+              </Box>
             </Box>
           </Box>
         </Box>
@@ -191,7 +326,8 @@ export default function Home() {
             position: "sticky",
             top: 104,
             pl: 3,
-            borderLeft: `1px solid ${colors.neutral[200]}`,
+            borderLeft: 1,
+            borderColor: border,
           }}
         >
           <Typography
@@ -199,7 +335,7 @@ export default function Home() {
             sx={{
               display: "block",
               mb: 1.5,
-              color: colors.neutral[500],
+              color: secondaryText,
               fontWeight: 700,
               letterSpacing: "0.08em",
             }}
@@ -207,10 +343,11 @@ export default function Home() {
             On this page
           </Typography>
           {[
-            ["Overview", "#colors"],
-            ["Primary colors", "#primary-colors"],
-            ["Neutral colors", "#neutral-colors"],
-            ["Semantic colors", "#semantic-colors"],
+            ["Overview", "#overview"],
+            ["Introduction", "#introduction"],
+            ["Advantages", "#advantages"],
+            ["Design foundations", "#foundations"],
+            ["Author", "#author"],
           ].map(([label, href]) => (
             <Typography
               component="a"
@@ -221,9 +358,9 @@ export default function Home() {
                 display: "block",
                 py: 0.75,
                 color:
-                  href === "#colors" ? colors.primary[600] : colors.neutral[600],
-                fontWeight: href === "#colors" ? 700 : 500,
-                "&:hover": { color: colors.primary[600] },
+                  href === "#overview" ? accent : secondaryText,
+                fontWeight: href === "#overview" ? 700 : 500,
+                "&:hover": { color: accent },
               }}
             >
               {label}
