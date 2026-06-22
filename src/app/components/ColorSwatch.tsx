@@ -1,5 +1,8 @@
+"use client";
+
 import { Box, Typography } from "@mui/material";
 import { colors, radius, shadows } from "../theme/tokens";
+import { useColorMode } from "../theme/themeProvider";
 
 interface ColorSwatchProps {
   name: string;
@@ -12,12 +15,18 @@ export default function ColorSwatch({
   color,
   description,
 }: ColorSwatchProps) {
+  const { mode } = useColorMode();
+  const isDarkMode = mode === "dark";
+
   return (
     <Box
       sx={{
         overflow: "hidden",
-        backgroundColor: colors.semantic.surface,
-        border: `1px solid ${colors.neutral[200]}`,
+        backgroundColor: isDarkMode
+          ? colors.neutral[800]
+          : colors.semantic.surface,
+        border: 1,
+        borderColor: isDarkMode ? colors.neutral[700] : colors.neutral[200],
         borderRadius: radius.medium,
         boxShadow: shadows.level1,
       }}
@@ -37,7 +46,7 @@ export default function ColorSwatch({
           variant="caption"
           sx={{
             display: "block",
-            color: colors.neutral[500],
+            color: isDarkMode ? colors.neutral[300] : colors.neutral[600],
             fontFamily: "var(--font-space-mono), monospace",
           }}
         >
@@ -46,7 +55,11 @@ export default function ColorSwatch({
         {description && (
           <Typography
             variant="caption"
-            sx={{ display: "block", color: colors.neutral[600], mt: 1 }}
+            sx={{
+              display: "block",
+              color: isDarkMode ? colors.neutral[300] : colors.neutral[600],
+              mt: 1,
+            }}
           >
             {description}
           </Typography>

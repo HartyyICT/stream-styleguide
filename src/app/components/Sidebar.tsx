@@ -1,4 +1,8 @@
+"use client";
+
 import { Box, Divider, Typography } from "@mui/material";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Accessibility,
   Blend,
@@ -11,19 +15,39 @@ import {
   Type,
 } from "lucide-react";
 import { colors, radius } from "../theme/tokens";
+import { useColorMode } from "../theme/themeProvider";
 
 const foundationItems = [
-  { label: "Colors", icon: Palette, active: true },
-  { label: "Typography", icon: Type },
-  { label: "Spacing", icon: Grid3X3 },
-  { label: "Border Radius", icon: Circle },
-  { label: "Elevation & Shadows", icon: Blend },
-  { label: "Iconography", icon: Sparkles },
-  { label: "Accessibility", icon: Accessibility },
-  { label: "Responsiveness", icon: Smartphone },
+  { label: "Colors", icon: Palette, href: "/colors" },
+  { label: "Typography", icon: Type, href: "/typography" },
+  { label: "Spacing", icon: Grid3X3, href: "/spacing" },
+  { label: "Border Radius", icon: Circle, href: "/border-radius" },
+  { label: "Elevation & Shadows", icon: Blend, href: "/elevation" },
+  { label: "Iconography", icon: Sparkles, href: "/iconography" },
+  { label: "Accessibility", icon: Accessibility, href: "/accessibility" },
+  { label: "Responsiveness", icon: Smartphone, href: "/responsiveness" },
 ];
 
 export default function Sidebar() {
+  const pathname = usePathname();
+  const overviewActive = pathname === "/";
+  const { mode } = useColorMode();
+  const isDarkMode = mode === "dark";
+  const surface = isDarkMode
+    ? colors.neutral[800]
+    : colors.semantic.surface;
+  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
+  const secondaryText = isDarkMode
+    ? colors.neutral[300]
+    : colors.neutral[600];
+  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
+  const selectedBackground = isDarkMode
+    ? colors.neutral[700]
+    : colors.primary[50];
+  const hoverBackground = isDarkMode
+    ? colors.neutral[700]
+    : colors.neutral[100];
+
   return (
     <Box
       component="aside"
@@ -34,8 +58,9 @@ export default function Sidebar() {
         top: 64,
         left: 0,
         overflowY: "auto",
-        borderRight: `1px solid ${colors.neutral[200]}`,
-        backgroundColor: colors.semantic.surface,
+        borderRight: 1,
+        borderColor: border,
+        backgroundColor: surface,
         px: 2,
         py: 3,
         display: { xs: "none", md: "block" },
@@ -47,7 +72,7 @@ export default function Sidebar() {
           display: "block",
           px: 1.5,
           mb: 1,
-          color: colors.neutral[500],
+          color: secondaryText,
           fontWeight: 700,
           letterSpacing: "0.08em",
         }}
@@ -56,18 +81,31 @@ export default function Sidebar() {
       </Typography>
 
       <Box
+        component={Link}
+        href="/"
         sx={{
           display: "flex",
           alignItems: "center",
           gap: 1.25,
           px: 1.5,
           py: 1,
-          color: colors.neutral[700],
+          mb: 0.5,
+          color: overviewActive ? accent : secondaryText,
+          backgroundColor: overviewActive ? selectedBackground : surface,
+          borderLeft: 3,
+          borderColor: overviewActive ? accent : border,
           borderRadius: radius.medium,
+          "&:hover": {
+            backgroundColor: hoverBackground,
+            color: accent,
+          },
         }}
       >
         <ScanText size={18} />
-        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+        <Typography
+          variant="body2"
+          sx={{ fontWeight: overviewActive ? 700 : 500 }}
+        >
           Overview
         </Typography>
       </Box>
@@ -80,7 +118,7 @@ export default function Sidebar() {
           display: "block",
           px: 1.5,
           mb: 1,
-          color: colors.neutral[500],
+          color: secondaryText,
           fontWeight: 700,
           letterSpacing: "0.08em",
         }}
@@ -89,10 +127,13 @@ export default function Sidebar() {
       </Typography>
 
       <Box component="nav" aria-label="Design foundations">
-        {foundationItems.map(({ label, icon: Icon, active }) => (
+        {foundationItems.map(({ label, icon: Icon, href }) => {
+          const active = pathname === href;
+
+          return (
           <Box
-            component="a"
-            href={active ? "#colors" : "#"}
+            component={Link}
+            href={href}
             key={label}
             sx={{
               display: "flex",
@@ -102,16 +143,13 @@ export default function Sidebar() {
               py: 1,
               mb: 0.5,
               borderRadius: radius.medium,
-              color: active ? colors.primary[700] : colors.neutral[600],
-              backgroundColor: active ? colors.primary[50] : "transparent",
-              borderLeft: active
-                ? `3px solid ${colors.primary[500]}`
-                : "3px solid transparent",
+              color: active ? accent : secondaryText,
+              backgroundColor: active ? selectedBackground : surface,
+              borderLeft: 3,
+              borderColor: active ? accent : border,
               "&:hover": {
-                backgroundColor: active
-                  ? colors.primary[50]
-                  : colors.neutral[50],
-                color: colors.primary[700],
+                backgroundColor: hoverBackground,
+                color: accent,
               },
             }}
           >
@@ -120,7 +158,8 @@ export default function Sidebar() {
               {label}
             </Typography>
           </Box>
-        ))}
+          );
+        })}
       </Box>
     </Box>
   );

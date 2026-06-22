@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, type PaletteMode } from "@mui/material/styles";
 import { colors } from "./tokens";
 
 declare module "@mui/material/styles" {
@@ -19,27 +19,95 @@ const fontFamilies = {
   monospace: "var(--font-space-mono), monospace",
 };
 
-export const theme = createTheme({
+export const createAppTheme = (mode: PaletteMode) =>
+  createTheme({
   palette: {
+    mode,
+    common: {
+      black: colors.neutral[900],
+      white: colors.semantic.surface,
+    },
+    grey: {
+      50: colors.neutral[50],
+      100: colors.neutral[100],
+      200: colors.neutral[200],
+      300: colors.neutral[300],
+      400: colors.neutral[400],
+      500: colors.neutral[500],
+      600: colors.neutral[600],
+      700: colors.neutral[700],
+      800: colors.neutral[800],
+      900: colors.neutral[900],
+      A100: colors.neutral[100],
+      A200: colors.neutral[200],
+      A400: colors.neutral[400],
+      A700: colors.neutral[700],
+    },
     primary: {
       light: colors.primary[100],
-      main: colors.primary[500],
+      main: mode === "light" ? colors.primary[500] : colors.primary[300],
       dark: colors.primary[700],
+      contrastText: colors.semantic.surface,
     },
     background: {
-      default: colors.semantic.background,
-      paper: colors.semantic.surface,
+      default:
+        mode === "light" ? colors.semantic.background : colors.neutral[900],
+      paper:
+        mode === "light" ? colors.semantic.surface : colors.neutral[800],
     },
     text: {
-      primary: colors.neutral[900],
-      secondary: colors.neutral[500],
+      primary:
+        mode === "light" ? colors.neutral[900] : colors.neutral[50],
+      secondary:
+        mode === "light" ? colors.neutral[600] : colors.neutral[300],
       disabled: colors.neutral[400],
     },
-    success: colors.semantic.success,
-    warning: colors.semantic.warning,
-    error: colors.semantic.error,
-    info: colors.semantic.info,
-    divider: colors.neutral[200],
+    success: {
+      ...colors.semantic.success,
+      main:
+        mode === "light"
+          ? colors.semantic.success.light
+          : colors.semantic.success.dark,
+      contrastText:
+        mode === "light" ? colors.neutral[900] : colors.semantic.surface,
+    },
+    warning: {
+      ...colors.semantic.warning,
+      main:
+        mode === "light"
+          ? colors.semantic.warning.light
+          : colors.semantic.warning.dark,
+      contrastText:
+        mode === "light" ? colors.neutral[900] : colors.semantic.surface,
+    },
+    error: {
+      ...colors.semantic.error,
+      main:
+        mode === "light"
+          ? colors.semantic.error.light
+          : colors.semantic.error.dark,
+      contrastText:
+        mode === "light" ? colors.neutral[900] : colors.semantic.surface,
+    },
+    info: {
+      ...colors.semantic.info,
+      main:
+        mode === "light"
+          ? colors.semantic.info.light
+          : colors.semantic.info.dark,
+      contrastText:
+        mode === "light" ? colors.neutral[900] : colors.semantic.surface,
+    },
+    divider: mode === "light" ? colors.neutral[200] : colors.neutral[700],
+    action: {
+      active: mode === "light" ? colors.neutral[600] : colors.neutral[300],
+      hover: mode === "light" ? colors.neutral[100] : colors.neutral[700],
+      selected: mode === "light" ? colors.primary[50] : colors.neutral[700],
+      disabled: colors.neutral[400],
+      disabledBackground:
+        mode === "light" ? colors.neutral[100] : colors.neutral[800],
+      focus: mode === "light" ? colors.primary[100] : colors.neutral[700],
+    },
   },
 
   typography: {
@@ -86,5 +154,36 @@ export const theme = createTheme({
 
   shape: {
     borderRadius: 8,
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          transition: "background-color 180ms ease, color 180ms ease",
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          border: "1px solid",
+          borderColor:
+            mode === "light" ? colors.neutral[200] : colors.neutral[700],
+          borderRadius: 8,
+          color:
+            mode === "light" ? colors.neutral[600] : colors.neutral[300],
+          backgroundColor:
+            mode === "light"
+              ? colors.semantic.surface
+              : colors.neutral[800],
+          "&:hover": {
+            color:
+              mode === "light" ? colors.primary[600] : colors.primary[200],
+            backgroundColor:
+              mode === "light" ? colors.primary[50] : colors.neutral[700],
+          },
+        },
+      },
+    },
   },
 });
