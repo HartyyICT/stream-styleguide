@@ -1,14 +1,16 @@
 "use client";
 
-import { Box, Chip, InputBase, Typography } from "@mui/material";
-import { BookOpen, Search } from "lucide-react";
+import { Box, Chip, Typography } from "@mui/material";
+import { BookOpen } from "lucide-react";
 import { colors, radius } from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
 import ThemeModeToggle from "./ThemeModeToggle";
+import SearchDialog from "./SearchDialog";
 
 export default function Navbar() {
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
+
   const surface = isDarkMode
     ? colors.neutral[800]
     : colors.semantic.surface;
@@ -17,9 +19,6 @@ export default function Navbar() {
   const secondaryText = isDarkMode
     ? colors.neutral[300]
     : colors.neutral[600];
-  const subtleBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.neutral[100];
   const selectedBackground = isDarkMode
     ? colors.neutral[700]
     : colors.primary[50];
@@ -56,6 +55,7 @@ export default function Navbar() {
         >
           <BookOpen size={20} />
         </Box>
+
         <Box>
           <Typography
             variant="subtitle1"
@@ -68,10 +68,12 @@ export default function Navbar() {
           >
             Stream Design System
           </Typography>
+
           <Typography variant="caption" sx={{ color: secondaryText }}>
             Styleguide
           </Typography>
         </Box>
+
         <Chip
           label="v0.1"
           size="small"
@@ -85,28 +87,7 @@ export default function Navbar() {
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Box
-          sx={{
-            width: 280,
-            display: { xs: "none", sm: "flex" },
-            alignItems: "center",
-            gap: 1,
-            px: 1.5,
-            py: 0.5,
-            border: 1,
-            borderColor: border,
-            borderRadius: radius.medium,
-            backgroundColor: subtleBackground,
-            color: secondaryText,
-          }}
-        >
-          <Search size={17} />
-          <InputBase
-            placeholder="Search documentation..."
-            inputProps={{ "aria-label": "Search documentation" }}
-            sx={{ flex: 1, fontSize: 14, color: primaryText }}
-          />
-        </Box>
+        <SearchDialog />
         <ThemeModeToggle />
       </Box>
     </Box>
