@@ -9,6 +9,7 @@ export default function ThemeModeToggle() {
   const { mode, toggleColorMode } = useColorMode();
   const isDarkMode = mode === "dark";
   const label = isDarkMode ? "Switch to light mode" : "Switch to dark mode";
+  const hoverColor = isDarkMode ? colors.primary[200] : colors.primary[600];
 
   return (
     <Tooltip title={label}>
@@ -29,8 +30,11 @@ export default function ThemeModeToggle() {
             ? colors.neutral[700]
             : colors.neutral[200],
           borderRadius: radius.medium,
+          transition:
+            "color 160ms ease, border-color 160ms ease, background-color 160ms ease",
           "&:hover": {
-            color: isDarkMode ? colors.primary[200] : colors.primary[600],
+            color: hoverColor,
+            borderColor: hoverColor,
             backgroundColor: isDarkMode
               ? colors.neutral[700]
               : colors.primary[50],

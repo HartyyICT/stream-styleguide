@@ -117,10 +117,14 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               height: 32,
               flexShrink: 0,
               color: secondaryText,
+              border: 1,
               borderColor: border,
               backgroundColor: surface,
+              transition:
+                "background-color 160ms ease, color 160ms ease, border-color 160ms ease",
               "&:hover": {
                 color: accent,
+                borderColor: accent,
                 backgroundColor: hoverBackground,
               },
             }}
@@ -168,10 +172,11 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             borderColor: overviewActive ? accent : border,
             borderRadius: radius.medium,
             transition:
-              "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease",
+              "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease",
             "&:hover": {
               backgroundColor: hoverBackground,
               color: accent,
+              borderColor: accent,
             },
           }}
         >
@@ -233,10 +238,11 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   borderLeft: 3,
                   borderColor: active ? accent : border,
                   transition:
-                    "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease",
+                    "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease",
                   "&:hover": {
                     backgroundColor: hoverBackground,
                     color: accent,
+                    borderColor: accent,
                   },
                 }}
               >
