@@ -213,10 +213,6 @@ export default function TypographyPage() {
   const subtleBackground = isDarkMode
     ? colors.neutral[700]
     : colors.neutral[100];
-  const selectedBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.primary[50];
-
   return (
     <DocumentationLayout>
       <Box

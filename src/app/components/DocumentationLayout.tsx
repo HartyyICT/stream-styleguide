@@ -1,6 +1,7 @@
 "use client";
 
 import { Box } from "@mui/material";
+import { useState } from "react";
 import Sidebar from "./Sidebar";
 import { colors } from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
@@ -11,6 +12,7 @@ export default function DocumentationLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
   const pageBackground = isDarkMode
@@ -20,14 +22,18 @@ export default function DocumentationLayout({
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: pageBackground }}>
       <Navbar />
-      <Sidebar />
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        onToggle={() => setSidebarCollapsed((collapsed) => !collapsed)}
+      />
 
       <Box
         component="main"
         sx={{
-          ml: { xs: 0, md: "280px" },
+          ml: { xs: 0, md: sidebarCollapsed ? "88px" : "280px" },
           pt: "64px",
           minHeight: "100vh",
+          transition: "margin-left 240ms ease",
         }}
       >
         <Box

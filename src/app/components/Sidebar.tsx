@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -9,6 +9,8 @@ import {
   Circle,
   Grid3X3,
   Palette,
+  PanelLeftClose,
+  PanelLeftOpen,
   ScanText,
   Smartphone,
   Sparkles,
@@ -28,7 +30,12 @@ const foundationItems = [
   { label: "Responsiveness", icon: Smartphone, href: "/responsiveness" },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  collapsed: boolean;
+  onToggle: () => void;
+}
+
+export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname();
   const overviewActive = pathname === "/";
   const { mode } = useColorMode();
@@ -47,12 +54,20 @@ export default function Sidebar() {
   const hoverBackground = isDarkMode
     ? colors.neutral[700]
     : colors.neutral[100];
+  const sidebarWidth = collapsed ? 88 : 280;
+  const labelSx = {
+    maxWidth: collapsed ? 0 : 180,
+    opacity: collapsed ? 0 : 1,
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    transition: "max-width 220ms ease, opacity 140ms ease",
+  } as const;
 
   return (
     <Box
       component="aside"
       sx={{
-        width: 280,
+        width: sidebarWidth,
         height: "calc(100vh - 64px)",
         position: "fixed",
         top: 64,
@@ -61,14 +76,65 @@ export default function Sidebar() {
         borderRight: 1,
         borderColor: border,
         backgroundColor: surface,
-        px: 2,
+        px: collapsed ? 1.25 : 2,
         py: 3,
         display: { xs: "none", md: "block" },
+        overflowX: "hidden",
+        transition: "width 240ms ease, padding 240ms ease",
       }}
     >
+      <Box
+        sx={{
+          height: 34,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: collapsed ? "center" : "space-between",
+          px: collapsed ? 0 : 1.5,
+          mb: 1,
+        }}
+      >
+        <Typography
+          variant="overline"
+          sx={{
+            ...labelSx,
+            color: secondaryText,
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+          }}
+        >
+          Navigation
+        </Typography>
+        <Tooltip title={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
+          <IconButton
+            size="small"
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            onClick={onToggle}
+            sx={{
+              width: 32,
+              height: 32,
+              flexShrink: 0,
+              color: secondaryText,
+              borderColor: border,
+              backgroundColor: surface,
+              "&:hover": {
+                color: accent,
+                backgroundColor: hoverBackground,
+              },
+            }}
+          >
+            {collapsed ? (
+              <PanelLeftOpen size={17} />
+            ) : (
+              <PanelLeftClose size={17} />
+            )}
+          </IconButton>
+        </Tooltip>
+      </Box>
+
       <Typography
         variant="overline"
         sx={{
+          ...labelSx,
           display: "block",
           px: 1.5,
           mb: 1,
@@ -80,41 +146,51 @@ export default function Sidebar() {
         Getting started
       </Typography>
 
-      <Box
-        component={Link}
-        href="/"
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: 1.25,
-          px: 1.5,
-          py: 1,
-          mb: 0.5,
-          color: overviewActive ? accent : secondaryText,
-          backgroundColor: overviewActive ? selectedBackground : surface,
-          borderLeft: 3,
-          borderColor: overviewActive ? accent : border,
-          borderRadius: radius.medium,
-          "&:hover": {
-            backgroundColor: hoverBackground,
-            color: accent,
-          },
-        }}
-      >
-        <ScanText size={18} />
-        <Typography
-          variant="body2"
-          sx={{ fontWeight: overviewActive ? 700 : 500 }}
+      <Tooltip title={collapsed ? "Overview" : ""} placement="right">
+        <Box
+          component={Link}
+          href="/"
+          aria-label="Overview"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: collapsed ? "center" : "flex-start",
+            gap: collapsed ? 0 : 1.25,
+            px: collapsed ? 1 : 1.5,
+            py: 1,
+            mb: 0.5,
+            color: overviewActive ? accent : secondaryText,
+            backgroundColor: overviewActive ? selectedBackground : surface,
+            borderLeft: 3,
+            borderColor: overviewActive ? accent : border,
+            borderRadius: radius.medium,
+            transition:
+              "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease",
+            "&:hover": {
+              backgroundColor: hoverBackground,
+              color: accent,
+            },
+          }}
         >
-          Overview
-        </Typography>
-      </Box>
+          <ScanText size={18} style={{ flexShrink: 0 }} />
+          <Typography
+            variant="body2"
+            sx={{
+              ...labelSx,
+              fontWeight: overviewActive ? 700 : 500,
+            }}
+          >
+            Overview
+          </Typography>
+        </Box>
+      </Tooltip>
 
       <Divider sx={{ my: 2.5 }} />
 
       <Typography
         variant="overline"
         sx={{
+          ...labelSx,
           display: "block",
           px: 1.5,
           mb: 1,
@@ -131,33 +207,48 @@ export default function Sidebar() {
           const active = pathname === href;
 
           return (
-          <Box
-            component={Link}
-            href={href}
-            key={label}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1.25,
-              px: 1.5,
-              py: 1,
-              mb: 0.5,
-              borderRadius: radius.medium,
-              color: active ? accent : secondaryText,
-              backgroundColor: active ? selectedBackground : surface,
-              borderLeft: 3,
-              borderColor: active ? accent : border,
-              "&:hover": {
-                backgroundColor: hoverBackground,
-                color: accent,
-              },
-            }}
-          >
-            <Icon size={18} strokeWidth={1.8} />
-            <Typography variant="body2" sx={{ fontWeight: active ? 700 : 500 }}>
-              {label}
-            </Typography>
-          </Box>
+            <Tooltip
+              key={label}
+              title={collapsed ? label : ""}
+              placement="right"
+            >
+              <Box
+                component={Link}
+                href={href}
+                aria-label={label}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: collapsed ? "center" : "flex-start",
+                  gap: collapsed ? 0 : 1.25,
+                  px: collapsed ? 1 : 1.5,
+                  py: 1,
+                  mb: 0.5,
+                  borderRadius: radius.medium,
+                  color: active ? accent : secondaryText,
+                  backgroundColor: active ? selectedBackground : surface,
+                  borderLeft: 3,
+                  borderColor: active ? accent : border,
+                  transition:
+                    "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease",
+                  "&:hover": {
+                    backgroundColor: hoverBackground,
+                    color: accent,
+                  },
+                }}
+              >
+                <Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    ...labelSx,
+                    fontWeight: active ? 700 : 500,
+                  }}
+                >
+                  {label}
+                </Typography>
+              </Box>
+            </Tooltip>
           );
         })}
       </Box>
