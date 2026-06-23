@@ -2,7 +2,12 @@
 
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { colors } from "../theme/tokens";
+import {
+  borderColors,
+  borderWidths,
+  colors,
+  interactionStates,
+} from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
 
 export interface OnThisPageItem {
@@ -22,11 +27,15 @@ export default function OnThisPage({
   const [currentHref, setCurrentHref] = useState(activeHref);
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
-  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
+  const borders = isDarkMode ? borderColors.dark : borderColors.light;
+  const interaction = isDarkMode
+    ? interactionStates.dark
+    : interactionStates.light;
+  const border = borders.subtle;
   const secondaryText = isDarkMode
     ? colors.neutral[300]
     : colors.neutral[600];
-  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
+  const accent = interaction.activeIndicator;
 
   useEffect(() => {
     const sections = items
@@ -146,11 +155,14 @@ export default function OnThisPage({
                   pl: active ? 1.25 : 0,
                   color: active ? accent : secondaryText,
                   fontWeight: active ? 700 : 500,
-                  borderLeft: active ? 2 : 0,
+                  borderLeft: active ? borderWidths.active : 0,
                   borderColor: accent,
                   transition:
                     "color 160ms ease, padding-left 160ms ease, border-color 160ms ease",
-                  "&:hover": { color: accent, pl: 1.25 },
+                  "&:hover": {
+                    color: interaction.hoverContent,
+                    pl: 1.25,
+                  },
                 }}
               >
                 {label}

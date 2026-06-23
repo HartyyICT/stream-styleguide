@@ -1,11 +1,10 @@
 "use client";
 
 import { Box, Divider, Typography, useTheme } from "@mui/material";
-import DocumentationLayout from "@/app/components/DocumentationLayout";
 import ColorSwatch from "@/app/components/ColorSwatch";
-import OnThisPage from "@/app/components/OnThisPage";
+import Page from "@/app/components/documentation/Page";
+import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
 import { colors, radius, shadows } from "@/app/theme/tokens";
-import { useColorMode } from "@/app/theme/themeProvider";
 
 const primaryColors = Object.entries(colors.primary);
 const neutralColors = Object.entries(colors.neutral);
@@ -77,23 +76,17 @@ const guidelines = [
 
 export default function ColorsPage() {
   const theme = useTheme();
-  const { mode } = useColorMode();
-
-  const isDarkMode = mode === "dark";
-
-  const surface = isDarkMode ? colors.neutral[800] : colors.semantic.surface;
-  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
-  const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
-  const secondaryText = isDarkMode
-    ? colors.neutral[300]
-    : colors.neutral[600];
-  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
-  const subtleBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.neutral[100];
-  const selectedBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.primary[50];
+  const {
+    isDarkMode,
+    borders,
+    surface,
+    primaryText,
+    secondaryText,
+    accent,
+    subtleBackground,
+    selectedBackground,
+  } = useDocumentationStyles();
+  const border = borders.default;
 
   const semanticVariant = isDarkMode ? "Dark" : "Light";
 
@@ -129,16 +122,7 @@ export default function ColorsPage() {
   ];
 
   return (
-    <DocumentationLayout>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { xs: "1fr", xl: "minmax(0, 1fr) 220px" },
-          gap: { xs: 4, xl: 8 },
-          alignItems: "start",
-        }}
-      >
-        <Box component="article" id="colors" sx={{ maxWidth: 920 }}>
+    <Page pageId="colors" sections={colorSections}>
           <Typography
             variant="overline"
             sx={{
@@ -539,10 +523,6 @@ export default function ColorsPage() {
               </Typography>
             </Box>
           </Box>
-        </Box>
-
-        <OnThisPage items={[...colorSections]} />
-      </Box>
-    </DocumentationLayout>
+    </Page>
   );
 }

@@ -17,14 +17,22 @@ import {
   FileText,
   Grid3X3,
   LayoutGrid,
+  MousePointer2,
   Palette,
+  PanelTop,
   Search,
   Type,
   X,
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { colors, radius, shadows } from "@/app/theme/tokens";
+import {
+  borderColors,
+  colors,
+  interactionStates,
+  radius,
+  shadows,
+} from "@/app/theme/tokens";
 import { useColorMode } from "@/app/theme/themeProvider";
 
 type SearchItem = {
@@ -143,6 +151,34 @@ const searchGroups: SearchGroup[] = [
         icon: Grid3X3,
       },
       {
+        title: "Hover states",
+        description: "Hover, active and focus feedback for interactive UI.",
+        href: "/hover-states",
+        category: "Design foundations",
+        icon: MousePointer2,
+      },
+      {
+        title: "Hover state scale",
+        description: "Semantic interaction tokens for light and dark mode.",
+        href: "/hover-states#state-scale",
+        category: "Hover states",
+        icon: MousePointer2,
+      },
+      {
+        title: "Border colors",
+        description: "Border colors, widths, roles and component examples.",
+        href: "/border-colors",
+        category: "Design foundations",
+        icon: PanelTop,
+      },
+      {
+        title: "Border scale",
+        description: "Structural, interactive, active and focus borders.",
+        href: "/border-colors#border-scale",
+        category: "Border colors",
+        icon: PanelTop,
+      },
+      {
         title: "Border radius",
         description: "Radius scale, token usage and component examples.",
         href: "/border-radius",
@@ -232,6 +268,20 @@ const searchGroups: SearchGroup[] = [
         icon: Grid3X3,
       },
       {
+        title: "Hover state guidelines",
+        description: "Rules for clear and accessible interaction feedback.",
+        href: "/hover-states#guidelines",
+        category: "Hover states",
+        icon: MousePointer2,
+      },
+      {
+        title: "Border color guidelines",
+        description: "Rules for consistent structural and state boundaries.",
+        href: "/border-colors#guidelines",
+        category: "Border colors",
+        icon: PanelTop,
+      },
+      {
         title: "Border radius guidelines",
         description: "Rules for consistent corner treatments.",
         href: "/border-radius#guidelines",
@@ -278,15 +328,16 @@ export default function SearchDialog() {
   const pageBackground = isDarkMode
     ? colors.neutral[900]
     : colors.semantic.background;
-  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
+  const borders = isDarkMode ? borderColors.dark : borderColors.light;
+  const interaction = isDarkMode
+    ? interactionStates.dark
+    : interactionStates.light;
+  const border = borders.subtle;
   const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
   const secondaryText = isDarkMode
     ? colors.neutral[300]
     : colors.neutral[600];
-  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
-  const selectedBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.primary[50];
+  const accent = interaction.activeIndicator;
 
   useEffect(() => {
     const storedRecentHrefs = localStorage.getItem(RECENT_SEARCHES_KEY);
@@ -417,8 +468,8 @@ export default function SearchDialog() {
             transition:
               "border-color 160ms ease, background-color 160ms ease",
             "&:hover": {
-              borderColor: accent,
-              backgroundColor: selectedBackground,
+              borderColor: interaction.hoverBorder,
+              backgroundColor: interaction.hoverBackground,
             },
           }}
         >
@@ -463,8 +514,9 @@ export default function SearchDialog() {
               borderColor: border,
               backgroundColor: surface,
               "&:hover": {
-                color: accent,
-                backgroundColor: selectedBackground,
+                color: interaction.hoverContent,
+                borderColor: interaction.hoverBorder,
+                backgroundColor: interaction.hoverBackground,
               },
             }}
           >
@@ -495,8 +547,8 @@ export default function SearchDialog() {
           borderRadius: radius.medium,
           transition: "border-color 160ms ease, background-color 160ms ease",
           "&:hover": {
-            borderColor: accent,
-            backgroundColor: selectedBackground,
+            borderColor: interaction.hoverBorder,
+            backgroundColor: interaction.hoverBackground,
           },
         }}
       >
@@ -568,8 +620,9 @@ export default function SearchDialog() {
           transition:
             "border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease",
           "&:hover": {
-            borderColor: accent,
-            backgroundColor: selectedBackground,
+            color: interaction.hoverContent,
+            borderColor: interaction.hoverBorder,
+            backgroundColor: interaction.hoverBackground,
           },
         }}
       >
@@ -721,8 +774,8 @@ export default function SearchDialog() {
                         transition:
                           "border-color 160ms ease, background-color 160ms ease",
                         "&:hover": {
-                          borderColor: accent,
-                          backgroundColor: selectedBackground,
+                          borderColor: interaction.hoverBorder,
+                          backgroundColor: interaction.hoverBackground,
                         },
                       }}
                     >

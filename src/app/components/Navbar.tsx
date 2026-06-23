@@ -2,7 +2,12 @@
 
 import { Box, Chip, Typography } from "@mui/material";
 import { BookOpen } from "lucide-react";
-import { colors, radius } from "../theme/tokens";
+import {
+  borderColors,
+  colors,
+  interactionStates,
+  radius,
+} from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
 import ThemeModeToggle from "./ThemeModeToggle";
 import SearchDialog from "./SearchDialog";
@@ -14,15 +19,17 @@ export default function Navbar() {
   const surface = isDarkMode
     ? colors.neutral[800]
     : colors.semantic.surface;
-  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
+  const borders = isDarkMode ? borderColors.dark : borderColors.light;
+  const interaction = isDarkMode
+    ? interactionStates.dark
+    : interactionStates.light;
+  const border = borders.subtle;
   const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
   const secondaryText = isDarkMode
     ? colors.neutral[300]
     : colors.neutral[600];
-  const selectedBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.primary[50];
-  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
+  const selectedBackground = interaction.activeBackground;
+  const accent = interaction.activeIndicator;
 
   return (
     <Box

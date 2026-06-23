@@ -1,7 +1,12 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { colors, radius, shadows } from "../theme/tokens";
+import {
+  borderColors,
+  colors,
+  radius,
+  shadows,
+} from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
 
 interface ColorSwatchProps {
@@ -26,7 +31,9 @@ export default function ColorSwatch({
           ? colors.neutral[800]
           : colors.semantic.surface,
         border: 1,
-        borderColor: isDarkMode ? colors.neutral[700] : colors.neutral[200],
+        borderColor: isDarkMode
+          ? borderColors.dark.default
+          : borderColors.light.default,
         borderRadius: radius.medium,
         boxShadow: shadows.level1,
       }}

@@ -2,10 +2,9 @@
 
 import { Box, Divider, Typography } from "@mui/material";
 import { Braces, CreditCard, MousePointerClick, PanelTop } from "lucide-react";
-import DocumentationLayout from "@/app/components/DocumentationLayout";
-import OnThisPage from "@/app/components/OnThisPage";
+import Page from "@/app/components/documentation/Page";
+import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
 import { colors, radius, shadows, spacing } from "@/app/theme/tokens";
-import { useColorMode } from "@/app/theme/themeProvider";
 
 const borderRadiusSections = [
   { label: "Overview", href: "#border-radius" },
@@ -85,22 +84,16 @@ const guidelines = [
 ] as const;
 
 export default function BorderRadiusPage() {
-  const { mode } = useColorMode();
-  const isDarkMode = mode === "dark";
-
-  const surface = isDarkMode ? colors.neutral[800] : colors.semantic.surface;
-  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
-  const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
-  const secondaryText = isDarkMode
-    ? colors.neutral[300]
-    : colors.neutral[600];
-  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
-  const subtleBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.neutral[100];
-  const selectedBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.primary[50];
+  const {
+    borders,
+    surface,
+    primaryText,
+    secondaryText,
+    accent,
+    subtleBackground,
+    selectedBackground,
+  } = useDocumentationStyles();
+  const border = borders.default;
 
   const codeBlockSx = {
     m: 0,
@@ -115,16 +108,7 @@ export default function BorderRadiusPage() {
   } as const;
 
   return (
-    <DocumentationLayout>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { xs: "1fr", xl: "minmax(0, 1fr) 220px" },
-          gap: { xs: 4, xl: 8 },
-          alignItems: "start",
-        }}
-      >
-        <Box component="article" id="border-radius" sx={{ maxWidth: 920 }}>
+    <Page pageId="border-radius" sections={borderRadiusSections}>
           <Typography
             variant="overline"
             sx={{
@@ -544,10 +528,6 @@ export default function BorderRadiusPage() {
               </Typography>
             </Box>
           </Box>
-        </Box>
-
-        <OnThisPage items={[...borderRadiusSections]} />
-      </Box>
-    </DocumentationLayout>
+    </Page>
   );
 }

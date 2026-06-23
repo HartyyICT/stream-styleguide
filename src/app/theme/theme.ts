@@ -1,5 +1,9 @@
 import { createTheme, type PaletteMode } from "@mui/material/styles";
-import { colors } from "./tokens";
+import {
+  borderColors,
+  colors,
+  interactionStates,
+} from "./tokens";
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
@@ -101,8 +105,14 @@ export const createAppTheme = (mode: PaletteMode) =>
     divider: mode === "light" ? colors.neutral[200] : colors.neutral[700],
     action: {
       active: mode === "light" ? colors.neutral[600] : colors.neutral[300],
-      hover: mode === "light" ? colors.neutral[100] : colors.neutral[700],
-      selected: mode === "light" ? colors.primary[50] : colors.neutral[700],
+      hover:
+        mode === "light"
+          ? interactionStates.light.hoverBackground
+          : interactionStates.dark.hoverBackground,
+      selected:
+        mode === "light"
+          ? interactionStates.light.activeBackground
+          : interactionStates.dark.activeBackground,
       disabled: colors.neutral[400],
       disabledBackground:
         mode === "light" ? colors.neutral[100] : colors.neutral[800],
@@ -168,7 +178,9 @@ export const createAppTheme = (mode: PaletteMode) =>
         root: {
           border: "1px solid",
           borderColor:
-            mode === "light" ? colors.neutral[200] : colors.neutral[700],
+            mode === "light"
+              ? borderColors.light.subtle
+              : borderColors.dark.subtle,
           borderRadius: 8,
           color:
             mode === "light" ? colors.neutral[600] : colors.neutral[300],
@@ -178,9 +190,17 @@ export const createAppTheme = (mode: PaletteMode) =>
               : colors.neutral[800],
           "&:hover": {
             color:
-              mode === "light" ? colors.primary[600] : colors.primary[200],
+              mode === "light"
+                ? interactionStates.light.hoverContent
+                : interactionStates.dark.hoverContent,
+            borderColor:
+              mode === "light"
+                ? interactionStates.light.hoverBorder
+                : interactionStates.dark.hoverBorder,
             backgroundColor:
-              mode === "light" ? colors.primary[50] : colors.neutral[700],
+              mode === "light"
+                ? interactionStates.light.hoverBackground
+                : interactionStates.dark.hoverBackground,
           },
         },
       },

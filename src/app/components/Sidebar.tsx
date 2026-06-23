@@ -8,7 +8,9 @@ import {
   Blend,
   Circle,
   Grid3X3,
+  MousePointer2,
   Palette,
+  PanelTop,
   PanelLeftClose,
   PanelLeftOpen,
   ScanText,
@@ -16,13 +18,21 @@ import {
   Sparkles,
   Type,
 } from "lucide-react";
-import { colors, radius } from "../theme/tokens";
+import {
+  borderColors,
+  borderWidths,
+  colors,
+  interactionStates,
+  radius,
+} from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
 
 const foundationItems = [
   { label: "Colors", icon: Palette, href: "/colors" },
   { label: "Typography", icon: Type, href: "/typography" },
   { label: "Spacing", icon: Grid3X3, href: "/spacing" },
+  { label: "Hover States", icon: MousePointer2, href: "/hover-states" },
+  { label: "Border Colors", icon: PanelTop, href: "/border-colors" },
   { label: "Border Radius", icon: Circle, href: "/border-radius" },
   { label: "Elevation & Shadows", icon: Blend, href: "/elevation" },
   { label: "Iconography", icon: Sparkles, href: "/iconography" },
@@ -43,17 +53,17 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const surface = isDarkMode
     ? colors.neutral[800]
     : colors.semantic.surface;
-  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
+  const borders = isDarkMode ? borderColors.dark : borderColors.light;
+  const interaction = isDarkMode
+    ? interactionStates.dark
+    : interactionStates.light;
+  const border = borders.subtle;
   const secondaryText = isDarkMode
     ? colors.neutral[300]
     : colors.neutral[600];
-  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
-  const selectedBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.primary[50];
-  const hoverBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.neutral[100];
+  const accent = interaction.activeIndicator;
+  const selectedBackground = interaction.activeBackground;
+  const hoverBackground = interaction.hoverBackground;
   const sidebarWidth = collapsed ? 88 : 280;
   const labelSx = {
     maxWidth: collapsed ? 0 : 180,
@@ -123,8 +133,8 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               transition:
                 "background-color 160ms ease, color 160ms ease, border-color 160ms ease",
               "&:hover": {
-                color: accent,
-                borderColor: accent,
+                color: interaction.hoverContent,
+                borderColor: interaction.hoverBorder,
                 backgroundColor: hoverBackground,
               },
             }}
@@ -168,15 +178,15 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             mb: 0.5,
             color: overviewActive ? accent : secondaryText,
             backgroundColor: overviewActive ? selectedBackground : surface,
-            borderLeft: 3,
+            borderLeft: borderWidths.active,
             borderColor: overviewActive ? accent : border,
             borderRadius: radius.medium,
             transition:
               "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease",
             "&:hover": {
               backgroundColor: hoverBackground,
-              color: accent,
-              borderColor: accent,
+              color: interaction.hoverContent,
+              borderColor: interaction.hoverBorder,
             },
           }}
         >
@@ -235,14 +245,14 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   borderRadius: radius.medium,
                   color: active ? accent : secondaryText,
                   backgroundColor: active ? selectedBackground : surface,
-                  borderLeft: 3,
+                  borderLeft: borderWidths.active,
                   borderColor: active ? accent : border,
                   transition:
                     "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease",
                   "&:hover": {
                     backgroundColor: hoverBackground,
-                    color: accent,
-                    borderColor: accent,
+                    color: interaction.hoverContent,
+                    borderColor: interaction.hoverBorder,
                   },
                 }}
               >

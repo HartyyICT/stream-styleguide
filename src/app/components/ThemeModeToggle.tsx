@@ -3,13 +3,21 @@
 import { IconButton, Tooltip } from "@mui/material";
 import { Moon, Sun } from "lucide-react";
 import { useColorMode } from "../theme/themeProvider";
-import { colors, radius } from "../theme/tokens";
+import {
+  borderColors,
+  colors,
+  interactionStates,
+  radius,
+} from "../theme/tokens";
 
 export default function ThemeModeToggle() {
   const { mode, toggleColorMode } = useColorMode();
   const isDarkMode = mode === "dark";
   const label = isDarkMode ? "Switch to light mode" : "Switch to dark mode";
-  const hoverColor = isDarkMode ? colors.primary[200] : colors.primary[600];
+  const interaction = isDarkMode
+    ? interactionStates.dark
+    : interactionStates.light;
+  const borders = isDarkMode ? borderColors.dark : borderColors.light;
 
   return (
     <Tooltip title={label}>
@@ -26,18 +34,14 @@ export default function ThemeModeToggle() {
             ? colors.neutral[800]
             : colors.semantic.surface,
           border: 1,
-          borderColor: isDarkMode
-            ? colors.neutral[700]
-            : colors.neutral[200],
+          borderColor: borders.subtle,
           borderRadius: radius.medium,
           transition:
             "color 160ms ease, border-color 160ms ease, background-color 160ms ease",
           "&:hover": {
-            color: hoverColor,
-            borderColor: hoverColor,
-            backgroundColor: isDarkMode
-              ? colors.neutral[700]
-              : colors.primary[50],
+            color: interaction.hoverContent,
+            borderColor: interaction.hoverBorder,
+            backgroundColor: interaction.hoverBackground,
           },
         }}
       >
