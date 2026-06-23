@@ -1,6 +1,5 @@
 html {
   height: 100%;
-  scroll-behavior: smooth;
 }
 
 html,
@@ -14,6 +13,12 @@ body {
   font-family: var(--font-open-sans), Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html[data-theme-switching="true"] *,
+html[data-theme-switching="true"] *::before,
+html[data-theme-switching="true"] *::after {
+  transition: none !important;
 }
 
 * {

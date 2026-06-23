@@ -1,10 +1,12 @@
 "use client";
 
 import { Box, Divider, Typography, useTheme } from "@mui/material";
-import DocumentationLayout from "@/app/components/DocumentationLayout";
-import OnThisPage from "@/app/components/OnThisPage";
-import { colors, radius, shadows } from "@/app/theme/tokens";
-import { useColorMode } from "@/app/theme/themeProvider";
+import Card from "@/app/components/documentation/Card";
+import CardTitle from "@/app/components/documentation/CardTitle";
+import Intro from "@/app/components/documentation/Intro";
+import Page from "@/app/components/documentation/Page";
+import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import { radius, shadows } from "@/app/theme/tokens";
 
 const typographySections = [
   { label: "Overview", href: "#typography" },
@@ -199,78 +201,22 @@ const guidelines = [
 
 export default function TypographyPage() {
   const theme = useTheme();
-  const { mode } = useColorMode();
-
-  const isDarkMode = mode === "dark";
-
-  const surface = isDarkMode ? colors.neutral[800] : colors.semantic.surface;
-  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
-  const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
-  const secondaryText = isDarkMode
-    ? colors.neutral[300]
-    : colors.neutral[600];
-  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
-  const subtleBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.neutral[100];
+  const {
+    borders,
+    surface,
+    primaryText,
+    secondaryText,
+    accent,
+    subtleBackground,
+  } = useDocumentationStyles();
+  const border = borders.default;
   return (
-    <DocumentationLayout>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { xs: "1fr", xl: "minmax(0, 1fr) 220px" },
-          gap: { xs: 4, xl: 8 },
-          alignItems: "start",
-        }}
-      >
-        <Box component="article" id="typography" sx={{ maxWidth: 920 }}>
-          <Typography
-            variant="overline"
-            sx={{
-              color: accent,
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-            }}
-          >
-            Design foundations
-          </Typography>
-
-          <Typography variant="h1" sx={{ mt: 1, mb: 2 }}>
-            Typography
-          </Typography>
-
-          <Typography
-            variant="body1"
-            sx={{
-              maxWidth: 720,
-              mb: 3,
-              color: secondaryText,
-              fontSize: "1.0625rem",
-              lineHeight: 1.75,
-            }}
-          >
-            Typography supports readability, scanability and visual hierarchy
-            within complex enterprise interfaces. The Stream typography system
-            defines consistent text styles for headings, body text, supporting
-            information, buttons and numerical data.
-          </Typography>
-
-          <Box
-            sx={{
-              p: 2.5,
-              mb: 6,
-              borderLeft: 4,
-              borderColor: accent,
-              backgroundColor: subtleBackground,
-            }}
-          >
-            <Typography variant="body2" sx={{ color: primaryText }}>
-              Typography choices are defined by the Stream Design Foundations
-              and implemented through shared theme tokens. Avoid one-off font
-              sizes, weights or font families outside the defined typography
-              scale.
-            </Typography>
-          </Box>
+    <Page pageId="typography" sections={typographySections}>
+          <Intro
+            title="Typography"
+            description="Typography supports readability, scanability and visual hierarchy within complex enterprise interfaces. The Stream typography system defines consistent text styles for headings, body text, supporting information, buttons and numerical data."
+            note="Typography choices are defined by the Stream Design Foundations and implemented through shared theme tokens. Avoid one-off font sizes, weights or font families outside the defined typography scale."
+          />
 
           <Box
             component="section"
@@ -712,19 +658,10 @@ export default function TypographyPage() {
               requirements and should not depend on color alone.
             </Typography>
 
-            <Box
-              sx={{
-                p: 3,
-                backgroundColor: surface,
-                border: 1,
-                borderColor: border,
-                borderRadius: radius.medium,
-                boxShadow: shadows.level1,
-              }}
-            >
-              <Typography variant="h3" sx={{ mb: 1 }}>
+            <Card elevated>
+              <CardTitle sx={{ mb: 1 }}>
                 Accessibility rules
-              </Typography>
+              </CardTitle>
 
               <Typography
                 variant="body2"
@@ -734,12 +671,8 @@ export default function TypographyPage() {
                 clear heading order and ensure that text has enough contrast in
                 both light and dark mode.
               </Typography>
-            </Box>
+            </Card>
           </Box>
-        </Box>
-
-        <OnThisPage items={[...typographySections]} />
-      </Box>
-    </DocumentationLayout>
+    </Page>
   );
 }

@@ -49,6 +49,20 @@ export const radius = {
   extraLarge: "1rem",
 };
 
+export const iconSizes = {
+  small: 16,
+  medium: 20,
+  large: 24,
+  extraLarge: 32,
+} as const;
+
+export const breakpoints = {
+  mobile: 0,
+  tablet: 600,
+  laptop: 900,
+  desktop: 1200,
+} as const;
+
 export const shadows = {
   level0: "none",
   level1: "0 1px 4px rgba(0,0,0,0.06)",
@@ -56,3 +70,52 @@ export const shadows = {
   level3: "0 4px 12px rgba(0,0,0,0.10)",
   level4: "0 8px 24px rgba(0,0,0,0.12)",
 };
+
+export const interactionStates = {
+  light: {
+    default: colors.semantic.surface,
+    hoverBackground: colors.neutral[100],
+    hoverBorder: colors.primary[200],
+    hoverContent: colors.primary[600],
+    activeBackground: colors.primary[50],
+    activeIndicator: colors.primary[500],
+    focusRing: colors.primary[500],
+  },
+  dark: {
+    default: colors.neutral[800],
+    hoverBackground: colors.neutral[700],
+    hoverBorder: colors.primary[300],
+    hoverContent: colors.primary[200],
+    activeBackground: colors.neutral[700],
+    activeIndicator: colors.primary[300],
+    focusRing: colors.primary[300],
+  },
+} as const;
+
+export const borderWidths = {
+  subtle: "1px",
+  default: "1px",
+  interactive: "2px",
+  active: "3px",
+  focus: "2px",
+  accent: "4px",
+} as const;
+
+export const borderColors = {
+  light: {
+    subtle: colors.neutral[200],
+    default: colors.neutral[300],
+    interactive: colors.primary[200],
+    active: colors.primary[500],
+    focus: colors.primary[500],
+    accent: colors.primary[500],
+  },
+  dark: {
+    subtle: colors.neutral[700],
+    default: colors.neutral[600],
+    interactive: colors.primary[300],
+    active: colors.primary[300],
+    focus: colors.primary[300],
+    accent: colors.primary[300],
+  },
+} as const;

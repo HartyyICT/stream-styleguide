@@ -1,256 +1,34 @@
 "use client";
 
-import Link from "next/link";
+import dynamic from "next/dynamic";
+import { Box, Typography } from "@mui/material";
+import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
-  Box,
-  Dialog,
-  DialogContent,
-  IconButton,
-  InputBase,
-  Typography,
-} from "@mui/material";
-import {
-  BookOpen,
-  Clock,
-  FileText,
-  Grid3X3,
-  LayoutGrid,
-  Palette,
-  Search,
-  Type,
-  X,
-  type LucideIcon,
-} from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { colors, radius, shadows } from "@/app/theme/tokens";
-import { useColorMode } from "@/app/theme/themeProvider";
+  borderColors,
+  colors,
+  interactionStates,
+  radius,
+  shadows,
+} from "../theme/tokens";
+import { useColorMode } from "../theme/themeProvider";
 
-type SearchItem = {
-  title: string;
-  description: string;
-  href: string;
-  category: string;
-  icon: LucideIcon;
-};
-
-type SearchGroup = {
-  label: string;
-  items: SearchItem[];
-};
-
-const searchGroups: SearchGroup[] = [
-  {
-    label: "Getting started",
-    items: [
-      {
-        title: "Overview",
-        description: "Introduction to the Stream Design System.",
-        href: "/",
-        category: "Getting started",
-        icon: BookOpen,
-      },
-      {
-        title: "Introduction",
-        description: "Why the Stream Design System exists.",
-        href: "/#introduction",
-        category: "Getting started",
-        icon: FileText,
-      },
-      {
-        title: "Design foundations",
-        description:
-          "Overview of the design foundations used by the styleguide.",
-        href: "/#foundations",
-        category: "Getting started",
-        icon: LayoutGrid,
-      },
-    ],
-  },
-  {
-    label: "Design foundations",
-    items: [
-      {
-        title: "Colors",
-        description: "Color tokens, categories, usage and accessibility.",
-        href: "/colors",
-        category: "Design foundations",
-        icon: Palette,
-      },
-      {
-        title: "Primary colors",
-        description: "Primary color scale for actions and selected states.",
-        href: "/colors#primary-colors",
-        category: "Colors",
-        icon: Palette,
-      },
-      {
-        title: "Neutral colors",
-        description: "Neutral color scale for text, borders and surfaces.",
-        href: "/colors#neutral-colors",
-        category: "Colors",
-        icon: Palette,
-      },
-      {
-        title: "Semantic colors",
-        description:
-          "Semantic colors for success, warning, error and info states.",
-        href: "/colors#semantic-colors",
-        category: "Colors",
-        icon: Palette,
-      },
-      {
-        title: "Typography",
-        description: "Font families, setup, typography scale and guidelines.",
-        href: "/typography",
-        category: "Design foundations",
-        icon: Type,
-      },
-      {
-        title: "Font setup",
-        description: "How developers should use the Stream typography system.",
-        href: "/typography#font-setup",
-        category: "Typography",
-        icon: Type,
-      },
-      {
-        title: "Typography scale",
-        description: "Full typography scale for headings, body text and data.",
-        href: "/typography#typography-scale",
-        category: "Typography",
-        icon: Type,
-      },
-      {
-        title: "Spacing",
-        description: "Spacing scale, token usage and layout guidelines.",
-        href: "/spacing",
-        category: "Design foundations",
-        icon: Grid3X3,
-      },
-      {
-        title: "Spacing scale",
-        description: "Named spacing tokens from xs to xxl.",
-        href: "/spacing#spacing-scale",
-        category: "Spacing",
-        icon: Grid3X3,
-      },
-      {
-        title: "Spacing examples",
-        description: "Practical card, form and responsive spacing patterns.",
-        href: "/spacing#layout-examples",
-        category: "Spacing",
-        icon: Grid3X3,
-      },
-    ],
-  },
-  {
-    label: "Guidelines",
-    items: [
-      {
-        title: "Color guidelines",
-        description: "Rules for consistent and accessible color usage.",
-        href: "/colors#guidelines",
-        category: "Colors",
-        icon: Palette,
-      },
-      {
-        title: "Color accessibility",
-        description: "Contrast requirements for readable interfaces.",
-        href: "/colors#accessibility",
-        category: "Colors",
-        icon: Palette,
-      },
-      {
-        title: "Typography guidelines",
-        description: "Rules for consistent and readable typography usage.",
-        href: "/typography#guidelines",
-        category: "Typography",
-        icon: Type,
-      },
-      {
-        title: "Typography accessibility",
-        description: "Accessibility rules for readable text styles.",
-        href: "/typography#accessibility",
-        category: "Typography",
-        icon: Type,
-      },
-      {
-        title: "Spacing guidelines",
-        description: "Rules for consistent spacing and visual grouping.",
-        href: "/spacing#guidelines",
-        category: "Spacing",
-        icon: Grid3X3,
-      },
-      {
-        title: "Spacing accessibility",
-        description: "Spacing guidance for readable and usable interfaces.",
-        href: "/spacing#accessibility",
-        category: "Spacing",
-        icon: Grid3X3,
-      },
-    ],
-  },
-];
-
-const searchItems = searchGroups.flatMap((group) => group.items);
-const RECENT_SEARCHES_KEY = "stream-styleguide-recent-searches";
+const SearchModal = dynamic(() => import("./SearchModal"), {
+  ssr: false,
+});
 
 export default function SearchDialog() {
   const { mode } = useColorMode();
-  const isDarkMode = mode === "dark";
-
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [recentHrefs, setRecentHrefs] = useState<string[]>([]);
-
+  const isDarkMode = mode === "dark";
   const surface = isDarkMode ? colors.neutral[800] : colors.semantic.surface;
-  const pageBackground = isDarkMode
-    ? colors.neutral[900]
-    : colors.semantic.background;
-  const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
-  const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
+  const borders = isDarkMode ? borderColors.dark : borderColors.light;
+  const interaction = isDarkMode
+    ? interactionStates.dark
+    : interactionStates.light;
   const secondaryText = isDarkMode
     ? colors.neutral[300]
     : colors.neutral[600];
-  const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
-  const selectedBackground = isDarkMode
-    ? colors.neutral[700]
-    : colors.primary[50];
-
-  useEffect(() => {
-    const storedRecentHrefs = localStorage.getItem(RECENT_SEARCHES_KEY);
-
-    if (!storedRecentHrefs) {
-      return;
-    }
-
-    try {
-      const parsedRecentHrefs = JSON.parse(storedRecentHrefs) as string[];
-      const frame = window.requestAnimationFrame(() => {
-        setRecentHrefs(parsedRecentHrefs);
-      });
-
-      return () => window.cancelAnimationFrame(frame);
-    } catch {
-      localStorage.removeItem(RECENT_SEARCHES_KEY);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    const originalBodyOverflow = document.body.style.overflow;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = originalBodyOverflow;
-      document.documentElement.style.overflow = originalHtmlOverflow;
-    };
-  }, [open]);
 
   useEffect(() => {
     function handleShortcut(event: KeyboardEvent) {
@@ -261,221 +39,15 @@ export default function SearchDialog() {
     }
 
     window.addEventListener("keydown", handleShortcut);
-
-    return () => {
-      window.removeEventListener("keydown", handleShortcut);
-    };
+    return () => window.removeEventListener("keydown", handleShortcut);
   }, []);
-
-  const recentItems = useMemo(() => {
-    return recentHrefs
-      .map((href) => searchItems.find((item) => item.href === href))
-      .filter((item): item is SearchItem => Boolean(item));
-  }, [recentHrefs]);
-
-  const filteredItems = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-
-    if (!normalizedQuery) {
-      return [];
-    }
-
-    return searchItems.filter((item) => {
-      const searchableText = [
-        item.title,
-        item.description,
-        item.category,
-        item.href,
-      ]
-        .join(" ")
-        .toLowerCase();
-
-      return searchableText.includes(normalizedQuery);
-    });
-  }, [query]);
-
-  function closeSearch() {
-    setOpen(false);
-    setQuery("");
-  }
-
-  function saveRecentItem(selectedItem: SearchItem) {
-    const nextRecentHrefs = [
-      selectedItem.href,
-      ...recentHrefs.filter((href) => href !== selectedItem.href),
-    ].slice(0, 4);
-
-    setRecentHrefs(nextRecentHrefs);
-    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(nextRecentHrefs));
-  }
-
-  function handleItemClick(item: SearchItem) {
-    saveRecentItem(item);
-    closeSearch();
-  }
-
-  function removeRecentItem(hrefToRemove: string) {
-    const nextRecentHrefs = recentHrefs.filter(
-      (href) => href !== hrefToRemove,
-    );
-
-    setRecentHrefs(nextRecentHrefs);
-    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(nextRecentHrefs));
-  }
-
-  function renderCompactItem(item: SearchItem, showClock = false) {
-    const Icon = item.icon;
-
-    if (showClock) {
-      return (
-        <Box
-          key={item.href}
-          sx={{
-            minHeight: 48,
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            pl: 2,
-            pr: 0.75,
-            py: 0.75,
-            backgroundColor: surface,
-            border: 1,
-            borderColor: border,
-            borderRadius: radius.medium,
-            transition:
-              "border-color 160ms ease, background-color 160ms ease",
-            "&:hover": {
-              borderColor: accent,
-              backgroundColor: selectedBackground,
-            },
-          }}
-        >
-          <Box
-            component={Link}
-            href={item.href}
-            onClick={() => handleItemClick(item)}
-            sx={{
-              minWidth: 0,
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              gap: 1.25,
-              py: 0.5,
-              textDecoration: "none",
-            }}
-          >
-            <Clock size={16} color={accent} />
-            <Typography
-              variant="body2"
-              sx={{
-                color: accent,
-                fontWeight: 600,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {item.title}
-            </Typography>
-          </Box>
-
-          <IconButton
-            size="small"
-            aria-label={`Remove ${item.title} from recent searches`}
-            onClick={() => removeRecentItem(item.href)}
-            sx={{
-              width: 30,
-              height: 30,
-              flexShrink: 0,
-              color: secondaryText,
-              borderColor: border,
-              backgroundColor: surface,
-              "&:hover": {
-                color: accent,
-                backgroundColor: selectedBackground,
-              },
-            }}
-          >
-            <X size={15} />
-          </IconButton>
-        </Box>
-      );
-    }
-
-    return (
-      <Box
-        key={item.href}
-        component={Link}
-        href={item.href}
-        onClick={() => handleItemClick(item)}
-        sx={{
-          minHeight: 48,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 2,
-          px: 2,
-          py: 1.25,
-          textDecoration: "none",
-          backgroundColor: surface,
-          border: 1,
-          borderColor: border,
-          borderRadius: radius.medium,
-          transition: "border-color 160ms ease, background-color 160ms ease",
-          "&:hover": {
-            borderColor: accent,
-            backgroundColor: selectedBackground,
-          },
-        }}
-      >
-        <Box
-          sx={{
-            minWidth: 0,
-            display: "flex",
-            alignItems: "center",
-            gap: 1.25,
-          }}
-        >
-          <Icon size={16} color={accent} />
-
-          <Typography
-            variant="body2"
-            sx={{
-              color: accent,
-              fontWeight: 600,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {item.title}
-          </Typography>
-        </Box>
-
-        <Typography
-          variant="caption"
-          sx={{
-            display: { xs: "none", sm: "inline-flex" },
-            px: 1,
-            py: 0.25,
-            color: secondaryText,
-            border: 1,
-            borderColor: border,
-            borderRadius: radius.small,
-            whiteSpace: "nowrap",
-          }}
-        >
-          {item.category}
-        </Typography>
-      </Box>
-    );
-  }
 
   return (
     <>
       <Box
         component="button"
         type="button"
+        aria-label="Search documentation"
         onClick={() => setOpen(true)}
         sx={{
           width: { xs: 40, sm: 280 },
@@ -487,7 +59,7 @@ export default function SearchDialog() {
           color: secondaryText,
           backgroundColor: surface,
           border: 1,
-          borderColor: border,
+          borderColor: borders.subtle,
           borderRadius: radius.medium,
           cursor: "pointer",
           boxShadow: shadows.level1,
@@ -496,19 +68,20 @@ export default function SearchDialog() {
           transition:
             "border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease",
           "&:hover": {
-            borderColor: accent,
-            backgroundColor: selectedBackground,
+            color: interaction.hoverContent,
+            borderColor: interaction.hoverBorder,
+            backgroundColor: interaction.hoverBackground,
           },
         }}
       >
-        <Search size={18} />
+        <Search size={18} aria-hidden="true" />
 
         <Typography
           variant="body2"
           sx={{
             display: { xs: "none", sm: "block" },
             flex: 1,
-            color: secondaryText,
+            color: "inherit",
           }}
         >
           Search documentation...
@@ -520,9 +93,9 @@ export default function SearchDialog() {
             display: { xs: "none", sm: "block" },
             px: 0.75,
             py: 0.25,
-            color: secondaryText,
+            color: "inherit",
             border: 1,
-            borderColor: border,
+            borderColor: borders.subtle,
             borderRadius: radius.small,
           }}
         >
@@ -530,259 +103,7 @@ export default function SearchDialog() {
         </Typography>
       </Box>
 
-      <Dialog
-        open={open}
-        onClose={closeSearch}
-        fullWidth
-        maxWidth="lg"
-        sx={{
-          "& .MuiDialog-container": {
-            alignItems: "flex-start",
-          },
-        }}
-        slotProps={{
-          backdrop: {
-            sx: {
-              backgroundColor: isDarkMode
-                ? colors.neutral[900]
-                : colors.neutral[800],
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-            },
-          },
-          paper: {
-            sx: {
-              mt: { xs: 2, sm: 6 },
-              width: { xs: "calc(100% - 24px)", sm: "920px" },
-              maxWidth: "calc(100% - 48px)",
-              maxHeight: "84vh",
-              backgroundColor: pageBackground,
-              border: 1,
-              borderColor: border,
-              borderRadius: radius.large,
-              boxShadow: shadows.level4,
-              overflow: "hidden",
-            },
-          },
-        }}
-      >
-        <DialogContent sx={{ p: 0 }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-              px: 2,
-              py: 1.5,
-              borderBottom: 1,
-              borderColor: border,
-            }}
-          >
-            <Search size={20} color={secondaryText} />
-
-            <InputBase
-              autoFocus
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="What are you looking for?"
-              sx={{
-                flex: 1,
-                color: primaryText,
-                fontSize: "1rem",
-              }}
-            />
-
-            <IconButton
-              size="small"
-              onClick={closeSearch}
-              aria-label="Close search"
-              sx={{
-                color: secondaryText,
-                border: 1,
-                borderColor: border,
-                borderRadius: radius.small,
-              }}
-            >
-              <X size={16} />
-            </IconButton>
-          </Box>
-
-          <Box
-            sx={{
-              p: 2,
-              minHeight: 480,
-              maxHeight: "72vh",
-              overflowY: "auto",
-              overscrollBehavior: "contain",
-            }}
-          >
-            {query.trim() ? (
-              <>
-                <Typography
-                  variant="overline"
-                  sx={{
-                    display: "block",
-                    mb: 1.5,
-                    color: secondaryText,
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                  }}
-                >
-                  Results
-                </Typography>
-
-                <Box sx={{ display: "grid", gap: 1 }}>
-                  {filteredItems.map((item) => (
-                    <Box
-                      key={item.href}
-                      component={Link}
-                      href={item.href}
-                      onClick={() => handleItemClick(item)}
-                      sx={{
-                        display: "block",
-                        p: 2,
-                        textDecoration: "none",
-                        backgroundColor: surface,
-                        border: 1,
-                        borderColor: border,
-                        borderRadius: radius.medium,
-                        transition:
-                          "border-color 160ms ease, background-color 160ms ease",
-                        "&:hover": {
-                          borderColor: accent,
-                          backgroundColor: selectedBackground,
-                        },
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          gap: 2,
-                          mb: 0.75,
-                        }}
-                      >
-                        <Typography
-                          variant="h3"
-                          sx={{ color: accent, fontSize: "1rem" }}
-                        >
-                          {item.title}
-                        </Typography>
-
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            px: 1,
-                            py: 0.25,
-                            height: "fit-content",
-                            color: secondaryText,
-                            border: 1,
-                            borderColor: border,
-                            borderRadius: radius.small,
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          {item.category}
-                        </Typography>
-                      </Box>
-
-                      <Typography
-                        variant="body2"
-                        sx={{ color: secondaryText, lineHeight: 1.6 }}
-                      >
-                        {item.description}
-                      </Typography>
-                    </Box>
-                  ))}
-
-                  {filteredItems.length === 0 && (
-                    <Box
-                      sx={{
-                        p: 3,
-                        textAlign: "center",
-                        color: secondaryText,
-                        backgroundColor: surface,
-                        border: 1,
-                        borderColor: border,
-                        borderRadius: radius.medium,
-                      }}
-                    >
-                      <Typography variant="body2">
-                        No results found for “{query}”.
-                      </Typography>
-                    </Box>
-                  )}
-                </Box>
-              </>
-            ) : (
-              <>
-                {recentItems.length > 0 && (
-                  <Box sx={{ mb: 5 }}>
-                    <Typography
-                      variant="overline"
-                      sx={{
-                        display: "block",
-                        mb: 1.5,
-                        color: secondaryText,
-                        fontWeight: 700,
-                        letterSpacing: "0.08em",
-                      }}
-                    >
-                      Recent
-                    </Typography>
-
-                    <Box
-                      sx={{
-                        display: "grid",
-                        gridTemplateColumns: {
-                          xs: "1fr",
-                          sm: "repeat(2, minmax(0, 1fr))",
-                        },
-                        gap: 1,
-                      }}
-                    >
-                      {recentItems.map((item) => renderCompactItem(item, true))}
-                    </Box>
-                  </Box>
-                )}
-
-                <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "1fr",
-                      md: "repeat(2, minmax(0, 1fr))",
-                    },
-                    columnGap: 2,
-                    rowGap: 5,
-                  }}
-                >
-                  {searchGroups.map((group) => (
-                    <Box key={group.label}>
-                      <Typography
-                        variant="overline"
-                        sx={{
-                          display: "block",
-                          mb: 1.5,
-                          color: secondaryText,
-                          fontWeight: 700,
-                          letterSpacing: "0.08em",
-                        }}
-                      >
-                        {group.label}
-                      </Typography>
-
-                      <Box sx={{ display: "grid", gap: 1 }}>
-                        {group.items.map((item) => renderCompactItem(item))}
-                      </Box>
-                    </Box>
-                  ))}
-                </Box>
-              </>
-            )}
-          </Box>
-        </DialogContent>
-      </Dialog>
+      {open && <SearchModal open={open} onClose={() => setOpen(false)} />}
     </>
   );
 }
