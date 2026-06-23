@@ -47,8 +47,7 @@ export default function Intro({
         sx={{
           p: 2.5,
           mb: 6,
-          borderLeft: borderWidths.accent,
-          borderColor: accent,
+          borderLeft: `${borderWidths.accent} solid ${accent}`,
           backgroundColor: subtleBackground,
         }}
       >

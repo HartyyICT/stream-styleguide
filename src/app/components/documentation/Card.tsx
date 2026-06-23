@@ -24,8 +24,7 @@ export default function Card({
       {...props}
       sx={{
         p: 2.5,
-        border: borderWidths.default,
-        borderColor: borders.default,
+        border: `${borderWidths.default} solid ${borders.default}`,
         borderRadius: radius.medium,
         backgroundColor: surface,
         boxShadow: elevated ? shadows.level1 : shadows.level0,
@@ -34,7 +33,7 @@ export default function Card({
             "color 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease",
           "&:hover": {
             color: interaction.hoverContent,
-            borderColor: interaction.hoverBorder,
+            border: `${borderWidths.interactive} solid ${interaction.hoverBorder}`,
             backgroundColor: interaction.hoverBackground,
             boxShadow: shadows.level2,
           },

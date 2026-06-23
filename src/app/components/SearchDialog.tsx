@@ -12,7 +12,6 @@ import {
 import {
   Blend,
   BookOpen,
-  Circle,
   Clock,
   FileText,
   Grid3X3,
@@ -165,39 +164,25 @@ const searchGroups: SearchGroup[] = [
         icon: MousePointer2,
       },
       {
-        title: "Border colors",
-        description: "Border colors, widths, roles and component examples.",
-        href: "/border-colors",
+        title: "Borders",
+        description: "Border colors, widths, radius and component examples.",
+        href: "/borders",
         category: "Design foundations",
         icon: PanelTop,
       },
       {
-        title: "Border scale",
+        title: "Border colors & widths",
         description: "Structural, interactive, active and focus borders.",
-        href: "/border-colors#border-scale",
-        category: "Border colors",
+        href: "/borders#border-colors",
+        category: "Borders",
         icon: PanelTop,
       },
       {
         title: "Border radius",
-        description: "Radius scale, token usage and component examples.",
-        href: "/border-radius",
-        category: "Design foundations",
-        icon: Circle,
-      },
-      {
-        title: "Radius scale",
         description: "Corner radius tokens from small to extra large.",
-        href: "/border-radius#radius-scale",
-        category: "Border radius",
-        icon: Circle,
-      },
-      {
-        title: "Border radius examples",
-        description: "Radius applications for controls, cards and dialogs.",
-        href: "/border-radius#component-examples",
-        category: "Border radius",
-        icon: Circle,
+        href: "/borders#border-radius",
+        category: "Borders",
+        icon: PanelTop,
       },
       {
         title: "Elevation & shadows",
@@ -275,25 +260,18 @@ const searchGroups: SearchGroup[] = [
         icon: MousePointer2,
       },
       {
-        title: "Border color guidelines",
-        description: "Rules for consistent structural and state boundaries.",
-        href: "/border-colors#guidelines",
-        category: "Border colors",
+        title: "Border guidelines",
+        description: "Rules for consistent boundaries and corner treatments.",
+        href: "/borders#guidelines",
+        category: "Borders",
         icon: PanelTop,
       },
       {
-        title: "Border radius guidelines",
-        description: "Rules for consistent corner treatments.",
-        href: "/border-radius#guidelines",
-        category: "Border radius",
-        icon: Circle,
-      },
-      {
-        title: "Border radius accessibility",
-        description: "Accessible use of shape, focus and interaction cues.",
-        href: "/border-radius#accessibility",
-        category: "Border radius",
-        icon: Circle,
+        title: "Border accessibility",
+        description: "Accessible use of boundaries, focus and shape.",
+        href: "/borders#accessibility",
+        category: "Borders",
+        icon: PanelTop,
       },
       {
         title: "Elevation guidelines",
@@ -314,6 +292,10 @@ const searchGroups: SearchGroup[] = [
 ];
 
 const searchItems = searchGroups.flatMap((group) => group.items);
+const foundationSuggestions =
+  searchGroups
+    .find((group) => group.label === "Design foundations")
+    ?.items.filter((item) => item.category === "Design foundations") ?? [];
 const RECENT_SEARCHES_KEY = "stream-styleguide-recent-searches";
 
 export default function SearchDialog() {
@@ -871,37 +853,34 @@ export default function SearchDialog() {
                   </Box>
                 )}
 
-                <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "1fr",
-                      md: "repeat(2, minmax(0, 1fr))",
-                    },
-                    columnGap: 2,
-                    rowGap: 5,
-                  }}
-                >
-                  {searchGroups.map((group) => (
-                    <Box key={group.label}>
-                      <Typography
-                        variant="overline"
-                        sx={{
-                          display: "block",
-                          mb: 1.5,
-                          color: secondaryText,
-                          fontWeight: 700,
-                          letterSpacing: "0.08em",
-                        }}
-                      >
-                        {group.label}
-                      </Typography>
+                <Box>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      display: "block",
+                      mb: 1.5,
+                      color: secondaryText,
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    Design foundations
+                  </Typography>
 
-                      <Box sx={{ display: "grid", gap: 1 }}>
-                        {group.items.map((item) => renderCompactItem(item))}
-                      </Box>
-                    </Box>
-                  ))}
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: {
+                        xs: "1fr",
+                        sm: "repeat(2, minmax(0, 1fr))",
+                      },
+                      gap: 1,
+                    }}
+                  >
+                    {foundationSuggestions.map((item) =>
+                      renderCompactItem(item),
+                    )}
+                  </Box>
                 </Box>
               </>
             )}

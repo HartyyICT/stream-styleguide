@@ -1,5 +1,5 @@
-import BorderColorsPage from "@/views/border-colors/BorderColors";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <BorderColorsPage />;
+  redirect("/borders#border-colors");
 }

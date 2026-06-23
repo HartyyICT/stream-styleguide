@@ -1,6 +1,7 @@
 import { createTheme, type PaletteMode } from "@mui/material/styles";
 import {
   borderColors,
+  borderWidths,
   colors,
   interactionStates,
 } from "./tokens";
@@ -176,11 +177,12 @@ export const createAppTheme = (mode: PaletteMode) =>
     MuiIconButton: {
       styleOverrides: {
         root: {
-          border: "1px solid",
-          borderColor:
+          boxSizing: "border-box",
+          border: `${borderWidths.subtle} solid ${
             mode === "light"
               ? borderColors.light.subtle
-              : borderColors.dark.subtle,
+              : borderColors.dark.subtle
+          }`,
           borderRadius: 8,
           color:
             mode === "light" ? colors.neutral[600] : colors.neutral[300],
@@ -193,10 +195,11 @@ export const createAppTheme = (mode: PaletteMode) =>
               mode === "light"
                 ? interactionStates.light.hoverContent
                 : interactionStates.dark.hoverContent,
-            borderColor:
+            border: `${borderWidths.interactive} solid ${
               mode === "light"
                 ? interactionStates.light.hoverBorder
-                : interactionStates.dark.hoverBorder,
+                : interactionStates.dark.hoverBorder
+            }`,
             backgroundColor:
               mode === "light"
                 ? interactionStates.light.hoverBackground

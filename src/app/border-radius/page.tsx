@@ -1,5 +1,5 @@
-import BorderRadiusPage from "@/views/border-radius/BorderRadius";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <BorderRadiusPage />;
+  redirect("/borders#border-radius");
 }

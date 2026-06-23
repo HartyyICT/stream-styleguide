@@ -32,6 +32,9 @@ export default function OnThisPage({
     ? interactionStates.dark
     : interactionStates.light;
   const border = borders.subtle;
+  const pageBackground = isDarkMode
+    ? colors.neutral[900]
+    : colors.semantic.background;
   const secondaryText = isDarkMode
     ? colors.neutral[300]
     : colors.neutral[600];
@@ -152,16 +155,17 @@ export default function OnThisPage({
                   alignItems: "center",
                   minHeight: 34,
                   py: 0.5,
-                  pl: active ? 1.25 : 0,
+                  pl: 1.25,
                   color: active ? accent : secondaryText,
                   fontWeight: active ? 700 : 500,
-                  borderLeft: active ? borderWidths.active : 0,
-                  borderColor: accent,
+                  borderLeft: `${borderWidths.active} solid ${
+                    active ? accent : pageBackground
+                  }`,
                   transition:
                     "color 160ms ease, padding-left 160ms ease, border-color 160ms ease",
                   "&:hover": {
-                    color: interaction.hoverContent,
-                    pl: 1.25,
+                    color: active ? accent : interaction.hoverContent,
+                    borderLeftColor: active ? accent : pageBackground,
                   },
                 }}
               >

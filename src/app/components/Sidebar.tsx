@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import {
   Accessibility,
   Blend,
-  Circle,
   Grid3X3,
   MousePointer2,
   Palette,
@@ -32,8 +31,7 @@ const foundationItems = [
   { label: "Typography", icon: Type, href: "/typography" },
   { label: "Spacing", icon: Grid3X3, href: "/spacing" },
   { label: "Hover States", icon: MousePointer2, href: "/hover-states" },
-  { label: "Border Colors", icon: PanelTop, href: "/border-colors" },
-  { label: "Border Radius", icon: Circle, href: "/border-radius" },
+  { label: "Borders", icon: PanelTop, href: "/borders" },
   { label: "Elevation & Shadows", icon: Blend, href: "/elevation" },
   { label: "Iconography", icon: Sparkles, href: "/iconography" },
   { label: "Accessibility", icon: Accessibility, href: "/accessibility" },
@@ -127,14 +125,14 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               height: 32,
               flexShrink: 0,
               color: secondaryText,
-              border: 1,
-              borderColor: border,
+              boxSizing: "border-box",
+              border: `${borderWidths.subtle} solid ${border}`,
               backgroundColor: surface,
               transition:
                 "background-color 160ms ease, color 160ms ease, border-color 160ms ease",
               "&:hover": {
                 color: interaction.hoverContent,
-                borderColor: interaction.hoverBorder,
+                border: `${borderWidths.interactive} solid ${interaction.hoverBorder}`,
                 backgroundColor: hoverBackground,
               },
             }}
@@ -178,15 +176,27 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             mb: 0.5,
             color: overviewActive ? accent : secondaryText,
             backgroundColor: overviewActive ? selectedBackground : surface,
-            borderLeft: borderWidths.active,
-            borderColor: overviewActive ? accent : border,
+            boxSizing: "border-box",
+            border: `${borderWidths.interactive} solid ${
+              overviewActive ? selectedBackground : surface
+            }`,
+            borderLeft: `${borderWidths.active} solid ${
+              overviewActive ? accent : surface
+            }`,
             borderRadius: radius.medium,
             transition:
               "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease",
             "&:hover": {
-              backgroundColor: hoverBackground,
-              color: interaction.hoverContent,
-              borderColor: interaction.hoverBorder,
+              backgroundColor: overviewActive
+                ? selectedBackground
+                : hoverBackground,
+              color: overviewActive ? accent : interaction.hoverContent,
+              borderColor: overviewActive
+                ? selectedBackground
+                : interaction.hoverBorder,
+              borderLeftColor: overviewActive
+                ? accent
+                : interaction.hoverBorder,
             },
           }}
         >
@@ -245,14 +255,26 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   borderRadius: radius.medium,
                   color: active ? accent : secondaryText,
                   backgroundColor: active ? selectedBackground : surface,
-                  borderLeft: borderWidths.active,
-                  borderColor: active ? accent : border,
+                  boxSizing: "border-box",
+                  border: `${borderWidths.interactive} solid ${
+                    active ? selectedBackground : surface
+                  }`,
+                  borderLeft: `${borderWidths.active} solid ${
+                    active ? accent : surface
+                  }`,
                   transition:
                     "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease",
                   "&:hover": {
-                    backgroundColor: hoverBackground,
-                    color: interaction.hoverContent,
-                    borderColor: interaction.hoverBorder,
+                    backgroundColor: active
+                      ? selectedBackground
+                      : hoverBackground,
+                    color: active ? accent : interaction.hoverContent,
+                    borderColor: active
+                      ? selectedBackground
+                      : interaction.hoverBorder,
+                    borderLeftColor: active
+                      ? accent
+                      : interaction.hoverBorder,
                   },
                 }}
               >

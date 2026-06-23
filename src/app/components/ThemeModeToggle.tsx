@@ -5,6 +5,7 @@ import { Moon, Sun } from "lucide-react";
 import { useColorMode } from "../theme/themeProvider";
 import {
   borderColors,
+  borderWidths,
   colors,
   interactionStates,
   radius,
@@ -33,14 +34,14 @@ export default function ThemeModeToggle() {
           backgroundColor: isDarkMode
             ? colors.neutral[800]
             : colors.semantic.surface,
-          border: 1,
-          borderColor: borders.subtle,
+          boxSizing: "border-box",
+          border: `${borderWidths.subtle} solid ${borders.subtle}`,
           borderRadius: radius.medium,
           transition:
             "color 160ms ease, border-color 160ms ease, background-color 160ms ease",
           "&:hover": {
             color: interaction.hoverContent,
-            borderColor: interaction.hoverBorder,
+            border: `${borderWidths.interactive} solid ${interaction.hoverBorder}`,
             backgroundColor: interaction.hoverBackground,
           },
         }}
