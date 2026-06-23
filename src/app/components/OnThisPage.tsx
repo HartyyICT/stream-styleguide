@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { colors } from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
 
@@ -18,6 +19,7 @@ export default function OnThisPage({
   items,
   activeHref = items[0]?.href,
 }: OnThisPageProps) {
+  const [currentHref, setCurrentHref] = useState(activeHref);
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
   const border = isDarkMode ? colors.neutral[700] : colors.neutral[200];
@@ -25,6 +27,70 @@ export default function OnThisPage({
     ? colors.neutral[300]
     : colors.neutral[600];
   const accent = isDarkMode ? colors.primary[300] : colors.primary[500];
+
+  useEffect(() => {
+    const sections = items
+      .map(({ href }) => document.getElementById(href.slice(1)))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    if (sections.length === 0) {
+      return;
+    }
+
+    let animationFrame = 0;
+
+    const updateActiveSection = () => {
+      const activationLine = 128;
+      const nearPageBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 4;
+
+      let activeSection = sections[0];
+
+      if (nearPageBottom) {
+        activeSection = sections[sections.length - 1];
+      } else {
+        sections.forEach((section) => {
+          if (section.getBoundingClientRect().top <= activationLine) {
+            activeSection = section;
+          }
+        });
+      }
+
+      setCurrentHref(`#${activeSection.id}`);
+    };
+
+    const handleScroll = () => {
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    const handleHashChange = () => {
+      const matchingHref = items.find(
+        ({ href }) => href === window.location.hash,
+      )?.href;
+
+      if (matchingHref) {
+        setCurrentHref(matchingHref);
+      }
+
+      handleScroll();
+    };
+
+    animationFrame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(updateActiveSection);
+    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, [items]);
 
   return (
     <Box
@@ -62,20 +128,29 @@ export default function OnThisPage({
 
         <Box component="nav" aria-label="Page sections">
           {items.map(({ label, href }) => {
-            const active = href === activeHref;
+            const active = href === currentHref;
 
             return (
               <Typography
                 component="a"
                 href={href}
                 key={href}
+                aria-current={active ? "location" : undefined}
+                onClick={() => setCurrentHref(href)}
                 variant="body2"
                 sx={{
-                  display: "block",
-                  py: 0.75,
+                  display: "flex",
+                  alignItems: "center",
+                  minHeight: 34,
+                  py: 0.5,
+                  pl: active ? 1.25 : 0,
                   color: active ? accent : secondaryText,
                   fontWeight: active ? 700 : 500,
-                  "&:hover": { color: accent },
+                  borderLeft: active ? 2 : 0,
+                  borderColor: accent,
+                  transition:
+                    "color 160ms ease, padding-left 160ms ease, border-color 160ms ease",
+                  "&:hover": { color: accent, pl: 1.25 },
                 }}
               >
                 {label}

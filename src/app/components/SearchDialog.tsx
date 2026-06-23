@@ -13,6 +13,7 @@ import {
   BookOpen,
   Clock,
   FileText,
+  Grid3X3,
   LayoutGrid,
   Palette,
   Search,
@@ -118,6 +119,27 @@ const searchGroups: SearchGroup[] = [
         category: "Typography",
         icon: Type,
       },
+      {
+        title: "Spacing",
+        description: "Spacing scale, token usage and layout guidelines.",
+        href: "/spacing",
+        category: "Design foundations",
+        icon: Grid3X3,
+      },
+      {
+        title: "Spacing scale",
+        description: "Named spacing tokens from xs to xxl.",
+        href: "/spacing#spacing-scale",
+        category: "Spacing",
+        icon: Grid3X3,
+      },
+      {
+        title: "Spacing examples",
+        description: "Practical card, form and responsive spacing patterns.",
+        href: "/spacing#layout-examples",
+        category: "Spacing",
+        icon: Grid3X3,
+      },
     ],
   },
   {
@@ -150,6 +172,20 @@ const searchGroups: SearchGroup[] = [
         href: "/typography#accessibility",
         category: "Typography",
         icon: Type,
+      },
+      {
+        title: "Spacing guidelines",
+        description: "Rules for consistent spacing and visual grouping.",
+        href: "/spacing#guidelines",
+        category: "Spacing",
+        icon: Grid3X3,
+      },
+      {
+        title: "Spacing accessibility",
+        description: "Spacing guidance for readable and usable interfaces.",
+        href: "/spacing#accessibility",
+        category: "Spacing",
+        icon: Grid3X3,
       },
     ],
   },
@@ -189,7 +225,11 @@ export default function SearchDialog() {
 
     try {
       const parsedRecentHrefs = JSON.parse(storedRecentHrefs) as string[];
-      setRecentHrefs(parsedRecentHrefs);
+      const frame = window.requestAnimationFrame(() => {
+        setRecentHrefs(parsedRecentHrefs);
+      });
+
+      return () => window.cancelAnimationFrame(frame);
     } catch {
       localStorage.removeItem(RECENT_SEARCHES_KEY);
     }
@@ -274,8 +314,93 @@ export default function SearchDialog() {
     closeSearch();
   }
 
+  function removeRecentItem(hrefToRemove: string) {
+    const nextRecentHrefs = recentHrefs.filter(
+      (href) => href !== hrefToRemove,
+    );
+
+    setRecentHrefs(nextRecentHrefs);
+    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(nextRecentHrefs));
+  }
+
   function renderCompactItem(item: SearchItem, showClock = false) {
     const Icon = item.icon;
+
+    if (showClock) {
+      return (
+        <Box
+          key={item.href}
+          sx={{
+            minHeight: 48,
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            pl: 2,
+            pr: 0.75,
+            py: 0.75,
+            backgroundColor: surface,
+            border: 1,
+            borderColor: border,
+            borderRadius: radius.medium,
+            transition:
+              "border-color 160ms ease, background-color 160ms ease",
+            "&:hover": {
+              borderColor: accent,
+              backgroundColor: selectedBackground,
+            },
+          }}
+        >
+          <Box
+            component={Link}
+            href={item.href}
+            onClick={() => handleItemClick(item)}
+            sx={{
+              minWidth: 0,
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              gap: 1.25,
+              py: 0.5,
+              textDecoration: "none",
+            }}
+          >
+            <Clock size={16} color={accent} />
+            <Typography
+              variant="body2"
+              sx={{
+                color: accent,
+                fontWeight: 600,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {item.title}
+            </Typography>
+          </Box>
+
+          <IconButton
+            size="small"
+            aria-label={`Remove ${item.title} from recent searches`}
+            onClick={() => removeRecentItem(item.href)}
+            sx={{
+              width: 30,
+              height: 30,
+              flexShrink: 0,
+              color: secondaryText,
+              borderColor: border,
+              backgroundColor: surface,
+              "&:hover": {
+                color: accent,
+                backgroundColor: selectedBackground,
+              },
+            }}
+          >
+            <X size={15} />
+          </IconButton>
+        </Box>
+      );
+    }
 
     return (
       <Box
@@ -311,11 +436,7 @@ export default function SearchDialog() {
             gap: 1.25,
           }}
         >
-          {showClock ? (
-            <Clock size={16} color={accent} />
-          ) : (
-            <Icon size={16} color={accent} />
-          )}
+          <Icon size={16} color={accent} />
 
           <Typography
             variant="body2"
@@ -423,8 +544,8 @@ export default function SearchDialog() {
           backdrop: {
             sx: {
               backgroundColor: isDarkMode
-                ? "rgba(15, 23, 42, 0.72)"
-                : "rgba(15, 23, 42, 0.28)",
+                ? colors.neutral[900]
+                : colors.neutral[800],
               backdropFilter: "blur(8px)",
               WebkitBackdropFilter: "blur(8px)",
             },
