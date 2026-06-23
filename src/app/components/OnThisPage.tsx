@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   borderColors,
   borderWidths,
@@ -16,7 +16,7 @@ export interface OnThisPageItem {
 }
 
 interface OnThisPageProps {
-  items: OnThisPageItem[];
+  items: readonly OnThisPageItem[];
   activeHref?: `#${string}`;
 }
 
@@ -25,6 +25,10 @@ export default function OnThisPage({
   activeHref = items[0]?.href,
 }: OnThisPageProps) {
   const [currentHref, setCurrentHref] = useState(activeHref);
+  const sectionOffsets = useRef<Array<{ href: `#${string}`; top: number }>>(
+    [],
+  );
+  const animationFrame = useRef(0);
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
   const borders = isDarkMode ? borderColors.dark : borderColors.light;
@@ -40,41 +44,62 @@ export default function OnThisPage({
     : colors.neutral[600];
   const accent = interaction.activeIndicator;
 
-  useEffect(() => {
-    const sections = items
-      .map(({ href }) => document.getElementById(href.slice(1)))
-      .filter((section): section is HTMLElement => Boolean(section));
+  const measureSections = useCallback(() => {
+    sectionOffsets.current = items.flatMap(({ href }) => {
+      const section = document.getElementById(href.slice(1));
 
-    if (sections.length === 0) {
+      return section
+        ? [{ href, top: section.getBoundingClientRect().top + window.scrollY }]
+        : [];
+    });
+  }, [items]);
+
+  const updateActiveSection = useCallback(() => {
+    const offsets = sectionOffsets.current;
+
+    if (offsets.length === 0) {
       return;
     }
 
-    let animationFrame = 0;
+    const activationPoint = window.scrollY + 128;
+    const nearPageBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 4;
+    let nextHref = offsets[0].href;
 
-    const updateActiveSection = () => {
-      const activationLine = 128;
-      const nearPageBottom =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 4;
+    if (nearPageBottom) {
+      nextHref = offsets[offsets.length - 1].href;
+    } else {
+      for (const section of offsets) {
+        if (section.top > activationPoint) {
+          break;
+        }
 
-      let activeSection = sections[0];
-
-      if (nearPageBottom) {
-        activeSection = sections[sections.length - 1];
-      } else {
-        sections.forEach((section) => {
-          if (section.getBoundingClientRect().top <= activationLine) {
-            activeSection = section;
-          }
-        });
+        nextHref = section.href;
       }
+    }
 
-      setCurrentHref(`#${activeSection.id}`);
+    setCurrentHref((current) => (current === nextHref ? current : nextHref));
+  }, []);
+
+  useEffect(() => {
+    const scheduleMeasurement = () => {
+      window.cancelAnimationFrame(animationFrame.current);
+      animationFrame.current = window.requestAnimationFrame(() => {
+        measureSections();
+        updateActiveSection();
+      });
     };
 
     const handleScroll = () => {
-      window.cancelAnimationFrame(animationFrame);
-      animationFrame = window.requestAnimationFrame(updateActiveSection);
+      window.cancelAnimationFrame(animationFrame.current);
+      animationFrame.current = window.requestAnimationFrame(
+        updateActiveSection,
+      );
+    };
+
+    const handleResize = () => {
+      scheduleMeasurement();
     };
 
     const handleHashChange = () => {
@@ -86,23 +111,55 @@ export default function OnThisPage({
         setCurrentHref(matchingHref);
       }
 
-      handleScroll();
+      handleResize();
     };
 
-    animationFrame = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(updateActiveSection);
-    });
+    const article = document.getElementById(items[0]?.href.slice(1) ?? "");
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(scheduleMeasurement);
+
+    if (article) {
+      resizeObserver?.observe(article);
+    }
+
+    scheduleMeasurement();
+    document.fonts?.ready.then(scheduleMeasurement).catch(() => undefined);
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
+    window.addEventListener("resize", handleResize);
     window.addEventListener("hashchange", handleHashChange);
 
     return () => {
-      window.cancelAnimationFrame(animationFrame);
+      window.cancelAnimationFrame(animationFrame.current);
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("hashchange", handleHashChange);
+      resizeObserver?.disconnect();
     };
-  }, [items]);
+  }, [items, measureSections, updateActiveSection]);
+
+  const handleItemClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: `#${string}`,
+  ) => {
+    const section = document.getElementById(href.slice(1));
+
+    if (!section) {
+      return;
+    }
+
+    event.preventDefault();
+    setCurrentHref(href);
+    window.history.pushState(null, "", href);
+    section.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "start",
+    });
+  };
 
   return (
     <Box
@@ -113,13 +170,14 @@ export default function OnThisPage({
         position: "sticky",
         top: 88,
         alignSelf: "start",
-        height: "fit-content",
+        maxHeight: "calc(100vh - 112px)",
+        overflowY: "auto",
+        overscrollBehavior: "contain",
+        zIndex: 1,
       }}
     >
       <Box
         sx={{
-          maxHeight: "calc(100vh - 112px)",
-          overflowY: "auto",
           pl: 3,
           borderLeft: 1,
           borderColor: border,
@@ -148,7 +206,7 @@ export default function OnThisPage({
                 href={href}
                 key={href}
                 aria-current={active ? "location" : undefined}
-                onClick={() => setCurrentHref(href)}
+                onClick={(event) => handleItemClick(event, href)}
                 variant="body2"
                 sx={{
                   display: "flex",

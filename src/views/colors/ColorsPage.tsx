@@ -2,6 +2,9 @@
 
 import { Box, Divider, Typography, useTheme } from "@mui/material";
 import ColorSwatch from "@/app/components/ColorSwatch";
+import Card from "@/app/components/documentation/Card";
+import CardTitle from "@/app/components/documentation/CardTitle";
+import Intro from "@/app/components/documentation/Intro";
 import Page from "@/app/components/documentation/Page";
 import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
 import { colors, radius, shadows } from "@/app/theme/tokens";
@@ -82,7 +85,6 @@ export default function ColorsPage() {
     surface,
     primaryText,
     secondaryText,
-    accent,
     subtleBackground,
     selectedBackground,
   } = useDocumentationStyles();
@@ -123,52 +125,11 @@ export default function ColorsPage() {
 
   return (
     <Page pageId="colors" sections={colorSections}>
-          <Typography
-            variant="overline"
-            sx={{
-              color: accent,
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-            }}
-          >
-            Design foundations
-          </Typography>
-
-          <Typography variant="h1" sx={{ mt: 1, mb: 2 }}>
-            Colors
-          </Typography>
-
-          <Typography
-            variant="body1"
-            sx={{
-              maxWidth: 720,
-              mb: 3,
-              color: secondaryText,
-              fontSize: "1.0625rem",
-              lineHeight: 1.75,
-            }}
-          >
-            Color tokens create a consistent visual language across Stream
-            Software applications. They support brand recognition, visual
-            hierarchy, system feedback and accessible interfaces.
-          </Typography>
-
-          <Box
-            sx={{
-              p: 2.5,
-              mb: 6,
-              borderLeft: 4,
-              borderColor: accent,
-              backgroundColor: subtleBackground,
-            }}
-          >
-            <Typography variant="body2" sx={{ color: primaryText }}>
-              Color choices are defined by the Stream Design Foundations and
-              implemented through shared design tokens. Avoid custom hex values
-              inside individual components unless a new token has been
-              approved.
-            </Typography>
-          </Box>
+          <Intro
+            title="Colors"
+            description="Color tokens create a consistent visual language across Stream Software applications. They support brand recognition, visual hierarchy, system feedback and accessible interfaces."
+            note="Color choices are defined by the Stream Design Foundations and implemented through shared design tokens. Avoid custom hex values inside individual components unless a new token has been approved."
+          />
 
           <Box
             component="section"
@@ -499,19 +460,10 @@ export default function ColorsPage() {
               required contrast ratio for their context.
             </Typography>
 
-            <Box
-              sx={{
-                p: 3,
-                backgroundColor: surface,
-                border: 1,
-                borderColor: border,
-                borderRadius: radius.medium,
-                boxShadow: shadows.level1,
-              }}
-            >
-              <Typography variant="h3" sx={{ mb: 1 }}>
+            <Card elevated>
+              <CardTitle sx={{ mb: 1 }}>
                 Contrast requirements
-              </Typography>
+              </CardTitle>
 
               <Typography
                 variant="body2"
@@ -521,7 +473,7 @@ export default function ColorsPage() {
                 for large text and interactive elements. Do not rely on color
                 alone to communicate status, priority or meaning.
               </Typography>
-            </Box>
+            </Card>
           </Box>
     </Page>
   );

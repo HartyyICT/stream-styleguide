@@ -49,6 +49,20 @@ export const radius = {
   extraLarge: "1rem",
 };
 
+export const iconSizes = {
+  small: 16,
+  medium: 20,
+  large: 24,
+  extraLarge: 32,
+} as const;
+
+export const breakpoints = {
+  mobile: 0,
+  tablet: 600,
+  laptop: 900,
+  desktop: 1200,
+} as const;
+
 export const shadows = {
   level0: "none",
   level1: "0 1px 4px rgba(0,0,0,0.06)",

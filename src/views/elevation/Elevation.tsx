@@ -2,6 +2,10 @@
 
 import { Box, Divider, Typography } from "@mui/material";
 import { Layers3, MousePointerClick, PanelTop, Rows3 } from "lucide-react";
+import Card from "@/app/components/documentation/Card";
+import CardTitle from "@/app/components/documentation/CardTitle";
+import CodeBlock from "@/app/components/documentation/CodeBlock";
+import Intro from "@/app/components/documentation/Intro";
 import Page from "@/app/components/documentation/Page";
 import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
 import { colors, radius, shadows, spacing } from "@/app/theme/tokens";
@@ -89,68 +93,19 @@ export default function ElevationPage() {
     borders,
     surface,
     pageBackground,
-    primaryText,
     secondaryText,
     accent,
-    subtleBackground,
     selectedBackground,
   } = useDocumentationStyles();
   const border = borders.default;
 
-  const codeBlockSx = {
-    m: 0,
-    p: 2,
-    overflowX: "auto",
-    color: primaryText,
-    backgroundColor: subtleBackground,
-    borderRadius: radius.small,
-    fontFamily: "var(--font-space-mono), monospace",
-    fontSize: "0.875rem",
-    lineHeight: 1.7,
-  } as const;
-
   return (
     <Page pageId="elevation" sections={elevationSections}>
-          <Typography
-            variant="overline"
-            sx={{ color: accent, fontWeight: 700, letterSpacing: "0.08em" }}
-          >
-            Design foundations
-          </Typography>
-
-          <Typography variant="h1" sx={{ mt: 1, mb: 2 }}>
-            Elevation &amp; Shadows
-          </Typography>
-
-          <Typography
-            variant="body1"
-            sx={{
-              maxWidth: 720,
-              mb: 3,
-              color: secondaryText,
-              fontSize: "1.0625rem",
-              lineHeight: 1.75,
-            }}
-          >
-            Elevation communicates how surfaces are layered within Stream
-            Software interfaces. The shadow scale helps users distinguish
-            resting content, interactive surfaces and temporary overlays.
-          </Typography>
-
-          <Box
-            sx={{
-              p: 2.5,
-              mb: 6,
-              borderLeft: 4,
-              borderColor: accent,
-              backgroundColor: subtleBackground,
-            }}
-          >
-            <Typography variant="body2" sx={{ color: primaryText }}>
-              Elevation represents interface hierarchy. Stronger shadows are
-              reserved for surfaces that appear closer to the user.
-            </Typography>
-          </Box>
+          <Intro
+            title="Elevation & Shadows"
+            description="Elevation communicates how surfaces are layered within Stream Software interfaces. The shadow scale helps users distinguish resting content, interactive surfaces and temporary overlays."
+            note="Elevation represents interface hierarchy. Stronger shadows are reserved for surfaces that appear closer to the user."
+          />
 
           <Box
             component="section"
@@ -212,7 +167,9 @@ export default function ElevationPage() {
                         mb: 1,
                       }}
                     >
-                      <Typography variant="h4">{item.token}</Typography>
+                      <Typography component="h3" variant="h4">
+                        {item.token}
+                      </Typography>
                       <Typography
                         component="code"
                         sx={{
@@ -247,15 +204,13 @@ export default function ElevationPage() {
               directly.
             </Typography>
 
-            <Box component="pre" sx={codeBlockSx}>
-              <code>{`import { shadows } from "@/app/theme/tokens";
+            <CodeBlock>{`import { shadows } from "@/app/theme/tokens";
 
 <Box
   sx={{
     boxShadow: shadows.level2,
   }}
-/>`}</code>
-            </Box>
+/>`}</CodeBlock>
           </Box>
 
           <Divider sx={{ my: 6 }} />
@@ -298,7 +253,11 @@ export default function ElevationPage() {
                       strokeWidth={1.8}
                       aria-hidden="true"
                     />
-                    <Typography variant="h4" sx={{ mt: 2, mb: 0.75 }}>
+                    <Typography
+                      component="h3"
+                      variant="h4"
+                      sx={{ mt: 2, mb: 0.75 }}
+                    >
                       {item.title}
                     </Typography>
                     <Typography
@@ -361,7 +320,7 @@ export default function ElevationPage() {
                   boxShadow: shadows.level1,
                 }}
               >
-                <Typography variant="h4" sx={{ mb: 1 }}>
+                <Typography component="h3" variant="h4" sx={{ mb: 1 }}>
                   Resting content
                 </Typography>
                 <Typography variant="body2" sx={{ color: secondaryText }}>
@@ -381,7 +340,7 @@ export default function ElevationPage() {
                   boxShadow: shadows.level3,
                 }}
               >
-                <Typography variant="h4" sx={{ mb: 1 }}>
+                <Typography component="h3" variant="h4" sx={{ mb: 1 }}>
                   Floating panel
                 </Typography>
                 <Typography variant="body2" sx={{ color: secondaryText }}>
@@ -454,25 +413,17 @@ export default function ElevationPage() {
               surface or interaction is distinguished.
             </Typography>
 
-            <Box
-              sx={{
-                p: 3,
-                border: 1,
-                borderColor: border,
-                borderRadius: radius.large,
-                backgroundColor: surface,
-              }}
-            >
-              <Typography variant="h3" sx={{ mb: 1.5 }}>
+            <Card>
+              <CardTitle sx={{ mb: 1.5 }}>
                 Preserve visible boundaries
-              </Typography>
+              </CardTitle>
               <Typography sx={{ color: secondaryText, lineHeight: 1.7 }}>
                 Maintain sufficient background contrast and use borders where
                 needed, especially in dark mode or high-contrast settings.
                 Focus indicators, labels and modal backdrops must remain clear
                 without relying on the shadow itself.
               </Typography>
-            </Box>
+            </Card>
           </Box>
     </Page>
   );

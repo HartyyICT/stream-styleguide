@@ -28,12 +28,17 @@ export default function Page({
           gridTemplateColumns: { xs: "1fr", xl: "minmax(0, 1fr) 220px" },
           gap: { xs: 4, xl: 8 },
           alignItems: "start",
+          minWidth: 0,
         }}
       >
-        <Box component="article" id={pageId} sx={{ maxWidth }}>
+        <Box
+          component="article"
+          id={pageId}
+          sx={{ maxWidth, scrollMarginTop: 96 }}
+        >
           {children}
         </Box>
-        <OnThisPage items={[...sections]} />
+        <OnThisPage items={sections} />
       </Box>
     </DocumentationLayout>
   );

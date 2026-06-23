@@ -118,7 +118,9 @@ export default function HoverStatesPage() {
                 boxShadow: "none",
               }}
             >
-              <Typography variant="h5">{item.state}</Typography>
+              <Typography component="h3" variant="h5">
+                {item.state}
+              </Typography>
               <Typography
                 component="code"
                 sx={{
@@ -211,7 +213,9 @@ const interactiveSx = {
           >
             <MousePointer2 size={20} />
             <Box>
-              <Typography variant="h5">Interactive card</Typography>
+              <Typography component="h3" variant="h5">
+                Interactive card
+              </Typography>
               <Typography variant="body2" sx={{ mt: 0.5 }}>
                 Background, border and content respond together.
               </Typography>
@@ -234,7 +238,9 @@ const interactiveSx = {
           >
             <Search size={20} />
             <Box>
-              <Typography variant="h5">Icon control</Typography>
+              <Typography component="h3" variant="h5">
+                Icon control
+              </Typography>
               <Typography variant="body2" sx={{ mt: 0.5 }}>
                 The border follows the icon color on hover.
               </Typography>
@@ -255,7 +261,9 @@ const interactiveSx = {
           >
             <ExternalLink size={20} />
             <Box>
-              <Typography variant="h5">Linked surface</Typography>
+              <Typography component="h3" variant="h5">
+                Linked surface
+              </Typography>
               <Typography variant="body2" sx={{ mt: 0.5 }}>
                 Hover confirms that the full surface is clickable.
               </Typography>
@@ -316,7 +324,7 @@ const interactiveSx = {
                 backgroundColor: state.background,
               }}
             >
-              <Typography variant="h4" sx={{ mb: 1 }}>
+              <Typography component="h3" variant="h4" sx={{ mb: 1 }}>
                 {state.label}
               </Typography>
               <Typography variant="body2">{state.description}</Typography>

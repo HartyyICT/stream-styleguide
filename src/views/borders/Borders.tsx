@@ -140,7 +140,9 @@ export default function BordersPage() {
                 gap: 2,
               }}
             >
-              <Typography variant="h5">{item.name}</Typography>
+              <Typography component="h3" variant="h5">
+                {item.name}
+              </Typography>
               <Typography
                 component="code"
                 sx={{
@@ -189,7 +191,7 @@ export default function BordersPage() {
         </Box>
 
         <Card sx={{ mt: 3, p: 3 }}>
-          <Typography variant="h4" sx={{ mb: 0.75 }}>
+          <Typography component="h3" variant="h4" sx={{ mb: 0.75 }}>
             Visual examples
           </Typography>
           <Typography
@@ -217,7 +219,7 @@ export default function BordersPage() {
                 backgroundColor: interaction.hoverBackground,
               }}
             >
-              <Typography variant="h5" sx={{ mb: 2 }}>
+              <Typography component="h4" variant="h5" sx={{ mb: 2 }}>
                 Subtle divider
               </Typography>
               <Box
@@ -239,7 +241,7 @@ export default function BordersPage() {
                 backgroundColor: interaction.hoverBackground,
               }}
             >
-              <Typography variant="h5" sx={{ mb: 1.5 }}>
+              <Typography component="h4" variant="h5" sx={{ mb: 1.5 }}>
                 Default input
               </Typography>
               <Box
@@ -267,7 +269,7 @@ export default function BordersPage() {
                 backgroundColor: interaction.hoverBackground,
               }}
             >
-              <Typography variant="h5" sx={{ mb: 1 }}>
+              <Typography component="h4" variant="h5" sx={{ mb: 1 }}>
                 Interactive card
               </Typography>
               <Typography variant="caption">
@@ -285,7 +287,7 @@ export default function BordersPage() {
                 backgroundColor: interaction.activeBackground,
               }}
             >
-              <Typography variant="h5" sx={{ mb: 1 }}>
+              <Typography component="h4" variant="h5" sx={{ mb: 1 }}>
                 Active navigation
               </Typography>
               <Typography variant="caption">Current location</Typography>
@@ -302,7 +304,7 @@ export default function BordersPage() {
                 backgroundColor: surface,
               }}
             >
-              <Typography variant="h5" sx={{ mb: 1 }}>
+              <Typography component="h4" variant="h5" sx={{ mb: 1 }}>
                 Keyboard focus
               </Typography>
               <Typography variant="caption" sx={{ color: secondaryText }}>
@@ -318,7 +320,7 @@ export default function BordersPage() {
                 backgroundColor: interaction.hoverBackground,
               }}
             >
-              <Typography variant="h5" sx={{ mb: 1 }}>
+              <Typography component="h4" variant="h5" sx={{ mb: 1 }}>
                 Accent callout
               </Typography>
               <Typography variant="caption" sx={{ color: secondaryText }}>
@@ -363,7 +365,9 @@ export default function BordersPage() {
                   mb: 1,
                 }}
               >
-                <Typography variant="h5">{item.token}</Typography>
+                <Typography component="h3" variant="h5">
+                  {item.token}
+                </Typography>
                 <Typography
                   component="code"
                   sx={{
@@ -423,7 +427,7 @@ const cardSx = {
               backgroundColor: surface,
             }}
           >
-            <Typography variant="h4" sx={{ mb: 1 }}>
+            <Typography component="h3" variant="h4" sx={{ mb: 1 }}>
               Default card
             </Typography>
             <Typography variant="body2" sx={{ color: secondaryText }}>
@@ -440,7 +444,7 @@ const cardSx = {
               backgroundColor: interaction.hoverBackground,
             }}
           >
-            <Typography variant="h4" sx={{ mb: 1 }}>
+            <Typography component="h3" variant="h4" sx={{ mb: 1 }}>
               Interactive control
             </Typography>
             <Typography variant="body2">
@@ -456,7 +460,7 @@ const cardSx = {
               backgroundColor: interaction.hoverBackground,
             }}
           >
-            <Typography variant="h4" sx={{ mb: 1 }}>
+            <Typography component="h3" variant="h4" sx={{ mb: 1 }}>
               Accent callout
             </Typography>
             <Typography variant="body2" sx={{ color: secondaryText }}>

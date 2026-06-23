@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import { colors } from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
 import Navbar from "./Navbar";
+import { sidebarMotion, sidebarTransition } from "./sidebarMotion";
 
 export default function DocumentationLayout({
   children,
@@ -30,10 +31,15 @@ export default function DocumentationLayout({
       <Box
         component="main"
         sx={{
-          ml: { xs: 0, md: sidebarCollapsed ? "88px" : "280px" },
           pt: "64px",
           minHeight: "100vh",
-          transition: "margin-left 240ms ease",
+          ml: {
+            xs: 0,
+            md: sidebarCollapsed
+              ? `${sidebarMotion.collapsedWidth}px`
+              : `${sidebarMotion.expandedWidth}px`,
+          },
+          transition: `margin-left ${sidebarTransition}`,
         }}
       >
         <Box

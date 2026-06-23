@@ -25,6 +25,7 @@ import {
   radius,
 } from "../theme/tokens";
 import { useColorMode } from "../theme/themeProvider";
+import { sidebarMotion, sidebarTransition } from "./sidebarMotion";
 
 const foundationItems = [
   { label: "Colors", icon: Palette, href: "/colors" },
@@ -62,20 +63,40 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const accent = interaction.activeIndicator;
   const selectedBackground = interaction.activeBackground;
   const hoverBackground = interaction.hoverBackground;
-  const sidebarWidth = collapsed ? 88 : 280;
   const labelSx = {
-    maxWidth: collapsed ? 0 : 180,
+    minWidth: 0,
+    width: collapsed ? 0 : "100%",
     opacity: collapsed ? 0 : 1,
     overflow: "hidden",
     whiteSpace: "nowrap",
-    transition: "max-width 220ms ease, opacity 140ms ease",
+    pointerEvents: collapsed ? "none" : "auto",
+    transition: `width ${sidebarTransition}, opacity ${sidebarTransition}`,
+  } as const;
+  const navigationItemSx = {
+    display: "grid",
+    gridTemplateColumns: "18px minmax(0, 1fr)",
+    alignItems: "center",
+    columnGap: collapsed ? 0 : 1.25,
+    pl: collapsed ? 3 : 1.5,
+    pr: collapsed ? 1 : 1.5,
+    py: 1,
+    mb: 0.5,
+    transition: [
+      `column-gap ${sidebarTransition}`,
+      `padding ${sidebarTransition}`,
+      "background-color 160ms ease",
+      "color 160ms ease",
+      "border-color 160ms ease",
+    ].join(", "),
   } as const;
 
   return (
     <Box
       component="aside"
       sx={{
-        width: sidebarWidth,
+        width: collapsed
+          ? sidebarMotion.collapsedWidth
+          : sidebarMotion.expandedWidth,
         height: "calc(100vh - 64px)",
         position: "fixed",
         top: 64,
@@ -88,16 +109,16 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         py: 3,
         display: { xs: "none", md: "block" },
         overflowX: "hidden",
-        transition: "width 240ms ease, padding 240ms ease",
+        transition: `width ${sidebarTransition}, padding ${sidebarTransition}`,
       }}
     >
       <Box
         sx={{
           height: 34,
-          display: "flex",
+          position: "relative",
+          display: "block",
           alignItems: "center",
-          justifyContent: collapsed ? "center" : "space-between",
-          px: collapsed ? 0 : 1.5,
+          px: 1.5,
           mb: 1,
         }}
       >
@@ -123,13 +144,16 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             sx={{
               width: 32,
               height: 32,
+              position: "absolute",
+              top: 1,
+              right: collapsed ? "calc(50% - 16px)" : 12,
               flexShrink: 0,
               color: secondaryText,
               boxSizing: "border-box",
               border: `${borderWidths.subtle} solid ${border}`,
               backgroundColor: surface,
               transition:
-                "background-color 160ms ease, color 160ms ease, border-color 160ms ease",
+                `right ${sidebarTransition}, background-color 160ms ease, color 160ms ease, border-color 160ms ease`,
               "&:hover": {
                 color: interaction.hoverContent,
                 border: `${borderWidths.interactive} solid ${interaction.hoverBorder}`,
@@ -167,25 +191,24 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           href="/"
           aria-label="Overview"
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: collapsed ? "center" : "flex-start",
-            gap: collapsed ? 0 : 1.25,
-            px: collapsed ? 1 : 1.5,
-            py: 1,
-            mb: 0.5,
+            ...navigationItemSx,
             color: overviewActive ? accent : secondaryText,
             backgroundColor: overviewActive ? selectedBackground : surface,
+            position: "relative",
             boxSizing: "border-box",
             border: `${borderWidths.interactive} solid ${
               overviewActive ? selectedBackground : surface
             }`,
-            borderLeft: `${borderWidths.active} solid ${
-              overviewActive ? accent : surface
-            }`,
             borderRadius: radius.medium,
-            transition:
-              "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              inset: "0 auto 0 0",
+              width: borderWidths.active,
+              borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
+              backgroundColor: overviewActive ? accent : "transparent",
+              transition: `background-color ${sidebarTransition}`,
+            },
             "&:hover": {
               backgroundColor: overviewActive
                 ? selectedBackground
@@ -193,9 +216,6 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               color: overviewActive ? accent : interaction.hoverContent,
               borderColor: overviewActive
                 ? selectedBackground
-                : interaction.hoverBorder,
-              borderLeftColor: overviewActive
-                ? accent
                 : interaction.hoverBorder,
             },
           }}
@@ -245,13 +265,8 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 href={href}
                 aria-label={label}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: collapsed ? "center" : "flex-start",
-                  gap: collapsed ? 0 : 1.25,
-                  px: collapsed ? 1 : 1.5,
-                  py: 1,
-                  mb: 0.5,
+                  ...navigationItemSx,
+                  position: "relative",
                   borderRadius: radius.medium,
                   color: active ? accent : secondaryText,
                   backgroundColor: active ? selectedBackground : surface,
@@ -259,11 +274,15 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   border: `${borderWidths.interactive} solid ${
                     active ? selectedBackground : surface
                   }`,
-                  borderLeft: `${borderWidths.active} solid ${
-                    active ? accent : surface
-                  }`,
-                  transition:
-                    "gap 240ms ease, padding 240ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease",
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    inset: "0 auto 0 0",
+                    width: borderWidths.active,
+                    borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
+                    backgroundColor: active ? accent : "transparent",
+                    transition: `background-color ${sidebarTransition}`,
+                  },
                   "&:hover": {
                     backgroundColor: active
                       ? selectedBackground
@@ -271,9 +290,6 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                     color: active ? accent : interaction.hoverContent,
                     borderColor: active
                       ? selectedBackground
-                      : interaction.hoverBorder,
-                    borderLeftColor: active
-                      ? accent
                       : interaction.hoverBorder,
                   },
                 }}

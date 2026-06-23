@@ -2,8 +2,10 @@ import { createTheme, type PaletteMode } from "@mui/material/styles";
 import {
   borderColors,
   borderWidths,
+  breakpoints,
   colors,
   interactionStates,
+  radius,
 } from "./tokens";
 
 declare module "@mui/material/styles" {
@@ -26,6 +28,15 @@ const fontFamilies = {
 
 export const createAppTheme = (mode: PaletteMode) =>
   createTheme({
+  breakpoints: {
+    values: {
+      xs: breakpoints.mobile,
+      sm: breakpoints.tablet,
+      md: breakpoints.laptop,
+      lg: breakpoints.desktop,
+      xl: 1536,
+    },
+  },
   palette: {
     mode,
     common: {
@@ -128,49 +139,82 @@ export const createAppTheme = (mode: PaletteMode) =>
 
     h1: {
       fontFamily: fontFamilies.heading,
-      fontSize: "2.5rem",
+      fontSize: "2rem",
       fontWeight: 600,
       lineHeight: 1.2,
     },
     h2: {
       fontFamily: fontFamilies.heading,
-      fontSize: "1.75rem",
+      fontSize: "1.5rem",
       fontWeight: 600,
-      lineHeight: 1.3,
+      lineHeight: 1.25,
     },
     h3: {
       fontFamily: fontFamilies.heading,
       fontSize: "1.25rem",
       fontWeight: 600,
-      lineHeight: 1.4,
+      lineHeight: 1.3,
     },
     h4: {
       fontFamily: fontFamilies.heading,
-      fontWeight: 600,
+      fontSize: "1.125rem",
+      fontWeight: 500,
+      lineHeight: 1.35,
     },
     h5: {
       fontFamily: fontFamilies.heading,
-      fontWeight: 600,
+      fontSize: "1rem",
+      fontWeight: 500,
+      lineHeight: 1.4,
     },
     h6: {
       fontFamily: fontFamilies.heading,
-      fontWeight: 600,
+      fontSize: "0.875rem",
+      fontWeight: 500,
+      lineHeight: 1.45,
+    },
+    body1: {
+      fontSize: "1rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+    body2: {
+      fontSize: "0.875rem",
+      fontWeight: 400,
+      lineHeight: 1.45,
+    },
+    subtitle1: {
+      fontSize: "1rem",
+      fontWeight: 500,
+      lineHeight: 1.4,
+    },
+    subtitle2: {
+      fontSize: "0.875rem",
+      fontWeight: 500,
+      lineHeight: 1.35,
+    },
+    caption: {
+      fontSize: "0.75rem",
+      fontWeight: 400,
+      lineHeight: 1.3,
     },
     button: {
       fontFamily: fontFamilies.heading,
-      fontWeight: 600,
+      fontSize: "0.875rem",
+      fontWeight: 500,
+      lineHeight: 1.4,
       textTransform: "none",
     },
   },
 
   shape: {
-    borderRadius: 8,
+    borderRadius: Number.parseFloat(radius.medium) * 16,
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          transition: "background-color 180ms ease, color 180ms ease",
+          colorScheme: mode,
         },
       },
     },
@@ -183,7 +227,7 @@ export const createAppTheme = (mode: PaletteMode) =>
               ? borderColors.light.subtle
               : borderColors.dark.subtle
           }`,
-          borderRadius: 8,
+          borderRadius: radius.medium,
           color:
             mode === "light" ? colors.neutral[600] : colors.neutral[300],
           backgroundColor:
