@@ -104,7 +104,10 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         >
           Navigation
         </Typography>
-        <Tooltip title={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
+        <Tooltip
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          placement="right"
+        >
           <IconButton
             size="small"
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
