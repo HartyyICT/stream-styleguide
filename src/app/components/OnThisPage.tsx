@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box, ButtonBase, Typography } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   borderColors,
@@ -114,7 +114,9 @@ export default function OnThisPage({
       handleResize();
     };
 
-    const article = document.getElementById(items[0]?.href.slice(1) ?? "");
+    const article =
+      document.getElementById(items[0]?.href.slice(1) ?? "") ??
+      document.querySelector("article");
     const resizeObserver =
       typeof ResizeObserver === "undefined"
         ? null
@@ -125,6 +127,17 @@ export default function OnThisPage({
     }
 
     scheduleMeasurement();
+    window.setTimeout(scheduleMeasurement, 80);
+    window.setTimeout(scheduleMeasurement, 240);
+
+    const initialHash = items.find(
+      ({ href }) => href === window.location.hash,
+    )?.href;
+
+    if (initialHash) {
+      window.requestAnimationFrame(() => setCurrentHref(initialHash));
+    }
+
     document.fonts?.ready.then(scheduleMeasurement).catch(() => undefined);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -201,16 +214,17 @@ export default function OnThisPage({
             const active = href === currentHref;
 
             return (
-              <Typography
+              <ButtonBase
                 component="a"
                 href={href}
                 key={href}
                 aria-current={active ? "location" : undefined}
                 onClick={(event) => handleItemClick(event, href)}
-                variant="body2"
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "flex-start",
+                  width: "100%",
                   minHeight: 34,
                   py: 0.5,
                   pl: 1.25,
@@ -227,8 +241,13 @@ export default function OnThisPage({
                   },
                 }}
               >
-                {label}
-              </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "inherit", fontWeight: "inherit" }}
+                >
+                  {label}
+                </Typography>
+              </ButtonBase>
             );
           })}
         </Box>

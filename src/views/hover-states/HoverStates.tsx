@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { ExternalLink, MousePointer2, Search } from "lucide-react";
 import Card from "@/app/components/documentation/Card";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
+import CodeExample from "@/app/components/documentation/CodeExample";
 import GuidelineList from "@/app/components/documentation/GuidelineList";
 import Intro from "@/app/components/documentation/Intro";
 import Page from "@/app/components/documentation/Page";
@@ -19,6 +20,7 @@ const sections = [
   { label: "State scale", href: "#state-scale" },
   { label: "Token usage", href: "#token-usage" },
   { label: "Interactive examples", href: "#interactive-examples" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "State hierarchy", href: "#state-hierarchy" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
@@ -270,6 +272,43 @@ const interactiveSx = {
             </Box>
           </Card>
         </Box>
+      </Section>
+
+      <Section
+        id="code-examples"
+        title="Code examples"
+        description="Apply hover states with existing interaction tokens so the element changes visually without moving."
+      >
+        <CodeExample
+          title="Hoverable surface"
+          preview={
+            <Card
+              interactive
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                color: secondaryText,
+              }}
+            >
+              <MousePointer2 size={20} />
+              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                Hover surface
+              </Typography>
+            </Card>
+          }
+          code={`import Card from "@/app/components/documentation/Card";
+import { MousePointer2 } from "lucide-react";
+
+export function HoverSurfaceExample() {
+  return (
+    <Card interactive>
+      <MousePointer2 aria-hidden="true" />
+      Hover surface
+    </Card>
+  );
+}`}
+        />
       </Section>
 
       <Section

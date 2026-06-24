@@ -12,6 +12,7 @@ import {
 import Card from "@/app/components/documentation/Card";
 import CardTitle from "@/app/components/documentation/CardTitle";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
+import CodeExample from "@/app/components/documentation/CodeExample";
 import GuidelineList from "@/app/components/documentation/GuidelineList";
 import Intro from "@/app/components/documentation/Intro";
 import IconBox from "@/app/components/documentation/IconBox";
@@ -30,6 +31,7 @@ const sections = [
   { label: "Forms", href: "#forms" },
   { label: "Focus states", href: "#focus-states" },
   { label: "Implementation", href: "#implementation" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Testing", href: "#testing" },
   { label: "Guidelines", href: "#guidelines" },
 ] as const;
@@ -254,6 +256,46 @@ export default function AccessibilityPage() {
 
 <label htmlFor="email">Email address</label>
 <input id="email" type="email" required />`}</CodeBlock>
+      </Section>
+
+      <Section
+        id="code-examples"
+        title="Code examples"
+        description="Show labels, focus and icon-only names in the actual implementation."
+      >
+        <CodeExample
+          title="Accessible icon action"
+          preview={
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                px: 1.5,
+                py: 1,
+                color: accent,
+                border: `${borderWidths.focus} solid ${borders.focus}`,
+                borderRadius: radius.medium,
+                backgroundColor: surface,
+              }}
+            >
+              <Keyboard size={iconSizes.medium} />
+              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                Keyboard reachable
+              </Typography>
+            </Box>
+          }
+          code={`import Button from "@/app/components/documentation/Button";
+import { Settings } from "lucide-react";
+
+export function AccessibleIconAction() {
+  return (
+    <Button variant="icon" iconOnly aria-label="Open settings">
+      <Settings aria-hidden="true" />
+    </Button>
+  );
+}`}
+        />
       </Section>
 
       <Section

@@ -7,7 +7,7 @@ import { useDocumentationStyles } from "./useDocumentationStyles";
 interface IntroProps {
   title: string;
   description: string;
-  note: string;
+  note?: string;
   eyebrow?: string;
 }
 
@@ -43,18 +43,20 @@ export default function Intro({
       >
         {description}
       </Typography>
-      <Box
-        sx={{
-          p: 2.5,
-          mb: 6,
-          borderLeft: `${borderWidths.accent} solid ${accent}`,
-          backgroundColor: subtleBackground,
-        }}
-      >
-        <Typography variant="body2" sx={{ color: primaryText }}>
-          {note}
-        </Typography>
-      </Box>
+      {note && (
+        <Box
+          sx={{
+            p: 2.5,
+            mb: 6,
+            borderLeft: `${borderWidths.accent} solid ${accent}`,
+            backgroundColor: subtleBackground,
+          }}
+        >
+          <Typography variant="body2" sx={{ color: primaryText }}>
+            {note}
+          </Typography>
+        </Box>
+      )}
     </>
   );
 }

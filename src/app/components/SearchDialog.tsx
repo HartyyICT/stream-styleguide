@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Box, Typography } from "@mui/material";
+import { ButtonBase, Typography } from "@mui/material";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -44,7 +44,7 @@ export default function SearchDialog() {
 
   return (
     <>
-      <Box
+      <ButtonBase
         component="button"
         type="button"
         aria-label="Search documentation"
@@ -101,7 +101,7 @@ export default function SearchDialog() {
         >
           Ctrl K
         </Typography>
-      </Box>
+      </ButtonBase>
 
       {open && <SearchModal open={open} onClose={() => setOpen(false)} />}
     </>

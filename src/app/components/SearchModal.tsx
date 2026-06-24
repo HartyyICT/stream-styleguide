@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {
   Box,
+  ButtonBase,
   Dialog,
   DialogContent,
   IconButton,
@@ -18,11 +19,14 @@ import {
   Grid3X3,
   LayoutGrid,
   MousePointer2,
+  Navigation,
   Palette,
+  PackagePlus,
   PanelTop,
   Search,
   Smartphone,
   Sparkles,
+  SquareMousePointer,
   Type,
   X,
   type LucideIcon,
@@ -62,6 +66,27 @@ const searchGroups: SearchGroup[] = [
         icon: BookOpen,
       },
       {
+        title: "Installation",
+        description: "Install and use the future @ssw/ui-library package.",
+        href: "/installation",
+        category: "Getting started",
+        icon: PackagePlus,
+      },
+      {
+        title: "Install package",
+        description: "npm install command for the shared Stream UI library.",
+        href: "/installation#install-package",
+        category: "Installation",
+        icon: PackagePlus,
+      },
+      {
+        title: "Use components",
+        description: "Import components from @ssw/ui-library.",
+        href: "/installation#use-components",
+        category: "Installation",
+        icon: PackagePlus,
+      },
+      {
         title: "Introduction",
         description: "Why the Stream Design System exists.",
         href: "/#introduction",
@@ -81,6 +106,62 @@ const searchGroups: SearchGroup[] = [
   {
     label: "Design foundations",
     items: [
+      {
+        title: "Accessibility",
+        description: "WCAG principles, forms, focus states and testing.",
+        href: "/accessibility",
+        category: "Design foundations",
+        icon: Accessibility,
+      },
+      {
+        title: "Accessibility principles",
+        description: "Perceivable, operable, understandable and robust UI.",
+        href: "/accessibility#core-principles",
+        category: "Accessibility",
+        icon: Accessibility,
+      },
+      {
+        title: "Borders",
+        description: "Border colors, widths, radius and component examples.",
+        href: "/borders",
+        category: "Design foundations",
+        icon: PanelTop,
+      },
+      {
+        title: "Border colors & widths",
+        description: "Structural, interactive, active and focus borders.",
+        href: "/borders#border-colors",
+        category: "Borders",
+        icon: PanelTop,
+      },
+      {
+        title: "Border radius",
+        description: "Corner radius tokens from small to extra large.",
+        href: "/borders#border-radius",
+        category: "Borders",
+        icon: PanelTop,
+      },
+      {
+        title: "Buttons",
+        description: "Button types, sizes, usage and accessibility guidance.",
+        href: "/buttons",
+        category: "Design foundations",
+        icon: SquareMousePointer,
+      },
+      {
+        title: "Button types",
+        description: "Primary, secondary, tertiary, icon and destructive buttons.",
+        href: "/buttons#button-types",
+        category: "Buttons",
+        icon: SquareMousePointer,
+      },
+      {
+        title: "Button scale",
+        description: "Button type tokens, visual treatment and intended use.",
+        href: "/buttons#button-scale",
+        category: "Buttons",
+        icon: SquareMousePointer,
+      },
       {
         title: "Colors",
         description: "Color tokens, categories, usage and accessibility.",
@@ -111,25 +192,67 @@ const searchGroups: SearchGroup[] = [
         icon: Palette,
       },
       {
-        title: "Typography",
-        description: "Font families, setup, typography scale and guidelines.",
-        href: "/typography",
+        title: "Elevation & shadows",
+        description: "Elevation scale, shadow tokens and layering examples.",
+        href: "/elevation",
         category: "Design foundations",
-        icon: Type,
+        icon: Blend,
       },
       {
-        title: "Font setup",
-        description: "How developers should use the Stream typography system.",
-        href: "/typography#font-setup",
-        category: "Typography",
-        icon: Type,
+        title: "Elevation scale",
+        description: "Shadow levels from flat surfaces to modal content.",
+        href: "/elevation#elevation-scale",
+        category: "Elevation & shadows",
+        icon: Blend,
       },
       {
-        title: "Typography scale",
-        description: "Full typography scale for headings, body text and data.",
-        href: "/typography#typography-scale",
-        category: "Typography",
-        icon: Type,
+        title: "Layering example",
+        description: "See how elevation clarifies overlapping surfaces.",
+        href: "/elevation#layering-example",
+        category: "Elevation & shadows",
+        icon: Blend,
+      },
+      {
+        title: "Hover states",
+        description: "Hover, active and focus feedback for interactive UI.",
+        href: "/hover-states",
+        category: "Design foundations",
+        icon: MousePointer2,
+      },
+      {
+        title: "Hover state scale",
+        description: "Semantic interaction tokens for light and dark mode.",
+        href: "/hover-states#state-scale",
+        category: "Hover states",
+        icon: MousePointer2,
+      },
+      {
+        title: "Iconography",
+        description: "Lucide icon library, sizes, usage and accessibility.",
+        href: "/iconography",
+        category: "Design foundations",
+        icon: Sparkles,
+      },
+      {
+        title: "Icon sizes",
+        description: "Shared icon sizes for controls, forms and navigation.",
+        href: "/iconography#icon-sizes",
+        category: "Iconography",
+        icon: Sparkles,
+      },
+      {
+        title: "Responsiveness",
+        description: "Desktop-first strategy, breakpoints and component behaviour.",
+        href: "/responsiveness",
+        category: "Design foundations",
+        icon: Smartphone,
+      },
+      {
+        title: "Responsive breakpoints",
+        description: "Mobile, tablet, laptop and desktop transition points.",
+        href: "/responsiveness#breakpoints",
+        category: "Responsiveness",
+        icon: Smartphone,
       },
       {
         title: "Spacing",
@@ -153,102 +276,72 @@ const searchGroups: SearchGroup[] = [
         icon: Grid3X3,
       },
       {
-        title: "Hover states",
-        description: "Hover, active and focus feedback for interactive UI.",
-        href: "/hover-states",
+        title: "Typography",
+        description: "Font families, setup, typography scale and guidelines.",
+        href: "/typography",
         category: "Design foundations",
-        icon: MousePointer2,
+        icon: Type,
       },
       {
-        title: "Hover state scale",
-        description: "Semantic interaction tokens for light and dark mode.",
-        href: "/hover-states#state-scale",
-        category: "Hover states",
-        icon: MousePointer2,
+        title: "Font setup",
+        description: "How developers should use the Stream typography system.",
+        href: "/typography#font-setup",
+        category: "Typography",
+        icon: Type,
       },
       {
-        title: "Borders",
-        description: "Border colors, widths, radius and component examples.",
-        href: "/borders",
-        category: "Design foundations",
+        title: "Typography scale",
+        description: "Full typography scale for headings, body text and data.",
+        href: "/typography#typography-scale",
+        category: "Typography",
+        icon: Type,
+      },
+    ],
+  },
+  {
+    label: "Components",
+    items: [
+      {
+        title: "Navbar",
+        description: "Persistent global navigation with brand, search and theme controls.",
+        href: "/navbar",
+        category: "Components",
+        icon: Navigation,
+      },
+      {
+        title: "Navbar anatomy",
+        description: "Brand area, version, search and global actions.",
+        href: "/navbar#anatomy",
+        category: "Navbar",
+        icon: Navigation,
+      },
+      {
+        title: "Searchbar",
+        description: "Global documentation search pattern and dialog behaviour.",
+        href: "/searchbar",
+        category: "Components",
+        icon: Search,
+      },
+      {
+        title: "Search dialog",
+        description: "Results, recent searches and foundation suggestions.",
+        href: "/searchbar#search-dialog",
+        category: "Searchbar",
+        icon: Search,
+      },
+      {
+        title: "Sidebar",
+        description: "Persistent grouped navigation with expanded and collapsed states.",
+        href: "/sidebar",
+        category: "Components",
         icon: PanelTop,
       },
       {
-        title: "Border colors & widths",
-        description: "Structural, interactive, active and focus borders.",
-        href: "/borders#border-colors",
-        category: "Borders",
+        title: "Sidebar states",
+        description: "Expanded, collapsed, hover and active navigation states.",
+        href: "/sidebar#states",
+        category: "Sidebar",
         icon: PanelTop,
-      },
-      {
-        title: "Border radius",
-        description: "Corner radius tokens from small to extra large.",
-        href: "/borders#border-radius",
-        category: "Borders",
-        icon: PanelTop,
-      },
-      {
-        title: "Elevation & shadows",
-        description: "Elevation scale, shadow tokens and layering examples.",
-        href: "/elevation",
-        category: "Design foundations",
-        icon: Blend,
-      },
-      {
-        title: "Elevation scale",
-        description: "Shadow levels from flat surfaces to modal content.",
-        href: "/elevation#elevation-scale",
-        category: "Elevation & shadows",
-        icon: Blend,
-      },
-      {
-        title: "Layering example",
-        description: "See how elevation clarifies overlapping surfaces.",
-        href: "/elevation#layering-example",
-        category: "Elevation & shadows",
-        icon: Blend,
-      },
-      {
-        title: "Iconography",
-        description: "Lucide icon library, sizes, usage and accessibility.",
-        href: "/iconography",
-        category: "Design foundations",
-        icon: Sparkles,
-      },
-      {
-        title: "Icon sizes",
-        description: "Shared icon sizes for controls, forms and navigation.",
-        href: "/iconography#icon-sizes",
-        category: "Iconography",
-        icon: Sparkles,
-      },
-      {
-        title: "Accessibility",
-        description: "WCAG principles, forms, focus states and testing.",
-        href: "/accessibility",
-        category: "Design foundations",
-        icon: Accessibility,
-      },
-      {
-        title: "Accessibility principles",
-        description: "Perceivable, operable, understandable and robust UI.",
-        href: "/accessibility#core-principles",
-        category: "Accessibility",
-        icon: Accessibility,
-      },
-      {
-        title: "Responsiveness",
-        description: "Desktop-first strategy, breakpoints and component behaviour.",
-        href: "/responsiveness",
-        category: "Design foundations",
-        icon: Smartphone,
-      },
-      {
-        title: "Responsive breakpoints",
-        description: "Mobile, tablet, laptop and desktop transition points.",
-        href: "/responsiveness#breakpoints",
-        category: "Responsiveness",
-        icon: Smartphone,
       },
     ],
   },
@@ -410,23 +503,6 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
     }
   }, []);
 
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    const originalBodyOverflow = document.body.style.overflow;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = originalBodyOverflow;
-      document.documentElement.style.overflow = originalHtmlOverflow;
-    };
-  }, [open]);
-
   const recentItems = useMemo(() => {
     return recentHrefs
       .map((href) => searchItems.find((item) => item.href === href))
@@ -510,7 +586,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
             },
           }}
         >
-          <Box
+          <ButtonBase
             component={Link}
             href={item.href}
             onClick={() => handleItemClick(item)}
@@ -537,7 +613,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
             >
               {item.title}
             </Typography>
-          </Box>
+          </ButtonBase>
 
           <IconButton
             size="small"
@@ -564,7 +640,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
     }
 
     return (
-      <Box
+      <ButtonBase
         key={item.href}
         component={Link}
         href={item.href}
@@ -628,7 +704,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         >
           {item.category}
         </Typography>
-      </Box>
+      </ButtonBase>
     );
   }
 
@@ -736,13 +812,15 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
 
                 <Box sx={{ display: "grid", gap: 1 }}>
                   {filteredItems.map((item) => (
-                    <Box
+                    <ButtonBase
                       key={item.href}
                       component={Link}
                       href={item.href}
                       onClick={() => handleItemClick(item)}
                       sx={{
                         display: "block",
+                        width: "100%",
+                        textAlign: "left",
                         p: 2,
                         textDecoration: "none",
                         backgroundColor: surface,
@@ -795,7 +873,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
                       >
                         {item.description}
                       </Typography>
-                    </Box>
+                    </ButtonBase>
                   ))}
 
                   {filteredItems.length === 0 && (

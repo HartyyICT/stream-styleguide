@@ -3,6 +3,7 @@
 import { Box, Typography } from "@mui/material";
 import Card from "@/app/components/documentation/Card";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
+import CodeExample from "@/app/components/documentation/CodeExample";
 import GuidelineList from "@/app/components/documentation/GuidelineList";
 import Intro from "@/app/components/documentation/Intro";
 import Page from "@/app/components/documentation/Page";
@@ -16,6 +17,7 @@ const sections = [
   { label: "Border radius", href: "#border-radius" },
   { label: "Token usage", href: "#token-usage" },
   { label: "Component examples", href: "#component-examples" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -468,6 +470,50 @@ const cardSx = {
             </Typography>
           </Box>
         </Box>
+      </Section>
+
+      <Section
+        id="code-examples"
+        title="Code examples"
+        description="Use the shared border width, color role and radius tokens together."
+      >
+        <CodeExample
+          title="Interactive border"
+          preview={
+            <Box
+              sx={{
+                p: 2,
+                color: interaction.hoverContent,
+                border: `${borderWidths.interactive} solid ${borders.interactive}`,
+                borderRadius: radius.medium,
+                backgroundColor: interaction.hoverBackground,
+              }}
+            >
+              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                Hoverable card
+              </Typography>
+            </Box>
+          }
+          code={`import { borderWidths, radius } from "@/app/theme/tokens";
+import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+
+export function InteractiveBorderExample() {
+  const { borders, interaction } = useDocumentationStyles();
+
+  return (
+    <div
+      style={{
+        color: interaction.hoverContent,
+        border: \`\${borderWidths.interactive} solid \${borders.interactive}\`,
+        borderRadius: radius.medium,
+        backgroundColor: interaction.hoverBackground,
+      }}
+    >
+      Hoverable card
+    </div>
+  );
+}`}
+        />
       </Section>
 
       <Section

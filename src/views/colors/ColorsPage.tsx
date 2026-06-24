@@ -4,6 +4,7 @@ import { Box, Divider, Typography, useTheme } from "@mui/material";
 import ColorSwatch from "@/app/components/ColorSwatch";
 import Card from "@/app/components/documentation/Card";
 import CardTitle from "@/app/components/documentation/CardTitle";
+import CodeExample from "@/app/components/documentation/CodeExample";
 import Intro from "@/app/components/documentation/Intro";
 import Page from "@/app/components/documentation/Page";
 import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
@@ -16,6 +17,7 @@ const colorSections = [
   { label: "Overview", href: "#colors" },
   { label: "Color categories", href: "#color-categories" },
   { label: "Token usage", href: "#token-usage" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Primary colors", href: "#primary-colors" },
   { label: "Neutral colors", href: "#neutral-colors" },
   { label: "Semantic colors", href: "#semantic-colors" },
@@ -205,6 +207,59 @@ export default function ColorsPage() {
                 </Box>
               ))}
             </Box>
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          <Box
+            component="section"
+            id="code-examples"
+            sx={{ scrollMarginTop: 96 }}
+          >
+            <Typography variant="h2" sx={{ mb: 1.5 }}>
+              Code examples
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
+            >
+              Use color tokens directly from the shared foundation instead of
+              placing custom hex values inside components.
+            </Typography>
+
+            <CodeExample
+              title="Primary action color"
+              preview={
+                <Box
+                  sx={{
+                    px: 2,
+                    py: 1,
+                    color: colors.semantic.surface,
+                    backgroundColor: colors.primary[500],
+                    borderRadius: radius.medium,
+                    fontWeight: 700,
+                  }}
+                >
+                  Save changes
+                </Box>
+              }
+              code={`import { colors, radius } from "@/app/theme/tokens";
+
+export function PrimaryActionPreview() {
+  return (
+    <div
+      style={{
+        color: colors.semantic.surface,
+        backgroundColor: colors.primary[500],
+        borderRadius: radius.medium,
+      }}
+    >
+      Save changes
+    </div>
+  );
+}`}
+            />
           </Box>
 
           <Divider sx={{ my: 6 }} />

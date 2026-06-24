@@ -18,6 +18,7 @@ import {
 import Card from "@/app/components/documentation/Card";
 import CardTitle from "@/app/components/documentation/CardTitle";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
+import CodeExample from "@/app/components/documentation/CodeExample";
 import GuidelineList from "@/app/components/documentation/GuidelineList";
 import Intro from "@/app/components/documentation/Intro";
 import IconBox from "@/app/components/documentation/IconBox";
@@ -36,6 +37,7 @@ const sections = [
   { label: "Icon sizes", href: "#icon-sizes" },
   { label: "Token usage", href: "#token-usage" },
   { label: "Usage examples", href: "#usage-examples" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -279,6 +281,42 @@ import { iconSizes } from "@/app/theme/tokens";
             </Typography>
           </Card>
         </Box>
+      </Section>
+
+      <Section
+        id="code-examples"
+        title="Code examples"
+        description="Import icons from Lucide and pair icon-only controls with an accessible label."
+      >
+        <CodeExample
+          title="Icon-only button"
+          preview={
+            <Box
+              sx={{
+                width: 42,
+                height: 42,
+                display: "grid",
+                placeItems: "center",
+                color: accent,
+                border: `${borderWidths.default} solid ${borders.default}`,
+                borderRadius: radius.medium,
+                backgroundColor: surface,
+              }}
+            >
+              <Search size={iconSizes.medium} />
+            </Box>
+          }
+          code={`import Button from "@/app/components/documentation/Button";
+import { Search } from "lucide-react";
+
+export function IconButtonExample() {
+  return (
+    <Button variant="icon" iconOnly aria-label="Search">
+      <Search />
+    </Button>
+  );
+}`}
+        />
       </Section>
 
       <Section

@@ -13,6 +13,7 @@ import {
 import Card from "@/app/components/documentation/Card";
 import CardTitle from "@/app/components/documentation/CardTitle";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
+import CodeExample from "@/app/components/documentation/CodeExample";
 import GuidelineList from "@/app/components/documentation/GuidelineList";
 import Intro from "@/app/components/documentation/Intro";
 import IconBox from "@/app/components/documentation/IconBox";
@@ -32,6 +33,7 @@ const sections = [
   { label: "Breakpoints", href: "#breakpoints" },
   { label: "Component behaviour", href: "#component-behaviour" },
   { label: "Implementation", href: "#implementation" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -284,6 +286,63 @@ export default function ResponsivenessPage() {
     gap: spacing.md,
   }}
 />`}</CodeBlock>
+      </Section>
+
+      <Section
+        id="code-examples"
+        title="Code examples"
+        description="Use responsive grid values for documentation and application layouts."
+      >
+        <CodeExample
+          title="Responsive card grid"
+          preview={
+            <Box
+              sx={{
+                width: "100%",
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  sm: "repeat(3, minmax(0, 1fr))",
+                },
+                gap: 1,
+              }}
+            >
+              {["Mobile", "Tablet", "Desktop"].map((label) => (
+                <Box
+                  key={label}
+                  sx={{
+                    p: 1.5,
+                    textAlign: "center",
+                    border: `${borderWidths.default} solid ${borders.default}`,
+                    borderRadius: radius.medium,
+                    backgroundColor: surface,
+                  }}
+                >
+                  <Typography variant="caption" sx={{ color: secondaryText }}>
+                    {label}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          }
+          code={`import { Box } from "@mui/material";
+
+export function ResponsiveGridExample() {
+  return (
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: {
+          xs: "1fr",
+          sm: "repeat(2, minmax(0, 1fr))",
+          lg: "repeat(3, minmax(0, 1fr))",
+        },
+        gap: 2,
+      }}
+    />
+  );
+}`}
+        />
       </Section>
 
       <Section

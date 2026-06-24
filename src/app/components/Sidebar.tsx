@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Divider, IconButton, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  ButtonBase,
+  Divider,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -8,13 +15,17 @@ import {
   Blend,
   Grid3X3,
   MousePointer2,
+  Navigation,
   Palette,
   PanelTop,
   PanelLeftClose,
   PanelLeftOpen,
+  PackagePlus,
   ScanText,
+  Search,
   Smartphone,
   Sparkles,
+  SquareMousePointer,
   Type,
 } from "lucide-react";
 import {
@@ -28,15 +39,27 @@ import { useColorMode } from "../theme/themeProvider";
 import { sidebarMotion, sidebarTransition } from "./sidebarMotion";
 
 const foundationItems = [
-  { label: "Colors", icon: Palette, href: "/colors" },
-  { label: "Typography", icon: Type, href: "/typography" },
-  { label: "Spacing", icon: Grid3X3, href: "/spacing" },
-  { label: "Hover States", icon: MousePointer2, href: "/hover-states" },
-  { label: "Borders", icon: PanelTop, href: "/borders" },
-  { label: "Elevation & Shadows", icon: Blend, href: "/elevation" },
-  { label: "Iconography", icon: Sparkles, href: "/iconography" },
   { label: "Accessibility", icon: Accessibility, href: "/accessibility" },
+  { label: "Borders", icon: PanelTop, href: "/borders" },
+  { label: "Buttons", icon: SquareMousePointer, href: "/buttons" },
+  { label: "Colors", icon: Palette, href: "/colors" },
+  { label: "Elevation & Shadows", icon: Blend, href: "/elevation" },
+  { label: "Hover States", icon: MousePointer2, href: "/hover-states" },
+  { label: "Iconography", icon: Sparkles, href: "/iconography" },
   { label: "Responsiveness", icon: Smartphone, href: "/responsiveness" },
+  { label: "Spacing", icon: Grid3X3, href: "/spacing" },
+  { label: "Typography", icon: Type, href: "/typography" },
+];
+
+const componentItems = [
+  { label: "Navbar", icon: Navigation, href: "/navbar" },
+  { label: "Searchbar", icon: Search, href: "/searchbar" },
+  { label: "Sidebar", icon: PanelLeftOpen, href: "/sidebar" },
+];
+
+const gettingStartedItems = [
+  { label: "Overview", icon: ScanText, href: "/" },
+  { label: "Installation", icon: PackagePlus, href: "/installation" },
 ];
 
 interface SidebarProps {
@@ -46,7 +69,6 @@ interface SidebarProps {
 
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname();
-  const overviewActive = pathname === "/";
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
   const surface = isDarkMode
@@ -185,53 +207,61 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         Getting started
       </Typography>
 
-      <Tooltip title={collapsed ? "Overview" : ""} placement="right">
-        <Box
-          component={Link}
-          href="/"
-          aria-label="Overview"
-          sx={{
-            ...navigationItemSx,
-            color: overviewActive ? accent : secondaryText,
-            backgroundColor: overviewActive ? selectedBackground : surface,
-            position: "relative",
-            boxSizing: "border-box",
-            border: `${borderWidths.interactive} solid ${
-              overviewActive ? selectedBackground : surface
-            }`,
-            borderRadius: radius.medium,
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              inset: "0 auto 0 0",
-              width: borderWidths.active,
-              borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
-              backgroundColor: overviewActive ? accent : "transparent",
-              transition: `background-color ${sidebarTransition}`,
-            },
-            "&:hover": {
-              backgroundColor: overviewActive
-                ? selectedBackground
-                : hoverBackground,
-              color: overviewActive ? accent : interaction.hoverContent,
-              borderColor: overviewActive
-                ? selectedBackground
-                : interaction.hoverBorder,
-            },
-          }}
-        >
-          <ScanText size={18} style={{ flexShrink: 0 }} />
-          <Typography
-            variant="body2"
-            sx={{
-              ...labelSx,
-              fontWeight: overviewActive ? 700 : 500,
-            }}
-          >
-            Overview
-          </Typography>
-        </Box>
-      </Tooltip>
+      <Box component="nav" aria-label="Getting started">
+        {gettingStartedItems.map(({ label, icon: Icon, href }) => {
+          const active = pathname === href;
+
+          return (
+            <Tooltip
+              key={label}
+              title={collapsed ? label : ""}
+              placement="right"
+            >
+              <ButtonBase
+                component={Link}
+                href={href}
+                aria-label={label}
+                sx={{
+                  ...navigationItemSx,
+                  color: active ? accent : secondaryText,
+                  backgroundColor: active ? selectedBackground : surface,
+                  position: "relative",
+                  boxSizing: "border-box",
+                  border: `${borderWidths.interactive} solid ${
+                    active ? selectedBackground : surface
+                  }`,
+                  borderRadius: radius.medium,
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    inset: "0 auto 0 0",
+                    width: borderWidths.active,
+                    borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
+                    backgroundColor: active ? accent : "transparent",
+                    transition: `background-color ${sidebarTransition}`,
+                  },
+                  "&:hover": {
+                    backgroundColor: active ? selectedBackground : hoverBackground,
+                    color: active ? accent : interaction.hoverContent,
+                    borderColor: active ? selectedBackground : interaction.hoverBorder,
+                  },
+                }}
+              >
+                <Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    ...labelSx,
+                    fontWeight: active ? 700 : 500,
+                  }}
+                >
+                  {label}
+                </Typography>
+              </ButtonBase>
+            </Tooltip>
+          );
+        })}
+      </Box>
 
       <Divider sx={{ my: 2.5 }} />
 
@@ -260,7 +290,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               title={collapsed ? label : ""}
               placement="right"
             >
-              <Box
+              <ButtonBase
                 component={Link}
                 href={href}
                 aria-label={label}
@@ -304,7 +334,84 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 >
                   {label}
                 </Typography>
-              </Box>
+              </ButtonBase>
+            </Tooltip>
+          );
+        })}
+      </Box>
+
+      <Divider sx={{ my: 2.5 }} />
+
+      <Typography
+        variant="overline"
+        sx={{
+          ...labelSx,
+          display: "block",
+          px: 1.5,
+          mb: 1,
+          color: secondaryText,
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+        }}
+      >
+        Components
+      </Typography>
+
+      <Box component="nav" aria-label="Components">
+        {componentItems.map(({ label, icon: Icon, href }) => {
+          const active = pathname === href;
+
+          return (
+            <Tooltip
+              key={label}
+              title={collapsed ? label : ""}
+              placement="right"
+            >
+              <ButtonBase
+                component={Link}
+                href={href}
+                aria-label={label}
+                sx={{
+                  ...navigationItemSx,
+                  position: "relative",
+                  borderRadius: radius.medium,
+                  color: active ? accent : secondaryText,
+                  backgroundColor: active ? selectedBackground : surface,
+                  boxSizing: "border-box",
+                  border: `${borderWidths.interactive} solid ${
+                    active ? selectedBackground : surface
+                  }`,
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    inset: "0 auto 0 0",
+                    width: borderWidths.active,
+                    borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
+                    backgroundColor: active ? accent : "transparent",
+                    transition: `background-color ${sidebarTransition}`,
+                  },
+                  "&:hover": {
+                    backgroundColor: active
+                      ? selectedBackground
+                      : hoverBackground,
+                    color: active ? accent : interaction.hoverContent,
+                    borderColor: active
+                      ? selectedBackground
+                      : interaction.hoverBorder,
+                  },
+                }}
+              >
+                <Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    ...labelSx,
+                    fontWeight: active ? 700 : 500,
+                  }}
+                >
+                  {label}
+                </Typography>
+              </ButtonBase>
             </Tooltip>
           );
         })}
