@@ -32,6 +32,7 @@ import {
   borderColors,
   borderWidths,
   colors,
+  iconSizes,
   interactionStates,
   radius,
 } from "../theme/tokens";
@@ -136,7 +137,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
     >
       <Box
         sx={{
-          height: 34,
+          height: 40,
           position: "relative",
           display: "block",
           alignItems: "center",
@@ -164,11 +165,11 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             onClick={onToggle}
             sx={{
-              width: 32,
-              height: 32,
+              width: 38,
+              height: 38,
               position: "absolute",
               top: 1,
-              right: collapsed ? "calc(50% - 16px)" : 12,
+              right: collapsed ? "calc(50% - 19px)" : 12,
               flexShrink: 0,
               color: secondaryText,
               boxSizing: "border-box",
@@ -184,9 +185,9 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             }}
           >
             {collapsed ? (
-              <PanelLeftOpen size={17} />
+              <PanelLeftOpen size={iconSizes.control} />
             ) : (
-              <PanelLeftClose size={17} />
+              <PanelLeftClose size={iconSizes.control} />
             )}
           </IconButton>
         </Tooltip>
@@ -247,7 +248,11 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   },
                 }}
               >
-                <Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                <Icon
+                  size={iconSizes.control}
+                  strokeWidth={1.8}
+                  style={{ flexShrink: 0 }}
+                />
                 <Typography
                   variant="body2"
                   sx={{
@@ -324,7 +329,11 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   },
                 }}
               >
-                <Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                <Icon
+                  size={iconSizes.control}
+                  strokeWidth={1.8}
+                  style={{ flexShrink: 0 }}
+                />
                 <Typography
                   variant="body2"
                   sx={{
@@ -401,7 +410,11 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   },
                 }}
               >
-                <Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                <Icon
+                  size={iconSizes.control}
+                  strokeWidth={1.8}
+                  style={{ flexShrink: 0 }}
+                />
                 <Typography
                   variant="body2"
                   sx={{

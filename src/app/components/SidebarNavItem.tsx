@@ -6,6 +6,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   borderWidths,
   colors,
+  iconSizes,
   interactionStates,
   radius,
 } from "../theme/tokens";
@@ -63,14 +64,12 @@ export default function SidebarNavItem({
         aria-current={active ? "page" : undefined}
         sx={{
           width: "100%",
-          minHeight: 40,
           display: "grid",
-          gridTemplateColumns: collapsed ? "18px" : "18px minmax(0, 1fr)",
+          gridTemplateColumns: "18px minmax(0, 1fr)",
           alignItems: "center",
-          justifyContent: collapsed ? "center" : "stretch",
           columnGap: collapsed ? 0 : 1.25,
-          pl: collapsed ? 0 : 1.5,
-          pr: collapsed ? 0 : 1.5,
+          pl: collapsed ? 3 : 1.5,
+          pr: collapsed ? 1 : 1.5,
           py: 1,
           mb: 0.5,
           position: "relative",
@@ -119,7 +118,11 @@ export default function SidebarNavItem({
           },
         }}
       >
-        <Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+        <Icon
+          size={iconSizes.control}
+          strokeWidth={1.8}
+          style={{ flexShrink: 0 }}
+        />
         <Typography
           variant="body2"
           sx={{

@@ -51,6 +51,7 @@ export const radius = {
 
 export const iconSizes = {
   small: 16,
+  control: 19,
   medium: 20,
   large: 24,
   extraLarge: 32,

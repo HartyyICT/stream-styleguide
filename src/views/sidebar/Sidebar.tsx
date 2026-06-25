@@ -11,6 +11,10 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import SidebarNavItem from "@/app/components/SidebarNavItem";
+import {
+  sidebarMotion,
+  sidebarTransition,
+} from "@/app/components/sidebarMotion";
 import Card from "@/app/components/documentation/Card";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
 import CodeExample from "@/app/components/documentation/CodeExample";
@@ -21,6 +25,7 @@ import Section from "@/app/components/documentation/Section";
 import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
 import {
   borderWidths,
+  iconSizes,
   radius,
   spacing,
 } from "@/app/theme/tokens";
@@ -67,35 +72,48 @@ function SidebarPreview({
   return (
     <Box
       sx={{
-        width: previewCollapsed ? 88 : 280,
+        width: previewCollapsed
+          ? sidebarMotion.collapsedWidth
+          : sidebarMotion.expandedWidth,
         maxWidth: "100%",
         minHeight: 300,
-        p: 2,
+        px: previewCollapsed ? 1.25 : 2,
+        py: 3,
         display: "flex",
         flexDirection: "column",
         backgroundColor: surface,
         border: `${borderWidths.subtle} solid ${borders.subtle}`,
         borderRadius: radius.medium,
-        transition: "width 280ms cubic-bezier(0.4, 0, 0.2, 1)",
+        overflow: "hidden",
+        transition: `width ${sidebarTransition}, padding ${sidebarTransition}`,
       }}
     >
       <Box
         sx={{
-          minHeight: 34,
-          display: "flex",
+          height: 34,
+          position: "relative",
+          display: "block",
           alignItems: "center",
-          justifyContent: previewCollapsed ? "center" : "space-between",
+          px: 1.5,
           mb: 1,
         }}
       >
-        {!previewCollapsed && (
-          <Typography
-            variant="overline"
-            sx={{ color: secondaryText, fontWeight: 700 }}
-          >
-            Foundations
-          </Typography>
-        )}
+        <Typography
+          variant="overline"
+          sx={{
+            minWidth: 0,
+            width: previewCollapsed ? 0 : "100%",
+            opacity: previewCollapsed ? 0 : 1,
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            pointerEvents: previewCollapsed ? "none" : "auto",
+            color: secondaryText,
+            fontWeight: 700,
+            transition: `width ${sidebarTransition}, opacity ${sidebarTransition}`,
+          }}
+        >
+          Foundations
+        </Typography>
 
         <IconButton
           size="small"
@@ -106,27 +124,33 @@ function SidebarPreview({
               : undefined
           }
           sx={{
-            width: 32,
-            height: 32,
+            width: 38,
+            height: 38,
+            position: "absolute",
+            top: 1,
+            right: previewCollapsed ? "calc(50% - 19px)" : 12,
+            flexShrink: 0,
             color: secondaryText,
+            boxSizing: "border-box",
             border: `${borderWidths.subtle} solid ${borders.subtle}`,
             borderRadius: radius.medium,
             backgroundColor: surface,
             cursor: interactive ? "pointer" : "default",
+            transition:
+              `right ${sidebarTransition}, background-color 160ms ease, color 160ms ease, border-color 160ms ease`,
           }}
         >
           {previewCollapsed ? (
-            <PanelLeftOpen size={17} />
+            <PanelLeftOpen size={iconSizes.control} />
           ) : (
-            <PanelLeftClose size={17} />
+            <PanelLeftClose size={iconSizes.control} />
           )}
         </IconButton>
       </Box>
 
       <Box
         sx={{
-          width: previewCollapsed ? 40 : "100%",
-          mx: previewCollapsed ? "auto" : 0,
+          width: "100%",
           display: "grid",
           gap: 0.5,
           alignContent: "start",

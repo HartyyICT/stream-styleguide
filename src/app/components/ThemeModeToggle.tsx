@@ -7,6 +7,7 @@ import {
   borderColors,
   borderWidths,
   colors,
+  iconSizes,
   interactionStates,
   radius,
 } from "../theme/tokens";
@@ -55,7 +56,11 @@ export default function ThemeModeToggle() {
           },
         }}
       >
-        {isDarkMode ? <Sun size={19} /> : <Moon size={19} />}
+        {isDarkMode ? (
+          <Sun size={iconSizes.control} />
+        ) : (
+          <Moon size={iconSizes.control} />
+        )}
       </IconButton>
     </Tooltip>
   );
