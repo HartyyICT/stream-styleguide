@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { useDocumentationStyles } from "./useDocumentationStyles";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface GuidelineListProps {
   items: readonly string[];

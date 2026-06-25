@@ -1,12 +1,12 @@
 "use client";
 
 import { Box, Divider, Typography, useTheme } from "@mui/material";
-import Card from "@/app/components/documentation/Card";
-import CardTitle from "@/app/components/documentation/CardTitle";
-import CodeExample from "@/app/components/documentation/CodeExample";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import Card from "@/app/components/atoms/Card";
+import CardTitle from "@/app/components/atoms/CardTitle";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import { radius, shadows } from "@/app/theme/tokens";
 
 const typographySections = [

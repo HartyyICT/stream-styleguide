@@ -35,9 +35,9 @@ import {
   iconSizes,
   interactionStates,
   radius,
-} from "../theme/tokens";
-import { useColorMode } from "../theme/themeProvider";
-import { sidebarMotion, sidebarTransition } from "./sidebarMotion";
+} from "../../theme/tokens";
+import { useColorMode } from "../../theme/themeProvider";
+import { sidebarMotion, sidebarTransition } from "@/app/components/shell/sidebarMotion";
 
 const foundationItems = [
   { label: "Accessibility", icon: Accessibility, href: "/accessibility" },

@@ -10,8 +10,8 @@ import {
   interactionStates,
   radius,
   shadows,
-} from "../theme/tokens";
-import { useColorMode } from "../theme/themeProvider";
+} from "../../theme/tokens";
+import { useColorMode } from "../../theme/themeProvider";
 
 const SearchModal = dynamic(() => import("./SearchModal"), {
   ssr: false,

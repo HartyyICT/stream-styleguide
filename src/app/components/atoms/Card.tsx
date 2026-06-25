@@ -2,7 +2,7 @@
 
 import { Box, type BoxProps } from "@mui/material";
 import { borderWidths, radius, shadows } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "./useDocumentationStyles";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface CardProps extends BoxProps {
   elevated?: boolean;

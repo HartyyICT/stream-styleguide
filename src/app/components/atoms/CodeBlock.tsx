@@ -2,7 +2,7 @@
 
 import { Box } from "@mui/material";
 import { radius } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "./useDocumentationStyles";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface CodeBlockProps {
   children: string;

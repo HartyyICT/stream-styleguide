@@ -9,9 +9,9 @@ import {
   iconSizes,
   interactionStates,
   radius,
-} from "../theme/tokens";
-import { useColorMode } from "../theme/themeProvider";
-import { sidebarTransition } from "./sidebarMotion";
+} from "../../theme/tokens";
+import { useColorMode } from "../../theme/themeProvider";
+import { sidebarTransition } from "@/app/components/shell/sidebarMotion";
 
 type SidebarNavItemProps = {
   label: string;

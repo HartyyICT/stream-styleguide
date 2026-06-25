@@ -2,17 +2,17 @@
 
 import { Box, Typography } from "@mui/material";
 import { Search, X } from "lucide-react";
-import RecentSearchItem from "@/app/components/RecentSearchItem";
-import SearchDialog from "@/app/components/SearchDialog";
-import Button from "@/app/components/documentation/Button";
-import Card from "@/app/components/documentation/Card";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import CodeExample from "@/app/components/documentation/CodeExample";
-import GuidelineList from "@/app/components/documentation/GuidelineList";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import Section from "@/app/components/documentation/Section";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import RecentSearchItem from "@/app/components/patterns/RecentSearchItem";
+import SearchDialog from "@/app/components/search/SearchDialog";
+import Button from "@/app/components/atoms/Button";
+import Card from "@/app/components/atoms/Card";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import GuidelineList from "@/app/components/patterns/GuidelineList";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import Section from "@/app/components/layout/Section";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   borderWidths,
   radius,
@@ -337,7 +337,7 @@ const searchbarPressed = {
             preview={<SearchDialog />}
             renderPreview={() => <SearchDialog />}
             previewMinHeight={132}
-            code={`import SearchDialog from "@/app/components/SearchDialog";
+            code={`import SearchDialog from "@/app/components/search/SearchDialog";
 
 export function NavbarSearchArea() {
   // SearchDialog renders the exact styleguide searchbar.
@@ -351,7 +351,7 @@ export function NavbarSearchArea() {
             preview={<SearchDialogPreview />}
             renderPreview={() => <SearchDialogPreview />}
             previewMinHeight={340}
-            code={`import SearchModal from "@/app/components/SearchModal";
+            code={`import SearchModal from "@/app/components/search/SearchModal";
 
 export function SearchExample({ open, onClose }) {
   // Pass open=true to show the dialog.

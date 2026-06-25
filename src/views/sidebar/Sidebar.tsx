@@ -10,19 +10,19 @@ import {
   Type,
 } from "lucide-react";
 import { useState } from "react";
-import SidebarNavItem from "@/app/components/SidebarNavItem";
+import SidebarNavItem from "@/app/components/shell/SidebarNavItem";
 import {
   sidebarMotion,
   sidebarTransition,
-} from "@/app/components/sidebarMotion";
-import Card from "@/app/components/documentation/Card";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import CodeExample from "@/app/components/documentation/CodeExample";
-import GuidelineList from "@/app/components/documentation/GuidelineList";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import Section from "@/app/components/documentation/Section";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+} from "@/app/components/shell/sidebarMotion";
+import Card from "@/app/components/atoms/Card";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import GuidelineList from "@/app/components/patterns/GuidelineList";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import Section from "@/app/components/layout/Section";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   borderWidths,
   iconSizes,
@@ -312,7 +312,7 @@ const activeItem = {
 code={`"use client";
 
 import { useState } from "react";
-import Sidebar from "@/app/components/Sidebar";
+import Sidebar from "@/app/components/shell/Sidebar";
 
 export default function DocumentationLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);

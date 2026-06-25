@@ -2,13 +2,13 @@
 
 import { Box, Divider, Typography } from "@mui/material";
 import { Braces, Grid3X3, LayoutPanelTop, Rows3 } from "lucide-react";
-import Card from "@/app/components/documentation/Card";
-import CardTitle from "@/app/components/documentation/CardTitle";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import CodeExample from "@/app/components/documentation/CodeExample";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import Card from "@/app/components/atoms/Card";
+import CardTitle from "@/app/components/atoms/CardTitle";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import { radius, shadows, spacing } from "@/app/theme/tokens";
 
 const spacingSections = [

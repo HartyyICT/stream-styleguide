@@ -2,16 +2,16 @@
 
 import { Box, Chip, Typography } from "@mui/material";
 import { BookOpen } from "lucide-react";
-import SearchDialog from "@/app/components/SearchDialog";
-import ThemeModeToggle from "@/app/components/ThemeModeToggle";
-import Card from "@/app/components/documentation/Card";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import CodeExample from "@/app/components/documentation/CodeExample";
-import GuidelineList from "@/app/components/documentation/GuidelineList";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import Section from "@/app/components/documentation/Section";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import SearchDialog from "@/app/components/search/SearchDialog";
+import ThemeModeToggle from "@/app/components/shell/ThemeModeToggle";
+import Card from "@/app/components/atoms/Card";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import GuidelineList from "@/app/components/patterns/GuidelineList";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import Section from "@/app/components/layout/Section";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import { borderWidths, colors, radius, shadows } from "@/app/theme/tokens";
 
 const sections = [
@@ -339,7 +339,7 @@ const searchbarHover = {
             preview={<StyleguideNavbarPreview />}
             renderPreview={() => <StyleguideNavbarPreview />}
             previewMinHeight={172}
-            code={`import Navbar from "@/app/components/Navbar";
+            code={`import Navbar from "@/app/components/shell/Navbar";
 
 export default function DocumentationLayout({ children }) {
   // The navbar is shared by the full styleguide shell.
@@ -358,7 +358,7 @@ export default function DocumentationLayout({ children }) {
             preview={<StyleguideNavbarPreview state="search" />}
             renderPreview={() => <StyleguideNavbarPreview state="search" />}
             previewMinHeight={196}
-            code={`import SearchDialog from "@/app/components/SearchDialog";
+            code={`import SearchDialog from "@/app/components/search/SearchDialog";
 
 export function NavbarSearchArea() {
   // SearchDialog renders the exact styleguide searchbar.
@@ -372,7 +372,7 @@ export function NavbarSearchArea() {
             preview={<StyleguideNavbarPreview state="theme" />}
             renderPreview={() => <StyleguideNavbarPreview state="theme" />}
             previewMinHeight={172}
-            code={`import ThemeModeToggle from "@/app/components/ThemeModeToggle";
+            code={`import ThemeModeToggle from "@/app/components/shell/ThemeModeToggle";
 
 export function NavbarThemeAction() {
   // ThemeModeToggle uses the same icon size, border and hover tokens as the navbar.

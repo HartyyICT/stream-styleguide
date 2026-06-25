@@ -3,7 +3,7 @@
 import { Box, type BoxProps } from "@mui/material";
 import { type ReactNode } from "react";
 import { radius } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "./useDocumentationStyles";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface IconBoxProps extends BoxProps {
   children: ReactNode;

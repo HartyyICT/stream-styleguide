@@ -2,7 +2,7 @@
 
 import { Box, Divider, Typography } from "@mui/material";
 import type { ReactNode } from "react";
-import { useDocumentationStyles } from "./useDocumentationStyles";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface SectionProps {
   id: string;

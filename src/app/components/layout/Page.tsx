@@ -2,10 +2,10 @@
 
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
-import DocumentationLayout from "@/app/components/DocumentationLayout";
+import DocumentationLayout from "@/app/components/layout/DocumentationLayout";
 import OnThisPage, {
   type OnThisPageItem,
-} from "@/app/components/OnThisPage";
+} from "@/app/components/patterns/OnThisPage";
 
 interface PageProps {
   pageId: string;

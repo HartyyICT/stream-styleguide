@@ -7,8 +7,8 @@ import {
   borderWidths,
   colors,
   interactionStates,
-} from "../theme/tokens";
-import { useColorMode } from "../theme/themeProvider";
+} from "../../theme/tokens";
+import { useColorMode } from "../../theme/themeProvider";
 
 export interface OnThisPageItem {
   label: string;

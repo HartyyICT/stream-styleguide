@@ -10,15 +10,15 @@ import {
   Settings,
   Trash2,
 } from "lucide-react";
-import Card from "@/app/components/documentation/Card";
-import Button from "@/app/components/documentation/Button";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import CodeExample from "@/app/components/documentation/CodeExample";
-import GuidelineList from "@/app/components/documentation/GuidelineList";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import Section from "@/app/components/documentation/Section";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import Card from "@/app/components/atoms/Card";
+import Button from "@/app/components/atoms/Button";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import GuidelineList from "@/app/components/patterns/GuidelineList";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import Section from "@/app/components/layout/Section";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import { borderWidths, radius, spacing } from "@/app/theme/tokens";
 
 const sections = [
@@ -203,7 +203,7 @@ const accessibilityGuidelines = [
   "Important or destructive actions should not rely on color alone.",
 ] as const;
 
-const primaryButtonCode = `import Button from "@/app/components/documentation/Button";
+const primaryButtonCode = `import Button from "@/app/components/atoms/Button";
 import { Check } from "lucide-react";
 
 // Change the text or startIcon to show a different action.
@@ -212,7 +212,7 @@ import { Check } from "lucide-react";
   Save changes
 </Button>`;
 
-const secondaryButtonCode = `import Button from "@/app/components/documentation/Button";
+const secondaryButtonCode = `import Button from "@/app/components/atoms/Button";
 
 // Change the variant to adjust the visual emphasis.
 // Examples: "secondary", "tertiary", "disabled".
@@ -220,7 +220,7 @@ const secondaryButtonCode = `import Button from "@/app/components/documentation/
   Cancel
 </Button>`;
 
-const iconButtonCode = `import Button from "@/app/components/documentation/Button";
+const iconButtonCode = `import Button from "@/app/components/atoms/Button";
 import { Search } from "lucide-react";
 
 // Change aria-label and the icon so the action stays clear.
@@ -229,7 +229,7 @@ import { Search } from "lucide-react";
   <Search />
 </Button>`;
 
-const destructiveButtonCode = `import Button from "@/app/components/documentation/Button";
+const destructiveButtonCode = `import Button from "@/app/components/atoms/Button";
 import { Trash2 } from "lucide-react";
 
 // Use destructive only for actions with negative impact.

@@ -9,16 +9,16 @@ import {
   ScanSearch,
   ShieldCheck,
 } from "lucide-react";
-import Card from "@/app/components/documentation/Card";
-import CardTitle from "@/app/components/documentation/CardTitle";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import CodeExample from "@/app/components/documentation/CodeExample";
-import GuidelineList from "@/app/components/documentation/GuidelineList";
-import Intro from "@/app/components/documentation/Intro";
-import IconBox from "@/app/components/documentation/IconBox";
-import Page from "@/app/components/documentation/Page";
-import Section from "@/app/components/documentation/Section";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import Card from "@/app/components/atoms/Card";
+import CardTitle from "@/app/components/atoms/CardTitle";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import GuidelineList from "@/app/components/patterns/GuidelineList";
+import Intro from "@/app/components/layout/Intro";
+import IconBox from "@/app/components/atoms/IconBox";
+import Page from "@/app/components/layout/Page";
+import Section from "@/app/components/layout/Section";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   borderWidths,
   iconSizes,
@@ -319,7 +319,7 @@ export default function AccessibilityPage() {
               </Typography>
             </Box>
           }
-          code={`import Button from "@/app/components/documentation/Button";
+          code={`import Button from "@/app/components/atoms/Button";
 import { Settings } from "lucide-react";
 
 export function AccessibleIconAction() {

@@ -30,9 +30,9 @@ import {
   shadows,
   spacing,
 } from "@/app/theme/tokens";
-import Button from "./Button";
-import Card from "./Card";
-import { useDocumentationStyles } from "./useDocumentationStyles";
+import Button from "@/app/components/atoms/Button";
+import Card from "@/app/components/atoms/Card";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface CodeExampleProps {
   title?: string;

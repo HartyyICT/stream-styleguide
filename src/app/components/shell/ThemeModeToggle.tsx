@@ -2,7 +2,7 @@
 
 import { IconButton, Tooltip } from "@mui/material";
 import { Moon, Sun } from "lucide-react";
-import { useColorMode } from "../theme/themeProvider";
+import { useColorMode } from "../../theme/themeProvider";
 import {
   borderColors,
   borderWidths,
@@ -10,7 +10,7 @@ import {
   iconSizes,
   interactionStates,
   radius,
-} from "../theme/tokens";
+} from "../../theme/tokens";
 
 export default function ThemeModeToggle() {
   const { mode, toggleColorMode } = useColorMode();

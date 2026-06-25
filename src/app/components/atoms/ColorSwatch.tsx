@@ -6,8 +6,8 @@ import {
   colors,
   radius,
   shadows,
-} from "../theme/tokens";
-import { useColorMode } from "../theme/themeProvider";
+} from "../../theme/tokens";
+import { useColorMode } from "../../theme/themeProvider";
 
 interface ColorSwatchProps {
   name: string;

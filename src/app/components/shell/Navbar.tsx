@@ -7,10 +7,10 @@ import {
   colors,
   interactionStates,
   radius,
-} from "../theme/tokens";
-import { useColorMode } from "../theme/themeProvider";
-import ThemeModeToggle from "./ThemeModeToggle";
-import SearchDialog from "./SearchDialog";
+} from "../../theme/tokens";
+import { useColorMode } from "../../theme/themeProvider";
+import ThemeModeToggle from "@/app/components/shell/ThemeModeToggle";
+import SearchDialog from "@/app/components/search/SearchDialog";
 
 export default function Navbar() {
   const { mode } = useColorMode();
