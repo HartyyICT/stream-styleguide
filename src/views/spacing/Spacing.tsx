@@ -15,9 +15,9 @@ const spacingSections = [
   { label: "Overview", href: "#spacing" },
   { label: "Spacing scale", href: "#spacing-scale" },
   { label: "Token usage", href: "#token-usage" },
-  { label: "Code examples", href: "#code-examples" },
   { label: "Usage levels", href: "#usage-levels" },
   { label: "Layout examples", href: "#layout-examples" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -230,64 +230,6 @@ export default function SpacingPage() {
                 </Box>
               ))}
             </Box>
-          </Box>
-
-          <Divider sx={{ my: 6 }} />
-
-          <Box
-            component="section"
-            id="code-examples"
-            sx={{ scrollMarginTop: 96 }}
-          >
-            <Typography variant="h2" sx={{ mb: 1.5 }}>
-              Code examples
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
-            >
-              Use spacing tokens for padding and gaps so repeated layouts stay
-              consistent.
-            </Typography>
-            <CodeExample
-              title="Card spacing"
-              preview={
-                <Box
-                  sx={{
-                    display: "grid",
-                    gap: spacing.sm,
-                    p: spacing.md,
-                    border: `1px solid ${border}`,
-                    borderRadius: radius.medium,
-                    backgroundColor: surface,
-                  }}
-                >
-                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                    Form section
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: secondaryText }}>
-                    xs for tight spacing, md for component padding.
-                  </Typography>
-                </Box>
-              }
-              code={`import { spacing, radius } from "@/app/theme/tokens";
-
-export function SpacingPreview() {
-  return (
-    <section
-      style={{
-        display: "grid",
-        gap: spacing.sm,
-        padding: spacing.md,
-        borderRadius: radius.medium,
-      }}
-    >
-      <strong>Form section</strong>
-      <span>Consistent token spacing</span>
-    </section>
-  );
-}`}
-            />
           </Box>
 
           <Divider sx={{ my: 6 }} />
@@ -584,7 +526,73 @@ export function SpacingPreview() {
 
           <Divider sx={{ my: 6 }} />
 
-          <Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
+          <Box
+            component="section"
+            id="code-examples"
+            sx={{ scrollMarginTop: 96 }}
+          >
+            <Typography variant="h2" sx={{ mb: 1.5 }}>
+              Code examples
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
+            >
+              Use spacing tokens for padding and gaps so repeated layouts stay
+              consistent.
+            </Typography>
+            <CodeExample
+              title="Card spacing"
+              preview={
+                <Box
+                  sx={{
+                    display: "grid",
+                    gap: spacing.sm,
+                    p: spacing.md,
+                    border: `1px solid ${border}`,
+                    borderRadius: radius.medium,
+                    backgroundColor: surface,
+                  }}
+                >
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                    Form section
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: secondaryText }}>
+                    xs for tight spacing, md for component padding.
+                  </Typography>
+                </Box>
+              }
+              code={`import { spacing, radius } from "@/app/theme/tokens";
+
+export function SpacingPreview() {
+  return (
+    <section
+      style={{
+        display: "grid",
+        // Change gap to test the space between items.
+        // Examples: spacing.xs, spacing.sm, spacing.md, spacing.lg.
+        gap: spacing.sm,
+        // Change padding to test the inner spacing.
+        // Examples: spacing.md, spacing.lg, spacing.xl.
+        padding: spacing.md,
+        // Change radius to test the surface corner rounding.
+        // Examples: radius.small, radius.medium, radius.large.
+        borderRadius: radius.medium,
+      }}
+    >
+      <strong>Form section</strong>
+      <span>Consistent token spacing</span>
+    </section>
+  );
+}`}
+            />
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          
+
+<Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Guidelines
             </Typography>

@@ -15,9 +15,9 @@ const elevationSections = [
   { label: "Overview", href: "#elevation" },
   { label: "Elevation scale", href: "#elevation-scale" },
   { label: "Token usage", href: "#token-usage" },
-  { label: "Code examples", href: "#code-examples" },
   { label: "Usage levels", href: "#usage-levels" },
   { label: "Layering example", href: "#layering-example" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -217,53 +217,6 @@ export default function ElevationPage() {
 
           <Divider sx={{ my: 6 }} />
 
-          <Box
-            component="section"
-            id="code-examples"
-            sx={{ scrollMarginTop: 96 }}
-          >
-            <Typography variant="h2" sx={{ mb: 1.5 }}>
-              Code examples
-            </Typography>
-            <Typography sx={{ mb: 3, color: secondaryText, lineHeight: 1.7 }}>
-              Apply elevation only when a surface needs extra hierarchy.
-            </Typography>
-            <CodeExample
-              title="Raised surface"
-              preview={
-                <Box
-                  sx={{
-                    p: spacing.md,
-                    borderRadius: radius.large,
-                    backgroundColor: surface,
-                    boxShadow: shadows.level2,
-                  }}
-                >
-                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                    Dropdown panel
-                  </Typography>
-                </Box>
-              }
-              code={`import { radius, shadows, spacing } from "@/app/theme/tokens";
-
-export function RaisedSurface() {
-  return (
-    <div
-      style={{
-        padding: spacing.md,
-        borderRadius: radius.large,
-        boxShadow: shadows.level2,
-      }}
-    >
-      Dropdown panel
-    </div>
-  );
-}`}
-            />
-          </Box>
-
-          <Divider sx={{ my: 6 }} />
-
           <Box component="section" id="usage-levels" sx={{ scrollMarginTop: 96 }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Usage levels
@@ -416,7 +369,62 @@ export function RaisedSurface() {
 
           <Divider sx={{ my: 6 }} />
 
-          <Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
+          <Box
+            component="section"
+            id="code-examples"
+            sx={{ scrollMarginTop: 96 }}
+          >
+            <Typography variant="h2" sx={{ mb: 1.5 }}>
+              Code examples
+            </Typography>
+            <Typography sx={{ mb: 3, color: secondaryText, lineHeight: 1.7 }}>
+              Apply elevation only when a surface needs extra hierarchy.
+            </Typography>
+            <CodeExample
+              title="Raised surface"
+              preview={
+                <Box
+                  sx={{
+                    p: spacing.md,
+                    borderRadius: radius.large,
+                    backgroundColor: surface,
+                    boxShadow: shadows.level2,
+                  }}
+                >
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                    Dropdown panel
+                  </Typography>
+                </Box>
+              }
+              code={`import { radius, shadows, spacing } from "@/app/theme/tokens";
+
+export function RaisedSurface() {
+  return (
+    <div
+      style={{
+        // Change padding to test more or less space inside the surface.
+        // Examples: spacing.sm, spacing.md, spacing.lg.
+        padding: spacing.md,
+        // Change radius to match the surface type.
+        // Examples: radius.medium, radius.large, radius.extraLarge.
+        borderRadius: radius.large,
+        // Change shadow to test the interface layer.
+        // Examples: shadows.level0, shadows.level1, shadows.level2, shadows.level4.
+        boxShadow: shadows.level2,
+      }}
+    >
+      Dropdown panel
+    </div>
+  );
+}`}
+            />
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          
+
+<Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Guidelines
             </Typography>

@@ -283,6 +283,8 @@ import { iconSizes } from "@/app/theme/tokens";
         </Box>
       </Section>
 
+      
+
       <Section
         id="code-examples"
         title="Code examples"
@@ -310,6 +312,8 @@ import { iconSizes } from "@/app/theme/tokens";
 import { Search } from "lucide-react";
 
 export function IconButtonExample() {
+  // Change aria-label and the icon based on the action.
+  // Examples: Search, Settings, Download, Filter from lucide-react.
   return (
     <Button variant="icon" iconOnly aria-label="Search">
       <Search />
@@ -319,7 +323,7 @@ export function IconButtonExample() {
         />
       </Section>
 
-      <Section
+<Section
         id="guidelines"
         title="Guidelines"
         description="A restrained icon language improves scanability without adding ambiguity."

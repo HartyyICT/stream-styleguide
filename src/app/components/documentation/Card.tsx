@@ -31,6 +31,7 @@ export default function Card({
         backgroundColor: surface,
         boxShadow: elevated ? shadows.level1 : shadows.level0,
         ...(interactive && {
+          cursor: "pointer",
           transition:
             "color 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease",
           "&:hover": {

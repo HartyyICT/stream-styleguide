@@ -27,8 +27,8 @@ const sections = [
   { label: "Button scale", href: "#button-scale" },
   { label: "Size scale", href: "#size-scale" },
   { label: "Usage examples", href: "#usage-examples" },
-  { label: "Code examples", href: "#code-examples" },
   { label: "Token usage", href: "#token-usage" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -206,12 +206,16 @@ const accessibilityGuidelines = [
 const primaryButtonCode = `import Button from "@/app/components/documentation/Button";
 import { Check } from "lucide-react";
 
+// Change the text or startIcon to show a different action.
+// Examples: "Save changes", "Create task", "Continue".
 <Button startIcon={<Check />}>
   Save changes
 </Button>`;
 
 const secondaryButtonCode = `import Button from "@/app/components/documentation/Button";
 
+// Change the variant to adjust the visual emphasis.
+// Examples: "secondary", "tertiary", "disabled".
 <Button variant="secondary">
   Cancel
 </Button>`;
@@ -219,6 +223,8 @@ const secondaryButtonCode = `import Button from "@/app/components/documentation/
 const iconButtonCode = `import Button from "@/app/components/documentation/Button";
 import { Search } from "lucide-react";
 
+// Change aria-label and the icon so the action stays clear.
+// Examples: aria-label="Search", "Edit", "Open settings".
 <Button variant="icon" iconOnly aria-label="Search">
   <Search />
 </Button>`;
@@ -226,6 +232,8 @@ import { Search } from "lucide-react";
 const destructiveButtonCode = `import Button from "@/app/components/documentation/Button";
 import { Trash2 } from "lucide-react";
 
+// Use destructive only for actions with negative impact.
+// Examples: "Delete", "Reset", "Remove user".
 <Button variant="destructive" startIcon={<Trash2 />}>
   Delete
 </Button>`;
@@ -749,57 +757,7 @@ export default function ButtonsPage() {
         </Box>
       </Section>
 
-      <Section
-        id="code-examples"
-        title="Code examples"
-        description="Copy or edit the example code while keeping the visual preview in the same Stream documentation style."
-      >
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(2, minmax(0, 1fr))" },
-            gap: 2,
-          }}
-        >
-          <CodeExample
-            title="Primary button"
-            code={primaryButtonCode}
-            preview={
-              <Button startIcon={<Check />}>Save changes</Button>
-            }
-            renderPreview={renderEditableButtonPreview}
-          />
-
-          <CodeExample
-            title="Secondary button"
-            code={secondaryButtonCode}
-            preview={<Button variant="secondary">Cancel</Button>}
-            renderPreview={renderEditableButtonPreview}
-          />
-
-          <CodeExample
-            title="Icon button"
-            code={iconButtonCode}
-            preview={
-              <Button variant="icon" iconOnly aria-label="Search">
-                <Search />
-              </Button>
-            }
-            renderPreview={renderEditableButtonPreview}
-          />
-
-          <CodeExample
-            title="Destructive button"
-            code={destructiveButtonCode}
-            preview={
-              <Button variant="destructive" startIcon={<Trash2 />}>
-                Delete
-              </Button>
-            }
-            renderPreview={renderEditableButtonPreview}
-          />
-        </Box>
-      </Section>
+      
 
       <Section
         id="token-usage"
@@ -854,6 +812,58 @@ const mediumButton = {
       </Section>
 
       <Section
+        id="code-examples"
+        title="Code examples"
+        description="Copy or edit the example code while keeping the visual preview in the same Stream documentation style."
+      >
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "repeat(2, minmax(0, 1fr))" },
+            gap: 2,
+          }}
+        >
+          <CodeExample
+            title="Primary button"
+            code={primaryButtonCode}
+            preview={
+              <Button startIcon={<Check />}>Save changes</Button>
+            }
+            renderPreview={renderEditableButtonPreview}
+          />
+
+          <CodeExample
+            title="Secondary button"
+            code={secondaryButtonCode}
+            preview={<Button variant="secondary">Cancel</Button>}
+            renderPreview={renderEditableButtonPreview}
+          />
+
+          <CodeExample
+            title="Icon button"
+            code={iconButtonCode}
+            preview={
+              <Button variant="icon" iconOnly aria-label="Search">
+                <Search />
+              </Button>
+            }
+            renderPreview={renderEditableButtonPreview}
+          />
+
+          <CodeExample
+            title="Destructive button"
+            code={destructiveButtonCode}
+            preview={
+              <Button variant="destructive" startIcon={<Trash2 />}>
+                Delete
+              </Button>
+            }
+            renderPreview={renderEditableButtonPreview}
+          />
+        </Box>
+      </Section>
+
+<Section
         id="guidelines"
         title="Guidelines"
         description="These rules keep button usage predictable in data-heavy enterprise screens."

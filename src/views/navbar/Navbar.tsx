@@ -1,7 +1,9 @@
 "use client";
 
 import { Box, Chip, Typography } from "@mui/material";
-import { BookOpen, Moon, Search } from "lucide-react";
+import { BookOpen } from "lucide-react";
+import SearchDialog from "@/app/components/SearchDialog";
+import ThemeModeToggle from "@/app/components/ThemeModeToggle";
 import Card from "@/app/components/documentation/Card";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
 import CodeExample from "@/app/components/documentation/CodeExample";
@@ -10,20 +12,15 @@ import Intro from "@/app/components/documentation/Intro";
 import Page from "@/app/components/documentation/Page";
 import Section from "@/app/components/documentation/Section";
 import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
-import {
-  borderWidths,
-  colors,
-  radius,
-  shadows,
-} from "@/app/theme/tokens";
+import { borderWidths, colors, radius, shadows } from "@/app/theme/tokens";
 
 const sections = [
   { label: "Overview", href: "#navbar" },
   { label: "Anatomy", href: "#anatomy" },
   { label: "Behaviour", href: "#behaviour" },
   { label: "States", href: "#states" },
-  { label: "Usage example", href: "#usage-example" },
   { label: "Token usage", href: "#token-usage" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -38,11 +35,124 @@ const anatomy = [
 const guidelines = [
   "Keep the navbar persistent at the top of documentation and application shells.",
   "Use the brand area for product identity, not page-specific titles.",
-  "Keep global actions grouped on the right side.",
-  "Avoid placing too many actions in the navbar; move secondary navigation into the sidebar or page content.",
+  "Keep search and theme switching grouped on the right side.",
+  "Do not add page navigation or hamburger menus to the navbar; navigation belongs in the sidebar.",
   "Preserve enough spacing between search, theme toggle and future global actions.",
   "Keep height, border, icon size and typography consistent across products.",
 ] as const;
+
+function StyleguideNavbarPreview({
+  state = "default",
+}: {
+  state?: "default" | "search" | "theme";
+}) {
+  const {
+    borders,
+    surface,
+    primaryText,
+    secondaryText,
+    accent,
+    selectedBackground,
+  } = useDocumentationStyles();
+
+  return (
+    <Box sx={{ width: "100%", display: "grid", gap: 1.5 }}>
+      <Box
+        sx={{
+          height: 64,
+          px: { xs: 2, md: 3 },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 1.5,
+          backgroundColor: surface,
+          border: `${borderWidths.subtle} solid ${borders.subtle}`,
+          borderRadius: radius.medium,
+          boxShadow: shadows.level1,
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Box
+            sx={{
+              width: 36,
+              height: 36,
+              display: "grid",
+              placeItems: "center",
+              borderRadius: radius.medium,
+              color: colors.semantic.surface,
+              backgroundColor: colors.primary[500],
+            }}
+          >
+            <BookOpen size={20} aria-hidden="true" />
+          </Box>
+
+          <Box>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: primaryText,
+                fontFamily: "var(--font-poppins), sans-serif",
+                fontWeight: 600,
+                lineHeight: 1.2,
+              }}
+            >
+              Stream Design System
+            </Typography>
+
+            <Typography variant="caption" sx={{ color: secondaryText }}>
+              Styleguide
+            </Typography>
+          </Box>
+
+          <Chip
+            label="v0.1"
+            size="small"
+            sx={{
+              display: { xs: "none", sm: "inline-flex" },
+              backgroundColor: selectedBackground,
+              color: accent,
+              fontWeight: 700,
+            }}
+          />
+        </Box>
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <SearchDialog />
+          <ThemeModeToggle />
+        </Box>
+      </Box>
+
+      {state === "search" && (
+        <Box
+          sx={{
+            p: 1.5,
+            border: `${borderWidths.default} solid ${borders.default}`,
+            borderRadius: radius.medium,
+            backgroundColor: selectedBackground,
+          }}
+        >
+          <Typography variant="caption" sx={{ color: accent, fontWeight: 700 }}>
+            Search modal opens from this exact searchbar pattern.
+          </Typography>
+        </Box>
+      )}
+      {state === "theme" && (
+        <Box
+          sx={{
+            p: 1.5,
+            border: `${borderWidths.default} solid ${borders.default}`,
+            borderRadius: radius.medium,
+            backgroundColor: selectedBackground,
+          }}
+        >
+          <Typography variant="caption" sx={{ color: accent, fontWeight: 700 }}>
+            Theme mode is handled by the exact navbar toggle component.
+          </Typography>
+        </Box>
+      )}
+    </Box>
+  );
+}
 
 export default function NavbarPage() {
   const {
@@ -59,24 +169,24 @@ export default function NavbarPage() {
       <Intro
         title="Navbar"
         description="The navbar provides persistent product identity and access to global documentation actions. It helps users understand where they are and gives quick access to search and theme controls."
-        note="Use the navbar for stable global actions. Page-specific navigation belongs in the sidebar, on-this-page navigation or page content."
+        note="This page documents the actual Stream styleguide navbar: brand on the left, searchbar and theme toggle on the right."
       />
 
       <Section
         id="anatomy"
         title="Anatomy"
-        description="The Stream navbar is built from a small set of predictable regions."
+        description="The Stream navbar is built from the exact regions used in the current styleguide shell."
         divider={false}
       >
         <Card sx={{ p: 0, overflow: "hidden" }}>
           <Box
             sx={{
               height: 64,
-              px: 2,
+              px: { xs: 2, md: 3 },
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              gap: 2,
+              gap: 1.5,
               borderBottom: `${borderWidths.subtle} solid ${borders.subtle}`,
               backgroundColor: surface,
             }}
@@ -115,36 +225,8 @@ export default function NavbarPage() {
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Box
-                sx={{
-                  width: 240,
-                  height: 40,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  px: 1.5,
-                  color: secondaryText,
-                  border: `${borderWidths.subtle} solid ${borders.subtle}`,
-                  borderRadius: radius.medium,
-                  boxShadow: shadows.level1,
-                }}
-              >
-                <Search size={18} />
-                <Typography variant="body2">Search documentation...</Typography>
-              </Box>
-              <Box
-                sx={{
-                  width: 38,
-                  height: 38,
-                  display: "grid",
-                  placeItems: "center",
-                  color: secondaryText,
-                  border: `${borderWidths.subtle} solid ${borders.subtle}`,
-                  borderRadius: radius.medium,
-                }}
-              >
-                <Moon size={19} />
-              </Box>
+              <SearchDialog />
+              <ThemeModeToggle />
             </Box>
           </Box>
         </Card>
@@ -159,7 +241,10 @@ export default function NavbarPage() {
         >
           {anatomy.map((item) => (
             <Card key={item}>
-              <Typography variant="body2" sx={{ color: secondaryText, lineHeight: 1.7 }}>
+              <Typography
+                variant="body2"
+                sx={{ color: secondaryText, lineHeight: 1.7 }}
+              >
                 {item}
               </Typography>
             </Card>
@@ -187,127 +272,30 @@ export default function NavbarPage() {
       <Section
         id="states"
         title="States"
-        description="Navbar controls should clearly show resting, hover and active feedback without changing layout."
+        description="Navbar controls use the same interaction tokens as the real searchbar and theme toggle."
       >
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" },
-            gap: 2,
-          }}
-        >
+        <Box sx={{ display: "grid", gap: 2 }}>
           <Card>
             <Typography variant="h3" sx={{ mb: 2 }}>
               Default
             </Typography>
-            <Box
-              sx={{
-                width: 44,
-                height: 44,
-                display: "grid",
-                placeItems: "center",
-                color: secondaryText,
-                border: `${borderWidths.default} solid ${borders.default}`,
-                borderRadius: radius.medium,
-                backgroundColor: surface,
-              }}
-            >
-              <Moon size={19} />
-            </Box>
+            <StyleguideNavbarPreview />
           </Card>
 
           <Card>
             <Typography variant="h3" sx={{ mb: 2 }}>
-              Hover
+              Search active
             </Typography>
-            <Box
-              sx={{
-                width: 44,
-                height: 44,
-                display: "grid",
-                placeItems: "center",
-                color: accent,
-                border: `${borderWidths.default} solid ${borders.interactive}`,
-                borderRadius: radius.medium,
-                backgroundColor: selectedBackground,
-              }}
-            >
-              <Moon size={19} />
-            </Box>
+            <StyleguideNavbarPreview state="search" />
           </Card>
 
           <Card>
             <Typography variant="h3" sx={{ mb: 2 }}>
-              Active
+              Theme toggle
             </Typography>
-            <Box
-              sx={{
-                height: 44,
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                px: 1.5,
-                color: accent,
-                border: `${borderWidths.default} solid ${borders.active}`,
-                borderRadius: radius.medium,
-                backgroundColor: selectedBackground,
-              }}
-            >
-              <Search size={18} />
-              <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                Search focused
-              </Typography>
-            </Box>
+            <StyleguideNavbarPreview state="theme" />
           </Card>
         </Box>
-      </Section>
-
-      <Section
-        id="usage-example"
-        title="Usage example"
-        description="The styleguide currently uses the navbar as part of its documentation layout."
-      >
-        <CodeExample
-          title="Documentation navbar"
-          preview={
-            <Box
-              sx={{
-                width: "100%",
-                maxWidth: 540,
-                height: 52,
-                px: 1.5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 1.5,
-                border: `${borderWidths.default} solid ${borders.default}`,
-                borderRadius: radius.medium,
-                backgroundColor: surface,
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <BookOpen size={20} color={accent} />
-                <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                  Stream Design System
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Search size={17} color={secondaryText} />
-                <Moon size={17} color={secondaryText} />
-              </Box>
-            </Box>
-          }
-          code={`import Navbar from "@/app/components/Navbar";
-
-export default function DocumentationLayout({ children }) {
-  return (
-    <>
-      <Navbar />
-      {children}
-    </>
-  );
-}`}
-        />
       </Section>
 
       <Section
@@ -315,15 +303,84 @@ export default function DocumentationLayout({ children }) {
         title="Token usage"
         description="Navbar styling should use the same foundation tokens as the rest of the interface."
       >
-        <CodeBlock>{`import { borderWidths, colors, radius, shadows } from "@/app/theme/tokens";
+        <CodeBlock>{`import {
+  borderColors,
+  borderWidths,
+  colors,
+  interactionStates,
+  radius,
+  shadows,
+} from "@/app/theme/tokens";
 
 const navbar = {
   height: 64,
   backgroundColor: colors.semantic.surface,
-  borderBottom: \`\${borderWidths.subtle} solid token.border.subtle\`,
-  boxShadow: shadows.level0,
+  borderBottom: borderColors.light.subtle,
+  borderWidth: borderWidths.subtle,
   borderRadius: radius.medium,
+  boxShadow: shadows.level1,
+};
+
+const searchbarHover = {
+  color: interactionStates.light.hoverContent,
+  borderColor: interactionStates.light.hoverBorder,
+  backgroundColor: interactionStates.light.hoverBackground,
 };`}</CodeBlock>
+      </Section>
+
+      <Section
+        id="code-examples"
+        title="Code examples"
+        description="Use the real Stream navbar components. These examples intentionally match the current styleguide shell instead of showing generic app bars."
+      >
+        <Box sx={{ display: "grid", gap: 2 }}>
+          <CodeExample
+            title="Current styleguide navbar"
+            preview={<StyleguideNavbarPreview />}
+            renderPreview={() => <StyleguideNavbarPreview />}
+            previewMinHeight={172}
+            code={`import Navbar from "@/app/components/Navbar";
+
+export default function DocumentationLayout({ children }) {
+  // The navbar is shared by the full styleguide shell.
+  // Change brand, version, search or theme actions centrally in Navbar.
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
+}`}
+          />
+
+          <CodeExample
+            title="Navbar searchbar"
+            preview={<StyleguideNavbarPreview state="search" />}
+            renderPreview={() => <StyleguideNavbarPreview state="search" />}
+            previewMinHeight={196}
+            code={`import SearchDialog from "@/app/components/SearchDialog";
+
+export function NavbarSearchArea() {
+  // SearchDialog renders the exact styleguide searchbar.
+  // It also handles the Ctrl K shortcut and opens the search modal.
+  return <SearchDialog />;
+}`}
+          />
+
+          <CodeExample
+            title="Theme mode toggle"
+            preview={<StyleguideNavbarPreview state="theme" />}
+            renderPreview={() => <StyleguideNavbarPreview state="theme" />}
+            previewMinHeight={172}
+            code={`import ThemeModeToggle from "@/app/components/ThemeModeToggle";
+
+export function NavbarThemeAction() {
+  // ThemeModeToggle uses the same icon size, border and hover tokens as the navbar.
+  // Keep it as the only theme action in the navbar.
+  return <ThemeModeToggle />;
+}`}
+          />
+        </Box>
       </Section>
 
       <Section

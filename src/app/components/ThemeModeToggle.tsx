@@ -44,6 +44,15 @@ export default function ThemeModeToggle() {
             border: `${borderWidths.interactive} solid ${interaction.hoverBorder}`,
             backgroundColor: interaction.hoverBackground,
           },
+          "&:active": {
+            backgroundColor: interaction.activeBackground,
+          },
+          "& .MuiTouchRipple-child": {
+            backgroundColor: interaction.activeIndicator,
+          },
+          "& .MuiTouchRipple-rippleVisible": {
+            opacity: 0.18,
+          },
         }}
       >
         {isDarkMode ? <Sun size={19} /> : <Moon size={19} />}

@@ -61,6 +61,7 @@ const guidelines = [
 
 export default function BordersPage() {
   const {
+    isDarkMode,
     borders,
     interaction,
     surface,
@@ -72,42 +73,42 @@ export default function BordersPage() {
   const borderScale = [
     {
       name: "Subtle",
-      token: "borders.subtle",
+      token: `borderColors.${isDarkMode ? "dark" : "light"}.subtle`,
       color: borders.subtle,
       width: borderWidths.subtle,
       use: "Dividers and subtle separation",
     },
     {
       name: "Default",
-      token: "borders.default",
+      token: `borderColors.${isDarkMode ? "dark" : "light"}.default`,
       color: borders.default,
       width: borderWidths.default,
       use: "Cards, inputs and panels",
     },
     {
       name: "Interactive",
-      token: "borders.interactive",
+      token: `borderColors.${isDarkMode ? "dark" : "light"}.interactive`,
       color: borders.interactive,
       width: borderWidths.interactive,
       use: "Hover and interactive outlines",
     },
     {
       name: "Active",
-      token: "borders.active",
+      token: `borderColors.${isDarkMode ? "dark" : "light"}.active`,
       color: borders.active,
       width: borderWidths.active,
       use: "Active navigation indicators",
     },
     {
       name: "Focus",
-      token: "borders.focus",
+      token: `borderColors.${isDarkMode ? "dark" : "light"}.focus`,
       color: borders.focus,
       width: borderWidths.focus,
       use: "Keyboard focus rings",
     },
     {
       name: "Accent",
-      token: "borders.accent",
+      token: `borderColors.${isDarkMode ? "dark" : "light"}.accent`,
       color: borders.accent,
       width: borderWidths.accent,
       use: "Callouts and highlighted information",
@@ -472,6 +473,8 @@ const cardSx = {
         </Box>
       </Section>
 
+      
+
       <Section
         id="code-examples"
         title="Code examples"
@@ -494,19 +497,22 @@ const cardSx = {
               </Typography>
             </Box>
           }
-          code={`import { borderWidths, radius } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+          code={`import { borderColors, borderWidths, colors, radius } from "@/app/theme/tokens";
 
 export function InteractiveBorderExample() {
-  const { borders, interaction } = useDocumentationStyles();
-
   return (
     <div
       style={{
-        color: interaction.hoverContent,
-        border: \`\${borderWidths.interactive} solid \${borders.interactive}\`,
+        color: colors.primary[600],
+        // Change the border width to test visual emphasis.
+        // Examples: borderWidths.default, borderWidths.interactive, borderWidths.focus, borderWidths.accent.
+        border: \`\${borderWidths.interactive} solid \${borderColors.light.interactive}\`,
+        // Change radius to test different component shapes.
+        // Examples: radius.small, radius.medium, radius.large, radius.extraLarge.
         borderRadius: radius.medium,
-        backgroundColor: interaction.hoverBackground,
+        // Change backgroundColor with your color tokens.
+        // Examples: colors.neutral[50], colors.neutral[100], colors.primary[50].
+        backgroundColor: colors.neutral[100],
       }}
     >
       Hoverable card
@@ -516,7 +522,7 @@ export function InteractiveBorderExample() {
         />
       </Section>
 
-      <Section
+<Section
         id="guidelines"
         title="Guidelines"
         description="Consistent borders make complex enterprise interfaces easier to scan."

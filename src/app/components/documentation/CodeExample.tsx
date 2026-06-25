@@ -7,6 +7,8 @@ import {
   Code2,
   Copy,
   EyeOff,
+  Download,
+  Filter,
   Grid3X3,
   Keyboard,
   Moon,
@@ -20,7 +22,14 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { borderWidths, colors, radius, shadows, spacing } from "@/app/theme/tokens";
+import {
+  borderColors,
+  borderWidths,
+  colors,
+  radius,
+  shadows,
+  spacing,
+} from "@/app/theme/tokens";
 import Button from "./Button";
 import Card from "./Card";
 import { useDocumentationStyles } from "./useDocumentationStyles";
@@ -31,6 +40,7 @@ interface CodeExampleProps {
   preview: ReactNode;
   renderPreview?: (code: string) => ReactNode;
   editable?: boolean;
+  previewMinHeight?: number | string;
 }
 
 export default function CodeExample({
@@ -39,6 +49,7 @@ export default function CodeExample({
   preview,
   renderPreview,
   editable = true,
+  previewMinHeight,
 }: CodeExampleProps) {
   const { borders, surface, subtleBackground, primaryText, secondaryText, accent } =
     useDocumentationStyles();
@@ -46,6 +57,13 @@ export default function CodeExample({
   const [isEditing, setIsEditing] = useState(false);
   const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
+  const isElevationExample = currentCode.includes("boxShadow");
+  const needsTallPreview =
+    isElevationExample ||
+    currentCode.includes("borderWidths") ||
+    (currentCode.includes("spacing.") && !currentCode.includes("gridTemplateColumns"));
+  const codeLineCount = currentCode.split(/\r\n|\r|\n/).length;
+  const codePanelHeight = Math.max(220, codeLineCount * 22 + 32);
 
   async function copyCode() {
     await navigator.clipboard.writeText(currentCode);
@@ -64,6 +82,7 @@ export default function CodeExample({
   }
 
   function renderAutomaticPreview(codeValue: string) {
+    const codeWithoutLineComments = codeValue.replace(/\/\/.*$/gm, "");
     const buttonVariant = codeValue.match(/variant=["']([^"']+)["']/)?.[1] as
       | "primary"
       | "secondary"
@@ -77,7 +96,13 @@ export default function CodeExample({
       const iconOnly = /\siconOnly(\s|>)/.test(codeValue);
 
       if (iconOnly) {
-        const Icon = codeValue.includes("<Settings") ? Settings : Search;
+        const Icon = codeValue.includes("<Settings")
+          ? Settings
+          : codeValue.includes("<Download")
+            ? Download
+            : codeValue.includes("<Filter")
+              ? Filter
+              : Search;
 
         return (
           <Button
@@ -106,10 +131,13 @@ export default function CodeExample({
       );
     }
 
-    const colorMatch = codeValue.match(/colors\.primary\[(\d+)\]/);
+    const colorMatch = codeValue.match(/backgroundColor:\s*colors\.primary\[(\d+)\]/);
     if (colorMatch) {
       const shade = colorMatch[1] as unknown as keyof typeof colors.primary;
       const backgroundColor = colors.primary[shade] ?? colors.primary[500];
+      const radiusToken = codeValue.match(/borderRadius:\s*radius\.(\w+)/)?.[1] as
+        | keyof typeof radius
+        | undefined;
 
       return (
         <Box
@@ -118,7 +146,7 @@ export default function CodeExample({
             py: 1,
             color: colors.semantic.surface,
             backgroundColor,
-            borderRadius: radius.medium,
+            borderRadius: radiusToken ? radius[radiusToken] : radius.medium,
             fontWeight: 700,
           }}
         >
@@ -128,98 +156,323 @@ export default function CodeExample({
     }
 
     if (codeValue.includes("Typography")) {
-      const variant = codeValue.match(/variant=["']([^"']+)["']/)?.[1] ?? "h3";
+      const allowedTypographyVariants = [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "body1",
+        "body2",
+        "subtitle1",
+        "subtitle2",
+        "caption",
+      ] as const;
+      type TypographyVariant = (typeof allowedTypographyVariants)[number];
+      const typographyMatches = [
+        ...codeWithoutLineComments.matchAll(
+          /<Typography\s+variant=["']([^"']+)["'][^>]*>([\s\S]*?)<\/Typography>/g,
+        ),
+      ];
+      const typographyItems =
+        typographyMatches.length > 0
+          ? typographyMatches.map((match) => {
+              const variant = allowedTypographyVariants.includes(
+                match[1] as TypographyVariant,
+              )
+                ? (match[1] as TypographyVariant)
+                : "body2";
+              const text =
+                match[2]
+                  .replace(/<[^>]+>/g, "")
+                  .replace(/\s+/g, " ")
+                  .trim() || "Typography text";
+
+              return { variant, text };
+            })
+          : [{ variant: "h3" as TypographyVariant, text: "Customer overview" }];
 
       return (
-        <Box>
-          <Typography variant={variant === "body2" ? "body2" : "h3"}>
-            {variant === "body2" ? "Supporting body text" : "Customer overview"}
-          </Typography>
-          <Typography variant="body2" sx={{ mt: 0.75, color: secondaryText }}>
-            Review activity, status and recent updates.
+        <Box sx={{ textAlign: "center" }}>
+          {typographyItems.map((item, index) => (
+            <Typography
+              key={`${item.variant}-${index}`}
+              variant={item.variant}
+              sx={{
+                mt: index === 0 ? 0 : 0.75,
+                color: index === 0 ? primaryText : secondaryText,
+              }}
+            >
+              {item.text}
+            </Typography>
+          ))}
+          <Typography
+            component="code"
+            variant="caption"
+            sx={{
+              display: "block",
+              mt: 1,
+              color: secondaryText,
+              fontFamily: "var(--font-space-mono), monospace",
+            }}
+          >
+            {typographyItems
+              .map((item) => `variant="${item.variant}"`)
+              .join(" / ")}
           </Typography>
         </Box>
       );
     }
 
-    if (codeValue.includes("spacing.")) {
+    if (
+      codeValue.includes("spacing.") &&
+      !codeValue.includes("gridTemplateColumns") &&
+      !codeValue.includes("boxShadow")
+    ) {
       const paddingToken = codeValue.match(/padding:\s*spacing\.(\w+)/)?.[1] as
         | keyof typeof spacing
         | undefined;
       const gapToken = codeValue.match(/gap:\s*spacing\.(\w+)/)?.[1] as
         | keyof typeof spacing
         | undefined;
+      const radiusName = codeValue.match(/borderRadius:\s*radius\.(\w+)/)?.[1];
+      const radiusToken =
+        radiusName && radiusName in radius
+          ? (radiusName as keyof typeof radius)
+          : undefined;
+      const invalidRadius =
+        radiusName && !radiusToken ? `Unknown radius: radius.${radiusName}` : null;
 
       return (
-        <Box
-          sx={{
-            display: "grid",
-            gap: gapToken ? spacing[gapToken] : spacing.sm,
-            p: paddingToken ? spacing[paddingToken] : spacing.md,
-            border: `${borderWidths.default} solid ${borders.default}`,
-            borderRadius: radius.medium,
-            backgroundColor: surface,
-          }}
-        >
-          <Typography variant="body2" sx={{ fontWeight: 700 }}>
-            Form section
-          </Typography>
-          <Typography variant="caption" sx={{ color: secondaryText }}>
-            Token spacing preview
+        <Box sx={{ display: "grid", gap: 1, justifyItems: "center" }}>
+          <Box
+            sx={{
+              display: "grid",
+              gap: gapToken ? spacing[gapToken] : spacing.sm,
+              p: paddingToken ? spacing[paddingToken] : spacing.md,
+              border: `${borderWidths.default} solid ${
+                invalidRadius ? colors.semantic.error.main : borders.default
+              }`,
+              borderRadius: radiusToken ? radius[radiusToken] : radius.medium,
+              backgroundColor: surface,
+            }}
+          >
+            <Typography variant="body2" sx={{ fontWeight: 700 }}>
+              Form section
+            </Typography>
+            <Typography variant="caption" sx={{ color: secondaryText }}>
+              Token spacing preview
+            </Typography>
+          </Box>
+          <Typography
+            component="code"
+            variant="caption"
+            sx={{
+              color: invalidRadius ? colors.semantic.error.main : secondaryText,
+              fontFamily: "var(--font-space-mono), monospace",
+            }}
+          >
+            {invalidRadius ?? `radius.${radiusToken ?? "medium"}`}
           </Typography>
         </Box>
       );
     }
 
     if (codeValue.includes("borderWidths")) {
-      const isInteractive = codeValue.includes("interactive");
+      const widthToken = codeValue.match(/borderWidths\.(\w+)/)?.[1] as
+        | keyof typeof borderWidths
+        | undefined;
+      const widthName = codeValue.match(/borderWidths\.(\w+)/)?.[1];
+      const borderColorMatch = codeValue.match(
+        /borderColors\.(light|dark)\.(\w+)/,
+      );
+      const borderMode = borderColorMatch?.[1] as keyof typeof borderColors | undefined;
+      const borderRole = borderColorMatch?.[2] as
+        | keyof typeof borderColors.light
+        | undefined;
+      const radiusToken = codeValue.match(/borderRadius:\s*radius\.(\w+)/)?.[1] as
+        | keyof typeof radius
+        | undefined;
+      const textPrimaryName = codeValue.match(/color:\s*colors\.primary\[(\d+)\]/)?.[1];
+      const backgroundNeutralName = codeValue.match(
+        /backgroundColor:\s*colors\.neutral\[(\d+)\]/,
+      )?.[1];
+      const backgroundPrimaryName = codeValue.match(
+        /backgroundColor:\s*colors\.primary\[(\d+)\]/,
+      )?.[1];
+      const backgroundNeutral =
+        backgroundNeutralName && backgroundNeutralName in colors.neutral
+          ? (backgroundNeutralName as unknown as keyof typeof colors.neutral)
+          : undefined;
+      const backgroundPrimary =
+        backgroundPrimaryName && backgroundPrimaryName in colors.primary
+          ? (backgroundPrimaryName as unknown as keyof typeof colors.primary)
+          : undefined;
+      const textPrimary =
+        textPrimaryName && textPrimaryName in colors.primary
+          ? (textPrimaryName as unknown as keyof typeof colors.primary)
+          : undefined;
+      const invalidMessages = [
+        widthName && !(widthName in borderWidths)
+          ? `Unknown width: borderWidths.${widthName}`
+          : null,
+        borderMode && borderRole && !(borderRole in borderColors[borderMode])
+          ? `Unknown color: borderColors.${borderMode}.${borderRole}`
+          : null,
+        textPrimaryName && !(textPrimaryName in colors.primary)
+          ? `Unknown text color: colors.primary[${textPrimaryName}]`
+          : null,
+        backgroundNeutralName && !(backgroundNeutralName in colors.neutral)
+          ? `Unknown background: colors.neutral[${backgroundNeutralName}]`
+          : null,
+        backgroundPrimaryName && !(backgroundPrimaryName in colors.primary)
+          ? `Unknown background: colors.primary[${backgroundPrimaryName}]`
+          : null,
+      ].filter(Boolean);
+      const resolvedBorderColor =
+        borderMode && borderRole
+          ? borderColors[borderMode][borderRole]
+          : borders.interactive;
+      const resolvedBackground = backgroundPrimary
+        ? colors.primary[backgroundPrimary]
+        : backgroundNeutral
+          ? colors.neutral[backgroundNeutral]
+          : subtleBackground;
+
+      return (
+        <Box sx={{ display: "grid", gap: 1, justifyItems: "center" }}>
+          <Box
+            sx={{
+              p: 2,
+              color: textPrimary ? colors.primary[textPrimary] : primaryText,
+              border: `${widthToken ? borderWidths[widthToken] : borderWidths.interactive} solid ${resolvedBorderColor}`,
+              borderRadius: radiusToken ? radius[radiusToken] : radius.medium,
+              backgroundColor: resolvedBackground,
+              fontWeight: 700,
+            }}
+          >
+            Interactive border
+          </Box>
+          <Typography
+            component="code"
+            variant="caption"
+            sx={{
+              color: invalidMessages.length
+                ? colors.semantic.error.main
+                : secondaryText,
+              fontFamily: "var(--font-space-mono), monospace",
+              textAlign: "center",
+            }}
+          >
+            {invalidMessages.length
+              ? invalidMessages.join(" · ")
+              : `${widthToken ? `borderWidths.${widthToken}` : "borderWidths.interactive"} / ${
+                  borderMode && borderRole
+                    ? `borderColors.${borderMode}.${borderRole}`
+                    : "borderColors.light.interactive"
+                }`}
+          </Typography>
+        </Box>
+      );
+    }
+
+    if (codeValue.includes("boxShadow")) {
+      const shadowMatch = codeValue.match(/boxShadow:\s*shadows\.(\w+)/);
+      const shadowName = shadowMatch?.[1];
+      const shadowToken =
+        shadowName && shadowName in shadows
+          ? (shadowName as keyof typeof shadows)
+          : undefined;
+      const isInvalidShadow = Boolean(shadowName && !shadowToken);
 
       return (
         <Box
           sx={{
-            p: 2,
-            color: isInteractive ? accent : primaryText,
-            border: `${isInteractive ? borderWidths.interactive : borderWidths.default} solid ${
-              isInteractive ? borders.interactive : borders.default
-            }`,
+            width: "100%",
+            height: "100%",
+            display: "grid",
+            placeItems: "center",
+            p: spacing.lg,
+            backgroundColor: colors.neutral[100],
             borderRadius: radius.medium,
-            backgroundColor: isInteractive ? subtleBackground : surface,
-            fontWeight: 700,
           }}
         >
-          Interactive border
+          <Box
+            sx={{
+              width: 220,
+              minHeight: 96,
+              p: spacing.md,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              border:
+                shadowToken === "level0" || isInvalidShadow
+                  ? `${borderWidths.default} solid ${
+                      isInvalidShadow ? colors.semantic.error.main : borders.default
+                    }`
+                  : "none",
+              borderRadius: radius.large,
+              backgroundColor: colors.semantic.surface,
+              boxShadow: shadowToken ? shadows[shadowToken] : shadows.level0,
+            }}
+          >
+            <Typography variant="body2" sx={{ fontWeight: 700 }}>
+              Raised surface
+            </Typography>
+            <Typography
+              component="code"
+              variant="caption"
+              sx={{
+                mt: 2,
+                color: isInvalidShadow ? colors.semantic.error.main : secondaryText,
+                fontFamily: "var(--font-space-mono), monospace",
+              }}
+            >
+              {isInvalidShadow
+                ? `Unknown token: shadows.${shadowName}`
+                : `shadows.${shadowToken}`}
+            </Typography>
+          </Box>
         </Box>
       );
     }
 
-    const shadowMatch = codeValue.match(/shadows\.(level\d)/);
-    if (shadowMatch) {
-      const shadowToken = shadowMatch[1] as keyof typeof shadows;
+    if (codeValue.includes("HoverSurfaceExample") || codeValue.includes("MousePointer2")) {
+      const isInteractiveCard = /<Card\s+interactive\b/.test(codeWithoutLineComments);
+      const cardLabel =
+        codeWithoutLineComments
+          .match(/<MousePointer2[^>]*\/>\s*([^<]+?)\s*<\/Card>/)?.[1]
+          ?.trim() || "Hover surface";
 
       return (
-        <Box
-          sx={{
-            p: spacing.md,
-            borderRadius: radius.large,
-            backgroundColor: surface,
-            boxShadow: shadows[shadowToken] ?? shadows.level2,
-          }}
-        >
-          <Typography variant="body2" sx={{ fontWeight: 700 }}>
-            Raised surface
+        <Box sx={{ display: "grid", gap: 1, justifyItems: "center" }}>
+          <Card
+            interactive={isInteractiveCard}
+            sx={{
+              minWidth: 220,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              color: secondaryText,
+            }}
+          >
+            <MousePointer2 size={20} />
+            <Typography variant="body2" sx={{ fontWeight: 700 }}>
+              {cardLabel}
+            </Typography>
+          </Card>
+          <Typography
+            component="code"
+            variant="caption"
+            sx={{
+              color: isInteractiveCard ? accent : secondaryText,
+              fontFamily: "var(--font-space-mono), monospace",
+            }}
+          >
+            {isInteractiveCard ? "<Card interactive>" : "<Card>"}
           </Typography>
         </Box>
-      );
-    }
-
-    if (codeValue.includes("Card interactive")) {
-      return (
-        <Card interactive sx={{ display: "flex", alignItems: "center", gap: 1, color: secondaryText }}>
-          <MousePointer2 size={20} />
-          <Typography variant="body2" sx={{ fontWeight: 700 }}>
-            Hover surface
-          </Typography>
-        </Card>
       );
     }
 
@@ -336,24 +589,53 @@ export default function CodeExample({
     }
 
     if (codeValue.includes("gridTemplateColumns")) {
+      const columns = codeValue.includes("repeat(3")
+        ? "3 columns available"
+        : codeValue.includes("repeat(2")
+          ? "2 columns available"
+          : "1 column";
+
       return (
-        <Box sx={{ width: "100%", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 1 }}>
-          {["Mobile", "Tablet", "Desktop"].map((label) => (
-            <Box
-              key={label}
-              sx={{
-                p: 1.5,
-                textAlign: "center",
-                border: `${borderWidths.default} solid ${borders.default}`,
-                borderRadius: radius.medium,
-                backgroundColor: surface,
-              }}
-            >
-              <Typography variant="caption" sx={{ color: secondaryText }}>
-                {label}
-              </Typography>
-            </Box>
-          ))}
+        <Box sx={{ width: "100%", display: "grid", gap: 1.25 }}>
+          <Typography
+            component="code"
+            variant="caption"
+            sx={{
+              color: accent,
+              fontFamily: "var(--font-space-mono), monospace",
+              textAlign: "center",
+            }}
+          >
+            {columns}
+          </Typography>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: codeValue.includes("repeat(3")
+                ? "repeat(3, minmax(0, 1fr))"
+                : codeValue.includes("repeat(2")
+                  ? "repeat(2, minmax(0, 1fr))"
+                  : "1fr",
+              gap: spacing.sm,
+            }}
+          >
+            {["Customer", "Status", "Next action"].map((label) => (
+              <Box
+                key={label}
+                sx={{
+                  p: 1.5,
+                  textAlign: "center",
+                  border: `${borderWidths.default} solid ${borders.default}`,
+                  borderRadius: radius.medium,
+                  backgroundColor: surface,
+                }}
+              >
+                <Typography variant="caption" sx={{ color: secondaryText }}>
+                  {label}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
         </Box>
       );
     }
@@ -385,7 +667,8 @@ export default function CodeExample({
 
       <Box
         sx={{
-          height: 112,
+          minHeight: previewMinHeight ?? (needsTallPreview ? 160 : 112),
+          height: "auto",
           p: 3,
           display: "flex",
           alignItems: "center",
@@ -498,8 +781,10 @@ export default function CodeExample({
           spellCheck={false}
           sx={{
             width: "100%",
-            minHeight: 220,
-            flex: 1,
+            height: codePanelHeight,
+            minHeight: codePanelHeight,
+            flex: "0 0 auto",
+            boxSizing: "border-box",
             p: 2,
             display: "block",
             resize: "none",
@@ -521,8 +806,10 @@ export default function CodeExample({
           sx={{
             m: 0,
             p: 2,
-            minHeight: 220,
-            flex: 1,
+            height: codePanelHeight,
+            minHeight: codePanelHeight,
+            flex: "0 0 auto",
+            boxSizing: "border-box",
             overflow: "hidden",
             color: primaryText,
             backgroundColor: surface,

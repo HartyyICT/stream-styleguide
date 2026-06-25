@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import {
   Accessibility,
   Grid3X3,
@@ -9,6 +9,8 @@ import {
   Palette,
   Type,
 } from "lucide-react";
+import { useState } from "react";
+import SidebarNavItem from "@/app/components/SidebarNavItem";
 import Card from "@/app/components/documentation/Card";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
 import CodeExample from "@/app/components/documentation/CodeExample";
@@ -28,8 +30,8 @@ const sections = [
   { label: "Anatomy", href: "#anatomy" },
   { label: "States", href: "#states" },
   { label: "Navigation groups", href: "#navigation-groups" },
-  { label: "Code examples", href: "#code-examples" },
   { label: "Token usage", href: "#token-usage" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -51,13 +53,102 @@ const exampleItems = [
   { label: "Accessibility", icon: Accessibility, active: false },
 ] as const;
 
+function SidebarPreview({
+  collapsed = false,
+  interactive = false,
+}: {
+  collapsed?: boolean;
+  interactive?: boolean;
+}) {
+  const { borders, surface, secondaryText } = useDocumentationStyles();
+  const [isCollapsed, setIsCollapsed] = useState(collapsed);
+  const previewCollapsed = interactive ? isCollapsed : collapsed;
+
+  return (
+    <Box
+      sx={{
+        width: previewCollapsed ? 88 : 280,
+        maxWidth: "100%",
+        minHeight: 300,
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: surface,
+        border: `${borderWidths.subtle} solid ${borders.subtle}`,
+        borderRadius: radius.medium,
+        transition: "width 280ms cubic-bezier(0.4, 0, 0.2, 1)",
+      }}
+    >
+      <Box
+        sx={{
+          minHeight: 34,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: previewCollapsed ? "center" : "space-between",
+          mb: 1,
+        }}
+      >
+        {!previewCollapsed && (
+          <Typography
+            variant="overline"
+            sx={{ color: secondaryText, fontWeight: 700 }}
+          >
+            Foundations
+          </Typography>
+        )}
+
+        <IconButton
+          size="small"
+          aria-label={previewCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          onClick={
+            interactive
+              ? () => setIsCollapsed((value) => !value)
+              : undefined
+          }
+          sx={{
+            width: 32,
+            height: 32,
+            color: secondaryText,
+            border: `${borderWidths.subtle} solid ${borders.subtle}`,
+            borderRadius: radius.medium,
+            backgroundColor: surface,
+            cursor: interactive ? "pointer" : "default",
+          }}
+        >
+          {previewCollapsed ? (
+            <PanelLeftOpen size={17} />
+          ) : (
+            <PanelLeftClose size={17} />
+          )}
+        </IconButton>
+      </Box>
+
+      <Box
+        sx={{
+          width: previewCollapsed ? 40 : "100%",
+          mx: previewCollapsed ? "auto" : 0,
+          display: "grid",
+          gap: 0.5,
+          alignContent: "start",
+        }}
+      >
+        {exampleItems.map(({ label, icon: Icon, active }) => (
+          <SidebarNavItem
+            key={label}
+            label={label}
+            icon={Icon}
+            active={active}
+            collapsed={previewCollapsed}
+          />
+        ))}
+      </Box>
+    </Box>
+  );
+}
+
 export default function SidebarPage() {
   const {
-    borders,
-    surface,
     secondaryText,
-    accent,
-    selectedBackground,
   } = useDocumentationStyles();
 
   return (
@@ -74,65 +165,7 @@ export default function SidebarPage() {
         description="A sidebar consists of grouped navigation, active indicators, icons, labels and a collapse control."
         divider={false}
       >
-        <Card sx={{ width: 280, maxWidth: "100%" }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-            <Typography
-              variant="overline"
-              sx={{ color: secondaryText, fontWeight: 700 }}
-            >
-              Foundations
-            </Typography>
-            <Box
-              sx={{
-                width: 32,
-                height: 32,
-                display: "grid",
-                placeItems: "center",
-                color: secondaryText,
-                border: `${borderWidths.subtle} solid ${borders.subtle}`,
-                borderRadius: radius.medium,
-              }}
-            >
-              <PanelLeftClose size={17} />
-            </Box>
-          </Box>
-
-          <Box sx={{ display: "grid", gap: 0.5 }}>
-            {exampleItems.map(({ label, icon: Icon, active }) => (
-              <Box
-                key={label}
-                sx={{
-                  minHeight: 40,
-                  display: "grid",
-                  gridTemplateColumns: "18px 1fr",
-                  alignItems: "center",
-                  gap: 1.25,
-                  px: 1.5,
-                  color: active ? accent : secondaryText,
-                  border: `${borderWidths.interactive} solid ${
-                    active ? selectedBackground : surface
-                  }`,
-                  borderRadius: radius.medium,
-                  backgroundColor: active ? selectedBackground : surface,
-                  position: "relative",
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    inset: "0 auto 0 0",
-                    width: borderWidths.active,
-                    borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
-                    backgroundColor: active ? accent : "transparent",
-                  },
-                }}
-              >
-                <Icon size={18} />
-                <Typography variant="body2" sx={{ fontWeight: active ? 700 : 500 }}>
-                  {label}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        </Card>
+        <SidebarPreview />
       </Section>
 
       <Section
@@ -147,140 +180,49 @@ export default function SidebarPage() {
             gap: 2,
           }}
         >
-          <Card>
+          <Card sx={{ minHeight: 360 }}>
             <Typography variant="h3" sx={{ mb: 2 }}>
               Expanded
             </Typography>
             <Box sx={{ display: "grid", gap: 0.75 }}>
               {exampleItems.slice(0, 3).map(({ label, icon: Icon, active }) => (
-                <Box
+                <SidebarNavItem
                   key={label}
-                  sx={{
-                    minHeight: 40,
-                    display: "grid",
-                    gridTemplateColumns: "18px 1fr",
-                    alignItems: "center",
-                    gap: 1.25,
-                    px: 1.5,
-                    color: active ? accent : secondaryText,
-                    border: `${borderWidths.interactive} solid ${
-                      active ? selectedBackground : surface
-                    }`,
-                    borderRadius: radius.medium,
-                    backgroundColor: active ? selectedBackground : surface,
-                    position: "relative",
-                    "&::before": {
-                      content: '""',
-                      position: "absolute",
-                      inset: "0 auto 0 0",
-                      width: borderWidths.active,
-                      borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
-                      backgroundColor: active ? accent : "transparent",
-                    },
-                  }}
-                >
-                  <Icon size={18} />
-                  <Typography variant="body2" sx={{ fontWeight: active ? 700 : 500 }}>
-                    {label}
-                  </Typography>
-                </Box>
+                  label={label}
+                  icon={Icon}
+                  active={active}
+                />
               ))}
             </Box>
           </Card>
 
-          <Card>
+          <Card sx={{ minHeight: 360 }}>
             <Typography variant="h3" sx={{ mb: 2 }}>
               Collapsed
             </Typography>
-            <Box sx={{ display: "flex", gap: 1 }}>
-              {[Palette, Type, Grid3X3, Accessibility].map((Icon, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    display: "grid",
-                    placeItems: "center",
-                    color: index === 0 ? accent : secondaryText,
-                    border: `${borderWidths.interactive} solid ${
-                      index === 0 ? selectedBackground : surface
-                    }`,
-                    borderRadius: radius.medium,
-                    backgroundColor: index === 0 ? selectedBackground : surface,
-                    position: "relative",
-                    "&::before": {
-                      content: '""',
-                      position: "absolute",
-                      inset: "0 auto 0 0",
-                      width: borderWidths.active,
-                      borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
-                      backgroundColor: index === 0 ? accent : "transparent",
-                    },
-                  }}
-                >
-                  <Icon size={18} />
-                </Box>
-              ))}
-            </Box>
+            <SidebarPreview collapsed />
           </Card>
 
-          <Card>
+          <Card sx={{ minHeight: 148 }}>
             <Typography variant="h3" sx={{ mb: 2 }}>
               Hover
             </Typography>
-            <Box
-              sx={{
-                minHeight: 40,
-                display: "grid",
-                gridTemplateColumns: "18px 1fr",
-                alignItems: "center",
-                gap: 1.25,
-                px: 1.5,
-                color: accent,
-                border: `${borderWidths.interactive} solid ${borders.interactive}`,
-                borderRadius: radius.medium,
-                backgroundColor: selectedBackground,
-              }}
-            >
-              <PanelLeftOpen size={18} />
-              <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                Hover item
-              </Typography>
-            </Box>
+            <SidebarNavItem
+              label="Hover item"
+              icon={PanelLeftClose}
+              state="hover"
+            />
           </Card>
 
-          <Card>
+          <Card sx={{ minHeight: 148 }}>
             <Typography variant="h3" sx={{ mb: 2 }}>
               Active
             </Typography>
-            <Box
-              sx={{
-                minHeight: 40,
-                display: "grid",
-                gridTemplateColumns: "18px 1fr",
-                alignItems: "center",
-                gap: 1.25,
-                px: 1.5,
-                color: accent,
-                border: `${borderWidths.interactive} solid ${selectedBackground}`,
-                borderRadius: radius.medium,
-                backgroundColor: selectedBackground,
-                position: "relative",
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  inset: "0 auto 0 0",
-                  width: borderWidths.active,
-                  borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
-                  backgroundColor: accent,
-                },
-              }}
-            >
-              <Palette size={18} />
-              <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                Current page
-              </Typography>
-            </Box>
+            <SidebarNavItem
+              label="Current page"
+              icon={Palette}
+              active
+            />
           </Card>
         </Box>
       </Section>
@@ -311,65 +253,7 @@ export default function SidebarPage() {
         </Box>
       </Section>
 
-      <Section
-        id="code-examples"
-        title="Code examples"
-        description="Use the shared sidebar in the documentation layout so navigation behaviour stays consistent."
-      >
-        <CodeExample
-          title="Documentation sidebar"
-          preview={
-            <Box
-              sx={{
-                width: 220,
-                display: "grid",
-                gap: 0.75,
-              }}
-            >
-              {exampleItems.slice(0, 3).map(({ label, icon: Icon, active }) => (
-                <Box
-                  key={label}
-                  sx={{
-                    minHeight: 38,
-                    display: "grid",
-                    gridTemplateColumns: "18px 1fr",
-                    alignItems: "center",
-                    gap: 1,
-                    px: 1.25,
-                    color: active ? accent : secondaryText,
-                    borderRadius: radius.medium,
-                    backgroundColor: active ? selectedBackground : surface,
-                    position: "relative",
-                    "&::before": {
-                      content: '""',
-                      position: "absolute",
-                      inset: "0 auto 0 0",
-                      width: borderWidths.active,
-                      borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
-                      backgroundColor: active ? accent : "transparent",
-                    },
-                  }}
-                >
-                  <Icon size={17} />
-                  <Typography variant="body2" sx={{ fontWeight: active ? 700 : 500 }}>
-                    {label}
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
-          }
-          code={`import Sidebar from "@/app/components/Sidebar";
-
-export default function DocumentationLayout({ children }) {
-  return (
-    <div>
-      <Sidebar />
-      <main>{children}</main>
-    </div>
-  );
-}`}
-        />
-      </Section>
+      
 
       <Section
         id="token-usage"
@@ -387,6 +271,44 @@ const activeItem = {
       </Section>
 
       <Section
+        id="code-examples"
+        title="Code examples"
+        description="Use the shared sidebar in the documentation layout so navigation behaviour stays consistent."
+      >
+        <CodeExample
+          title="Documentation sidebar"
+          preview={<SidebarPreview interactive />}
+          renderPreview={(code) => (
+            <SidebarPreview
+              collapsed={/collapsed=\{true\}|collapsed={true}/.test(code)}
+              interactive
+            />
+          )}
+          previewMinHeight={300}
+code={`"use client";
+
+import { useState } from "react";
+import Sidebar from "@/app/components/Sidebar";
+
+export default function DocumentationLayout({ children }) {
+  const [collapsed, setCollapsed] = useState(false);
+
+  // Change collapsed to true to preview the compact vertical sidebar.
+  // Examples: collapsed={false}, collapsed={true}.
+  return (
+    <div>
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={() => setCollapsed((value) => !value)}
+      />
+      <main>{children}</main>
+    </div>
+  );
+}`}
+        />
+      </Section>
+
+<Section
         id="guidelines"
         title="Guidelines"
         description="These rules keep navigation predictable across Stream interfaces."

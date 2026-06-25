@@ -72,6 +72,15 @@ export default function SearchDialog() {
             borderColor: interaction.hoverBorder,
             backgroundColor: interaction.hoverBackground,
           },
+          "&:active": {
+            backgroundColor: interaction.activeBackground,
+          },
+          "& .MuiTouchRipple-child": {
+            backgroundColor: interaction.activeIndicator,
+          },
+          "& .MuiTouchRipple-rippleVisible": {
+            opacity: 0.18,
+          },
         }}
       >
         <Search size={18} aria-hidden="true" />

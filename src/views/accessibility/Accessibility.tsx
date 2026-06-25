@@ -31,8 +31,8 @@ const sections = [
   { label: "Forms", href: "#forms" },
   { label: "Focus states", href: "#focus-states" },
   { label: "Implementation", href: "#implementation" },
-  { label: "Code examples", href: "#code-examples" },
   { label: "Testing", href: "#testing" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
 ] as const;
 
@@ -258,45 +258,7 @@ export default function AccessibilityPage() {
 <input id="email" type="email" required />`}</CodeBlock>
       </Section>
 
-      <Section
-        id="code-examples"
-        title="Code examples"
-        description="Show labels, focus and icon-only names in the actual implementation."
-      >
-        <CodeExample
-          title="Accessible icon action"
-          preview={
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                px: 1.5,
-                py: 1,
-                color: accent,
-                border: `${borderWidths.focus} solid ${borders.focus}`,
-                borderRadius: radius.medium,
-                backgroundColor: surface,
-              }}
-            >
-              <Keyboard size={iconSizes.medium} />
-              <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                Keyboard reachable
-              </Typography>
-            </Box>
-          }
-          code={`import Button from "@/app/components/documentation/Button";
-import { Settings } from "lucide-react";
-
-export function AccessibleIconAction() {
-  return (
-    <Button variant="icon" iconOnly aria-label="Open settings">
-      <Settings aria-hidden="true" />
-    </Button>
-  );
-}`}
-        />
-      </Section>
+      
 
       <Section
         id="testing"
@@ -331,6 +293,50 @@ export function AccessibleIconAction() {
       </Section>
 
       <Section
+        id="code-examples"
+        title="Code examples"
+        description="Show labels, focus and icon-only names in the actual implementation."
+      >
+        <CodeExample
+          title="Accessible icon action"
+          preview={
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                px: 1.5,
+                py: 1,
+                color: accent,
+                border: `${borderWidths.focus} solid ${borders.focus}`,
+                borderRadius: radius.medium,
+                backgroundColor: surface,
+              }}
+            >
+              <Keyboard size={iconSizes.medium} />
+              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                Keyboard reachable
+              </Typography>
+            </Box>
+          }
+          code={`import Button from "@/app/components/documentation/Button";
+import { Settings } from "lucide-react";
+
+export function AccessibleIconAction() {
+  // Change aria-label so screen readers understand the action.
+  // Note: aria-label normally does not change anything visually.
+  // In a real UI, test this with a screen reader or accessibility inspector.
+  // Examples: "Open settings", "Search documentation", "Close dialog".
+  return (
+    <Button variant="icon" iconOnly aria-label="Open settings">
+      <Settings aria-hidden="true" />
+    </Button>
+  );
+}`}
+        />
+      </Section>
+
+<Section
         id="guidelines"
         title="Guidelines"
         description="These requirements apply to every shared component and application."

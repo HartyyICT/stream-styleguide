@@ -17,10 +17,10 @@ const colorSections = [
   { label: "Overview", href: "#colors" },
   { label: "Color categories", href: "#color-categories" },
   { label: "Token usage", href: "#token-usage" },
-  { label: "Code examples", href: "#code-examples" },
   { label: "Primary colors", href: "#primary-colors" },
   { label: "Neutral colors", href: "#neutral-colors" },
   { label: "Semantic colors", href: "#semantic-colors" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -207,59 +207,6 @@ export default function ColorsPage() {
                 </Box>
               ))}
             </Box>
-          </Box>
-
-          <Divider sx={{ my: 6 }} />
-
-          <Box
-            component="section"
-            id="code-examples"
-            sx={{ scrollMarginTop: 96 }}
-          >
-            <Typography variant="h2" sx={{ mb: 1.5 }}>
-              Code examples
-            </Typography>
-
-            <Typography
-              variant="body1"
-              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
-            >
-              Use color tokens directly from the shared foundation instead of
-              placing custom hex values inside components.
-            </Typography>
-
-            <CodeExample
-              title="Primary action color"
-              preview={
-                <Box
-                  sx={{
-                    px: 2,
-                    py: 1,
-                    color: colors.semantic.surface,
-                    backgroundColor: colors.primary[500],
-                    borderRadius: radius.medium,
-                    fontWeight: 700,
-                  }}
-                >
-                  Save changes
-                </Box>
-              }
-              code={`import { colors, radius } from "@/app/theme/tokens";
-
-export function PrimaryActionPreview() {
-  return (
-    <div
-      style={{
-        color: colors.semantic.surface,
-        backgroundColor: colors.primary[500],
-        borderRadius: radius.medium,
-      }}
-    >
-      Save changes
-    </div>
-  );
-}`}
-            />
           </Box>
 
           <Divider sx={{ my: 6 }} />
@@ -460,7 +407,66 @@ export function PrimaryActionPreview() {
 
           <Divider sx={{ my: 6 }} />
 
-          <Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
+          <Box
+            component="section"
+            id="code-examples"
+            sx={{ scrollMarginTop: 96 }}
+          >
+            <Typography variant="h2" sx={{ mb: 1.5 }}>
+              Code examples
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
+            >
+              Use color tokens directly from the shared foundation instead of
+              placing custom hex values inside components.
+            </Typography>
+
+            <CodeExample
+              title="Primary action color"
+              preview={
+                <Box
+                  sx={{
+                    px: 2,
+                    py: 1,
+                    color: colors.semantic.surface,
+                    backgroundColor: colors.primary[500],
+                    borderRadius: radius.medium,
+                    fontWeight: 700,
+                  }}
+                >
+                  Save changes
+                </Box>
+              }
+              code={`import { colors, radius } from "@/app/theme/tokens";
+
+export function PrimaryActionPreview() {
+  return (
+    <div
+      style={{
+        // Change this token to test the brand color.
+        // Examples: colors.primary[400], colors.primary[500], colors.primary[700].
+        color: colors.semantic.surface,
+        backgroundColor: colors.primary[500],
+        // Change the radius to test different corner rounding.
+        // Examples: radius.small, radius.medium, radius.large.
+        borderRadius: radius.medium,
+      }}
+    >
+      Save changes
+    </div>
+  );
+}`}
+            />
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          
+
+<Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Guidelines
             </Typography>

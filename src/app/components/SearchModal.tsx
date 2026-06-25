@@ -14,7 +14,6 @@ import {
   Accessibility,
   Blend,
   BookOpen,
-  Clock,
   FileText,
   Grid3X3,
   LayoutGrid,
@@ -32,6 +31,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import RecentSearchItem from "@/app/components/RecentSearchItem";
 import {
   borderColors,
   colors,
@@ -564,78 +564,13 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
 
     if (showClock) {
       return (
-        <Box
+        <RecentSearchItem
           key={item.href}
-          sx={{
-            minHeight: 48,
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            pl: 2,
-            pr: 0.75,
-            py: 0.75,
-            backgroundColor: surface,
-            border: 1,
-            borderColor: border,
-            borderRadius: radius.medium,
-            transition:
-              "border-color 160ms ease, background-color 160ms ease",
-            "&:hover": {
-              borderColor: interaction.hoverBorder,
-              backgroundColor: interaction.hoverBackground,
-            },
-          }}
-        >
-          <ButtonBase
-            component={Link}
-            href={item.href}
-            onClick={() => handleItemClick(item)}
-            sx={{
-              minWidth: 0,
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              gap: 1.25,
-              py: 0.5,
-              textDecoration: "none",
-            }}
-          >
-            <Clock size={16} color={accent} />
-            <Typography
-              variant="body2"
-              sx={{
-                color: accent,
-                fontWeight: 600,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {item.title}
-            </Typography>
-          </ButtonBase>
-
-          <IconButton
-            size="small"
-            aria-label={`Remove ${item.title} from recent searches`}
-            onClick={() => removeRecentItem(item.href)}
-            sx={{
-              width: 30,
-              height: 30,
-              flexShrink: 0,
-              color: secondaryText,
-              borderColor: border,
-              backgroundColor: surface,
-              "&:hover": {
-                color: interaction.hoverContent,
-                borderColor: interaction.hoverBorder,
-                backgroundColor: interaction.hoverBackground,
-              },
-            }}
-          >
-            <X size={15} />
-          </IconButton>
-        </Box>
+          href={item.href}
+          label={item.title}
+          onSelect={() => handleItemClick(item)}
+          onRemove={() => removeRecentItem(item.href)}
+        />
       );
     }
 

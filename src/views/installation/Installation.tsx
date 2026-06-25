@@ -5,6 +5,7 @@ import { PackageCheck, PackagePlus, Terminal, Wrench } from "lucide-react";
 import Button from "@/app/components/documentation/Button";
 import Card from "@/app/components/documentation/Card";
 import CodeBlock from "@/app/components/documentation/CodeBlock";
+import CodeExample from "@/app/components/documentation/CodeExample";
 import GuidelineList from "@/app/components/documentation/GuidelineList";
 import Intro from "@/app/components/documentation/Intro";
 import Page from "@/app/components/documentation/Page";
@@ -18,6 +19,7 @@ const sections = [
   { label: "Peer dependencies", href: "#peer-dependencies" },
   { label: "Use components", href: "#use-components" },
   { label: "Development setup", href: "#development-setup" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
 ] as const;
 
@@ -199,6 +201,29 @@ import { Check } from "lucide-react";`}</CodeBlock>
             library, just like other Stream applications.
           </Typography>
         </Box>
+      </Section>
+
+      <Section
+        id="code-examples"
+        title="Code examples"
+        description="Copy the import pattern developers should use once the shared package is available."
+      >
+        <CodeExample
+          title="Install and use a package component"
+          preview={<Button startIcon={<PackageCheck />}>Install library</Button>}
+          code={`import { Button } from "@ssw/ui-library";
+import { Check } from "lucide-react";
+
+export function SaveAction() {
+  // Change the import once the package is officially published.
+  // Examples: Button, Card, Sidebar or Searchbar from @ssw/ui-library.
+  return (
+    <Button startIcon={<Check />}>
+      Save changes
+    </Button>
+  );
+}`}
+        />
       </Section>
 
       <Section
