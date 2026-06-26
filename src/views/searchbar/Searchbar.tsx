@@ -2,8 +2,8 @@
 
 import { Box, Typography } from "@mui/material";
 import { Search, X } from "lucide-react";
-import RecentSearchItem from "@/app/components/patterns/RecentSearchItem";
-import SearchDialog from "@/app/components/search/SearchDialog";
+import RecentSearchItem from "@/app/components/molecules/RecentSearchItem";
+import SearchDialog from "@/app/components/molecules/SearchDialog";
 import Button from "@/app/components/atoms/Button";
 import Card from "@/app/components/atoms/Card";
 import CodeBlock from "@/app/components/atoms/CodeBlock";
@@ -337,7 +337,7 @@ const searchbarPressed = {
             preview={<SearchDialog />}
             renderPreview={() => <SearchDialog />}
             previewMinHeight={132}
-            code={`import SearchDialog from "@/app/components/search/SearchDialog";
+            code={`import SearchDialog from "@/app/components/molecules/SearchDialog";
 
 export function NavbarSearchArea() {
   // SearchDialog renders the exact styleguide searchbar.
@@ -351,7 +351,7 @@ export function NavbarSearchArea() {
             preview={<SearchDialogPreview />}
             renderPreview={() => <SearchDialogPreview />}
             previewMinHeight={340}
-            code={`import SearchModal from "@/app/components/search/SearchModal";
+            code={`import SearchModal from "@/app/components/organisms/SearchModal";
 
 export function SearchExample({ open, onClose }) {
   // Pass open=true to show the dialog.

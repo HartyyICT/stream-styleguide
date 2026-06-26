@@ -11,7 +11,7 @@ import {
   radius,
 } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
-import { sidebarTransition } from "@/app/components/shell/sidebarMotion";
+import { sidebarTransition } from "@/app/components/organisms/sidebarMotion";
 
 type SidebarNavItemProps = {
   label: string;

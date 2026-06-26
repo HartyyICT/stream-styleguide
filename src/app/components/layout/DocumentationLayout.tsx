@@ -2,11 +2,11 @@
 
 import { Box } from "@mui/material";
 import { useState } from "react";
-import Sidebar from "@/app/components/shell/Sidebar";
+import Sidebar from "@/app/components/organisms/Sidebar";
 import { colors } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
-import Navbar from "@/app/components/shell/Navbar";
-import { sidebarMotion, sidebarTransition } from "@/app/components/shell/sidebarMotion";
+import Navbar from "@/app/components/organisms/Navbar";
+import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
 
 export default function DocumentationLayout({
   children,

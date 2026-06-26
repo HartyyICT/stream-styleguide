@@ -31,7 +31,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import RecentSearchItem from "@/app/components/patterns/RecentSearchItem";
+import RecentSearchItem from "@/app/components/molecules/RecentSearchItem";
 import {
   borderColors,
   colors,

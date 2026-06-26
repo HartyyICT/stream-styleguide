@@ -37,7 +37,7 @@ import {
   radius,
 } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
-import { sidebarMotion, sidebarTransition } from "@/app/components/shell/sidebarMotion";
+import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
 
 const foundationItems = [
   { label: "Accessibility", icon: Accessibility, href: "/accessibility" },

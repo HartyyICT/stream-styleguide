@@ -2,8 +2,8 @@
 
 import { Box, Chip, Typography } from "@mui/material";
 import { BookOpen } from "lucide-react";
-import SearchDialog from "@/app/components/search/SearchDialog";
-import ThemeModeToggle from "@/app/components/shell/ThemeModeToggle";
+import SearchDialog from "@/app/components/molecules/SearchDialog";
+import ThemeModeToggle from "@/app/components/molecules/ThemeModeToggle";
 import Card from "@/app/components/atoms/Card";
 import CodeBlock from "@/app/components/atoms/CodeBlock";
 import CodeExample from "@/app/components/patterns/CodeExample";
@@ -339,7 +339,7 @@ const searchbarHover = {
             preview={<StyleguideNavbarPreview />}
             renderPreview={() => <StyleguideNavbarPreview />}
             previewMinHeight={172}
-            code={`import Navbar from "@/app/components/shell/Navbar";
+            code={`import Navbar from "@/app/components/organisms/Navbar";
 
 export default function DocumentationLayout({ children }) {
   // The navbar is shared by the full styleguide shell.
@@ -358,7 +358,7 @@ export default function DocumentationLayout({ children }) {
             preview={<StyleguideNavbarPreview state="search" />}
             renderPreview={() => <StyleguideNavbarPreview state="search" />}
             previewMinHeight={196}
-            code={`import SearchDialog from "@/app/components/search/SearchDialog";
+            code={`import SearchDialog from "@/app/components/molecules/SearchDialog";
 
 export function NavbarSearchArea() {
   // SearchDialog renders the exact styleguide searchbar.
@@ -372,7 +372,7 @@ export function NavbarSearchArea() {
             preview={<StyleguideNavbarPreview state="theme" />}
             renderPreview={() => <StyleguideNavbarPreview state="theme" />}
             previewMinHeight={172}
-            code={`import ThemeModeToggle from "@/app/components/shell/ThemeModeToggle";
+            code={`import ThemeModeToggle from "@/app/components/molecules/ThemeModeToggle";
 
 export function NavbarThemeAction() {
   // ThemeModeToggle uses the same icon size, border and hover tokens as the navbar.

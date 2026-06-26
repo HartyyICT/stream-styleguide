@@ -10,11 +10,11 @@ import {
   Type,
 } from "lucide-react";
 import { useState } from "react";
-import SidebarNavItem from "@/app/components/shell/SidebarNavItem";
+import SidebarNavItem from "@/app/components/molecules/SidebarNavItem";
 import {
   sidebarMotion,
   sidebarTransition,
-} from "@/app/components/shell/sidebarMotion";
+} from "@/app/components/organisms/sidebarMotion";
 import Card from "@/app/components/atoms/Card";
 import CodeBlock from "@/app/components/atoms/CodeBlock";
 import CodeExample from "@/app/components/patterns/CodeExample";
@@ -312,7 +312,7 @@ const activeItem = {
 code={`"use client";
 
 import { useState } from "react";
-import Sidebar from "@/app/components/shell/Sidebar";
+import Sidebar from "@/app/components/organisms/Sidebar";
 
 export default function DocumentationLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);

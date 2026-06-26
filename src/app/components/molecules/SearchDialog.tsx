@@ -13,7 +13,7 @@ import {
 } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
 
-const SearchModal = dynamic(() => import("./SearchModal"), {
+const SearchModal = dynamic(() => import("@/app/components/organisms/SearchModal"), {
   ssr: false,
 });
 

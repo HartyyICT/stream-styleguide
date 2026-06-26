@@ -9,8 +9,8 @@ import {
   radius,
 } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
-import ThemeModeToggle from "@/app/components/shell/ThemeModeToggle";
-import SearchDialog from "@/app/components/search/SearchDialog";
+import ThemeModeToggle from "@/app/components/molecules/ThemeModeToggle";
+import SearchDialog from "@/app/components/molecules/SearchDialog";
 
 export default function Navbar() {
   const { mode } = useColorMode();
