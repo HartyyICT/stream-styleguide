@@ -135,6 +135,7 @@ export default function Sidebar({
   } as const;
 
   const navigationItemSx = {
+    height: 38,
     display: "grid",
     gridTemplateColumns: "18px minmax(0, 1fr)",
     alignItems: "center",
@@ -181,6 +182,7 @@ export default function Sidebar({
           display: "grid",
           gridTemplateColumns: "18px minmax(0, 1fr)",
           alignItems: "center",
+          height: 38,
           columnGap: 1.25,
           px: 1.5,
           py: 1,
@@ -406,7 +408,7 @@ export default function Sidebar({
                         <Icon
                           size={iconSizes.control}
                           strokeWidth={1.8}
-                          style={{ flexShrink: 0 }}
+                          style={{ flexShrink: 0, display: "block" }}
                           aria-hidden="true"
                         />
                         {showLabels && (

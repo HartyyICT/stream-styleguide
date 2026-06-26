@@ -64,6 +64,7 @@ export default function SidebarNavItem({
         aria-current={active ? "page" : undefined}
         sx={{
           width: "100%",
+          height: 38,
           display: "grid",
           gridTemplateColumns: "18px minmax(0, 1fr)",
           alignItems: "center",
@@ -121,7 +122,7 @@ export default function SidebarNavItem({
         <Icon
           size={iconSizes.control}
           strokeWidth={1.8}
-          style={{ flexShrink: 0 }}
+          style={{ flexShrink: 0, display: "block" }}
         />
         <Typography
           variant="body2"
