@@ -1,12 +1,9 @@
 "use client";
 
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import {
   BookOpen,
   Check,
-  Code2,
-  Copy,
-  EyeOff,
   Download,
   Filter,
   Grid3X3,
@@ -14,7 +11,6 @@ import {
   Moon,
   MousePointer2,
   Palette,
-  Pencil,
   Search,
   Settings,
   Trash2,
@@ -32,6 +28,7 @@ import {
 } from "@/app/theme/tokens";
 import Button from "@/app/components/atoms/Button";
 import Card from "@/app/components/atoms/Card";
+import CodeExampleToolbar from "@/app/components/molecules/CodeExampleToolbar";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface CodeExampleProps {
@@ -56,7 +53,6 @@ export default function CodeExample({
   const [currentCode, setCurrentCode] = useState(code);
   const [isEditing, setIsEditing] = useState(false);
   const [showCode, setShowCode] = useState(false);
-  const [copied, setCopied] = useState(false);
   const isElevationExample = currentCode.includes("boxShadow");
   const needsTallPreview =
     isElevationExample ||
@@ -64,12 +60,6 @@ export default function CodeExample({
     (currentCode.includes("spacing.") && !currentCode.includes("gridTemplateColumns"));
   const codeLineCount = currentCode.split(/\r\n|\r|\n/).length;
   const codePanelHeight = Math.max(220, codeLineCount * 22 + 32);
-
-  async function copyCode() {
-    await navigator.clipboard.writeText(currentCode);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
-  }
 
   function getButtonLabel(codeValue: string, fallback: string) {
     const labelMatch = codeValue.match(/>\s*([^<>]+?)\s*<\/Button>/);
@@ -703,73 +693,20 @@ export default function CodeExample({
           Example code
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 0.75 }}>
-          <Button
-            size="sm"
-            variant="secondary"
-            startIcon={showCode ? <EyeOff /> : <Code2 />}
-            onClick={() => {
-              setShowCode((value) => !value);
-              setIsEditing(false);
-            }}
-            sx={{ minWidth: 112 }}
-          >
-            {showCode ? "Hide Code" : "Show Code"}
-          </Button>
-
-          {editable && (
-            <Tooltip title={isEditing ? "Preview code" : "Edit code"}>
-              <IconButton
-                size="small"
-                aria-label={isEditing ? "Preview code" : "Edit code"}
-                onClick={() => {
-                  setShowCode(true);
-                  setIsEditing((value) => !value);
-                }}
-                sx={{
-                  width: 32,
-                  height: 32,
-                  color: isEditing ? accent : secondaryText,
-                  border: `${borderWidths.default} solid ${
-                    isEditing ? accent : borders.default
-                  }`,
-                  borderRadius: radius.small,
-                  "&:hover": {
-                    color: accent,
-                    borderColor: accent,
-                    backgroundColor: subtleBackground,
-                  },
-                }}
-              >
-                <Pencil size={15} />
-              </IconButton>
-            </Tooltip>
-          )}
-
-          <Tooltip title={copied ? "Copied" : "Copy code"}>
-            <IconButton
-              size="small"
-              aria-label={copied ? "Code copied" : "Copy code"}
-              onClick={copyCode}
-              sx={{
-                width: 32,
-                height: 32,
-                color: copied ? accent : secondaryText,
-                border: `${borderWidths.default} solid ${
-                  copied ? accent : borders.default
-                }`,
-                borderRadius: radius.small,
-                "&:hover": {
-                  color: accent,
-                  borderColor: accent,
-                  backgroundColor: subtleBackground,
-                },
-              }}
-            >
-              {copied ? <Check size={15} /> : <Copy size={15} />}
-            </IconButton>
-          </Tooltip>
-        </Box>
+        <CodeExampleToolbar
+          code={currentCode}
+          showCode={showCode}
+          editable={editable}
+          isEditing={isEditing}
+          onToggleCode={() => {
+            setShowCode((value) => !value);
+            setIsEditing(false);
+          }}
+          onToggleEdit={() => {
+            setShowCode(true);
+            setIsEditing((value) => !value);
+          }}
+        />
       </Box>
 
       {showCode && isEditing ? (

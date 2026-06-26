@@ -8,12 +8,16 @@ import { useColorMode } from "../../theme/themeProvider";
 import Navbar from "@/app/components/organisms/Navbar";
 import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
 
+let persistedSidebarCollapsed = false;
+
 export default function DocumentationLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(
+    persistedSidebarCollapsed,
+  );
   const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
@@ -26,7 +30,13 @@ export default function DocumentationLayout({
       <Navbar onMenuClick={() => setMobileNavigationOpen(true)} />
       <Sidebar
         collapsed={sidebarCollapsed}
-        onToggle={() => setSidebarCollapsed((collapsed) => !collapsed)}
+        onToggle={() =>
+          setSidebarCollapsed((collapsed) => {
+            const next = !collapsed;
+            persistedSidebarCollapsed = next;
+            return next;
+          })
+        }
         mobileOpen={mobileNavigationOpen}
         onMobileClose={() => setMobileNavigationOpen(false)}
       />

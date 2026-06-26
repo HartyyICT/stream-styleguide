@@ -3,6 +3,7 @@
 import {
   Box,
   ButtonBase,
+  Collapse,
   Divider,
   Drawer,
   IconButton,
@@ -14,6 +15,7 @@ import { usePathname } from "next/navigation";
 import {
   Accessibility,
   Blend,
+  ChevronDown,
   Grid3X3,
   MousePointer2,
   Navigation,
@@ -27,9 +29,11 @@ import {
   Smartphone,
   Sparkles,
   SquareMousePointer,
+  Table2,
   Type,
   type LucideIcon,
 } from "lucide-react";
+import { useState } from "react";
 import {
   borderColors,
   borderWidths,
@@ -80,9 +84,16 @@ const navigationGroups: { label: string; ariaLabel: string; items: NavigationIte
       { label: "Navbar", icon: Navigation, href: "/navbar" },
       { label: "Searchbar", icon: Search, href: "/searchbar" },
       { label: "Sidebar", icon: PanelLeftOpen, href: "/sidebar" },
+      { label: "Tables", icon: Table2, href: "/tables" },
     ],
   },
 ];
+
+function createDefaultOpenGroups() {
+  return Object.fromEntries(navigationGroups.map((group) => [group.label, true]));
+}
+
+let persistedOpenGroups: Record<string, boolean> | null = null;
 
 interface SidebarProps {
   collapsed: boolean;
@@ -98,6 +109,9 @@ export default function Sidebar({
   onMobileClose,
 }: SidebarProps) {
   const pathname = usePathname();
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
+    persistedOpenGroups ?? createDefaultOpenGroups(),
+  );
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
   const surface = isDarkMode ? colors.neutral[800] : colors.semantic.surface;
@@ -137,6 +151,18 @@ export default function Sidebar({
       "border-color 160ms ease",
     ].join(", "),
   } as const;
+
+  function toggleGroup(label: string) {
+    setOpenGroups((current) => {
+      const next = {
+        ...current,
+        [label]: !(current[label] ?? true),
+      };
+
+      persistedOpenGroups = next;
+      return next;
+    });
+  }
 
   function renderNavigationContent(isMobile = false) {
     const showLabels = isMobile || !collapsed;
@@ -228,88 +254,178 @@ export default function Sidebar({
         {navigationGroups.map((group, groupIndex) => (
           <Box key={group.label}>
             {groupIndex > 0 && <Divider sx={{ my: 2.5 }} />}
+            {(() => {
+              const groupOpen = openGroups[group.label] ?? true;
 
-            <Typography
-              variant="overline"
-              sx={{
-                ...effectiveLabelSx,
-                display: "block",
-                px: 1.5,
-                mb: 1,
-                color: secondaryText,
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-              }}
-            >
-              {group.label}
-            </Typography>
-
-            <Box component="nav" aria-label={group.ariaLabel}>
-              {group.items.map(({ label, icon: Icon, href }) => {
-                const active = pathname === href;
-
-                return (
-                  <Tooltip
-                    key={label}
-                    title={!isMobile && collapsed ? label : ""}
-                    placement="right"
+              return showLabels ? (
+                <ButtonBase
+                  component="button"
+                  type="button"
+                  aria-expanded={groupOpen}
+                  aria-controls={`sidebar-group-${group.label
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
+                  onClick={() => toggleGroup(group.label)}
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 1,
+                    px: 1.5,
+                    mb: 1,
+                    color: secondaryText,
+                    overflow: "hidden",
+                    borderRadius: radius.medium,
+                    cursor: "pointer",
+                    textAlign: "left",
+                    transition:
+                      "color 160ms ease, background-color 160ms ease",
+                    "&:hover": {
+                      color: interaction.hoverContent,
+                      backgroundColor: hoverBackground,
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      ...effectiveLabelSx,
+                      textAlign: "left",
+                      color: "inherit",
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                    }}
                   >
-                    <ButtonBase
-                      component={Link}
-                      href={href}
-                      aria-label={label}
-                      aria-current={active ? "page" : undefined}
-                      onClick={isMobile ? onMobileClose : undefined}
-                      sx={{
-                        ...effectiveItemSx,
-                        color: active ? accent : secondaryText,
-                        backgroundColor: active ? selectedBackground : surface,
-                        position: "relative",
-                        boxSizing: "border-box",
-                        border: `${borderWidths.interactive} solid ${
-                          active ? selectedBackground : surface
-                        }`,
-                        borderRadius: radius.medium,
-                        "&::before": {
-                          content: '""',
-                          position: "absolute",
-                          inset: "0 auto 0 0",
-                          width: borderWidths.active,
-                          borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
-                          backgroundColor: active ? accent : "transparent",
-                          transition: `background-color ${sidebarTransition}`,
-                        },
-                        "&:hover": {
-                          backgroundColor: active ? selectedBackground : hoverBackground,
-                          color: active ? accent : interaction.hoverContent,
-                          borderColor: active
-                            ? selectedBackground
-                            : interaction.hoverBorder,
-                        },
+                    {group.label}
+                  </Typography>
+                  <ChevronDown
+                    size={iconSizes.small}
+                    aria-hidden="true"
+                    style={{
+                      flexShrink: 0,
+                      transform: groupOpen ? "rotate(0deg)" : "rotate(-90deg)",
+                      transition: `transform ${sidebarTransition}`,
+                    }}
+                  />
+                </ButtonBase>
+              ) : (
+                <Tooltip
+                  title={`${groupOpen ? "Collapse" : "Expand"} ${group.label}`}
+                  placement="right"
+                >
+                  <ButtonBase
+                    component="button"
+                    type="button"
+                    aria-label={`${groupOpen ? "Collapse" : "Expand"} ${group.label}`}
+                    aria-expanded={groupOpen}
+                    aria-controls={`sidebar-group-${group.label
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
+                    onClick={() => toggleGroup(group.label)}
+                    sx={{
+                      width: "100%",
+                      height: 34,
+                      mb: 1,
+                      display: "grid",
+                      placeItems: "center",
+                      color: secondaryText,
+                      borderRadius: radius.medium,
+                      cursor: "pointer",
+                      transition:
+                        "color 160ms ease, background-color 160ms ease",
+                      "&:hover": {
+                        color: interaction.hoverContent,
+                        backgroundColor: hoverBackground,
+                      },
+                    }}
+                  >
+                    <ChevronDown
+                      size={iconSizes.small}
+                      aria-hidden="true"
+                      style={{
+                        transform: groupOpen ? "rotate(0deg)" : "rotate(-90deg)",
+                        transition: `transform ${sidebarTransition}`,
                       }}
+                    />
+                  </ButtonBase>
+                </Tooltip>
+              );
+            })()}
+
+            <Collapse
+              id={`sidebar-group-${group.label.toLowerCase().replace(/\s+/g, "-")}`}
+              in={openGroups[group.label] ?? true}
+              timeout={220}
+              unmountOnExit={false}
+            >
+              <Box component="nav" aria-label={group.ariaLabel}>
+                {group.items.map(({ label, icon: Icon, href }) => {
+                  const active = pathname === href;
+
+                  return (
+                    <Tooltip
+                      key={label}
+                      title={!isMobile && collapsed ? label : ""}
+                      placement="right"
                     >
-                      <Icon
-                        size={iconSizes.control}
-                        strokeWidth={1.8}
-                        style={{ flexShrink: 0 }}
-                        aria-hidden="true"
-                      />
-                      {showLabels && (
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            ...effectiveLabelSx,
-                            fontWeight: active ? 700 : 500,
-                          }}
-                        >
-                          {label}
-                        </Typography>
-                      )}
-                    </ButtonBase>
-                  </Tooltip>
-                );
-              })}
-            </Box>
+                      <ButtonBase
+                        component={Link}
+                        href={href}
+                        aria-label={label}
+                        aria-current={active ? "page" : undefined}
+                        onClick={isMobile ? onMobileClose : undefined}
+                        sx={{
+                          ...effectiveItemSx,
+                          color: active ? accent : secondaryText,
+                          backgroundColor: active ? selectedBackground : surface,
+                          position: "relative",
+                          boxSizing: "border-box",
+                          border: `${borderWidths.interactive} solid ${
+                            active ? selectedBackground : surface
+                          }`,
+                          borderRadius: radius.medium,
+                          "&::before": {
+                            content: '""',
+                            position: "absolute",
+                            inset: "0 auto 0 0",
+                            width: borderWidths.active,
+                            borderRadius: `${radius.medium} 0 0 ${radius.medium}`,
+                            backgroundColor: active ? accent : "transparent",
+                            transition: `background-color ${sidebarTransition}`,
+                          },
+                          "&:hover": {
+                            backgroundColor: active ? selectedBackground : hoverBackground,
+                            color: active ? accent : interaction.hoverContent,
+                            borderColor: active
+                              ? selectedBackground
+                              : interaction.hoverBorder,
+                          },
+                        }}
+                      >
+                        <Icon
+                          size={iconSizes.control}
+                          strokeWidth={1.8}
+                          style={{ flexShrink: 0 }}
+                          aria-hidden="true"
+                        />
+                        {showLabels && (
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              ...effectiveLabelSx,
+                              fontWeight: active ? 700 : 500,
+                            }}
+                          >
+                            {label}
+                          </Typography>
+                        )}
+                      </ButtonBase>
+                    </Tooltip>
+                  );
+                })}
+              </Box>
+            </Collapse>
           </Box>
         ))}
       </>
@@ -329,6 +445,8 @@ export default function Sidebar({
           top: responsiveLayout.navbarHeight,
           left: 0,
           overflowY: "auto",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
           borderRight: 1,
           borderColor: border,
           backgroundColor: surface,
@@ -337,6 +455,9 @@ export default function Sidebar({
           display: { xs: "none", md: "block" },
           overflowX: "hidden",
           transition: `width ${sidebarTransition}, padding ${sidebarTransition}`,
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
         }}
       >
         {renderNavigationContent(false)}

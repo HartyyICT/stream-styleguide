@@ -258,3 +258,41 @@ export const buttonTokens = {
     },
   },
 } as const;
+
+export const tableTokens = {
+  density: {
+    compact: {
+      rowHeight: "2.5rem",
+      cellPadding: `${spacing.sm} ${spacing.md}`,
+      use: "Dense data views and dashboards",
+    },
+    comfortable: {
+      rowHeight: "3rem",
+      cellPadding: `${spacing.md} ${spacing.lg}`,
+      use: "Default enterprise tables",
+    },
+    spacious: {
+      rowHeight: "3.5rem",
+      cellPadding: `${spacing.lg} ${spacing.xl}`,
+      use: "Review screens and low-density content",
+    },
+  },
+  columns: {
+    label: {
+      minWidth: "12rem",
+      alignment: "left",
+    },
+    numeric: {
+      minWidth: "7rem",
+      alignment: "right",
+    },
+    status: {
+      minWidth: "8rem",
+      alignment: "left",
+    },
+    action: {
+      minWidth: "5rem",
+      alignment: "right",
+    },
+  },
+} as const;
