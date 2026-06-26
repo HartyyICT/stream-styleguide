@@ -25,6 +25,7 @@ import {
   breakpoints,
   iconSizes,
   radius,
+  responsiveGrids,
   spacing,
 } from "@/app/theme/tokens";
 
@@ -49,21 +50,21 @@ const breakpointScale = [
   },
   {
     token: "tablet",
-    range: "600px – 899px",
+    range: "600px - 899px",
     start: breakpoints.tablet,
     use: "Tablets",
     icon: Tablet,
   },
   {
     token: "laptop",
-    range: "900px – 1199px",
+    range: "900px - 1199px",
     start: breakpoints.laptop,
     use: "Small desktop screens",
     icon: Laptop,
   },
   {
     token: "desktop",
-    range: "≥ 1200px",
+    range: ">= 1200px",
     start: breakpoints.desktop,
     use: "Standard work environment",
     icon: Monitor,
@@ -129,8 +130,9 @@ export default function ResponsivenessPage() {
           sx={{
             display: "grid",
             gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(3, minmax(0, 1fr))",
+              xs: responsiveGrids.oneToThree.mobile,
+              sm: responsiveGrids.oneToThree.tablet,
+              lg: responsiveGrids.oneToThree.desktop,
             },
             gap: 2,
           }}
@@ -210,8 +212,9 @@ export default function ResponsivenessPage() {
           sx={{
             display: "grid",
             gridTemplateColumns: {
-              xs: "1fr",
-              md: "repeat(3, minmax(0, 1fr))",
+              xs: responsiveGrids.oneToThree.mobile,
+              sm: responsiveGrids.oneToThree.tablet,
+              lg: responsiveGrids.oneToThree.desktop,
             },
             gap: 2,
           }}
@@ -334,15 +337,18 @@ export default function ResponsivenessPage() {
       <Section
         id="implementation"
         title="Implementation"
-        description="Use responsive MUI values and the shared breakpoint names instead of isolated media queries."
+        description="Use the shared responsive tokens so pages, documentation examples and application layouts react at the same widths."
       >
-        <CodeBlock>{`<Box
+        <CodeBlock>{`import { responsiveGrids, responsiveLayout, spacing } from "@/app/theme/tokens";
+
+<Box
   sx={{
     display: "grid",
+    maxWidth: responsiveLayout.contentMaxWidth,
     gridTemplateColumns: {
-      xs: "1fr",
-      md: "repeat(2, minmax(0, 1fr))",
-      lg: "repeat(3, minmax(0, 1fr))",
+      xs: responsiveGrids.oneToThree.mobile,
+      sm: responsiveGrids.oneToThree.tablet,
+      lg: responsiveGrids.oneToThree.desktop,
     },
     gap: spacing.md,
   }}
@@ -364,9 +370,9 @@ export default function ResponsivenessPage() {
                 width: "100%",
                 display: "grid",
                 gridTemplateColumns: {
-                  xs: "1fr",
-                  sm: "repeat(2, minmax(0, 1fr))",
-                  lg: "repeat(3, minmax(0, 1fr))",
+                  xs: responsiveGrids.oneToThree.mobile,
+                  sm: responsiveGrids.oneToThree.tablet,
+                  lg: responsiveGrids.oneToThree.desktop,
                 },
                 gap: spacing.sm,
               }}
@@ -390,7 +396,7 @@ export default function ResponsivenessPage() {
             </Box>
           }
           code={`import { Box } from "@mui/material";
-import { spacing } from "@/app/theme/tokens";
+import { responsiveGrids, spacing } from "@/app/theme/tokens";
 
 export function ResponsiveGridExample() {
   return (
@@ -398,11 +404,11 @@ export function ResponsiveGridExample() {
       sx={{
         display: "grid",
         // Change the columns per breakpoint to test responsive behavior.
-        // Examples: xs: "1fr", sm: "repeat(2, 1fr)", lg: "repeat(3, 1fr)".
+        // Examples: responsiveGrids.oneToTwo.mobile, responsiveGrids.oneToThree.desktop.
         gridTemplateColumns: {
-          xs: "1fr",
-          sm: "repeat(2, minmax(0, 1fr))",
-          lg: "repeat(3, minmax(0, 1fr))",
+          xs: responsiveGrids.oneToThree.mobile,
+          sm: responsiveGrids.oneToThree.tablet,
+          lg: responsiveGrids.oneToThree.desktop,
         },
         // Change gap with your spacing tokens.
         // Examples: spacing.sm, spacing.md, spacing.lg.

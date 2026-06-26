@@ -1,18 +1,25 @@
 "use client";
 
-import { Box, Chip, Typography } from "@mui/material";
-import { BookOpen } from "lucide-react";
+import { Box, Chip, IconButton, Typography } from "@mui/material";
+import { BookOpen, Menu } from "lucide-react";
 import {
   borderColors,
+  borderWidths,
   colors,
+  iconSizes,
   interactionStates,
   radius,
+  responsiveLayout,
 } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
 import ThemeModeToggle from "@/app/components/molecules/ThemeModeToggle";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 
-export default function Navbar() {
+interface NavbarProps {
+  onMenuClick: () => void;
+}
+
+export default function Navbar({ onMenuClick }: NavbarProps) {
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
 
@@ -35,24 +42,47 @@ export default function Navbar() {
     <Box
       component="header"
       sx={{
-        height: 64,
+        height: responsiveLayout.navbarHeight,
         position: "fixed",
         inset: "0 0 auto 0",
         zIndex: 1200,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        px: { xs: 2, md: 3 },
+        px: {
+          xs: responsiveLayout.pagePaddingX.mobile,
+          md: responsiveLayout.pagePaddingX.tablet,
+        },
         backgroundColor: surface,
         borderBottom: 1,
         borderColor: border,
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <IconButton
+          aria-label="Open navigation"
+          onClick={onMenuClick}
+          sx={{
+            display: { xs: "inline-flex", md: "none" },
+            width: 38,
+            height: 38,
+            color: secondaryText,
+            border: `${borderWidths.subtle} solid ${border}`,
+            backgroundColor: surface,
+            "&:hover": {
+              color: interaction.hoverContent,
+              border: `${borderWidths.interactive} solid ${interaction.hoverBorder}`,
+              backgroundColor: interaction.hoverBackground,
+            },
+          }}
+        >
+          <Menu size={iconSizes.control} aria-hidden="true" />
+        </IconButton>
+
         <Box
           sx={{
-            width: 36,
-            height: 36,
+            width: { xs: 34, sm: 36 },
+            height: { xs: 34, sm: 36 },
             display: "grid",
             placeItems: "center",
             borderRadius: radius.medium,
@@ -76,7 +106,10 @@ export default function Navbar() {
             Stream Design System
           </Typography>
 
-          <Typography variant="caption" sx={{ color: secondaryText }}>
+          <Typography
+            variant="caption"
+            sx={{ display: { xs: "none", sm: "block" }, color: secondaryText }}
+          >
             Styleguide
           </Typography>
         </Box>

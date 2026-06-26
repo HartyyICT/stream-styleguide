@@ -3,7 +3,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import Sidebar from "@/app/components/organisms/Sidebar";
-import { colors } from "../../theme/tokens";
+import { colors, responsiveLayout } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
 import Navbar from "@/app/components/organisms/Navbar";
 import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
@@ -14,6 +14,7 @@ export default function DocumentationLayout({
   children: React.ReactNode;
 }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
   const pageBackground = isDarkMode
@@ -22,16 +23,18 @@ export default function DocumentationLayout({
 
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: pageBackground }}>
-      <Navbar />
+      <Navbar onMenuClick={() => setMobileNavigationOpen(true)} />
       <Sidebar
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed((collapsed) => !collapsed)}
+        mobileOpen={mobileNavigationOpen}
+        onMobileClose={() => setMobileNavigationOpen(false)}
       />
 
       <Box
         component="main"
         sx={{
-          pt: "64px",
+          pt: responsiveLayout.navbarHeight,
           minHeight: "100vh",
           ml: {
             xs: 0,
@@ -43,12 +46,19 @@ export default function DocumentationLayout({
         }}
       >
         <Box
-          sx={{
+        sx={{
             width: "100%",
-            maxWidth: 1440,
+            maxWidth: responsiveLayout.shellMaxWidth,
             mx: "auto",
-            px: { xs: 2.5, sm: 4, lg: 6 },
-            py: { xs: 4, lg: 6 },
+            px: {
+              xs: responsiveLayout.pagePaddingX.mobile,
+              sm: responsiveLayout.pagePaddingX.tablet,
+              lg: responsiveLayout.pagePaddingX.desktop,
+            },
+            py: {
+              xs: responsiveLayout.pagePaddingY.mobile,
+              lg: responsiveLayout.pagePaddingY.desktop,
+            },
           }}
         >
           {children}

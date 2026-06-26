@@ -64,6 +64,44 @@ export const breakpoints = {
   desktop: 1200,
 } as const;
 
+export const responsiveLayout = {
+  navbarHeight: "4rem",
+  contentMaxWidth: 920,
+  shellMaxWidth: 1440,
+  tableMinWidth: 860,
+  onThisPageWidth: 220,
+  pagePaddingX: {
+    mobile: spacing.lg,
+    tablet: spacing.xl,
+    desktop: spacing.xxl,
+  },
+  pagePaddingY: {
+    mobile: spacing.lg,
+    desktop: spacing.xxl,
+  },
+  sectionGap: {
+    mobile: spacing.xl,
+    desktop: spacing.xxl,
+  },
+} as const;
+
+export const responsiveGrids = {
+  oneToTwo: {
+    mobile: "1fr",
+    laptop: "repeat(2, minmax(0, 1fr))",
+  },
+  oneToThree: {
+    mobile: "1fr",
+    tablet: "repeat(2, minmax(0, 1fr))",
+    desktop: "repeat(3, minmax(0, 1fr))",
+  },
+  colorScale: {
+    mobile: "repeat(2, minmax(0, 1fr))",
+    tablet: "repeat(3, minmax(0, 1fr))",
+    desktop: "repeat(5, minmax(0, 1fr))",
+  },
+} as const;
+
 export const shadows = {
   level0: "none",
   level1: "0 1px 4px rgba(0,0,0,0.06)",
