@@ -252,5 +252,10 @@ export const createAppTheme = (mode: PaletteMode) =>
         },
       },
     },
+    MuiButtonBase: {
+      defaultProps: {
+        centerRipple: true,
+      },
+    },
   },
 });

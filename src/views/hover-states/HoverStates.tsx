@@ -2,13 +2,14 @@
 
 import { Box, Typography } from "@mui/material";
 import { ExternalLink, MousePointer2, Search } from "lucide-react";
-import Card from "@/app/components/documentation/Card";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import GuidelineList from "@/app/components/documentation/GuidelineList";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import Section from "@/app/components/documentation/Section";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import Card from "@/app/components/atoms/Card";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import GuidelineList from "@/app/components/patterns/GuidelineList";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import Section from "@/app/components/layout/Section";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   borderWidths,
   radius,
@@ -20,6 +21,7 @@ const sections = [
   { label: "Token usage", href: "#token-usage" },
   { label: "Interactive examples", href: "#interactive-examples" },
   { label: "State hierarchy", href: "#state-hierarchy" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -272,6 +274,8 @@ const interactiveSx = {
         </Box>
       </Section>
 
+      
+
       <Section
         id="state-hierarchy"
         title="State hierarchy"
@@ -334,6 +338,46 @@ const interactiveSx = {
       </Section>
 
       <Section
+        id="code-examples"
+        title="Code examples"
+        description="Apply hover states with existing interaction tokens so the element changes visually without moving."
+      >
+        <CodeExample
+          title="Hoverable surface"
+          preview={
+            <Card
+              interactive
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                color: secondaryText,
+              }}
+            >
+              <MousePointer2 size={20} />
+              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                Hover surface
+              </Typography>
+            </Card>
+          }
+          code={`import Card from "@/app/components/atoms/Card";
+import { MousePointer2 } from "lucide-react";
+
+export function HoverSurfaceExample() {
+  // Toggle interactive on or off to compare hover feedback.
+  // Use interactive for clickable cards and remove it for static content.
+  // Examples: <Card interactive> for clickable content, <Card> for informational content.
+  return (
+    <Card interactive>
+      <MousePointer2 aria-hidden="true" />
+      Hover surface
+    </Card>
+  );
+}`}
+        />
+      </Section>
+
+<Section
         id="guidelines"
         title="Guidelines"
         description="Predictable state feedback keeps interactive interfaces calm and understandable."

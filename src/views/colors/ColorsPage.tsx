@@ -1,12 +1,13 @@
 "use client";
 
 import { Box, Divider, Typography, useTheme } from "@mui/material";
-import ColorSwatch from "@/app/components/ColorSwatch";
-import Card from "@/app/components/documentation/Card";
-import CardTitle from "@/app/components/documentation/CardTitle";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import ColorSwatch from "@/app/components/atoms/ColorSwatch";
+import Card from "@/app/components/atoms/Card";
+import CardTitle from "@/app/components/atoms/CardTitle";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import { colors, radius, shadows } from "@/app/theme/tokens";
 
 const primaryColors = Object.entries(colors.primary);
@@ -19,6 +20,7 @@ const colorSections = [
   { label: "Primary colors", href: "#primary-colors" },
   { label: "Neutral colors", href: "#neutral-colors" },
   { label: "Semantic colors", href: "#semantic-colors" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -405,7 +407,66 @@ export default function ColorsPage() {
 
           <Divider sx={{ my: 6 }} />
 
-          <Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
+          <Box
+            component="section"
+            id="code-examples"
+            sx={{ scrollMarginTop: 96 }}
+          >
+            <Typography variant="h2" sx={{ mb: 1.5 }}>
+              Code examples
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
+            >
+              Use color tokens directly from the shared foundation instead of
+              placing custom hex values inside components.
+            </Typography>
+
+            <CodeExample
+              title="Primary action color"
+              preview={
+                <Box
+                  sx={{
+                    px: 2,
+                    py: 1,
+                    color: colors.semantic.surface,
+                    backgroundColor: colors.primary[500],
+                    borderRadius: radius.medium,
+                    fontWeight: 700,
+                  }}
+                >
+                  Save changes
+                </Box>
+              }
+              code={`import { colors, radius } from "@/app/theme/tokens";
+
+export function PrimaryActionPreview() {
+  return (
+    <div
+      style={{
+        // Change this token to test the brand color.
+        // Examples: colors.primary[400], colors.primary[500], colors.primary[700].
+        color: colors.semantic.surface,
+        backgroundColor: colors.primary[500],
+        // Change the radius to test different corner rounding.
+        // Examples: radius.small, radius.medium, radius.large.
+        borderRadius: radius.medium,
+      }}
+    >
+      Save changes
+    </div>
+  );
+}`}
+            />
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          
+
+<Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Guidelines
             </Typography>

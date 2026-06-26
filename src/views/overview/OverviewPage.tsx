@@ -11,8 +11,8 @@
     RefreshCw,
     Users,
   } from "lucide-react";
-  import Page from "@/app/components/documentation/Page";
-  import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+  import Page from "@/app/components/layout/Page";
+  import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
   import { colors, radius, shadows } from "@/app/theme/tokens";
 
   const benefits = [

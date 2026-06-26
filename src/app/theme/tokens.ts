@@ -51,6 +51,7 @@ export const radius = {
 
 export const iconSizes = {
   small: 16,
+  control: 19,
   medium: 20,
   large: 24,
   extraLarge: 32,
@@ -61,6 +62,44 @@ export const breakpoints = {
   tablet: 600,
   laptop: 900,
   desktop: 1200,
+} as const;
+
+export const responsiveLayout = {
+  navbarHeight: "4rem",
+  contentMaxWidth: 920,
+  shellMaxWidth: 1440,
+  tableMinWidth: 860,
+  onThisPageWidth: 220,
+  pagePaddingX: {
+    mobile: spacing.lg,
+    tablet: spacing.xl,
+    desktop: spacing.xxl,
+  },
+  pagePaddingY: {
+    mobile: spacing.lg,
+    desktop: spacing.xxl,
+  },
+  sectionGap: {
+    mobile: spacing.xl,
+    desktop: spacing.xxl,
+  },
+} as const;
+
+export const responsiveGrids = {
+  oneToTwo: {
+    mobile: "1fr",
+    laptop: "repeat(2, minmax(0, 1fr))",
+  },
+  oneToThree: {
+    mobile: "1fr",
+    tablet: "repeat(2, minmax(0, 1fr))",
+    desktop: "repeat(3, minmax(0, 1fr))",
+  },
+  colorScale: {
+    mobile: "repeat(2, minmax(0, 1fr))",
+    tablet: "repeat(3, minmax(0, 1fr))",
+    desktop: "repeat(5, minmax(0, 1fr))",
+  },
 } as const;
 
 export const shadows = {
@@ -117,5 +156,143 @@ export const borderColors = {
     active: colors.primary[300],
     focus: colors.primary[300],
     accent: colors.primary[300],
+  },
+} as const;
+
+export const buttonTokens = {
+  types: {
+    primary: {
+      background: colors.primary[500],
+      content: colors.semantic.surface,
+      border: colors.primary[500],
+      hoverBackground: colors.primary[600],
+      hoverBorder: colors.primary[600],
+    },
+    secondary: {
+      background: colors.semantic.surface,
+      content: colors.primary[500],
+      border: colors.primary[500],
+      hoverBackground: colors.primary[50],
+      hoverBorder: colors.primary[600],
+    },
+    tertiary: {
+      background: "transparent",
+      content: colors.primary[500],
+      border: "transparent",
+      hoverBackground: colors.primary[50],
+      hoverBorder: "transparent",
+    },
+    icon: {
+      background: colors.semantic.surface,
+      content: colors.neutral[700],
+      border: colors.neutral[200],
+      hoverBackground: colors.neutral[100],
+      hoverBorder: colors.primary[200],
+    },
+    destructive: {
+      background: colors.semantic.error.main,
+      content: colors.semantic.surface,
+      border: colors.semantic.error.main,
+      hoverBackground: colors.semantic.error.dark,
+      hoverBorder: colors.semantic.error.dark,
+    },
+    disabled: {
+      background: colors.neutral[100],
+      content: colors.neutral[400],
+      border: colors.neutral[200],
+      hoverBackground: colors.neutral[100],
+      hoverBorder: colors.neutral[200],
+    },
+  },
+  darkTypes: {
+    secondary: {
+      background: colors.neutral[800],
+      content: colors.primary[200],
+      border: colors.primary[300],
+      hoverBackground: colors.neutral[700],
+      hoverBorder: colors.primary[200],
+    },
+    tertiary: {
+      background: "transparent",
+      content: colors.primary[200],
+      border: "transparent",
+      hoverBackground: colors.neutral[700],
+      hoverBorder: "transparent",
+    },
+    icon: {
+      background: colors.neutral[800],
+      content: colors.neutral[300],
+      border: colors.neutral[700],
+      hoverBackground: colors.neutral[700],
+      hoverBorder: colors.primary[300],
+    },
+    disabled: {
+      background: colors.neutral[700],
+      content: colors.neutral[500],
+      border: colors.neutral[700],
+      hoverBackground: colors.neutral[700],
+      hoverBorder: colors.neutral[700],
+    },
+  },
+  sizes: {
+    sm: {
+      height: "2rem",
+      minWidth: "4rem",
+      padding: "0.375rem 0.75rem",
+      fontSize: "0.875rem",
+      iconSize: 14,
+    },
+    md: {
+      height: "2.5rem",
+      minWidth: "5rem",
+      padding: "0.5rem 1rem",
+      fontSize: "0.875rem",
+      iconSize: 14,
+    },
+    lg: {
+      height: "3rem",
+      minWidth: "6rem",
+      padding: "0.75rem 1.25rem",
+      fontSize: "1rem",
+      iconSize: 16,
+    },
+  },
+} as const;
+
+export const tableTokens = {
+  density: {
+    compact: {
+      rowHeight: "2.5rem",
+      cellPadding: `${spacing.sm} ${spacing.md}`,
+      use: "Dense data views and dashboards",
+    },
+    comfortable: {
+      rowHeight: "3rem",
+      cellPadding: `${spacing.md} ${spacing.lg}`,
+      use: "Default enterprise tables",
+    },
+    spacious: {
+      rowHeight: "3.5rem",
+      cellPadding: `${spacing.lg} ${spacing.xl}`,
+      use: "Review screens and low-density content",
+    },
+  },
+  columns: {
+    label: {
+      minWidth: "12rem",
+      alignment: "left",
+    },
+    numeric: {
+      minWidth: "7rem",
+      alignment: "right",
+    },
+    status: {
+      minWidth: "8rem",
+      alignment: "left",
+    },
+    action: {
+      minWidth: "5rem",
+      alignment: "right",
+    },
   },
 } as const;

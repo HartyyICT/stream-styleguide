@@ -1,11 +1,12 @@
 "use client";
 
 import { Box, Divider, Typography, useTheme } from "@mui/material";
-import Card from "@/app/components/documentation/Card";
-import CardTitle from "@/app/components/documentation/CardTitle";
-import Intro from "@/app/components/documentation/Intro";
-import Page from "@/app/components/documentation/Page";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import Card from "@/app/components/atoms/Card";
+import CardTitle from "@/app/components/atoms/CardTitle";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import Intro from "@/app/components/layout/Intro";
+import Page from "@/app/components/layout/Page";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import { radius, shadows } from "@/app/theme/tokens";
 
 const typographySections = [
@@ -14,6 +15,7 @@ const typographySections = [
   { label: "Font setup", href: "#font-setup" },
   { label: "Typography scale", href: "#typography-scale" },
   { label: "Component", href: "#component" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -603,7 +605,52 @@ export default function TypographyPage() {
 
           <Divider sx={{ my: 6 }} />
 
-          <Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
+          <Box
+            component="section"
+            id="code-examples"
+            sx={{ scrollMarginTop: 96 }}
+          >
+            <Typography variant="h2" sx={{ mb: 1.5 }}>
+              Code examples
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{ color: secondaryText, mb: 3, lineHeight: 1.7 }}
+            >
+              Use the theme typography variants instead of one-off font sizes.
+            </Typography>
+            <CodeExample
+              title="Heading with supporting text"
+              preview={
+                <Box>
+                  <Typography variant="h3">Customer overview</Typography>
+                  <Typography variant="body2" sx={{ mt: 0.75, color: secondaryText }}>
+                    Review activity, status and recent updates.
+                  </Typography>
+                </Box>
+              }
+              code={`import { Typography } from "@mui/material";
+
+export function TypographyExample() {
+  return (
+    <>
+      {/* Change variant to test the text hierarchy.
+         Examples: "h1", "h2", "h3", "body1", "body2", "caption". */}
+      <Typography variant="h3">Customer overview</Typography>
+      <Typography variant="body2">
+        Review activity, status and recent updates.
+      </Typography>
+    </>
+  );
+}`}
+            />
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          
+
+<Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Guidelines
             </Typography>

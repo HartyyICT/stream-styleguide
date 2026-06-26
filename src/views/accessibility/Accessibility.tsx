@@ -9,15 +9,16 @@ import {
   ScanSearch,
   ShieldCheck,
 } from "lucide-react";
-import Card from "@/app/components/documentation/Card";
-import CardTitle from "@/app/components/documentation/CardTitle";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import GuidelineList from "@/app/components/documentation/GuidelineList";
-import Intro from "@/app/components/documentation/Intro";
-import IconBox from "@/app/components/documentation/IconBox";
-import Page from "@/app/components/documentation/Page";
-import Section from "@/app/components/documentation/Section";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import Card from "@/app/components/atoms/Card";
+import CardTitle from "@/app/components/atoms/CardTitle";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import GuidelineList from "@/app/components/patterns/GuidelineList";
+import Intro from "@/app/components/layout/Intro";
+import IconBox from "@/app/components/atoms/IconBox";
+import Page from "@/app/components/layout/Page";
+import Section from "@/app/components/layout/Section";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   borderWidths,
   iconSizes,
@@ -31,6 +32,7 @@ const sections = [
   { label: "Focus states", href: "#focus-states" },
   { label: "Implementation", href: "#implementation" },
   { label: "Testing", href: "#testing" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
 ] as const;
 
@@ -256,6 +258,8 @@ export default function AccessibilityPage() {
 <input id="email" type="email" required />`}</CodeBlock>
       </Section>
 
+      
+
       <Section
         id="testing"
         title="Testing"
@@ -289,6 +293,50 @@ export default function AccessibilityPage() {
       </Section>
 
       <Section
+        id="code-examples"
+        title="Code examples"
+        description="Show labels, focus and icon-only names in the actual implementation."
+      >
+        <CodeExample
+          title="Accessible icon action"
+          preview={
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                px: 1.5,
+                py: 1,
+                color: accent,
+                border: `${borderWidths.focus} solid ${borders.focus}`,
+                borderRadius: radius.medium,
+                backgroundColor: surface,
+              }}
+            >
+              <Keyboard size={iconSizes.medium} />
+              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                Keyboard reachable
+              </Typography>
+            </Box>
+          }
+          code={`import Button from "@/app/components/atoms/Button";
+import { Settings } from "lucide-react";
+
+export function AccessibleIconAction() {
+  // Change aria-label so screen readers understand the action.
+  // Note: aria-label normally does not change anything visually.
+  // In a real UI, test this with a screen reader or accessibility inspector.
+  // Examples: "Open settings", "Search documentation", "Close dialog".
+  return (
+    <Button variant="icon" iconOnly aria-label="Open settings">
+      <Settings aria-hidden="true" />
+    </Button>
+  );
+}`}
+        />
+      </Section>
+
+<Section
         id="guidelines"
         title="Guidelines"
         description="These requirements apply to every shared component and application."

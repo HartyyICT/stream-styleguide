@@ -10,20 +10,23 @@ import {
   Smartphone,
   Tablet,
 } from "lucide-react";
-import Card from "@/app/components/documentation/Card";
-import CardTitle from "@/app/components/documentation/CardTitle";
-import CodeBlock from "@/app/components/documentation/CodeBlock";
-import GuidelineList from "@/app/components/documentation/GuidelineList";
-import Intro from "@/app/components/documentation/Intro";
-import IconBox from "@/app/components/documentation/IconBox";
-import Page from "@/app/components/documentation/Page";
-import Section from "@/app/components/documentation/Section";
-import { useDocumentationStyles } from "@/app/components/documentation/useDocumentationStyles";
+import Card from "@/app/components/atoms/Card";
+import CardTitle from "@/app/components/atoms/CardTitle";
+import CodeBlock from "@/app/components/atoms/CodeBlock";
+import CodeExample from "@/app/components/patterns/CodeExample";
+import GuidelineList from "@/app/components/patterns/GuidelineList";
+import Intro from "@/app/components/layout/Intro";
+import IconBox from "@/app/components/atoms/IconBox";
+import Page from "@/app/components/layout/Page";
+import Section from "@/app/components/layout/Section";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   borderWidths,
   breakpoints,
   iconSizes,
   radius,
+  responsiveGrids,
+  spacing,
 } from "@/app/theme/tokens";
 
 const sections = [
@@ -32,6 +35,7 @@ const sections = [
   { label: "Breakpoints", href: "#breakpoints" },
   { label: "Component behaviour", href: "#component-behaviour" },
   { label: "Implementation", href: "#implementation" },
+  { label: "Code examples", href: "#code-examples" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -46,52 +50,48 @@ const breakpointScale = [
   },
   {
     token: "tablet",
-    range: "600px – 899px",
+    range: "600px - 899px",
     start: breakpoints.tablet,
     use: "Tablets",
     icon: Tablet,
   },
   {
     token: "laptop",
-    range: "900px – 1199px",
+    range: "900px - 1199px",
     start: breakpoints.laptop,
     use: "Small desktop screens",
     icon: Laptop,
   },
   {
     token: "desktop",
-    range: "≥ 1200px",
+    range: ">= 1200px",
     start: breakpoints.desktop,
     use: "Standard work environment",
     icon: Monitor,
   },
 ] as const;
 
-const behaviours = [
+const responsivePatterns = [
   {
-    title: "Cards",
-    description: "Stack vertically when horizontal space becomes limited.",
-    icon: Columns3,
-  },
-  {
-    title: "Tables",
-    description: "Remain readable and scroll horizontally only when necessary.",
+    title: "Card grids",
+    desktop: "3 columns",
+    compact: "1 column",
+    description: "Dashboard cards keep their content readable by stacking before they become too narrow.",
     icon: Columns3,
   },
   {
     title: "Forms",
-    description: "Place fields underneath each other on smaller screens.",
+    desktop: "2 columns",
+    compact: "Stacked fields",
+    description: "Form fields move underneath each other so labels, inputs and validation remain readable.",
     icon: FormInput,
   },
   {
     title: "Navigation",
-    description: "Collapse into a compact menu when the full structure no longer fits.",
+    desktop: "Full labels",
+    compact: "Icon menu",
+    description: "Navigation reduces density when space is limited while keeping destinations available.",
     icon: Menu,
-  },
-  {
-    title: "Dialogs",
-    description: "Adapt their maximum width and margins to the viewport.",
-    icon: Monitor,
   },
 ] as const;
 
@@ -130,8 +130,9 @@ export default function ResponsivenessPage() {
           sx={{
             display: "grid",
             gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(3, minmax(0, 1fr))",
+              xs: responsiveGrids.oneToThree.mobile,
+              sm: responsiveGrids.oneToThree.tablet,
+              lg: responsiveGrids.oneToThree.desktop,
             },
             gap: 2,
           }}
@@ -205,25 +206,59 @@ export default function ResponsivenessPage() {
       <Section
         id="component-behaviour"
         title="Component behaviour"
-        description="Components respond according to their content and task rather than merely shrinking everything."
+        description="Responsive behaviour should make the same content easier to use at different widths, not just make everything smaller."
       >
         <Box
           sx={{
             display: "grid",
             gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(2, minmax(0, 1fr))",
+              xs: responsiveGrids.oneToThree.mobile,
+              sm: responsiveGrids.oneToThree.tablet,
+              lg: responsiveGrids.oneToThree.desktop,
             },
             gap: 2,
           }}
         >
-          {behaviours.map(({ title, description, icon: Icon }) => (
+          {responsivePatterns.map(({ title, desktop, compact, description, icon: Icon }) => (
             <Card key={title}>
-              <Icon size={iconSizes.large} color={accent} aria-hidden="true" />
-              <CardTitle sx={{ mt: 1.5, mb: 0.75 }}>
-                {title}
-              </CardTitle>
-              <Typography variant="body2" sx={{ color: secondaryText }}>
+              <IconBox sx={{ mb: 2 }}>
+                <Icon size={iconSizes.medium} aria-hidden="true" />
+              </IconBox>
+              <CardTitle sx={{ mb: 1 }}>{title}</CardTitle>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr auto 1fr",
+                  alignItems: "center",
+                  gap: 1,
+                  mb: 1.5,
+                }}
+              >
+                <Typography
+                  component="code"
+                  sx={{
+                    color: accent,
+                    fontFamily: "var(--font-space-mono), monospace",
+                    fontSize: "0.8125rem",
+                  }}
+                >
+                  {desktop}
+                </Typography>
+                <Typography variant="caption" sx={{ color: secondaryText }}>
+                  to
+                </Typography>
+                <Typography
+                  component="code"
+                  sx={{
+                    color: accent,
+                    fontFamily: "var(--font-space-mono), monospace",
+                    fontSize: "0.8125rem",
+                  }}
+                >
+                  {compact}
+                </Typography>
+              </Box>
+              <Typography variant="body2" sx={{ color: secondaryText, lineHeight: 1.7 }}>
                 {description}
               </Typography>
             </Card>
@@ -232,38 +267,69 @@ export default function ResponsivenessPage() {
 
         <Card sx={{ mt: 2 }}>
           <CardTitle sx={{ mb: 2 }}>
-            Responsive layout example
+            What should change visually?
           </CardTitle>
           <Box
             sx={{
               display: "grid",
               gridTemplateColumns: {
                 xs: "1fr",
-                md: "repeat(3, minmax(0, 1fr))",
+                md: "1fr 1fr",
               },
-              gap: 1.5,
+              gap: 2,
             }}
           >
-            {[1, 2, 3].map((item) => (
+            <Box>
+              <Typography variant="h3" sx={{ mb: 1 }}>
+                Wide layout
+              </Typography>
               <Box
-                key={item}
                 sx={{
-                  minHeight: 92,
-                  p: 2,
-                  border: `${borderWidths.default} solid ${borders.default}`,
-                  borderRadius: radius.medium,
-                  backgroundColor: surface,
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  gap: 1,
                 }}
               >
-                <CardTitle>Card {item}</CardTitle>
-                <Typography
-                  variant="caption"
-                  sx={{ display: "block", mt: 1, color: secondaryText }}
-                >
-                  Stacks below the laptop breakpoint.
-                </Typography>
+                {["Metric", "Status", "Action"].map((label) => (
+                  <Box
+                    key={label}
+                    sx={{
+                      p: 1.5,
+                      border: `${borderWidths.default} solid ${borders.default}`,
+                      borderRadius: radius.medium,
+                      backgroundColor: surface,
+                    }}
+                  >
+                    <Typography variant="caption" sx={{ color: secondaryText }}>
+                      {label}
+                    </Typography>
+                  </Box>
+                ))}
               </Box>
-            ))}
+            </Box>
+
+            <Box>
+              <Typography variant="h3" sx={{ mb: 1 }}>
+                Compact layout
+              </Typography>
+              <Box sx={{ display: "grid", gap: 1 }}>
+                {["Metric", "Status", "Action"].map((label) => (
+                  <Box
+                    key={label}
+                    sx={{
+                      p: 1.5,
+                      border: `${borderWidths.default} solid ${borders.default}`,
+                      borderRadius: radius.medium,
+                      backgroundColor: surface,
+                    }}
+                  >
+                    <Typography variant="caption" sx={{ color: secondaryText }}>
+                      {label}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
           </Box>
         </Card>
       </Section>
@@ -271,22 +337,90 @@ export default function ResponsivenessPage() {
       <Section
         id="implementation"
         title="Implementation"
-        description="Use responsive MUI values and the shared breakpoint names instead of isolated media queries."
+        description="Use the shared responsive tokens so pages, documentation examples and application layouts react at the same widths."
       >
-        <CodeBlock>{`<Box
+        <CodeBlock>{`import { responsiveGrids, responsiveLayout, spacing } from "@/app/theme/tokens";
+
+<Box
   sx={{
     display: "grid",
+    maxWidth: responsiveLayout.contentMaxWidth,
     gridTemplateColumns: {
-      xs: "1fr",
-      md: "repeat(2, minmax(0, 1fr))",
-      lg: "repeat(3, minmax(0, 1fr))",
+      xs: responsiveGrids.oneToThree.mobile,
+      sm: responsiveGrids.oneToThree.tablet,
+      lg: responsiveGrids.oneToThree.desktop,
     },
     gap: spacing.md,
   }}
 />`}</CodeBlock>
       </Section>
 
+      
+
       <Section
+        id="code-examples"
+        title="Code examples"
+        description="This example shows a real responsive grid: the layout starts stacked and adds columns when more width is available."
+      >
+        <CodeExample
+          title="Responsive card grid"
+          preview={
+            <Box
+              sx={{
+                width: "100%",
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: responsiveGrids.oneToThree.mobile,
+                  sm: responsiveGrids.oneToThree.tablet,
+                  lg: responsiveGrids.oneToThree.desktop,
+                },
+                gap: spacing.sm,
+              }}
+            >
+              {["Customer", "Status", "Next action"].map((label) => (
+                <Box
+                  key={label}
+                  sx={{
+                    p: 1.5,
+                    textAlign: "center",
+                    border: `${borderWidths.default} solid ${borders.default}`,
+                    borderRadius: radius.medium,
+                    backgroundColor: surface,
+                  }}
+                >
+                  <Typography variant="caption" sx={{ color: secondaryText }}>
+                    {label}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          }
+          code={`import { Box } from "@mui/material";
+import { responsiveGrids, spacing } from "@/app/theme/tokens";
+
+export function ResponsiveGridExample() {
+  return (
+    <Box
+      sx={{
+        display: "grid",
+        // Change the columns per breakpoint to test responsive behavior.
+        // Examples: responsiveGrids.oneToTwo.mobile, responsiveGrids.oneToThree.desktop.
+        gridTemplateColumns: {
+          xs: responsiveGrids.oneToThree.mobile,
+          sm: responsiveGrids.oneToThree.tablet,
+          lg: responsiveGrids.oneToThree.desktop,
+        },
+        // Change gap with your spacing tokens.
+        // Examples: spacing.sm, spacing.md, spacing.lg.
+        gap: spacing.md,
+      }}
+    />
+  );
+}`}
+        />
+      </Section>
+
+<Section
         id="guidelines"
         title="Guidelines"
         description="Responsive behaviour should preserve task completion and information hierarchy."
