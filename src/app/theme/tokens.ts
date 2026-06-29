@@ -47,6 +47,8 @@ export const radius = {
   medium: "0.5rem",
   large: "0.75rem",
   extraLarge: "1rem",
+  pill: "999px",
+  circle: "50%",
 };
 
 export const iconSizes = {
@@ -295,4 +297,100 @@ export const tableTokens = {
       alignment: "right",
     },
   },
+} as const;
+
+export const formTokens = {
+  field: {
+    height: "2.75rem",
+    minHeight: "2.75rem",
+    paddingX: spacing.md,
+    paddingY: "0.625rem",
+    fontSize: "0.875rem",
+    lineHeight: "1.25rem",
+    gap: spacing.xs,
+    focusRing: `0 0 0 3px ${colors.primary[50]}`,
+    hoverIndicatorHeight: 2,
+  },
+  textarea: {
+    minHeight: "7rem",
+    padding: spacing.md,
+    lineHeight: 1.7,
+  },
+  label: {
+    gap: spacing.xs,
+    rowHeight: "1.25rem",
+  },
+  helperText: {
+    gap: spacing.xs,
+  },
+  choice: {
+    size: 18,
+    indicatorSize: 6,
+    disabledOpacity: 0.65,
+  },
+  toggle: {
+    width: 44,
+    height: 24,
+    padding: "2px",
+    thumbSize: 20,
+    thumbOffset: "20px",
+    disabledOpacity: 0.65,
+  },
+  toggleField: {
+    minHeight: "3.5rem",
+    disabledOpacity: 0.75,
+  },
+  layout: {
+    singleColumn: "minmax(0, 1fr)",
+    twoColumn: "repeat(2, minmax(0, 1fr))",
+    sectionGap: spacing.lg,
+  },
+  states: {
+    default: {
+      border: colors.neutral[300],
+      background: colors.semantic.surface,
+      content: colors.neutral[900],
+    },
+    hover: {
+      border: colors.primary[200],
+      background: colors.semantic.surface,
+      content: colors.neutral[900],
+    },
+    focus: {
+      border: colors.primary[500],
+      background: colors.semantic.surface,
+      content: colors.neutral[900],
+    },
+    error: {
+      border: colors.semantic.error.main,
+      background: colors.semantic.surface,
+      content: colors.neutral[900],
+    },
+    disabled: {
+      border: colors.neutral[200],
+      background: colors.neutral[100],
+      content: colors.neutral[400],
+    },
+  },
+} as const;
+
+export const wizardTokens = {
+  shellPadding: spacing.lg,
+  panelGap: "0rem",
+  panelColumnWidth: "280px",
+  cardPadding: spacing.lg,
+  fieldGap: spacing.md,
+  stepGap: spacing.md,
+  stepHeight: "4.5rem",
+  stepIconSize: 24,
+  contentMinHeight: {
+    mobile: 560,
+    desktop: 604,
+  },
+  bodyMinHeight: 300,
+} as const;
+
+export const tablePreviewTokens = {
+  columns: "2fr 1.4fr 1.2fr 88px",
+  headerFontSize: "0.8125rem",
 } as const;

@@ -680,7 +680,7 @@ export default function CodeExample({
           px: 1.25,
           py: 1,
           borderTop: `${borderWidths.subtle} solid ${borders.subtle}`,
-          borderBottom: `${borderWidths.subtle} solid ${borders.subtle}`,
+          borderBottom: showCode ? `${borderWidths.subtle} solid ${borders.subtle}` : 0,
         }}
       >
         <Typography

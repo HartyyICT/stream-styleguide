@@ -36,6 +36,7 @@ import {
   radius,
   responsiveGrids,
   spacing,
+  tablePreviewTokens,
   tableTokens,
 } from "@/app/theme/tokens";
 
@@ -71,15 +72,95 @@ const columnRows = Object.entries(tableTokens.columns).map(([token, value]) => (
 const guidelines = [
   "Use tables for structured data that benefits from scanning, sorting or comparing values.",
   "Keep column labels short and descriptive.",
-  "Align numeric values to the right and text values to the left.",
+  "Align values by column role and keep header and cell alignment consistent.",
   "Use comfortable density as the default for enterprise workflows.",
   "Avoid hiding important actions behind icon-only controls without labels or tooltips.",
   "Use horizontal scrolling inside the table container when columns cannot safely collapse.",
 ] as const;
 
+const tableExampleCode = `import Button from "@/app/components/atoms/Button";
+import Badge from "@/app/components/atoms/Badge";
+import { tableTokens } from "@/app/theme/tokens";
+import { MoreHorizontal } from "lucide-react";
+
+export function CustomerTable() {
+  const density = tableTokens.density.comfortable;
+  const rows = [
+    { customer: "Van Dijk Logistics", status: "Active", amount: "EUR 2.450" },
+    { customer: "Nova Retail", status: "Review", amount: "EUR 980" },
+    { customer: "Stream Support", status: "Active", amount: "EUR 1.260" },
+  ];
+  // Change the density token to test row spacing.
+  // Examples: tableTokens.density.compact, tableTokens.density.comfortable, tableTokens.density.spacious.
+  // Change customer, status or amount values to update the preview.
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Status</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr key={row.customer} style={{ height: density.rowHeight }}>
+            <td style={{ padding: density.cellPadding }}>{row.customer}</td>
+            <td style={{ padding: density.cellPadding, textAlign: "left" }}>
+              <Badge tone={row.status === "Active" ? "accent" : "neutral"}>
+                {row.status}
+              </Badge>
+            </td>
+            <td style={{ padding: density.cellPadding, textAlign: "left" }}>
+              {row.amount}
+            </td>
+            <td style={{ padding: density.cellPadding, textAlign: "right" }}>
+              <Button variant="icon" iconOnly aria-label="Open row actions">
+                <MoreHorizontal />
+              </Button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}`;
+
 function getDensityFromCode(code: string) {
   const densityMatch = code.match(/tableTokens\.density\.(compact|comfortable|spacious)/);
   return densityMatch?.[1] as keyof typeof tableTokens.density | undefined;
+}
+
+type TablePreviewRow = {
+  customer: string;
+  status: string;
+  amount: string;
+};
+
+const defaultPreviewRows: TablePreviewRow[] = [
+  { customer: "Van Dijk Logistics", status: "Active", amount: "EUR 2.450" },
+  { customer: "Nova Retail", status: "Review", amount: "EUR 980" },
+  { customer: "Stream Support", status: "Active", amount: "EUR 1.260" },
+];
+
+function getTableRowsFromCode(code: string): TablePreviewRow[] {
+  const rowMatches = [
+    ...code.matchAll(
+      /\{\s*customer:\s*["']([^"']+)["'],\s*status:\s*["']([^"']+)["'],\s*amount:\s*["']([^"']+)["']\s*\}/g,
+    ),
+  ];
+
+  if (rowMatches.length === 0) {
+    return defaultPreviewRows;
+  }
+
+  return rowMatches.map((match) => ({
+    customer: match[1],
+    status: match[2],
+    amount: match[3],
+  }));
 }
 
 function TablePreview({ code }: { code: string }) {
@@ -87,6 +168,10 @@ function TablePreview({ code }: { code: string }) {
     useDocumentationStyles();
   const density = getDensityFromCode(code) ?? "comfortable";
   const densityToken = tableTokens.density[density];
+  const rows = getTableRowsFromCode(code);
+  const cellSx = {
+    p: densityToken.cellPadding,
+  } as const;
 
   return (
     <Surface
@@ -95,34 +180,39 @@ function TablePreview({ code }: { code: string }) {
         width: "100%",
         overflowX: "auto",
         p: spacing.md,
+        border: 0,
       }}
     >
       <Box
-        component="table"
+        role="table"
         sx={{
           width: "100%",
           minWidth: 560,
-          borderCollapse: "separate",
-          borderSpacing: 0,
           overflow: "hidden",
           border: `${borderWidths.default} solid ${borders.default}`,
           borderRadius: radius.medium,
           backgroundColor: surface,
         }}
       >
-        <Box component="thead" sx={{ backgroundColor: subtleBackground }}>
-          <Box component="tr">
+        <Box role="rowgroup" sx={{ backgroundColor: subtleBackground }}>
+          <Box
+            role="row"
+            sx={{
+              display: "grid",
+              gridTemplateColumns: tablePreviewTokens.columns,
+              alignItems: "center",
+            }}
+          >
             {["Customer", "Status", "Amount", "Action"].map((heading) => (
               <Box
                 key={heading}
-                component="th"
+                role="columnheader"
                 sx={{
-                  px: spacing.md,
-                  py: spacing.sm,
+                  p: densityToken.cellPadding,
                   color: secondaryText,
                   fontFamily: "var(--font-poppins), sans-serif",
-                  fontSize: "0.8125rem",
-                  textAlign: heading === "Amount" || heading === "Action" ? "right" : "left",
+                  fontSize: tablePreviewTokens.headerFontSize,
+                  textAlign: heading === "Action" ? "right" : "left",
                   borderBottom: `${borderWidths.default} solid ${borders.default}`,
                 }}
               >
@@ -131,25 +221,45 @@ function TablePreview({ code }: { code: string }) {
             ))}
           </Box>
         </Box>
-        <Box component="tbody">
-          {[
-            ["Van Dijk Logistics", "Active", "€2.450"],
-            ["Nova Retail", "Review", "€980"],
-            ["Stream Support", "Active", "€1.260"],
-          ].map(([customer, status, amount]) => (
-            <Box key={customer} component="tr" sx={{ height: densityToken.rowHeight }}>
-              <Box component="td" sx={{ p: densityToken.cellPadding, borderBottom: `${borderWidths.default} solid ${borders.subtle}` }}>
+        <Box role="rowgroup">
+          {rows.map((row) => (
+            <Box
+              key={`${row.customer}-${row.status}-${row.amount}`}
+              role="row"
+              sx={{
+                minHeight: densityToken.rowHeight,
+                display: "grid",
+                gridTemplateColumns: tablePreviewTokens.columns,
+                alignItems: "center",
+                borderBottom: `${borderWidths.default} solid ${borders.subtle}`,
+                "&:last-child": {
+                  borderBottom: 0,
+                },
+              }}
+            >
+              <Box role="cell" sx={cellSx}>
                 <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                  {customer}
+                  {row.customer}
                 </Typography>
               </Box>
-              <Box component="td" sx={{ p: densityToken.cellPadding, borderBottom: `${borderWidths.default} solid ${borders.subtle}` }}>
-                <Badge tone={status === "Active" ? "accent" : "neutral"}>{status}</Badge>
+              <Box
+                role="cell"
+                sx={{
+                  ...cellSx,
+                  textAlign: "left",
+                }}
+              >
+                <Badge
+                  tone={row.status === "Active" ? "accent" : "neutral"}
+                  sx={{ mx: 0 }}
+                >
+                  {row.status}
+                </Badge>
               </Box>
-              <Box component="td" sx={{ p: densityToken.cellPadding, textAlign: "right", borderBottom: `${borderWidths.default} solid ${borders.subtle}` }}>
-                <Typography variant="body2">{amount}</Typography>
+              <Box role="cell" sx={{ ...cellSx, textAlign: "left" }}>
+                <Typography variant="body2">{row.amount}</Typography>
               </Box>
-              <Box component="td" sx={{ p: densityToken.cellPadding, textAlign: "right", borderBottom: `${borderWidths.default} solid ${borders.subtle}` }}>
+              <Box role="cell" sx={{ ...cellSx, textAlign: "right" }}>
                 <Button variant="icon" iconOnly size="sm" aria-label="Open row actions">
                   <MoreHorizontal />
                 </Button>
@@ -322,45 +432,9 @@ export default function TablesPage() {
       >
         <CodeExample
           title="Data table density"
-          preview={<TablePreview code="tableTokens.density.comfortable" />}
+          preview={<TablePreview code={tableExampleCode} />}
           renderPreview={(code) => <TablePreview code={code} />}
-          code={`import Button from "@/app/components/atoms/Button";
-import Badge from "@/app/components/atoms/Badge";
-import { tableTokens } from "@/app/theme/tokens";
-import { MoreHorizontal } from "lucide-react";
-
-export function CustomerTable() {
-  const density = tableTokens.density.comfortable;
-  // Change the density token to test row spacing.
-  // Examples: tableTokens.density.compact, tableTokens.density.comfortable, tableTokens.density.spacious.
-
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Customer</th>
-          <th>Status</th>
-          <th>Amount</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style={{ height: density.rowHeight }}>
-          <td style={{ padding: density.cellPadding }}>Van Dijk Logistics</td>
-          <td style={{ padding: density.cellPadding }}>
-            <Badge tone="accent">Active</Badge>
-          </td>
-          <td style={{ padding: density.cellPadding, textAlign: "right" }}>€2.450</td>
-          <td style={{ padding: density.cellPadding, textAlign: "right" }}>
-            <Button variant="icon" iconOnly aria-label="Open row actions">
-              <MoreHorizontal />
-            </Button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  );
-}`}
+          code={tableExampleCode}
         />
       </Section>
 

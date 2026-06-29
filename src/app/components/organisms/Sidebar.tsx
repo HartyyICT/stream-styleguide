@@ -16,7 +16,9 @@ import {
   Accessibility,
   Blend,
   ChevronDown,
+  ClipboardList,
   Grid3X3,
+  ListChecks,
   MousePointer2,
   Navigation,
   Palette,
@@ -82,9 +84,11 @@ const navigationGroups: { label: string; ariaLabel: string; items: NavigationIte
     ariaLabel: "Components",
     items: [
       { label: "Navbar", icon: Navigation, href: "/navbar" },
+      { label: "Forms", icon: ClipboardList, href: "/forms" },
       { label: "Searchbar", icon: Search, href: "/searchbar" },
       { label: "Sidebar", icon: PanelLeftOpen, href: "/sidebar" },
       { label: "Tables", icon: Table2, href: "/tables" },
+      { label: "Wizards", icon: ListChecks, href: "/wizards" },
     ],
   },
 ];
