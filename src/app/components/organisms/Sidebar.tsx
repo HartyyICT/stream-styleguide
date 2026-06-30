@@ -141,10 +141,10 @@ export default function Sidebar({
   const navigationItemSx = {
     height: 38,
     display: "grid",
-    gridTemplateColumns: "18px minmax(0, 1fr)",
+    gridTemplateColumns: `${iconSizes.control}px minmax(0, 1fr)`,
     alignItems: "center",
     columnGap: collapsed ? 0 : 1.25,
-    pl: collapsed ? 3 : 1.5,
+    pl: collapsed ? 2.8125 : 2.25,
     pr: collapsed ? 1 : 1.5,
     py: 1,
     mb: 0.5,
@@ -263,10 +263,12 @@ export default function Sidebar({
             {(() => {
               const groupOpen = openGroups[group.label] ?? true;
 
-              return showLabels ? (
+              return (
+                <Tooltip title={!showLabels ? group.label : ""} placement="right">
                 <ButtonBase
                   component="button"
                   type="button"
+                  aria-label={showLabels ? undefined : `${groupOpen ? "Collapse" : "Expand"} ${group.label}`}
                   aria-expanded={groupOpen}
                   aria-controls={`sidebar-group-${group.label
                     .toLowerCase()
@@ -274,10 +276,10 @@ export default function Sidebar({
                   onClick={() => toggleGroup(group.label)}
                   sx={{
                     width: "100%",
-                    display: "flex",
+                    height: 34,
+                    display: "grid",
+                    gridTemplateColumns: "minmax(0, 1fr) 16px",
                     alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: 1,
                     px: 1.5,
                     mb: 1,
                     color: secondaryText,
@@ -297,6 +299,8 @@ export default function Sidebar({
                     variant="overline"
                     sx={{
                       ...effectiveLabelSx,
+                      gridColumn: "1",
+                      gridRow: "1",
                       textAlign: "left",
                       color: "inherit",
                       fontWeight: 700,
@@ -305,45 +309,16 @@ export default function Sidebar({
                   >
                     {group.label}
                   </Typography>
-                  <ChevronDown
-                    size={iconSizes.small}
-                    aria-hidden="true"
-                    style={{
-                      flexShrink: 0,
-                      transform: groupOpen ? "rotate(0deg)" : "rotate(-90deg)",
-                      transition: `transform ${sidebarTransition}`,
-                    }}
-                  />
-                </ButtonBase>
-              ) : (
-                <Tooltip
-                  title={`${groupOpen ? "Collapse" : "Expand"} ${group.label}`}
-                  placement="right"
-                >
-                  <ButtonBase
-                    component="button"
-                    type="button"
-                    aria-label={`${groupOpen ? "Collapse" : "Expand"} ${group.label}`}
-                    aria-expanded={groupOpen}
-                    aria-controls={`sidebar-group-${group.label
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                    onClick={() => toggleGroup(group.label)}
+                  <Box
+                    component="span"
                     sx={{
-                      width: "100%",
-                      height: 34,
-                      mb: 1,
+                      width: 16,
+                      height: 16,
                       display: "grid",
                       placeItems: "center",
-                      color: secondaryText,
-                      borderRadius: radius.medium,
-                      cursor: "pointer",
-                      transition:
-                        "color 160ms ease, background-color 160ms ease",
-                      "&:hover": {
-                        color: interaction.hoverContent,
-                        backgroundColor: hoverBackground,
-                      },
+                      justifySelf: collapsed ? "center" : "end",
+                      gridColumn: collapsed ? "1 / -1" : "2",
+                      gridRow: "1",
                     }}
                   >
                     <ChevronDown
@@ -354,7 +329,8 @@ export default function Sidebar({
                         transition: `transform ${sidebarTransition}`,
                       }}
                     />
-                  </ButtonBase>
+                  </Box>
+                </ButtonBase>
                 </Tooltip>
               );
             })()}
