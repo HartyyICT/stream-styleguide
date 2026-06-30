@@ -309,7 +309,10 @@ export const formTokens = {
     lineHeight: "1.25rem",
     gap: spacing.xs,
     focusRing: `0 0 0 3px ${colors.primary[50]}`,
+    focusOutlineOffset: "2px",
     hoverIndicatorHeight: 2,
+    selectIconPaddingRight: "2.5rem",
+    selectIconOffsetInline: spacing.md,
   },
   textarea: {
     minHeight: "7rem",
@@ -335,6 +338,8 @@ export const formTokens = {
     thumbSize: 20,
     thumbOffset: "20px",
     disabledOpacity: 0.65,
+    transition: "background-color 160ms ease, opacity 160ms ease",
+    thumbTransition: "transform 160ms ease",
   },
   toggleField: {
     minHeight: "3.5rem",

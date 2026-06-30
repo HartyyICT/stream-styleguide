@@ -139,15 +139,19 @@ export default function Sidebar({
   } as const;
 
   const navigationItemSx = {
-    height: 38,
+    height: sidebarMotion.navItem.height,
     display: "grid",
-    gridTemplateColumns: `${iconSizes.control}px minmax(0, 1fr)`,
+    gridTemplateColumns: `${sidebarMotion.navItem.iconColumnWidth}px minmax(0, 1fr)`,
     alignItems: "center",
-    columnGap: collapsed ? 0 : 1.25,
-    pl: collapsed ? 2.8125 : 2.25,
-    pr: collapsed ? 1 : 1.5,
-    py: 1,
-    mb: 0.5,
+    columnGap: collapsed ? 0 : sidebarMotion.navItem.expandedColumnGap,
+    pl: collapsed
+      ? sidebarMotion.navItem.collapsedPaddingLeft
+      : sidebarMotion.navItem.expandedPaddingLeft,
+    pr: collapsed
+      ? sidebarMotion.navItem.collapsedPaddingRight
+      : sidebarMotion.navItem.expandedPaddingRight,
+    py: sidebarMotion.navItem.paddingY,
+    mb: sidebarMotion.navItem.marginBottom,
     transition: [
       `column-gap ${sidebarTransition}`,
       `padding ${sidebarTransition}`,

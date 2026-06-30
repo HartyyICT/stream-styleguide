@@ -92,7 +92,7 @@ export default function ToggleField({
         sx={{
           "&:focus-visible": {
             outline: `${borderWidths.focus} solid ${accent}`,
-            outlineOffset: 2,
+            outlineOffset: formTokens.field.focusOutlineOffset,
           },
         }}
       />

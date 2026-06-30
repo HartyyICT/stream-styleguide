@@ -66,10 +66,10 @@ export default function Toggle({
         backgroundColor: isChecked ? accent : colors.neutral[300],
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? formTokens.toggle.disabledOpacity : 1,
-        transition: "background-color 160ms ease, opacity 160ms ease",
+        transition: formTokens.toggle.transition,
         "&:focus-visible": {
           outline: `${borderWidths.focus} solid ${accent}`,
-          outlineOffset: 2,
+          outlineOffset: formTokens.field.focusOutlineOffset,
         },
         ...sx,
       }}
@@ -83,7 +83,7 @@ export default function Toggle({
           borderRadius: radius.extraLarge,
           backgroundColor: colors.semantic.surface,
           transform: isChecked ? `translateX(${formTokens.toggle.thumbOffset})` : "translateX(0)",
-          transition: "transform 160ms ease",
+          transition: formTokens.toggle.thumbTransition,
         }}
       />
     </ButtonBase>

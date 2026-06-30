@@ -27,7 +27,7 @@ export default function Select({ error = false, disabled, children, sx, ...props
           appearance: "none",
           px: formTokens.field.paddingX,
           py: formTokens.field.paddingY,
-          pr: 5,
+          pr: formTokens.field.selectIconPaddingRight,
           color: disabled ? formTokens.states.disabled.content : primaryText,
           border: `${borderWidths.default} solid ${
             error ? formTokens.states.error.border : borders.default
@@ -54,7 +54,7 @@ export default function Select({ error = false, disabled, children, sx, ...props
         style={{
           position: "absolute",
           top: "50%",
-          right: 16,
+          right: formTokens.field.selectIconOffsetInline,
           transform: "translateY(-50%)",
           pointerEvents: "none",
           color: disabled ? formTokens.states.disabled.content : primaryText,
