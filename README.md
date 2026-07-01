@@ -24,9 +24,11 @@ This runs ESLint, TypeScript and the optimized Next.js production build.
 ## Project structure
 
 - `src/app/theme` - design tokens and MUI theme configuration
-- `src/app/components` - application layout and navigation
-- `src/app/components/documentation` - reusable documentation components
-- `src/views` - content for each design-foundation page
-- `src/app/*/page.tsx` - Next.js routes
+- `src/app/components/atoms` - smallest reusable UI building blocks
+- `src/app/components/molecules` - combined components such as fields, navigation items and toolbars
+- `src/app/components/organisms` - larger interface sections such as the navbar, sidebar, search modal and sandbox examples
+- `src/app/components/patterns` - reusable documentation patterns such as code examples and page navigation
+- `src/views` - content for each documentation page
+- `src/app/(routes)` - grouped Next.js routes
 
 All visual color values must be defined in `src/app/theme/tokens.ts`.

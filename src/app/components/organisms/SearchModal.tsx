@@ -576,6 +576,42 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
     }
   }, []);
 
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const scrollY = window.scrollY;
+    const { body, documentElement } = document;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyPosition = body.style.position;
+    const previousBodyTop = body.style.top;
+    const previousBodyWidth = body.style.width;
+    const previousBodyPaddingRight = body.style.paddingRight;
+    const previousBodyBoxSizing = body.style.boxSizing;
+    const previousHtmlOverflow = documentElement.style.overflow;
+    const scrollbarWidth = window.innerWidth - documentElement.clientWidth;
+
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    body.style.paddingRight = scrollbarWidth > 0 ? `${scrollbarWidth}px` : previousBodyPaddingRight;
+    body.style.boxSizing = "border-box";
+    documentElement.style.overflow = "hidden";
+
+    return () => {
+      body.style.overflow = previousBodyOverflow;
+      body.style.position = previousBodyPosition;
+      body.style.top = previousBodyTop;
+      body.style.width = previousBodyWidth;
+      body.style.paddingRight = previousBodyPaddingRight;
+      body.style.boxSizing = previousBodyBoxSizing;
+      documentElement.style.overflow = previousHtmlOverflow;
+      window.scrollTo(0, scrollY);
+    };
+  }, [open]);
+
   const recentItems = useMemo(() => {
     return recentHrefs
       .map((href) => searchItems.find((item) => item.href === href))
@@ -720,6 +756,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
       <Dialog
         open={open}
         onClose={closeSearch}
+        disableScrollLock
         fullWidth
         maxWidth="lg"
         sx={{
@@ -730,9 +767,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         slotProps={{
           backdrop: {
             sx: {
-              backgroundColor: isDarkMode
-                ? colors.neutral[900]
-                : colors.neutral[800],
+              backgroundColor: "transparent",
               backdropFilter: "blur(8px)",
               WebkitBackdropFilter: "blur(8px)",
             },

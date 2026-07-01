@@ -91,7 +91,8 @@ export default function SearchDialog() {
           variant="body2"
           sx={{
             display: { xs: "none", sm: "block" },
-            flex: "0 1 auto",
+            flex: 1,
+            minWidth: 0,
             maxWidth: navbarTokens.searchTextMaxWidth,
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -106,6 +107,7 @@ export default function SearchDialog() {
           variant="caption"
           sx={{
             display: { xs: "none", sm: "block" },
+            ml: "auto",
             px: navbarTokens.shortcutPaddingX,
             py: navbarTokens.shortcutPaddingY,
             color: "inherit",

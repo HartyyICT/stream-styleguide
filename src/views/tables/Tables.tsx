@@ -24,6 +24,7 @@ import ButtonGroupExample from "@/app/components/molecules/ButtonGroupExample";
 import ExampleCard from "@/app/components/molecules/ExampleCard";
 import StateCard from "@/app/components/molecules/StateCard";
 import TokenTable from "@/app/components/molecules/TokenTable";
+import DataTable, { type DataTableColumn } from "@/app/components/organisms/DataTable";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
@@ -31,12 +32,9 @@ import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
-  borderWidths,
   iconSizes,
-  radius,
   responsiveGrids,
   spacing,
-  tablePreviewTokens,
   tableTokens,
 } from "@/app/theme/tokens";
 
@@ -164,114 +162,58 @@ function getTableRowsFromCode(code: string): TablePreviewRow[] {
 }
 
 function TablePreview({ code }: { code: string }) {
-  const { borders, surface, subtleBackground, secondaryText } =
-    useDocumentationStyles();
   const density = getDensityFromCode(code) ?? "comfortable";
   const densityToken = tableTokens.density[density];
   const rows = getTableRowsFromCode(code);
-  const cellSx = {
-    p: densityToken.cellPadding,
-  } as const;
+  const columns: DataTableColumn<TablePreviewRow>[] = [
+    {
+      key: "customer",
+      header: "Customer",
+      render: (row) => (
+        <Typography variant="body2" sx={{ fontWeight: 700 }}>
+          {row.customer}
+        </Typography>
+      ),
+    },
+    {
+      key: "status",
+      header: "Status",
+      render: (row) => (
+        <Badge tone={row.status === "Active" ? "accent" : "neutral"} sx={{ mx: 0 }}>
+          {row.status}
+        </Badge>
+      ),
+    },
+    {
+      key: "amount",
+      header: "Amount",
+      render: (row) => row.amount,
+    },
+    {
+      key: "action",
+      header: "Action",
+      align: "right",
+      render: () => (
+        <Button variant="icon" iconOnly size="sm" aria-label="Open row actions">
+          <MoreHorizontal />
+        </Button>
+      ),
+    },
+  ];
 
   return (
-    <Surface
-      subtle
-      sx={{
-        width: "100%",
-        overflowX: "auto",
-        p: spacing.md,
-        border: 0,
-      }}
-    >
-      <Box
-        role="table"
-        sx={{
-          width: "100%",
-          minWidth: 560,
-          overflow: "hidden",
-          border: `${borderWidths.default} solid ${borders.default}`,
-          borderRadius: radius.medium,
-          backgroundColor: surface,
-        }}
-      >
-        <Box role="rowgroup" sx={{ backgroundColor: subtleBackground }}>
-          <Box
-            role="row"
-            sx={{
-              display: "grid",
-              gridTemplateColumns: tablePreviewTokens.columns,
-              alignItems: "center",
-            }}
-          >
-            {["Customer", "Status", "Amount", "Action"].map((heading) => (
-              <Box
-                key={heading}
-                role="columnheader"
-                sx={{
-                  p: densityToken.cellPadding,
-                  color: secondaryText,
-                  fontFamily: "var(--font-poppins), sans-serif",
-                  fontSize: tablePreviewTokens.headerFontSize,
-                  textAlign: heading === "Action" ? "right" : "left",
-                  borderBottom: `${borderWidths.default} solid ${borders.default}`,
-                }}
-              >
-                {heading}
-              </Box>
-            ))}
-          </Box>
-        </Box>
-        <Box role="rowgroup">
-          {rows.map((row) => (
-            <Box
-              key={`${row.customer}-${row.status}-${row.amount}`}
-              role="row"
-              sx={{
-                minHeight: densityToken.rowHeight,
-                display: "grid",
-                gridTemplateColumns: tablePreviewTokens.columns,
-                alignItems: "center",
-                borderBottom: `${borderWidths.default} solid ${borders.subtle}`,
-                "&:last-child": {
-                  borderBottom: 0,
-                },
-              }}
-            >
-              <Box role="cell" sx={cellSx}>
-                <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                  {row.customer}
-                </Typography>
-              </Box>
-              <Box
-                role="cell"
-                sx={{
-                  ...cellSx,
-                  textAlign: "left",
-                }}
-              >
-                <Badge
-                  tone={row.status === "Active" ? "accent" : "neutral"}
-                  sx={{ mx: 0 }}
-                >
-                  {row.status}
-                </Badge>
-              </Box>
-              <Box role="cell" sx={{ ...cellSx, textAlign: "left" }}>
-                <Typography variant="body2">{row.amount}</Typography>
-              </Box>
-              <Box role="cell" sx={{ ...cellSx, textAlign: "right" }}>
-                <Button variant="icon" iconOnly size="sm" aria-label="Open row actions">
-                  <MoreHorizontal />
-                </Button>
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      </Box>
+    <>
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowKey={(row) => `${row.customer}-${row.status}-${row.amount}`}
+        rowHeight={densityToken.rowHeight}
+        cellPadding={densityToken.cellPadding}
+      />
       <Text tone="accent" variant="caption" sx={{ display: "block", mt: spacing.sm }}>
         Current density: tableTokens.density.{density}
       </Text>
-    </Surface>
+    </>
   );
 }
 
