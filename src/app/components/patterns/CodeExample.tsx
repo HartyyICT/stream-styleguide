@@ -45,13 +45,11 @@ export default function CodeExample({
   code,
   preview,
   renderPreview,
-  editable = true,
   previewMinHeight,
 }: CodeExampleProps) {
   const { borders, surface, subtleBackground, primaryText, secondaryText, accent } =
     useDocumentationStyles();
-  const [currentCode, setCurrentCode] = useState(code);
-  const [isEditing, setIsEditing] = useState(false);
+  const currentCode = code;
   const [showCode, setShowCode] = useState(false);
   const isElevationExample = currentCode.includes("boxShadow");
   const needsTallPreview =
@@ -696,48 +694,11 @@ export default function CodeExample({
         <CodeExampleToolbar
           code={currentCode}
           showCode={showCode}
-          editable={editable}
-          isEditing={isEditing}
-          onToggleCode={() => {
-            setShowCode((value) => !value);
-            setIsEditing(false);
-          }}
-          onToggleEdit={() => {
-            setShowCode(true);
-            setIsEditing((value) => !value);
-          }}
+          onToggleCode={() => setShowCode((value) => !value)}
         />
       </Box>
 
-      {showCode && isEditing ? (
-        <Box
-          component="textarea"
-          value={currentCode}
-          aria-label="Editable example code"
-          onChange={(event) => setCurrentCode(event.target.value)}
-          spellCheck={false}
-          sx={{
-            width: "100%",
-            height: codePanelHeight,
-            minHeight: codePanelHeight,
-            flex: "0 0 auto",
-            boxSizing: "border-box",
-            p: 2,
-            display: "block",
-            resize: "none",
-            border: 0,
-            color: primaryText,
-            backgroundColor: surface,
-            outline: "none",
-            fontFamily: "var(--font-space-mono), monospace",
-            fontSize: "0.8125rem",
-            lineHeight: 1.7,
-            overflow: "auto",
-            whiteSpace: "pre-wrap",
-            overflowWrap: "anywhere",
-          }}
-        />
-      ) : showCode ? (
+      {showCode ? (
         <Box
           component="pre"
           sx={{

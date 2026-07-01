@@ -87,6 +87,23 @@ export const responsiveLayout = {
   },
 } as const;
 
+export const navbarTokens = {
+  actionSize: "2.375rem",
+  actionSlotSize: "2.375rem",
+  actionEdgeInset: "0.8125rem",
+  actionGap: spacing.sm,
+  searchWidth: "18rem",
+  searchTextMaxWidth: "10rem",
+  shortcutPaddingX: "0.375rem",
+  shortcutPaddingY: "0.125rem",
+  profileAvatarSize: "1.5rem",
+  profileChevronSlotSize: "1.75rem",
+  profileTextMaxWidth: "9rem",
+  profileMenuWidth: "17.5rem",
+  profileMenuAvatarSize: "2.5rem",
+  menuItemMinHeight: "2.625rem",
+} as const;
+
 export const responsiveGrids = {
   oneToTwo: {
     mobile: "1fr",

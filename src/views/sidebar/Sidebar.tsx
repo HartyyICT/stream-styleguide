@@ -1,15 +1,12 @@
 "use client";
 
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import {
   Accessibility,
   Grid3X3,
-  PanelLeftClose,
-  PanelLeftOpen,
   Palette,
   Type,
 } from "lucide-react";
-import { useState } from "react";
 import SidebarNavItem from "@/app/components/molecules/SidebarNavItem";
 import {
   sidebarMotion,
@@ -25,7 +22,6 @@ import Section from "@/app/components/layout/Section";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   borderWidths,
-  iconSizes,
   radius,
   spacing,
 } from "@/app/theme/tokens";
@@ -60,14 +56,11 @@ const exampleItems = [
 
 function SidebarPreview({
   collapsed = false,
-  interactive = false,
 }: {
   collapsed?: boolean;
-  interactive?: boolean;
 }) {
-  const { borders, surface, secondaryText } = useDocumentationStyles();
-  const [isCollapsed, setIsCollapsed] = useState(collapsed);
-  const previewCollapsed = interactive ? isCollapsed : collapsed;
+  const { borders, surface } = useDocumentationStyles();
+  const previewCollapsed = collapsed;
 
   return (
     <Box
@@ -88,66 +81,6 @@ function SidebarPreview({
         transition: `width ${sidebarTransition}, padding ${sidebarTransition}`,
       }}
     >
-      <Box
-        sx={{
-          height: 34,
-          position: "relative",
-          display: "block",
-          alignItems: "center",
-          px: 1.5,
-          mb: 1,
-        }}
-      >
-        <Typography
-          variant="overline"
-          sx={{
-            minWidth: 0,
-            width: previewCollapsed ? 0 : "100%",
-            opacity: previewCollapsed ? 0 : 1,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            pointerEvents: previewCollapsed ? "none" : "auto",
-            color: secondaryText,
-            fontWeight: 700,
-            transition: `width ${sidebarTransition}, opacity ${sidebarTransition}`,
-          }}
-        >
-          Foundations
-        </Typography>
-
-        <IconButton
-          size="small"
-          aria-label={previewCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          onClick={
-            interactive
-              ? () => setIsCollapsed((value) => !value)
-              : undefined
-          }
-          sx={{
-            width: 38,
-            height: 38,
-            position: "absolute",
-            top: 1,
-            right: previewCollapsed ? "calc(50% - 19px)" : 12,
-            flexShrink: 0,
-            color: secondaryText,
-            boxSizing: "border-box",
-            border: `${borderWidths.subtle} solid ${borders.subtle}`,
-            borderRadius: radius.medium,
-            backgroundColor: surface,
-            cursor: interactive ? "pointer" : "default",
-            transition:
-              `right ${sidebarTransition}, background-color 160ms ease, color 160ms ease, border-color 160ms ease`,
-          }}
-        >
-          {previewCollapsed ? (
-            <PanelLeftOpen size={iconSizes.control} />
-          ) : (
-            <PanelLeftClose size={iconSizes.control} />
-          )}
-        </IconButton>
-      </Box>
-
       <Box
         sx={{
           width: "100%",
@@ -233,7 +166,7 @@ export default function SidebarPage() {
             </Typography>
             <SidebarNavItem
               label="Hover item"
-              icon={PanelLeftClose}
+              icon={Accessibility}
               state="hover"
             />
           </Card>
@@ -301,30 +234,30 @@ const activeItem = {
       >
         <CodeExample
           title="Documentation sidebar"
-          preview={<SidebarPreview interactive />}
+          preview={<SidebarPreview />}
           renderPreview={(code) => (
             <SidebarPreview
               collapsed={/collapsed=\{true\}|collapsed={true}/.test(code)}
-              interactive
             />
           )}
           previewMinHeight={300}
-code={`"use client";
+          code={`"use client";
 
 import { useState } from "react";
 import Sidebar from "@/app/components/organisms/Sidebar";
+import Navbar from "@/app/components/organisms/Navbar";
 
 export default function DocumentationLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
 
-  // Change collapsed to true to preview the compact vertical sidebar.
-  // Examples: collapsed={false}, collapsed={true}.
   return (
     <div>
-      <Sidebar
-        collapsed={collapsed}
-        onToggle={() => setCollapsed((value) => !value)}
+      <Navbar
+        onMenuClick={() => undefined}
+        sidebarCollapsed={collapsed}
+        onSidebarToggle={() => setCollapsed((value) => !value)}
       />
+      <Sidebar collapsed={collapsed} />
       <main>{children}</main>
     </div>
   );

@@ -6,8 +6,11 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   borderColors,
+  borderWidths,
   colors,
+  iconSizes,
   interactionStates,
+  navbarTokens,
   radius,
   shadows,
 } from "../../theme/tokens";
@@ -50,16 +53,15 @@ export default function SearchDialog() {
         aria-label="Search documentation"
         onClick={() => setOpen(true)}
         sx={{
-          width: { xs: 40, sm: 280 },
-          height: 40,
+          width: { xs: navbarTokens.actionSize, sm: navbarTokens.searchWidth },
+          height: navbarTokens.actionSize,
           display: "flex",
           alignItems: "center",
-          gap: 1,
-          px: { xs: 1, sm: 1.5 },
+          gap: navbarTokens.actionGap,
+          px: { xs: 0, sm: navbarTokens.actionGap },
           color: secondaryText,
           backgroundColor: surface,
-          border: 1,
-          borderColor: borders.subtle,
+          border: `${borderWidths.subtle} solid ${borders.subtle}`,
           borderRadius: radius.medium,
           cursor: "pointer",
           boxShadow: shadows.level1,
@@ -83,13 +85,17 @@ export default function SearchDialog() {
           },
         }}
       >
-        <Search size={18} aria-hidden="true" />
+        <Search size={iconSizes.control} aria-hidden="true" />
 
         <Typography
           variant="body2"
           sx={{
             display: { xs: "none", sm: "block" },
-            flex: 1,
+            flex: "0 1 auto",
+            maxWidth: navbarTokens.searchTextMaxWidth,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
             color: "inherit",
           }}
         >
@@ -100,12 +106,12 @@ export default function SearchDialog() {
           variant="caption"
           sx={{
             display: { xs: "none", sm: "block" },
-            px: 0.75,
-            py: 0.25,
+            px: navbarTokens.shortcutPaddingX,
+            py: navbarTokens.shortcutPaddingY,
             color: "inherit",
-            border: 1,
-            borderColor: borders.subtle,
+            border: `${borderWidths.subtle} solid ${borders.subtle}`,
             borderRadius: radius.small,
+            whiteSpace: "nowrap",
           }}
         >
           Ctrl K

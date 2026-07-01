@@ -6,7 +6,6 @@ import {
   Collapse,
   Divider,
   Drawer,
-  IconButton,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -23,7 +22,6 @@ import {
   Navigation,
   Palette,
   PanelTop,
-  PanelLeftClose,
   PanelLeftOpen,
   PackagePlus,
   ScanText,
@@ -101,14 +99,12 @@ let persistedOpenGroups: Record<string, boolean> | null = null;
 
 interface SidebarProps {
   collapsed: boolean;
-  onToggle: () => void;
   mobileOpen?: boolean;
   onMobileClose?: () => void;
 }
 
 export default function Sidebar({
   collapsed,
-  onToggle,
   mobileOpen = false,
   onMobileClose,
 }: SidebarProps) {
@@ -139,6 +135,7 @@ export default function Sidebar({
   } as const;
 
   const navigationItemSx = {
+    width: "100%",
     height: sidebarMotion.navItem.height,
     display: "grid",
     gridTemplateColumns: `${sidebarMotion.navItem.iconColumnWidth}px minmax(0, 1fr)`,
@@ -152,6 +149,7 @@ export default function Sidebar({
       : sidebarMotion.navItem.expandedPaddingRight,
     py: sidebarMotion.navItem.paddingY,
     mb: sidebarMotion.navItem.marginBottom,
+    overflow: "hidden",
     transition: [
       `column-gap ${sidebarTransition}`,
       `padding ${sidebarTransition}`,
@@ -200,67 +198,6 @@ export default function Sidebar({
 
     return (
       <>
-        <Box
-          sx={{
-            height: 40,
-            position: "relative",
-            display: "block",
-            alignItems: "center",
-            px: 1.5,
-            mb: 1,
-          }}
-        >
-          <Typography
-            variant="overline"
-            sx={{
-              ...effectiveLabelSx,
-              color: secondaryText,
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-            }}
-          >
-            Navigation
-          </Typography>
-
-          {!isMobile && (
-            <Tooltip
-              title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-              placement="right"
-            >
-              <IconButton
-                size="small"
-                aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-                onClick={onToggle}
-                sx={{
-                  width: 38,
-                  height: 38,
-                  position: "absolute",
-                  top: 1,
-                  right: collapsed ? "calc(50% - 19px)" : 12,
-                  flexShrink: 0,
-                  color: secondaryText,
-                  boxSizing: "border-box",
-                  border: `${borderWidths.subtle} solid ${border}`,
-                  backgroundColor: surface,
-                  transition:
-                    `right ${sidebarTransition}, background-color 160ms ease, color 160ms ease, border-color 160ms ease`,
-                  "&:hover": {
-                    color: interaction.hoverContent,
-                    border: `${borderWidths.interactive} solid ${interaction.hoverBorder}`,
-                    backgroundColor: hoverBackground,
-                  },
-                }}
-              >
-                {collapsed ? (
-                  <PanelLeftOpen size={iconSizes.control} />
-                ) : (
-                  <PanelLeftClose size={iconSizes.control} />
-                )}
-              </IconButton>
-            </Tooltip>
-          )}
-        </Box>
-
         {navigationGroups.map((group, groupIndex) => (
           <Box key={group.label}>
             {groupIndex > 0 && <Divider sx={{ my: 2.5 }} />}
@@ -282,17 +219,30 @@ export default function Sidebar({
                     width: "100%",
                     height: 34,
                     display: "grid",
-                    gridTemplateColumns: "minmax(0, 1fr) 16px",
+                    gridTemplateColumns: `${sidebarMotion.navItem.iconColumnWidth}px minmax(0, 1fr) 16px`,
                     alignItems: "center",
-                    px: 1.5,
+                    columnGap: collapsed ? 0 : sidebarMotion.navItem.expandedColumnGap,
+                    pl: collapsed
+                      ? sidebarMotion.navItem.collapsedPaddingLeft
+                      : sidebarMotion.navItem.expandedPaddingLeft,
+                    pr: collapsed
+                      ? sidebarMotion.navItem.collapsedPaddingRight
+                      : sidebarMotion.navItem.expandedPaddingRight,
                     mb: 1,
                     color: secondaryText,
+                    position: "relative",
+                    boxSizing: "border-box",
                     overflow: "hidden",
                     borderRadius: radius.medium,
                     cursor: "pointer",
                     textAlign: "left",
-                    transition:
-                      "color 160ms ease, background-color 160ms ease",
+                    transition: [
+                      `column-gap ${sidebarTransition}`,
+                      `grid-template-columns ${sidebarTransition}`,
+                      `padding ${sidebarTransition}`,
+                      "color 160ms ease",
+                      "background-color 160ms ease",
+                    ].join(", "),
                     "&:hover": {
                       color: interaction.hoverContent,
                       backgroundColor: hoverBackground,
@@ -303,7 +253,7 @@ export default function Sidebar({
                     variant="overline"
                     sx={{
                       ...effectiveLabelSx,
-                      gridColumn: "1",
+                      gridColumn: "2",
                       gridRow: "1",
                       textAlign: "left",
                       color: "inherit",
@@ -320,9 +270,16 @@ export default function Sidebar({
                       height: 16,
                       display: "grid",
                       placeItems: "center",
-                      justifySelf: collapsed ? "center" : "end",
-                      gridColumn: collapsed ? "1 / -1" : "2",
-                      gridRow: "1",
+                      position: "absolute",
+                      top: "50%",
+                      left: collapsed ? "50%" : "auto",
+                      right: collapsed ? "auto" : sidebarMotion.navItem.expandedPaddingRight,
+                      transform: collapsed ? "translate(-50%, -50%)" : "translateY(-50%)",
+                      transition: [
+                        `left ${sidebarTransition}`,
+                        `right ${sidebarTransition}`,
+                        `transform ${sidebarTransition}`,
+                      ].join(", "),
                     }}
                   >
                     <ChevronDown
@@ -395,17 +352,15 @@ export default function Sidebar({
                           style={{ flexShrink: 0, display: "block" }}
                           aria-hidden="true"
                         />
-                        {showLabels && (
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              ...effectiveLabelSx,
-                              fontWeight: active ? 700 : 500,
-                            }}
-                          >
-                            {label}
-                          </Typography>
-                        )}
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            ...effectiveLabelSx,
+                            fontWeight: active ? 700 : 500,
+                          }}
+                        >
+                          {label}
+                        </Typography>
                       </ButtonBase>
                     </Tooltip>
                   );

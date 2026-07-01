@@ -3,7 +3,7 @@
 import { Box, Chip, Typography } from "@mui/material";
 import { BookOpen } from "lucide-react";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
-import ThemeModeToggle from "@/app/components/molecules/ThemeModeToggle";
+import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
 import Card from "@/app/components/atoms/Card";
 import CodeBlock from "@/app/components/atoms/CodeBlock";
 import CodeExample from "@/app/components/patterns/CodeExample";
@@ -26,31 +26,30 @@ const sections = [
 ] as const;
 
 const anatomy = [
-  "Brand area with icon, product name and styleguide context.",
+  "Brand area with icon, product name and version context.",
   "Version indicator for the current design system release.",
   "Search entry point for finding pages and component documentation.",
-  "Theme mode toggle for switching between light and dark mode.",
+  "User profile menu with account details, theme switching and logout actions.",
 ] as const;
 
 const guidelines = [
   "Keep the navbar persistent at the top of documentation and application shells.",
   "Use the brand area for product identity, not page-specific titles.",
-  "Keep search and theme switching grouped on the right side.",
+  "Keep search and account actions grouped on the right side.",
   "Do not add page navigation or hamburger menus to the navbar; navigation belongs in the sidebar.",
-  "Preserve enough spacing between search, theme toggle and future global actions.",
+  "Preserve enough spacing between search, user profile and future global actions.",
   "Keep height, border, icon size and typography consistent across products.",
 ] as const;
 
 function StyleguideNavbarPreview({
   state = "default",
 }: {
-  state?: "default" | "search" | "theme";
+  state?: "default" | "search" | "profile";
 }) {
   const {
     borders,
     surface,
     primaryText,
-    secondaryText,
     accent,
     selectedBackground,
   } = useDocumentationStyles();
@@ -86,7 +85,7 @@ function StyleguideNavbarPreview({
             <BookOpen size={20} aria-hidden="true" />
           </Box>
 
-          <Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <Typography
               variant="subtitle1"
               sx={{
@@ -99,26 +98,22 @@ function StyleguideNavbarPreview({
               Stream Design System
             </Typography>
 
-            <Typography variant="caption" sx={{ color: secondaryText }}>
-              Styleguide
-            </Typography>
+            <Chip
+              label="v0.1"
+              size="small"
+              sx={{
+                display: { xs: "none", sm: "inline-flex" },
+                backgroundColor: selectedBackground,
+                color: accent,
+                fontWeight: 700,
+              }}
+            />
           </Box>
-
-          <Chip
-            label="v0.1"
-            size="small"
-            sx={{
-              display: { xs: "none", sm: "inline-flex" },
-              backgroundColor: selectedBackground,
-              color: accent,
-              fontWeight: 700,
-            }}
-          />
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <SearchDialog />
-          <ThemeModeToggle />
+          <UserProfileMenu />
         </Box>
       </Box>
 
@@ -136,7 +131,7 @@ function StyleguideNavbarPreview({
           </Typography>
         </Box>
       )}
-      {state === "theme" && (
+      {state === "profile" && (
         <Box
           sx={{
             p: 1.5,
@@ -146,7 +141,7 @@ function StyleguideNavbarPreview({
           }}
         >
           <Typography variant="caption" sx={{ color: accent, fontWeight: 700 }}>
-            Theme mode is handled by the exact navbar toggle component.
+            The user menu groups profile details, theme switching and logout actions.
           </Typography>
         </Box>
       )}
@@ -168,8 +163,8 @@ export default function NavbarPage() {
     <Page pageId="navbar" sections={sections}>
       <Intro
         title="Navbar"
-        description="The navbar provides persistent product identity and access to global documentation actions. It helps users understand where they are and gives quick access to search and theme controls."
-        note="This page documents the actual Stream styleguide navbar: brand on the left, searchbar and theme toggle on the right."
+        description="The navbar provides persistent product identity and access to global documentation actions. It helps users understand where they are and gives quick access to search and account controls."
+        note="This page documents the actual Stream styleguide navbar: brand on the left, searchbar and user profile menu on the right."
       />
 
       <Section
@@ -205,28 +200,25 @@ export default function NavbarPage() {
               >
                 <BookOpen size={20} />
               </Box>
-              <Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                 <Typography variant="subtitle1" sx={{ color: primaryText }}>
                   Stream Design System
                 </Typography>
-                <Typography variant="caption" sx={{ color: secondaryText }}>
-                  Styleguide
-                </Typography>
+                <Chip
+                  label="v0.1"
+                  size="small"
+                  sx={{
+                    color: accent,
+                    backgroundColor: selectedBackground,
+                    fontWeight: 700,
+                  }}
+                />
               </Box>
-              <Chip
-                label="v0.1"
-                size="small"
-                sx={{
-                  color: accent,
-                  backgroundColor: selectedBackground,
-                  fontWeight: 700,
-                }}
-              />
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <SearchDialog />
-              <ThemeModeToggle />
+              <UserProfileMenu />
             </Box>
           </Box>
         </Card>
@@ -264,7 +256,7 @@ export default function NavbarPage() {
           <Typography sx={{ color: secondaryText, lineHeight: 1.7 }}>
             The navbar should not change per page. Its job is to provide
             consistent access to identity, search, version context and global
-            preferences such as dark mode.
+            account actions such as theme switching and logout.
           </Typography>
         </Card>
       </Section>
@@ -272,7 +264,7 @@ export default function NavbarPage() {
       <Section
         id="states"
         title="States"
-        description="Navbar controls use the same interaction tokens as the real searchbar and theme toggle."
+        description="Navbar controls use the same interaction tokens as the real searchbar and user profile menu."
       >
         <Box sx={{ display: "grid", gap: 2 }}>
           <Card>
@@ -291,9 +283,9 @@ export default function NavbarPage() {
 
           <Card>
             <Typography variant="h3" sx={{ mb: 2 }}>
-              Theme toggle
+              User profile menu
             </Typography>
-            <StyleguideNavbarPreview state="theme" />
+            <StyleguideNavbarPreview state="profile" />
           </Card>
         </Box>
       </Section>
@@ -308,12 +300,22 @@ export default function NavbarPage() {
   borderWidths,
   colors,
   interactionStates,
+  navbarTokens,
   radius,
   shadows,
 } from "@/app/theme/tokens";
 
 const navbar = {
   height: 64,
+  actionSize: navbarTokens.actionSize,
+  actionSlotSize: navbarTokens.actionSlotSize,
+  actionEdgeInset: navbarTokens.actionEdgeInset,
+  actionGap: navbarTokens.actionGap,
+  searchWidth: navbarTokens.searchWidth,
+  searchTextMaxWidth: navbarTokens.searchTextMaxWidth,
+  shortcutPaddingX: navbarTokens.shortcutPaddingX,
+  profileAvatarSize: navbarTokens.profileAvatarSize,
+  profileChevronSlotSize: navbarTokens.profileChevronSlotSize,
   backgroundColor: colors.semantic.surface,
   borderBottom: borderColors.light.subtle,
   borderWidth: borderWidths.subtle,
@@ -339,14 +341,21 @@ const searchbarHover = {
             preview={<StyleguideNavbarPreview />}
             renderPreview={() => <StyleguideNavbarPreview />}
             previewMinHeight={172}
-            code={`import Navbar from "@/app/components/organisms/Navbar";
+            code={`import { useState } from "react";
+import Navbar from "@/app/components/organisms/Navbar";
 
 export default function DocumentationLayout({ children }) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
   // The navbar is shared by the full styleguide shell.
-  // Change brand, version, search or theme actions centrally in Navbar.
+  // Change brand, version, search or account actions centrally in Navbar.
   return (
     <>
-      <Navbar />
+      <Navbar
+        onMenuClick={() => undefined}
+        sidebarCollapsed={sidebarCollapsed}
+        onSidebarToggle={() => setSidebarCollapsed((value) => !value)}
+      />
       {children}
     </>
   );
@@ -368,16 +377,22 @@ export function NavbarSearchArea() {
           />
 
           <CodeExample
-            title="Theme mode toggle"
-            preview={<StyleguideNavbarPreview state="theme" />}
-            renderPreview={() => <StyleguideNavbarPreview state="theme" />}
+            title="User profile menu"
+            preview={<StyleguideNavbarPreview state="profile" />}
+            renderPreview={() => <StyleguideNavbarPreview state="profile" />}
             previewMinHeight={172}
-            code={`import ThemeModeToggle from "@/app/components/molecules/ThemeModeToggle";
+            code={`import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
 
-export function NavbarThemeAction() {
-  // ThemeModeToggle uses the same icon size, border and hover tokens as the navbar.
-  // Keep it as the only theme action in the navbar.
-  return <ThemeModeToggle />;
+export function NavbarAccountArea() {
+  // UserProfileMenu combines account identity with common account actions.
+  // Theme switching lives inside the menu so the navbar stays compact.
+  return (
+    <UserProfileMenu
+      name="Hartiessan Asep"
+      email="hartiessan.asep@streamsoftware.nl"
+      role="Design system"
+    />
+  );
 }`}
           />
         </Box>
@@ -402,9 +417,9 @@ export function NavbarThemeAction() {
             Label global controls
           </Typography>
           <Typography sx={{ color: secondaryText, lineHeight: 1.7 }}>
-            Icon-only controls such as the theme toggle require an accessible
-            label. Search should clearly communicate its purpose and support a
-            keyboard shortcut without requiring pointer interaction.
+            Icon-only controls and compact profile buttons require accessible
+            labels. Search should clearly communicate its purpose, while the user
+            menu should expose account actions with readable menu item text.
           </Typography>
         </Card>
       </Section>

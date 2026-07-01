@@ -27,16 +27,19 @@ export default function DocumentationLayout({
 
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: pageBackground }}>
-      <Navbar onMenuClick={() => setMobileNavigationOpen(true)} />
-      <Sidebar
-        collapsed={sidebarCollapsed}
-        onToggle={() =>
+      <Navbar
+        onMenuClick={() => setMobileNavigationOpen(true)}
+        sidebarCollapsed={sidebarCollapsed}
+        onSidebarToggle={() =>
           setSidebarCollapsed((collapsed) => {
             const next = !collapsed;
             persistedSidebarCollapsed = next;
             return next;
           })
         }
+      />
+      <Sidebar
+        collapsed={sidebarCollapsed}
         mobileOpen={mobileNavigationOpen}
         onMobileClose={() => setMobileNavigationOpen(false)}
       />

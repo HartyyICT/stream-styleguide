@@ -1,16 +1,16 @@
 import { iconSizes } from "@/app/theme/tokens";
 
 export const sidebarMotion = {
-  collapsedWidth: 88,
+  collapsedWidth: 64,
   expandedWidth: 280,
   duration: 280,
   easing: "cubic-bezier(0.4, 0, 0.2, 1)",
   navItem: {
     height: 38,
     iconColumnWidth: iconSizes.control,
-    collapsedPaddingLeft: 2.8125,
-    expandedPaddingLeft: 2.25,
-    collapsedPaddingRight: 1,
+    collapsedPaddingLeft: 1.625,
+    expandedPaddingLeft: 0.875,
+    collapsedPaddingRight: 1.625,
     expandedPaddingRight: 1.5,
     paddingY: 1,
     marginBottom: 0.5,

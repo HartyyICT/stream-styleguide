@@ -79,6 +79,7 @@ export default function SidebarNavItem({
           mb: sidebarMotion.navItem.marginBottom,
           position: "relative",
           boxSizing: "border-box",
+          overflow: "hidden",
           color: active ? accent : hover ? interaction.hoverContent : secondaryText,
           backgroundColor: active
             ? selectedBackground

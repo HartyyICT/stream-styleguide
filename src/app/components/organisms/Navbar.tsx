@@ -1,25 +1,33 @@
 "use client";
 
 import { Box, Chip, IconButton, Typography } from "@mui/material";
-import { BookOpen, Menu } from "lucide-react";
+import { BookOpen, Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import {
   borderColors,
   borderWidths,
   colors,
   iconSizes,
   interactionStates,
+  navbarTokens,
   radius,
   responsiveLayout,
 } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
-import ThemeModeToggle from "@/app/components/molecules/ThemeModeToggle";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
+import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
+import { sidebarMotion } from "@/app/components/organisms/sidebarMotion";
 
 interface NavbarProps {
   onMenuClick: () => void;
+  sidebarCollapsed: boolean;
+  onSidebarToggle: () => void;
 }
 
-export default function Navbar({ onMenuClick }: NavbarProps) {
+export default function Navbar({
+  onMenuClick,
+  sidebarCollapsed,
+  onSidebarToggle,
+}: NavbarProps) {
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
 
@@ -53,19 +61,56 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
           xs: responsiveLayout.pagePaddingX.mobile,
           md: responsiveLayout.pagePaddingX.tablet,
         },
+        pl: {
+          md: 0,
+        },
+        pr: {
+          md: navbarTokens.actionEdgeInset,
+        },
         backgroundColor: surface,
         borderBottom: 1,
         borderColor: border,
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1.5, md: 0 } }}>
+        <Box
+          sx={{
+            width: sidebarMotion.collapsedWidth,
+            display: { xs: "none", md: "grid" },
+            placeItems: "center",
+          }}
+        >
+          <IconButton
+            aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            onClick={onSidebarToggle}
+            sx={{
+              width: navbarTokens.actionSize,
+              height: navbarTokens.actionSize,
+              color: secondaryText,
+              border: `${borderWidths.subtle} solid ${border}`,
+              backgroundColor: surface,
+              "&:hover": {
+                color: interaction.hoverContent,
+                border: `${borderWidths.interactive} solid ${interaction.hoverBorder}`,
+                backgroundColor: interaction.hoverBackground,
+              },
+            }}
+          >
+            {sidebarCollapsed ? (
+              <PanelLeftOpen size={iconSizes.control} aria-hidden="true" />
+            ) : (
+              <PanelLeftClose size={iconSizes.control} aria-hidden="true" />
+            )}
+          </IconButton>
+        </Box>
+
         <IconButton
           aria-label="Open navigation"
           onClick={onMenuClick}
           sx={{
             display: { xs: "inline-flex", md: "none" },
-            width: 38,
-            height: 38,
+            width: navbarTokens.actionSize,
+            height: navbarTokens.actionSize,
             color: secondaryText,
             border: `${borderWidths.subtle} solid ${border}`,
             backgroundColor: surface,
@@ -79,56 +124,51 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
           <Menu size={iconSizes.control} aria-hidden="true" />
         </IconButton>
 
-        <Box
-          sx={{
-            width: { xs: 34, sm: 36 },
-            height: { xs: 34, sm: 36 },
-            display: "grid",
-            placeItems: "center",
-            borderRadius: radius.medium,
-            color: colors.semantic.surface,
-            backgroundColor: colors.primary[500],
-          }}
-        >
-          <BookOpen size={20} />
-        </Box>
-
-        <Box>
-          <Typography
-            variant="subtitle1"
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Box
             sx={{
-              color: primaryText,
-              fontFamily: "var(--font-poppins), sans-serif",
-              fontWeight: 600,
-              lineHeight: 1.2,
+              width: { xs: 34, sm: 36 },
+              height: { xs: 34, sm: 36 },
+              display: "grid",
+              placeItems: "center",
+              borderRadius: radius.medium,
+              color: colors.semantic.surface,
+              backgroundColor: colors.primary[500],
             }}
           >
-            Stream Design System
-          </Typography>
+            <BookOpen size={20} />
+          </Box>
 
-          <Typography
-            variant="caption"
-            sx={{ display: { xs: "none", sm: "block" }, color: secondaryText }}
-          >
-            Styleguide
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: primaryText,
+                fontFamily: "var(--font-poppins), sans-serif",
+                fontWeight: 600,
+                lineHeight: 1.2,
+              }}
+            >
+              Stream Design System
+            </Typography>
+
+            <Chip
+              label="v0.1"
+              size="small"
+              sx={{
+                display: { xs: "none", sm: "inline-flex" },
+                backgroundColor: selectedBackground,
+                color: accent,
+                fontWeight: 700,
+              }}
+            />
+          </Box>
         </Box>
-
-        <Chip
-          label="v0.1"
-          size="small"
-          sx={{
-            display: { xs: "none", sm: "inline-flex" },
-            backgroundColor: selectedBackground,
-            color: accent,
-            fontWeight: 700,
-          }}
-        />
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <SearchDialog />
-        <ThemeModeToggle />
+        <UserProfileMenu />
       </Box>
     </Box>
   );
