@@ -2,9 +2,9 @@
 
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
-import { borderWidths, radius, spacing, tablePreviewTokens } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import Surface from "@/app/components/atoms/Surface";
+import { borderWidths, radius, spacing, tablePreviewTokens } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
+import { Surface } from "@ssw/ui-library";
 
 export type DataTableColumn<Row> = {
   key: string;
@@ -35,7 +35,7 @@ export default function DataTable<Row>({
   subtle = true,
 }: DataTableProps<Row>) {
   const { borders, surface, subtleBackground, secondaryText } =
-    useDocumentationStyles();
+    useSemanticColors();
 
   return (
     <Surface

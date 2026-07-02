@@ -3,7 +3,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import Sidebar from "@/app/components/organisms/Sidebar";
-import { colors, pageLayoutTokens } from "../../theme/tokens";
+import { colors, pageLayoutTokens } from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
 import Navbar from "@/app/components/organisms/Navbar";
 import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";

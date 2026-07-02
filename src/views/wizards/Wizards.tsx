@@ -19,26 +19,26 @@ import {
   Upload,
 } from "lucide-react";
 import { useState } from "react";
-import Badge from "@/app/components/atoms/Badge";
-import Button from "@/app/components/atoms/Button";
-import Card from "@/app/components/atoms/Card";
-import CardTitle from "@/app/components/atoms/CardTitle";
-import IconBox from "@/app/components/atoms/IconBox";
-import Surface from "@/app/components/atoms/Surface";
-import Text from "@/app/components/atoms/Text";
-import TokenCode from "@/app/components/atoms/TokenCode";
+import { Badge } from "@ssw/ui-library";
+import { Button } from "@ssw/ui-library";
+import { Card } from "@ssw/ui-library";
+import { CardTitle } from "@ssw/ui-library";
+import { IconBox } from "@ssw/ui-library";
+import { Surface } from "@ssw/ui-library";
+import { Text } from "@ssw/ui-library";
+import { TokenCode } from "@ssw/ui-library";
 import AnatomyItem from "@/app/components/molecules/AnatomyItem";
 import ExampleCard from "@/app/components/molecules/ExampleCard";
-import FormActionRow from "@/app/components/molecules/FormActionRow";
-import FormField from "@/app/components/molecules/FormField";
-import SelectField from "@/app/components/molecules/SelectField";
-import ToggleField from "@/app/components/molecules/ToggleField";
+import { FormActionRow } from "@ssw/ui-library";
+import { FormField } from "@ssw/ui-library";
+import { SelectField } from "@ssw/ui-library";
+import { ToggleField } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
   colors,
@@ -50,7 +50,7 @@ import {
   shadows,
   spacing,
   wizardTokens,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#wizards" },
@@ -153,9 +153,9 @@ const accessibilityGuidelines = [
   "Use semantic headings so assistive technology can navigate between wizard areas.",
 ] as const;
 
-const wizardCode = `import FormField from "@/app/components/molecules/FormField";
-import SelectField from "@/app/components/molecules/SelectField";
-import FormActionRow from "@/app/components/molecules/FormActionRow";
+const wizardCode = `import { FormField } from "@ssw/ui-library";
+import { SelectField } from "@ssw/ui-library";
+import { FormActionRow } from "@ssw/ui-library";
 
 export function ExampleWizardStep() {
   return (
@@ -183,7 +183,7 @@ function WizardStepList({
   onStepSelect: (stepIndex: number) => void;
 }) {
   const { borders, surface, subtleBackground, primaryText, secondaryText, accent } =
-    useDocumentationStyles();
+    useSemanticColors();
 
   return (
     <Box
@@ -306,7 +306,7 @@ function WizardActionBar({
   onPrevious: () => void;
   onContinue: () => void;
 }) {
-  const { borders, surface, secondaryText } = useDocumentationStyles();
+  const { borders, surface, secondaryText } = useSemanticColors();
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === wizardSteps.length - 1;
 
@@ -333,7 +333,7 @@ function WizardActionBar({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: spacing.sm }}>
         <Button
-          variant={isFirstStep ? "disabled" : "secondary"}
+          variant="secondary"
           disabled={isFirstStep}
           size="sm"
           startIcon={<ArrowLeft />}
@@ -344,7 +344,7 @@ function WizardActionBar({
         <Button
           size="sm"
           endIcon={<ArrowRight />}
-          variant={canContinue ? "primary" : "disabled"}
+          variant="primary"
           disabled={!canContinue}
           onClick={onContinue}
         >
@@ -357,7 +357,7 @@ function WizardActionBar({
 
 function WizardExamplePreview() {
   const { borders, surface, subtleBackground, primaryText, secondaryText, accent } =
-    useDocumentationStyles();
+    useSemanticColors();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<boolean[]>(
     () => Array(wizardSteps.length).fill(false),
@@ -450,7 +450,7 @@ function WizardExamplePreview() {
               ]}
               selectProps={{
                 value: owner,
-                onChange: (event) => setOwner(event.currentTarget.value),
+                onChange: (event) => setOwner(event.target.value),
               }}
             />
           </Box>
@@ -539,7 +539,7 @@ function WizardExamplePreview() {
             ]}
             selectProps={{
               value: activityType,
-              onChange: (event) => setActivityType(event.currentTarget.value),
+              onChange: (event) => setActivityType(event.target.value),
             }}
           />
         </Box>
@@ -697,7 +697,7 @@ function WizardExamplePreview() {
 }
 
 export default function WizardsPage() {
-  const { accent, semantic } = useDocumentationStyles();
+  const { accent, semantic } = useSemanticColors();
 
   return (
     <Page pageId="wizards" sections={sections} maxWidth={pageLayoutTokens.dataContentMaxWidth}>

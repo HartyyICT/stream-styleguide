@@ -1,15 +1,15 @@
 "use client";
 
 import { Box, Typography, useTheme } from "@mui/material";
-import Divider from "@/app/components/atoms/Divider";
-import ColorSwatch from "@/app/components/atoms/ColorSwatch";
-import Card from "@/app/components/atoms/Card";
-import CardTitle from "@/app/components/atoms/CardTitle";
+import { Divider } from "@ssw/ui-library";
+import { ColorSwatch } from "@ssw/ui-library";
+import { Card } from "@ssw/ui-library";
+import { CardTitle } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { colors, pageLayoutTokens, radius, shadows } from "@/app/theme/tokens";
+import { useSemanticColors } from "@ssw/ui-library";
+import { colors, pageLayoutTokens, radius, shadows } from "@ssw/ui-library";
 
 const primaryColors = Object.entries(colors.primary);
 const neutralColors = Object.entries(colors.neutral);
@@ -90,7 +90,7 @@ export default function ColorsPage() {
     secondaryText,
     subtleBackground,
     selectedBackground,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
   const border = borders.default;
 
   const semanticVariant = isDarkMode ? "Dark" : "Light";
@@ -441,7 +441,7 @@ export default function ColorsPage() {
                   Save changes
                 </Box>
               }
-              code={`import { colors, radius } from "@/app/theme/tokens";
+              code={`import { colors, radius } from "@ssw/ui-library";
 
 export function PrimaryActionPreview() {
   return (

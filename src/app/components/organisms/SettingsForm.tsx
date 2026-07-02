@@ -2,13 +2,13 @@
 
 import { Box } from "@mui/material";
 import { useState } from "react";
-import CheckboxField from "@/app/components/molecules/CheckboxField";
-import FormActionRow from "@/app/components/molecules/FormActionRow";
-import RadioGroup from "@/app/components/molecules/RadioGroup";
-import ToggleField from "@/app/components/molecules/ToggleField";
+import { CheckboxField } from "@ssw/ui-library";
+import { FormActionRow } from "@ssw/ui-library";
+import { RadioGroup } from "@ssw/ui-library";
+import { ToggleField } from "@ssw/ui-library";
 import FormLayout from "@/app/components/organisms/FormLayout";
 import FormSection from "@/app/components/organisms/FormSection";
-import { spacing } from "@/app/theme/tokens";
+import { spacing } from "@ssw/ui-library";
 
 export default function SettingsForm() {
   const [emailNotifications, setEmailNotifications] = useState(true);

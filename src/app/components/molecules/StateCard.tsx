@@ -1,11 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Card from "@/app/components/atoms/Card";
-import CardTitle from "@/app/components/atoms/CardTitle";
-import Text from "@/app/components/atoms/Text";
-import { borderWidths, spacing } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { Card } from "@ssw/ui-library";
+import { CardTitle } from "@ssw/ui-library";
+import { Text } from "@ssw/ui-library";
+import { borderWidths, spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 interface StateCardProps {
   title: string;
@@ -20,7 +20,7 @@ export default function StateCard({
   state = "default",
   children,
 }: StateCardProps) {
-  const { interaction, borders } = useDocumentationStyles();
+  const { interaction, borders } = useSemanticColors();
 
   return (
     <Card

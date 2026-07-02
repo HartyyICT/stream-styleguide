@@ -2,8 +2,8 @@
 
 import { MenuItem, type MenuItemProps } from "@mui/material";
 import type { ReactNode } from "react";
-import { iconSizes, navbarTokens } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { iconSizes, navbarTokens } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 type ProfileMenuItemTone = "default" | "danger";
 
@@ -20,7 +20,7 @@ export default function ProfileMenuItem({
   sx,
   ...props
 }: ProfileMenuItemProps) {
-  const { primaryText, interaction, semantic } = useDocumentationStyles();
+  const { primaryText, interaction, semantic } = useSemanticColors();
   const isDanger = tone === "danger";
 
   return (

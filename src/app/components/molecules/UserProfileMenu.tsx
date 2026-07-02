@@ -12,7 +12,7 @@ import {
   navbarTokens,
   radius,
   shadows,
-} from "../../theme/tokens";
+} from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
 import ProfileIdentity from "./ProfileIdentity";
 import ProfileMenuItem from "./ProfileMenuItem";

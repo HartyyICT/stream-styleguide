@@ -25,11 +25,11 @@ import {
   radius,
   shadows,
   spacing,
-} from "@/app/theme/tokens";
-import Button from "@/app/components/atoms/Button";
-import Card from "@/app/components/atoms/Card";
+} from "@ssw/ui-library";
+import { Button } from "@ssw/ui-library";
+import { Card } from "@ssw/ui-library";
 import CodeExampleToolbar from "@/app/components/molecules/CodeExampleToolbar";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 
 interface CodeExampleProps {
   title?: string;
@@ -48,7 +48,7 @@ export default function CodeExample({
   previewMinHeight,
 }: CodeExampleProps) {
   const { borders, surface, subtleBackground, primaryText, secondaryText, accent, semantic } =
-    useDocumentationStyles();
+    useSemanticColors();
   const currentCode = code;
   const [showCode, setShowCode] = useState(false);
   const isElevationExample = currentCode.includes("boxShadow");
@@ -77,7 +77,6 @@ export default function CodeExample({
       | "tertiary"
       | "icon"
       | "destructive"
-      | "disabled"
       | undefined;
 
     if (codeValue.includes("<Button")) {

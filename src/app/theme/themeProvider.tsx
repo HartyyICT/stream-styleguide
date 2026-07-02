@@ -15,7 +15,7 @@ import {
   useState,
 } from "react";
 import { flushSync } from "react-dom";
-import { createAppTheme } from "./theme";
+import { createAppTheme } from "@ssw/ui-library";
 
 interface ColorModeContextValue {
   mode: PaletteMode;

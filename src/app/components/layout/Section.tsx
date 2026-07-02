@@ -2,9 +2,9 @@
 
 import { Box, Typography } from "@mui/material";
 import type { ReactNode } from "react";
-import Divider from "@/app/components/atoms/Divider";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { pageLayoutTokens } from "@/app/theme/tokens";
+import { Divider } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
+import { pageLayoutTokens } from "@ssw/ui-library";
 
 interface SectionProps {
   id: string;
@@ -23,7 +23,7 @@ export default function Section({
   divider = true,
   last = false,
 }: SectionProps) {
-  const { secondaryText } = useDocumentationStyles();
+  const { secondaryText } = useSemanticColors();
 
   return (
     <>

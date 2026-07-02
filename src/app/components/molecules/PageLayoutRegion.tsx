@@ -2,9 +2,9 @@
 
 import { Box, Typography, type BoxProps } from "@mui/material";
 import type { ReactNode } from "react";
-import TokenCode from "@/app/components/atoms/TokenCode";
-import { borderWidths, radius, spacing } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { TokenCode } from "@ssw/ui-library";
+import { borderWidths, radius, spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 interface PageLayoutRegionProps extends BoxProps {
   title: string;
@@ -22,7 +22,7 @@ export default function PageLayoutRegion({
   ...props
 }: PageLayoutRegionProps) {
   const { borders, primaryText, secondaryText, accent, surface } =
-    useDocumentationStyles();
+    useSemanticColors();
 
   return (
     <Box

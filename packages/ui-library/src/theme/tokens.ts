@@ -260,13 +260,13 @@ export const buttonTokens = {
       hoverBackground: colors.semantic.error.dark,
       hoverBorder: colors.semantic.error.dark,
     },
-    disabled: {
-      background: colors.neutral[100],
-      content: colors.neutral[400],
-      border: colors.neutral[200],
-      hoverBackground: colors.neutral[100],
-      hoverBorder: colors.neutral[200],
-    },
+  },
+  disabledState: {
+    background: colors.neutral[100],
+    content: colors.neutral[400],
+    border: colors.neutral[200],
+    hoverBackground: colors.neutral[100],
+    hoverBorder: colors.neutral[200],
   },
   darkTypes: {
     secondary: {
@@ -290,13 +290,13 @@ export const buttonTokens = {
       hoverBackground: colors.neutral[700],
       hoverBorder: colors.primary[300],
     },
-    disabled: {
-      background: colors.neutral[700],
-      content: colors.neutral[500],
-      border: colors.neutral[700],
-      hoverBackground: colors.neutral[700],
-      hoverBorder: colors.neutral[700],
-    },
+  },
+  darkDisabledState: {
+    background: colors.neutral[700],
+    content: colors.neutral[500],
+    border: colors.neutral[700],
+    hoverBackground: colors.neutral[700],
+    hoverBorder: colors.neutral[700],
   },
   sizes: {
     sm: {

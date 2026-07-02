@@ -2,16 +2,16 @@
 
 import { Box } from "@mui/material";
 import { useState } from "react";
-import ErrorText from "@/app/components/atoms/ErrorText";
-import HelperText from "@/app/components/atoms/HelperText";
-import Label from "@/app/components/atoms/Label";
-import Textarea from "@/app/components/atoms/Textarea";
-import FormActionRow from "@/app/components/molecules/FormActionRow";
-import FormField from "@/app/components/molecules/FormField";
-import SelectField from "@/app/components/molecules/SelectField";
+import { ErrorText } from "@ssw/ui-library";
+import { HelperText } from "@ssw/ui-library";
+import { Label } from "@ssw/ui-library";
+import { Textarea } from "@ssw/ui-library";
+import { FormActionRow } from "@ssw/ui-library";
+import { FormField } from "@ssw/ui-library";
+import { SelectField } from "@ssw/ui-library";
 import FormLayout from "@/app/components/organisms/FormLayout";
 import FormSection from "@/app/components/organisms/FormSection";
-import { formTokens, spacing } from "@/app/theme/tokens";
+import { formTokens, spacing } from "@ssw/ui-library";
 
 export default function ContactForm() {
   const [firstName, setFirstName] = useState("");
@@ -91,7 +91,7 @@ export default function ContactForm() {
             ]}
             selectProps={{
               value: topic,
-              onChange: (event) => setTopic(event.currentTarget.value),
+              onChange: (event) => setTopic(event.target.value),
             }}
           />
         </Box>

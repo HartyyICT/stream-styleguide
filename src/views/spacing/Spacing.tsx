@@ -2,15 +2,15 @@
 
 import { Box, Typography } from "@mui/material";
 import { Braces, Grid3X3, LayoutPanelTop, Rows3 } from "lucide-react";
-import Card from "@/app/components/atoms/Card";
-import CardTitle from "@/app/components/atoms/CardTitle";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
-import Divider from "@/app/components/atoms/Divider";
+import { Card } from "@ssw/ui-library";
+import { CardTitle } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
+import { Divider } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { pageLayoutTokens, radius, shadows, spacing } from "@/app/theme/tokens";
+import { useSemanticColors } from "@ssw/ui-library";
+import { pageLayoutTokens, radius, shadows, spacing } from "@ssw/ui-library";
 
 const spacingSections = [
   { label: "Overview", href: "#spacing" },
@@ -110,7 +110,7 @@ export default function SpacingPage() {
     accent,
     subtleBackground,
     selectedBackground,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
   const border = borders.default;
 
   return (
@@ -279,7 +279,7 @@ export default function SpacingPage() {
                 >
                   Use the central spacing object as the single source of truth.
                 </Typography>
-                <CodeBlock>{`import { spacing } from "@/app/theme/tokens";`}</CodeBlock>
+                <CodeBlock>{`import { spacing } from "@ssw/ui-library";`}</CodeBlock>
               </Box>
 
               <Box
@@ -563,7 +563,7 @@ export default function SpacingPage() {
                   </Typography>
                 </Box>
               }
-              code={`import { spacing, radius } from "@/app/theme/tokens";
+              code={`import { spacing, radius } from "@ssw/ui-library";
 
 export function SpacingPreview() {
   return (

@@ -7,7 +7,7 @@ import {
   borderWidths,
   colors,
   interactionStates,
-} from "../../theme/tokens";
+} from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
 
 export interface OnThisPageItem {

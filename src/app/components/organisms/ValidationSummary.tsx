@@ -2,8 +2,8 @@
 
 import { Box, Typography, type BoxProps } from "@mui/material";
 import { AlertCircle } from "lucide-react";
-import { borderWidths, iconSizes, radius, spacing } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { borderWidths, iconSizes, radius, spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 interface ValidationSummaryProps extends BoxProps {
   title?: string;
@@ -16,7 +16,7 @@ export default function ValidationSummary({
   sx,
   ...props
 }: ValidationSummaryProps) {
-  const { surface, semantic } = useDocumentationStyles();
+  const { surface, semantic } = useSemanticColors();
 
   if (errors.length === 0) {
     return null;

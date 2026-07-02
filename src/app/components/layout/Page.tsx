@@ -6,7 +6,7 @@ import DocumentationLayout from "@/app/components/layout/DocumentationLayout";
 import OnThisPage, {
   type OnThisPageItem,
 } from "@/app/components/patterns/OnThisPage";
-import { pageLayoutTokens } from "@/app/theme/tokens";
+import { pageLayoutTokens } from "@ssw/ui-library";
 
 interface PageProps {
   pageId: string;

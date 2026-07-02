@@ -1,14 +1,14 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 
 interface GuidelineListProps {
   items: readonly string[];
 }
 
 export default function GuidelineList({ items }: GuidelineListProps) {
-  const { secondaryText } = useDocumentationStyles();
+  const { secondaryText } = useSemanticColors();
 
   return (
     <Box

@@ -4,21 +4,21 @@ import { Box, Typography } from "@mui/material";
 import { Search, X } from "lucide-react";
 import RecentSearchItem from "@/app/components/molecules/RecentSearchItem";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
-import Button from "@/app/components/atoms/Button";
-import Card from "@/app/components/atoms/Card";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
+import { Button } from "@ssw/ui-library";
+import { Card } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
   radius,
   shadows,
   spacing,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#searchbar" },
@@ -54,7 +54,7 @@ function SearchStatePreview({
   state: "default" | "hover" | "active" | "recent";
 }) {
   const { borders, surface, secondaryText, interaction } =
-    useDocumentationStyles();
+    useSemanticColors();
 
   if (state === "recent") {
     return (
@@ -152,7 +152,7 @@ function SearchDialogPreview() {
     primaryText,
     secondaryText,
     subtleBackground,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   return (
     <Card sx={{ p: 0, overflow: "hidden" }}>
@@ -194,7 +194,7 @@ function SearchDialogPreview() {
 }
 
 export default function SearchbarPage() {
-  const { secondaryText } = useDocumentationStyles();
+  const { secondaryText } = useSemanticColors();
 
   return (
     <Page pageId="searchbar" sections={sections}>
@@ -305,7 +305,7 @@ export default function SearchbarPage() {
   interactionStates,
   radius,
   shadows,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const searchbar = {
   height: 40,

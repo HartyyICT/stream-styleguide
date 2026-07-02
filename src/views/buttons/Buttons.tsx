@@ -10,16 +10,16 @@ import {
   Settings,
   Trash2,
 } from "lucide-react";
-import Card from "@/app/components/atoms/Card";
-import Button from "@/app/components/atoms/Button";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
+import { Card } from "@ssw/ui-library";
+import { Button } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { borderWidths, pageLayoutTokens, radius, spacing } from "@/app/theme/tokens";
+import { useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, pageLayoutTokens, radius, spacing } from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#buttons" },
@@ -144,7 +144,7 @@ const buttonScale = [
     border: "1px Neutral 200 / #E2E8F0",
     use: "Unavailable action",
     example: (
-      <Button size="sm" variant="disabled">
+      <Button size="sm" variant="primary" disabled>
         Test
       </Button>
     ),
@@ -203,7 +203,7 @@ const accessibilityGuidelines = [
   "Important or destructive actions should not rely on color alone.",
 ] as const;
 
-const primaryButtonCode = `import Button from "@/app/components/atoms/Button";
+const primaryButtonCode = `import { Button } from "@ssw/ui-library";
 import { Check } from "lucide-react";
 
 // Change the text or startIcon to show a different action.
@@ -212,7 +212,7 @@ import { Check } from "lucide-react";
   Save changes
 </Button>`;
 
-const secondaryButtonCode = `import Button from "@/app/components/atoms/Button";
+const secondaryButtonCode = `import { Button } from "@ssw/ui-library";
 
 // Change the variant to adjust the visual emphasis.
 // Examples: "secondary", "tertiary", "disabled".
@@ -220,7 +220,7 @@ const secondaryButtonCode = `import Button from "@/app/components/atoms/Button";
   Cancel
 </Button>`;
 
-const iconButtonCode = `import Button from "@/app/components/atoms/Button";
+const iconButtonCode = `import { Button } from "@ssw/ui-library";
 import { Search } from "lucide-react";
 
 // Change aria-label and the icon so the action stays clear.
@@ -229,7 +229,7 @@ import { Search } from "lucide-react";
   <Search />
 </Button>`;
 
-const destructiveButtonCode = `import Button from "@/app/components/atoms/Button";
+const destructiveButtonCode = `import { Button } from "@ssw/ui-library";
 import { Trash2 } from "lucide-react";
 
 // Use destructive only for actions with negative impact.
@@ -255,7 +255,6 @@ function renderEditableButtonPreview(code: string) {
     | "tertiary"
     | "icon"
     | "destructive"
-    | "disabled"
     | undefined;
   const size = code.match(/size=["']([^"']+)["']/)?.[1] as
     | "sm"
@@ -316,7 +315,7 @@ export default function ButtonsPage() {
     accent,
     subtleBackground,
     selectedBackground,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   return (
     <Page pageId="buttons" sections={sections} maxWidth={pageLayoutTokens.wideContentMaxWidth}>
@@ -781,7 +780,7 @@ export default function ButtonsPage() {
             >
               Use primary tokens for the main call to action.
             </Typography>
-            <CodeBlock>{`import { colors, radius } from "@/app/theme/tokens";
+            <CodeBlock>{`import { colors, radius } from "@ssw/ui-library";
 
 const primaryButton = {
   backgroundColor: colors.primary[500],
@@ -800,7 +799,7 @@ const primaryButton = {
             >
               Keep dimensions and padding predictable across products.
             </Typography>
-            <CodeBlock>{`import { buttonTokens } from "@/app/theme/tokens";
+            <CodeBlock>{`import { buttonTokens } from "@ssw/ui-library";
 
 const mediumButton = {
   minHeight: "2.5rem",

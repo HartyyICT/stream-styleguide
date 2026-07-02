@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, Typography, type BoxProps } from "@mui/material";
-import { borderWidths, radius, spacing } from "@/app/theme/tokens";
-import TokenCode from "@/app/components/atoms/TokenCode";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { borderWidths, radius, spacing } from "@ssw/ui-library";
+import { TokenCode } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 export type TokenRowColumn = {
   label?: string;
@@ -24,7 +24,7 @@ export default function TokenRow({
   sx,
   ...props
 }: TokenRowProps) {
-  const { borders, surface, secondaryText } = useDocumentationStyles();
+  const { borders, surface, secondaryText } = useSemanticColors();
 
   return (
     <Box

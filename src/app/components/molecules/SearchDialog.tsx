@@ -13,7 +13,7 @@ import {
   navbarTokens,
   radius,
   shadows,
-} from "../../theme/tokens";
+} from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
 
 const SearchModal = dynamic(() => import("@/app/components/organisms/SearchModal"), {

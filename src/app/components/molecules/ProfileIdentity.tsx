@@ -4,8 +4,8 @@ import { Avatar, Box, Typography } from "@mui/material";
 import {
   colors,
   navbarTokens,
-} from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+} from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 type ProfileIdentityProps = {
   name: string;
@@ -30,7 +30,7 @@ export default function ProfileIdentity({
   role,
   compact = false,
 }: ProfileIdentityProps) {
-  const { isDarkMode, primaryText, secondaryText } = useDocumentationStyles();
+  const { isDarkMode, primaryText, secondaryText } = useSemanticColors();
   const initials = getInitials(name);
   const avatarBackground = isDarkMode ? colors.primary[300] : colors.primary[500];
   const avatarColor = isDarkMode ? colors.neutral[900] : colors.semantic.surface;

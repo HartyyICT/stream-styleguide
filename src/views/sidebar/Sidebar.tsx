@@ -12,19 +12,19 @@ import {
   sidebarMotion,
   sidebarTransition,
 } from "@/app/components/organisms/sidebarMotion";
-import Card from "@/app/components/atoms/Card";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
+import { Card } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
   radius,
   spacing,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#sidebar" },
@@ -59,7 +59,7 @@ function SidebarPreview({
 }: {
   collapsed?: boolean;
 }) {
-  const { borders, surface } = useDocumentationStyles();
+  const { borders, surface } = useSemanticColors();
   const previewCollapsed = collapsed;
 
   return (
@@ -106,7 +106,7 @@ function SidebarPreview({
 export default function SidebarPage() {
   const {
     secondaryText,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   return (
     <Page pageId="sidebar" sections={sections}>
@@ -217,7 +217,7 @@ export default function SidebarPage() {
         title="Token usage"
         description="Sidebar navigation uses border, radius, spacing and interaction tokens."
       >
-        <CodeBlock>{`import { borderWidths, interactionStates, radius } from "@/app/theme/tokens";
+        <CodeBlock>{`import { borderWidths, interactionStates, radius } from "@ssw/ui-library";
 
 const activeItem = {
   border: \`\${borderWidths.interactive} solid transparent\`,

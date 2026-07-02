@@ -3,9 +3,13 @@ import {
   borderColors,
   borderWidths,
   breakpoints,
+  buttonTokens,
   colors,
+  formTokens,
   interactionStates,
   radius,
+  semanticStateColors,
+  shadows,
 } from "./tokens";
 
 declare module "@mui/material/styles" {
@@ -19,6 +23,51 @@ declare module "@mui/material/styles" {
     fontFamilyMonospace?: string;
   }
 }
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsVariantOverrides {
+    primary: true;
+    secondary: true;
+    tertiary: true;
+    icon: true;
+    destructive: true;
+    text: false;
+    outlined: false;
+    contained: false;
+  }
+
+  interface ButtonPropsSizeOverrides {
+    sm: true;
+    md: true;
+    lg: true;
+  }
+}
+
+declare module "@mui/material/OutlinedInput" {
+  interface OutlinedInputPropsColorOverrides {
+    success: true;
+    warning: true;
+    info: true;
+  }
+}
+
+declare module "@mui/material/TextField" {
+  interface TextFieldPropsColorOverrides {
+    success: true;
+    warning: true;
+    info: true;
+  }
+}
+
+const buttonVariantKeys = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "icon",
+  "destructive",
+] as const;
+
+const buttonSizeKeys = ["sm", "md", "lg"] as const;
 
 const fontFamilies = {
   body: "var(--font-open-sans), Arial, sans-serif",
@@ -210,7 +259,27 @@ export const createAppTheme = (mode: PaletteMode) =>
   shape: {
     borderRadius: Number.parseFloat(radius.medium) * 16,
   },
-  components: {
+  components: (() => {
+    const formBorders = mode === "light" ? borderColors.light : borderColors.dark;
+    const formSemantic =
+      mode === "light" ? semanticStateColors.light : semanticStateColors.dark;
+    const formInteraction =
+      mode === "light" ? interactionStates.light : interactionStates.dark;
+    const formSurface =
+      mode === "light" ? colors.semantic.surface : colors.neutral[800];
+    const formContent = mode === "light" ? colors.neutral[900] : colors.neutral[50];
+    const formPlaceholder =
+      mode === "light" ? colors.neutral[400] : colors.neutral[500];
+    const formDisabledBackground =
+      mode === "light" ? colors.neutral[100] : colors.neutral[700];
+    const formDisabledContent =
+      mode === "light" ? colors.neutral[400] : colors.neutral[500];
+    const formDisabledBorder =
+      mode === "light" ? colors.neutral[200] : colors.neutral[700];
+    const choiceDefaultColor = formBorders.default;
+    const choiceCheckedColor = formInteraction.activeIndicator;
+
+    return {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
@@ -257,5 +326,224 @@ export const createAppTheme = (mode: PaletteMode) =>
         centerRipple: true,
       },
     },
-  },
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
+      styleOverrides: {
+        root: {
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 6,
+          border: `${borderWidths.default} solid transparent`,
+          borderRadius: radius.medium,
+          textTransform: "none",
+          "&.Mui-disabled": {
+            cursor: "not-allowed",
+            pointerEvents: "auto",
+            color: (mode === "light"
+              ? buttonTokens.disabledState
+              : buttonTokens.darkDisabledState
+            ).content,
+            backgroundColor: (mode === "light"
+              ? buttonTokens.disabledState
+              : buttonTokens.darkDisabledState
+            ).background,
+            borderColor: (mode === "light"
+              ? buttonTokens.disabledState
+              : buttonTokens.darkDisabledState
+            ).border,
+          },
+          "&:focus-visible": {
+            outline: `${borderWidths.focus} solid ${
+              mode === "light" ? colors.primary[500] : colors.primary[300]
+            }`,
+            outlineOffset: 2,
+          },
+        },
+      },
+      variants: [
+        ...buttonVariantKeys.map((variantKey) => {
+          const variantTokens =
+            mode === "dark" && variantKey in buttonTokens.darkTypes
+              ? buttonTokens.darkTypes[
+                  variantKey as keyof typeof buttonTokens.darkTypes
+                ]
+              : buttonTokens.types[variantKey];
+
+          return {
+            props: { variant: variantKey },
+            style: {
+              color: variantTokens.content,
+              backgroundColor: variantTokens.background,
+              borderColor: variantTokens.border,
+              "&:hover": {
+                backgroundColor: variantTokens.hoverBackground,
+                borderColor: variantTokens.hoverBorder,
+                boxShadow: variantKey === "primary" ? shadows.level1 : shadows.level0,
+              },
+            },
+          };
+        }),
+        ...buttonSizeKeys.map((sizeKey) => {
+          const sizeTokens = buttonTokens.sizes[sizeKey];
+
+          return {
+            props: { size: sizeKey },
+            style: {
+              height: sizeTokens.height,
+              minWidth: sizeTokens.minWidth,
+              padding: sizeTokens.padding,
+              fontSize: sizeTokens.fontSize,
+              "& svg": {
+                width: sizeTokens.iconSize,
+                height: sizeTokens.iconSize,
+              },
+            },
+          };
+        }),
+      ],
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: radius.medium,
+          backgroundColor: formSurface,
+          color: formContent,
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: formBorders.default,
+            borderWidth: borderWidths.default,
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: formBorders.interactive,
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: formBorders.focus,
+            boxShadow: `0 0 0 3px ${formInteraction.activeBackground}`,
+          },
+          "&.Mui-error .MuiOutlinedInput-notchedOutline": {
+            borderColor: formSemantic.error,
+          },
+          "&.Mui-disabled": {
+            backgroundColor: formDisabledBackground,
+          },
+          "&.Mui-disabled .MuiOutlinedInput-notchedOutline": {
+            borderColor: formDisabledBorder,
+          },
+          "& .MuiInputBase-inputMultiline": {
+            minHeight: formTokens.textarea.minHeight,
+            lineHeight: formTokens.textarea.lineHeight,
+            padding: formTokens.textarea.padding,
+          },
+        },
+        input: {
+          padding: `${formTokens.field.paddingY} ${formTokens.field.paddingX}`,
+          fontSize: formTokens.field.fontSize,
+          lineHeight: formTokens.field.lineHeight,
+          "&::placeholder": {
+            color: formPlaceholder,
+            opacity: 1,
+          },
+          "&.Mui-disabled": {
+            WebkitTextFillColor: formDisabledContent,
+          },
+        },
+      },
+      variants: [
+        {
+          props: { color: "success" as const },
+          style: {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: formSemantic.success,
+            },
+          },
+        },
+        {
+          props: { color: "warning" as const },
+          style: {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: formSemantic.warning,
+            },
+          },
+        },
+        {
+          props: { color: "info" as const },
+          style: {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: formSemantic.info,
+            },
+          },
+        },
+      ],
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          "&.Mui-disabled": {
+            cursor: "not-allowed",
+          },
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        select: {
+          paddingRight: formTokens.field.selectIconPaddingRight,
+        },
+        icon: {
+          right: formTokens.field.selectIconOffsetInline,
+          color: mode === "light" ? colors.neutral[600] : colors.neutral[300],
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          width: formTokens.choice.size,
+          height: formTokens.choice.size,
+          borderRadius: radius.small,
+          "&.Mui-disabled": {
+            opacity: formTokens.choice.disabledOpacity,
+          },
+        },
+      },
+      variants: [
+        {
+          props: { color: "default" as const },
+          style: {
+            color: choiceDefaultColor,
+            "&.Mui-checked": {
+              color: choiceCheckedColor,
+            },
+          },
+        },
+      ],
+    },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          width: formTokens.choice.size,
+          height: formTokens.choice.size,
+          "&.Mui-disabled": {
+            opacity: formTokens.choice.disabledOpacity,
+          },
+        },
+      },
+      variants: [
+        {
+          props: { color: "default" as const },
+          style: {
+            color: choiceDefaultColor,
+            "&.Mui-checked": {
+              color: choiceCheckedColor,
+            },
+          },
+        },
+      ],
+    },
+    };
+  })(),
 });

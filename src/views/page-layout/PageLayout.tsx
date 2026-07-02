@@ -9,11 +9,11 @@ import {
   PanelRight,
   Rows3,
 } from "lucide-react";
-import Card from "@/app/components/atoms/Card";
-import CardTitle from "@/app/components/atoms/CardTitle";
-import Surface from "@/app/components/atoms/Surface";
-import Text from "@/app/components/atoms/Text";
-import TokenCode from "@/app/components/atoms/TokenCode";
+import { Card } from "@ssw/ui-library";
+import { CardTitle } from "@ssw/ui-library";
+import { Surface } from "@ssw/ui-library";
+import { Text } from "@ssw/ui-library";
+import { TokenCode } from "@ssw/ui-library";
 import PageLayoutRegion from "@/app/components/molecules/PageLayoutRegion";
 import TokenTable from "@/app/components/molecules/TokenTable";
 import FixedPageLayout from "@/app/components/organisms/FixedPageLayout";
@@ -22,13 +22,13 @@ import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 import {
   iconSizes,
   pageLayoutTokens,
   responsiveGrids,
   spacing,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#page-layout" },
@@ -137,7 +137,7 @@ function renderPageLayoutPreview() {
 }
 
 export default function PageLayoutPage() {
-  const { accent } = useDocumentationStyles();
+  const { accent } = useSemanticColors();
 
   return (
     <Page pageId="page-layout" sections={sections}>

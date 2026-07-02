@@ -43,7 +43,7 @@ import {
   interactionStates,
   pageLayoutTokens,
   radius,
-} from "../../theme/tokens";
+} from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
 import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
 

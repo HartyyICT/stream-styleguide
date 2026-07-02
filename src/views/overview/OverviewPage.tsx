@@ -1,7 +1,7 @@
 "use client";
 
   import { Box, Chip, Typography } from "@mui/material";
-  import Divider from "@/app/components/atoms/Divider";
+  import { Divider } from "@ssw/ui-library";
   import {
     Accessibility,
     Blocks,
@@ -13,8 +13,8 @@
     Users,
   } from "lucide-react";
   import Page from "@/app/components/layout/Page";
-  import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-  import { colors, pageLayoutTokens, radius, shadows } from "@/app/theme/tokens";
+  import { useSemanticColors } from "@ssw/ui-library";
+  import { colors, pageLayoutTokens, radius, shadows } from "@ssw/ui-library";
 
   const benefits = [
     {
@@ -84,7 +84,7 @@
       accent,
       subtleBackground,
       selectedBackground,
-    } = useDocumentationStyles();
+    } = useSemanticColors();
     const border = borders.default;
 
     return (

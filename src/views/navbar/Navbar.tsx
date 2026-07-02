@@ -4,15 +4,15 @@ import { Box, Chip, Typography } from "@mui/material";
 import { BookOpen } from "lucide-react";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
-import Card from "@/app/components/atoms/Card";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
+import { Card } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { borderWidths, colors, radius, shadows } from "@/app/theme/tokens";
+import { useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, colors, radius, shadows } from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#navbar" },
@@ -52,7 +52,7 @@ function StyleguideNavbarPreview({
     primaryText,
     accent,
     selectedBackground,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   return (
     <Box sx={{ width: "100%", display: "grid", gap: 1.5 }}>
@@ -157,7 +157,7 @@ export default function NavbarPage() {
     secondaryText,
     accent,
     selectedBackground,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   return (
     <Page pageId="navbar" sections={sections}>
@@ -303,7 +303,7 @@ export default function NavbarPage() {
   navbarTokens,
   radius,
   shadows,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const navbar = {
   height: 64,

@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { Box, ButtonBase } from "@mui/material";
 import type { LucideIcon } from "lucide-react";
-import IconBox from "@/app/components/atoms/IconBox";
-import Text from "@/app/components/atoms/Text";
-import { borderWidths, radius, spacing } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { IconBox } from "@ssw/ui-library";
+import { Text } from "@ssw/ui-library";
+import { borderWidths, radius, spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 interface SearchResultItemProps {
   title: string;
@@ -23,7 +23,7 @@ export default function SearchResultItem({
   icon: Icon,
   onSelect,
 }: SearchResultItemProps) {
-  const { surface, borders, interaction } = useDocumentationStyles();
+  const { surface, borders, interaction } = useSemanticColors();
 
   return (
     <ButtonBase

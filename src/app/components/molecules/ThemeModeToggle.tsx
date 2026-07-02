@@ -10,7 +10,7 @@ import {
   iconSizes,
   interactionStates,
   radius,
-} from "../../theme/tokens";
+} from "@ssw/ui-library";
 
 export default function ThemeModeToggle() {
   const { mode, toggleColorMode } = useColorMode();

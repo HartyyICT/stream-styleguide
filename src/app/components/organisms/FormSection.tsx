@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, Typography, type BoxProps } from "@mui/material";
-import Surface from "@/app/components/atoms/Surface";
-import { spacing } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { Surface } from "@ssw/ui-library";
+import { spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 interface FormSectionProps extends BoxProps {
   title: string;
@@ -17,7 +17,7 @@ export default function FormSection({
   sx,
   ...props
 }: FormSectionProps) {
-  const { primaryText, secondaryText } = useDocumentationStyles();
+  const { primaryText, secondaryText } = useSemanticColors();
 
   return (
     <Surface {...props} sx={sx}>

@@ -12,19 +12,19 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import Badge from "@/app/components/atoms/Badge";
-import Card from "@/app/components/atoms/Card";
-import CardTitle from "@/app/components/atoms/CardTitle";
-import IconBox from "@/app/components/atoms/IconBox";
-import Surface from "@/app/components/atoms/Surface";
-import Tabs from "@/app/components/atoms/Tabs";
-import Text from "@/app/components/atoms/Text";
-import TokenCode from "@/app/components/atoms/TokenCode";
+import { Badge } from "@ssw/ui-library";
+import { Card } from "@ssw/ui-library";
+import { CardTitle } from "@ssw/ui-library";
+import { IconBox } from "@ssw/ui-library";
+import { Surface } from "@ssw/ui-library";
+import { Tabs } from "@ssw/ui-library";
+import { Text } from "@ssw/ui-library";
+import { TokenCode } from "@ssw/ui-library";
 import AnatomyItem from "@/app/components/molecules/AnatomyItem";
 import ExampleCard from "@/app/components/molecules/ExampleCard";
 import StateCard from "@/app/components/molecules/StateCard";
 import TokenTable from "@/app/components/molecules/TokenTable";
-import ToggleField from "@/app/components/molecules/ToggleField";
+import { ToggleField } from "@ssw/ui-library";
 import ContactForm from "@/app/components/organisms/ContactForm";
 import CustomerForm from "@/app/components/organisms/CustomerForm";
 import SettingsForm from "@/app/components/organisms/SettingsForm";
@@ -33,7 +33,7 @@ import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
   formTokens,
@@ -42,7 +42,7 @@ import {
   radius,
   responsiveGrids,
   spacing,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#forms" },
@@ -108,7 +108,7 @@ const fieldTypeRows = [
   },
 ] as const;
 
-type FormStateStyles = ReturnType<typeof useDocumentationStyles>["formStates"];
+type FormStateStyles = ReturnType<typeof useSemanticColors>["formStates"];
 
 function getStateRows(formStates: FormStateStyles) {
   return [
@@ -263,7 +263,7 @@ const accessibilityGuidelines = [
   "Make checkbox and radio targets large enough to click comfortably.",
 ] as const;
 
-const textInputCode = `import FormField from "@/app/components/molecules/FormField";
+const textInputCode = `import { FormField } from "@ssw/ui-library";
 import { User } from "lucide-react";
 
 export function CustomerNameField() {
@@ -282,7 +282,7 @@ export function CustomerNameField() {
   );
 }`;
 
-const validationCode = `import FormField from "@/app/components/molecules/FormField";
+const validationCode = `import { FormField } from "@ssw/ui-library";
 import { Mail } from "lucide-react";
 
 export function EmailField() {
@@ -301,8 +301,8 @@ export function EmailField() {
   );
 }`;
 
-const formLayoutCode = `import Button from "@/app/components/atoms/Button";
-import { formTokens, spacing } from "@/app/theme/tokens";
+const formLayoutCode = `import { Button } from "@ssw/ui-library";
+import { formTokens, spacing } from "@ssw/ui-library";
 
 export function ContactForm() {
   return (
@@ -318,7 +318,7 @@ export function ContactForm() {
 }`;
 
 const toggleCode = `import { useState } from "react";
-import ToggleField from "@/app/components/molecules/ToggleField";
+import { ToggleField } from "@ssw/ui-library";
 
 export function NotificationToggle() {
   const [enabled, setEnabled] = useState(true);
@@ -366,7 +366,7 @@ function FieldPreview({
     formStates,
     formFocusRing,
   } =
-    useDocumentationStyles();
+    useSemanticColors();
   const stateToken = formStates[state];
   const isDisabled = state === "disabled";
   const feedbackColor =
@@ -497,7 +497,7 @@ function FieldPreview({
 
 function ChoicePreview({ type, error = false }: { type: "checkbox" | "radio"; error?: boolean }) {
   const { borders, primaryText, secondaryText, surface, accent, semantic } =
-    useDocumentationStyles();
+    useSemanticColors();
   const isRadio = type === "radio";
 
   return (
@@ -592,7 +592,7 @@ function TogglePreview({
 
 function InteractiveInputPreview() {
   const { surface, primaryText, secondaryText, placeholderText, formStates, formFocusRing } =
-    useDocumentationStyles();
+    useSemanticColors();
   const [customerName, setCustomerName] = useState("");
 
   return (
@@ -648,7 +648,7 @@ function InteractiveInputPreview() {
 
 function InteractiveValidationPreview() {
   const { surface, primaryText, secondaryText, placeholderText, semantic, formStates } =
-    useDocumentationStyles();
+    useSemanticColors();
   const [email, setEmail] = useState("sanne@");
   const isInvalid = email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const helperId = "interactive-email-helper";
@@ -744,7 +744,7 @@ const layoutPlaygroundOptions = [
 ] as const;
 
 function LayoutPlayground() {
-  const { borders, secondaryText, subtleBackground } = useDocumentationStyles();
+  const { borders, secondaryText, subtleBackground } = useSemanticColors();
   const [activeLayout, setActiveLayout] =
     useState<(typeof layoutPlaygroundOptions)[number]["value"]>("contact");
   const activeOption = layoutPlaygroundOptions.find((option) => option.value === activeLayout);
@@ -835,7 +835,7 @@ function renderFormCodePreview(code: string) {
 }
 
 export default function FormsPage() {
-  const { accent, formStates } = useDocumentationStyles();
+  const { accent, formStates } = useSemanticColors();
   const stateRows = getStateRows(formStates);
 
   return (

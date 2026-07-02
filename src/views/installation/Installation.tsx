@@ -2,16 +2,16 @@
 
 import { Box, Typography } from "@mui/material";
 import { PackageCheck, PackagePlus, Terminal, Wrench } from "lucide-react";
-import Button from "@/app/components/atoms/Button";
-import Card from "@/app/components/atoms/Card";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
+import { Button } from "@ssw/ui-library";
+import { Card } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { borderWidths, radius, spacing } from "@/app/theme/tokens";
+import { useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, radius, spacing } from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#installation" },
@@ -65,7 +65,7 @@ export default function InstallationPage() {
     secondaryText,
     accent,
     selectedBackground,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   return (
     <Page pageId="installation" sections={sections}>

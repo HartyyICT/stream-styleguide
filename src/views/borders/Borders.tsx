@@ -1,15 +1,15 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import Card from "@/app/components/atoms/Card";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
+import { Card } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { borderWidths, radius } from "@/app/theme/tokens";
+import { useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, radius } from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#borders" },
@@ -68,7 +68,7 @@ export default function BordersPage() {
     primaryText,
     secondaryText,
     accent,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   const borderScale = [
     {
@@ -399,7 +399,7 @@ export default function BordersPage() {
   borderColors,
   borderWidths,
   radius,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const cardSx = {
   border: \`\${borderWidths.default} solid \${borders.default}\`,
@@ -497,7 +497,7 @@ const cardSx = {
               </Typography>
             </Box>
           }
-          code={`import { borderColors, borderWidths, colors, radius } from "@/app/theme/tokens";
+          code={`import { borderColors, borderWidths, colors, radius } from "@ssw/ui-library";
 
 export function InteractiveBorderExample() {
   return (

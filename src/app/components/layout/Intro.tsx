@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { borderWidths, pageLayoutTokens } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { borderWidths, pageLayoutTokens } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 interface IntroProps {
   title: string;
@@ -18,7 +18,7 @@ export default function Intro({
   eyebrow = "Design foundations",
 }: IntroProps) {
   const { accent, primaryText, secondaryText, subtleBackground } =
-    useDocumentationStyles();
+    useSemanticColors();
 
   return (
     <>

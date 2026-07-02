@@ -42,7 +42,7 @@ import {
   interactionStates,
   radius,
   shadows,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 import { useColorMode } from "@/app/theme/themeProvider";
 
 type SearchItem = {

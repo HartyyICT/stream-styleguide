@@ -2,10 +2,10 @@
 
 import type { ReactNode } from "react";
 import { Box } from "@mui/material";
-import Card from "@/app/components/atoms/Card";
-import Text from "@/app/components/atoms/Text";
-import TokenCode from "@/app/components/atoms/TokenCode";
-import { spacing } from "@/app/theme/tokens";
+import { Card } from "@ssw/ui-library";
+import { Text } from "@ssw/ui-library";
+import { TokenCode } from "@ssw/ui-library";
+import { spacing } from "@ssw/ui-library";
 
 interface AnatomyItemProps {
   label: string;

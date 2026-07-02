@@ -1,12 +1,12 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import PageRegion from "@/app/components/atoms/PageRegion";
-import { borderWidths, pageLayoutTokens, radius, spacing } from "@/app/theme/tokens";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { PageRegion } from "@ssw/ui-library";
+import { borderWidths, pageLayoutTokens, radius, spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/ui-library";
 
 export default function FixedPageLayout({ sx, ...props }: BoxProps) {
-  const { borders, surface, pageBackground } = useDocumentationStyles();
+  const { borders, surface, pageBackground } = useSemanticColors();
 
   return (
     <Box

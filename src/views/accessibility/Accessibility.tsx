@@ -9,21 +9,21 @@ import {
   ScanSearch,
   ShieldCheck,
 } from "lucide-react";
-import Card from "@/app/components/atoms/Card";
-import CardTitle from "@/app/components/atoms/CardTitle";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
+import { Card } from "@ssw/ui-library";
+import { CardTitle } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
-import IconBox from "@/app/components/atoms/IconBox";
+import { IconBox } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
   iconSizes,
   radius,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#accessibility" },
@@ -90,7 +90,7 @@ export default function AccessibilityPage() {
     surface,
     secondaryText,
     accent,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   return (
     <Page pageId="accessibility" sections={sections}>
@@ -319,7 +319,7 @@ export default function AccessibilityPage() {
               </Typography>
             </Box>
           }
-          code={`import Button from "@/app/components/atoms/Button";
+          code={`import { Button } from "@ssw/ui-library";
 import { Settings } from "lucide-react";
 
 export function AccessibleIconAction() {

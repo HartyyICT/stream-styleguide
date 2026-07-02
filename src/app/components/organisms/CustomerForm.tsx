@@ -2,12 +2,12 @@
 
 import { Box } from "@mui/material";
 import { useState } from "react";
-import FormActionRow from "@/app/components/molecules/FormActionRow";
-import FormField from "@/app/components/molecules/FormField";
-import SelectField from "@/app/components/molecules/SelectField";
+import { FormActionRow } from "@ssw/ui-library";
+import { FormField } from "@ssw/ui-library";
+import { SelectField } from "@ssw/ui-library";
 import FormLayout from "@/app/components/organisms/FormLayout";
 import FormSection from "@/app/components/organisms/FormSection";
-import { formTokens, spacing } from "@/app/theme/tokens";
+import { formTokens, spacing } from "@ssw/ui-library";
 
 export default function CustomerForm() {
   const [customerName, setCustomerName] = useState("Van Dijk Logistics");
@@ -64,7 +64,7 @@ export default function CustomerForm() {
             ]}
             selectProps={{
               value: status,
-              onChange: (event) => setStatus(event.currentTarget.value),
+              onChange: (event) => setStatus(event.target.value),
             }}
           />
           <FormField

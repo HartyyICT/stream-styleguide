@@ -1,14 +1,14 @@
 "use client";
 
 import { Box, Typography, useTheme } from "@mui/material";
-import Card from "@/app/components/atoms/Card";
-import CardTitle from "@/app/components/atoms/CardTitle";
-import Divider from "@/app/components/atoms/Divider";
+import { Card } from "@ssw/ui-library";
+import { CardTitle } from "@ssw/ui-library";
+import { Divider } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { pageLayoutTokens, radius, shadows } from "@/app/theme/tokens";
+import { useSemanticColors } from "@ssw/ui-library";
+import { pageLayoutTokens, radius, shadows } from "@ssw/ui-library";
 
 const typographySections = [
   { label: "Overview", href: "#typography" },
@@ -211,7 +211,7 @@ export default function TypographyPage() {
     secondaryText,
     accent,
     subtleBackground,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
   const border = borders.default;
   return (
     <Page pageId="typography" sections={typographySections}>

@@ -11,7 +11,7 @@ import {
   navbarTokens,
   pageLayoutTokens,
   radius,
-} from "../../theme/tokens";
+} from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";

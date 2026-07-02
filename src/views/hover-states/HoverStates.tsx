@@ -2,18 +2,18 @@
 
 import { Box, Typography } from "@mui/material";
 import { ExternalLink, MousePointer2, Search } from "lucide-react";
-import Card from "@/app/components/atoms/Card";
-import CodeBlock from "@/app/components/atoms/CodeBlock";
+import { Card } from "@ssw/ui-library";
+import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
-import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
   radius,
-} from "@/app/theme/tokens";
+} from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#hover-states" },
@@ -44,7 +44,7 @@ export default function HoverStatesPage() {
     primaryText,
     secondaryText,
     accent,
-  } = useDocumentationStyles();
+  } = useSemanticColors();
 
   const stateScale = [
     {
@@ -168,7 +168,7 @@ export default function HoverStatesPage() {
         title="Token usage"
         description="Select the light or dark interaction set once and reuse its semantic state names throughout components."
       >
-        <CodeBlock>{`import { interactionStates } from "@/app/theme/tokens";
+        <CodeBlock>{`import { interactionStates } from "@ssw/ui-library";
 
 const interaction =
   mode === "dark"
@@ -360,7 +360,7 @@ const interactiveSx = {
               </Typography>
             </Card>
           }
-          code={`import Card from "@/app/components/atoms/Card";
+          code={`import { Card } from "@ssw/ui-library";
 import { MousePointer2 } from "lucide-react";
 
 export function HoverSurfaceExample() {

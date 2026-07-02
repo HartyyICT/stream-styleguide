@@ -2,7 +2,7 @@
 
 import { Code2, EyeOff } from "lucide-react";
 import { Box } from "@mui/material";
-import Button from "@/app/components/atoms/Button";
+import { Button } from "@ssw/ui-library";
 import CopyAction from "@/app/components/molecules/CopyAction";
 
 interface CodeExampleToolbarProps {
