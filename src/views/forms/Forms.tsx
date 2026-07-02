@@ -3,10 +3,8 @@
 import { Box, Typography } from "@mui/material";
 import {
   AlertCircle,
-  CheckCircle2,
   ChevronDown,
   CircleDot,
-  HelpCircle,
   ListChecks,
   Mail,
   TextCursorInput,
@@ -15,15 +13,14 @@ import {
 import type { ReactNode } from "react";
 import { useState } from "react";
 import Badge from "@/app/components/atoms/Badge";
-import Button from "@/app/components/atoms/Button";
 import Card from "@/app/components/atoms/Card";
 import CardTitle from "@/app/components/atoms/CardTitle";
 import IconBox from "@/app/components/atoms/IconBox";
 import Surface from "@/app/components/atoms/Surface";
+import Tabs from "@/app/components/atoms/Tabs";
 import Text from "@/app/components/atoms/Text";
 import TokenCode from "@/app/components/atoms/TokenCode";
 import AnatomyItem from "@/app/components/molecules/AnatomyItem";
-import ButtonGroupExample from "@/app/components/molecules/ButtonGroupExample";
 import ExampleCard from "@/app/components/molecules/ExampleCard";
 import StateCard from "@/app/components/molecules/StateCard";
 import TokenTable from "@/app/components/molecules/TokenTable";
@@ -39,7 +36,6 @@ import Section from "@/app/components/layout/Section";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   borderWidths,
-  colors,
   formTokens,
   iconSizes,
   radius,
@@ -52,6 +48,7 @@ const sections = [
   { label: "Anatomy", href: "#anatomy" },
   { label: "Field types", href: "#field-types" },
   { label: "States", href: "#states" },
+  { label: "Choice controls", href: "#choice-controls" },
   { label: "Validation", href: "#validation" },
   { label: "Layout", href: "#layout" },
   { label: "Code examples", href: "#code-examples" },
@@ -110,46 +107,137 @@ const fieldTypeRows = [
   },
 ] as const;
 
-const stateRows = [
+type FormStateStyles = ReturnType<typeof useDocumentationStyles>["formStates"];
+
+function getStateRows(formStates: FormStateStyles) {
+  return [
+    {
+      token: "form.states.default",
+      columns: [
+        { value: formStates.default.border, code: true },
+        { value: formStates.default.background, code: true },
+        { value: "Resting field" },
+      ],
+    },
+    {
+      token: "form.states.hover",
+      columns: [
+        { value: formStates.hover.border, code: true },
+        { value: formStates.hover.background, code: true },
+        { value: "Pointer feedback" },
+      ],
+    },
+    {
+      token: "form.states.focus",
+      columns: [
+        { value: formStates.focus.border, code: true },
+        { value: formStates.focus.background, code: true },
+        { value: "Keyboard and active input" },
+      ],
+    },
+    {
+      token: "form.states.error",
+      columns: [
+        { value: formStates.error.border, code: true },
+        { value: formStates.error.background, code: true },
+        { value: "Validation feedback" },
+      ],
+    },
+    {
+      token: "form.states.success",
+      columns: [
+        { value: formStates.success.border, code: true },
+        { value: formStates.success.background, code: true },
+        { value: "Positive confirmation" },
+      ],
+    },
+    {
+      token: "form.states.warning",
+      columns: [
+        { value: formStates.warning.border, code: true },
+        { value: formStates.warning.background, code: true },
+        { value: "Needs attention" },
+      ],
+    },
+    {
+      token: "form.states.info",
+      columns: [
+        { value: formStates.info.border, code: true },
+        { value: formStates.info.background, code: true },
+        { value: "Informational guidance" },
+      ],
+    },
+    {
+      token: "form.states.disabled",
+      columns: [
+        { value: formStates.disabled.border, code: true },
+        { value: formStates.disabled.background, code: true },
+        { value: "Unavailable input" },
+      ],
+    },
+  ];
+}
+
+const stateExamples = [
   {
-    token: "form.states.default",
-    columns: [
-      { value: formTokens.states.default.border, code: true },
-      { value: formTokens.states.default.background, code: true },
-      { value: "Resting field" },
-    ],
+    title: "Default",
+    description: "A resting field uses a neutral border and clear label.",
+    label: "Reference",
+    placeholder: "SO-1042",
+    state: "default",
   },
   {
-    token: "form.states.hover",
-    columns: [
-      { value: formTokens.states.hover.border, code: true },
-      { value: formTokens.states.hover.background, code: true },
-      { value: "Pointer feedback" },
-    ],
+    title: "Hover",
+    description: "Hover gives pointer feedback without changing the layout.",
+    label: "Reference",
+    value: "SO-1042",
+    state: "hover",
   },
   {
-    token: "form.states.focus",
-    columns: [
-      { value: formTokens.states.focus.border, code: true },
-      { value: formTokens.states.focus.background, code: true },
-      { value: "Keyboard and active input" },
-    ],
+    title: "Focus",
+    description: "Focused fields use a stronger border and visible focus ring.",
+    label: "Reference",
+    value: "SO-1042",
+    state: "focus",
   },
   {
-    token: "form.states.error",
-    columns: [
-      { value: formTokens.states.error.border, code: true },
-      { value: formTokens.states.error.background, code: true },
-      { value: "Validation feedback" },
-    ],
+    title: "Error",
+    description: "Errors show the issue and explain how to fix it.",
+    label: "Email address",
+    value: "support@",
+    state: "error",
+    helper: "Enter a valid email address.",
   },
   {
-    token: "form.states.disabled",
-    columns: [
-      { value: formTokens.states.disabled.border, code: true },
-      { value: formTokens.states.disabled.background, code: true },
-      { value: "Unavailable input" },
-    ],
+    title: "Success",
+    description: "Use success when confirmation helps the user continue.",
+    label: "VAT number",
+    value: "NL123456789B01",
+    state: "success",
+    helper: "VAT number verified.",
+  },
+  {
+    title: "Warning",
+    description: "Use warning for accepted values that need attention.",
+    label: "Delivery date",
+    value: "Friday 12 July",
+    state: "warning",
+    helper: "This date is outside the standard planning window.",
+  },
+  {
+    title: "Info",
+    description: "Use info for helpful guidance that is not an error.",
+    label: "Reference",
+    value: "SO-1042",
+    state: "info",
+    helper: "References are visible in reports and exports.",
+  },
+  {
+    title: "Disabled",
+    description: "Disabled fields are muted and should not hide important values.",
+    label: "Account number",
+    value: "A-20488",
+    state: "disabled",
   },
 ] as const;
 
@@ -174,45 +262,41 @@ const accessibilityGuidelines = [
   "Make checkbox and radio targets large enough to click comfortably.",
 ] as const;
 
-const textInputCode = `import { formTokens, radius } from "@/app/theme/tokens";
+const textInputCode = `import FormField from "@/app/components/molecules/FormField";
+import { User } from "lucide-react";
 
 export function CustomerNameField() {
   return (
-    <label>
-      <span>Customer name</span>
-      <input
-        name="customerName"
-        autoComplete="organization"
-        placeholder="Van Dijk Logistics"
-        style={{
-          minHeight: formTokens.field.minHeight,
-          paddingInline: formTokens.field.paddingX,
-          borderRadius: radius.medium,
-        }}
-      />
-    </label>
+    <FormField
+      label="Customer name"
+      name="customerName"
+      required
+      helperText="Use the official company name."
+      inputProps={{
+        autoComplete: "organization",
+        placeholder: "Van Dijk Logistics",
+        startIcon: <User />,
+      }}
+    />
   );
 }`;
 
-const validationCode = `import { formTokens, colors } from "@/app/theme/tokens";
+const validationCode = `import FormField from "@/app/components/molecules/FormField";
+import { Mail } from "lucide-react";
 
 export function EmailField() {
-  const errorId = "email-error";
-
   return (
-    <label>
-      <span>Email address</span>
-      <input
-        type="email"
-        name="email"
-        aria-invalid="true"
-        aria-describedby={errorId}
-        style={{ borderColor: formTokens.states.error.border }}
-      />
-      <span id={errorId} style={{ color: colors.semantic.error.main }}>
-        Enter a valid email address.
-      </span>
-    </label>
+    <FormField
+      label="Email address"
+      name="email"
+      required
+      errorText="Enter a valid email address."
+      inputProps={{
+        type: "email",
+        defaultValue: "sanne@",
+        startIcon: <Mail />,
+      }}
+    />
   );
 }`;
 
@@ -253,7 +337,8 @@ type FieldPreviewProps = {
   value?: string;
   placeholder?: string;
   helper?: string;
-  state?: "default" | "hover" | "focus" | "error" | "disabled";
+  state?: "default" | "hover" | "focus" | "error" | "success" | "warning" | "info" | "disabled";
+  required?: boolean;
   multiline?: boolean;
   icon?: ReactNode;
   endIcon?: ReactNode;
@@ -265,15 +350,34 @@ function FieldPreview({
   placeholder,
   helper,
   state = "default",
+  required = false,
   multiline = false,
   icon,
   endIcon,
 }: FieldPreviewProps) {
-  const { borders, surface, primaryText, secondaryText, subtleBackground } =
+  const {
+    surface,
+    primaryText,
+    secondaryText,
+    placeholderText,
+    subtleBackground,
+    semantic,
+    formStates,
+    formFocusRing,
+  } =
     useDocumentationStyles();
-  const stateToken = formTokens.states[state];
-  const isError = state === "error";
+  const stateToken = formStates[state];
   const isDisabled = state === "disabled";
+  const feedbackColor =
+    state === "success"
+      ? semantic.success
+      : state === "warning"
+        ? semantic.warning
+        : state === "info"
+          ? semantic.info
+          : state === "error"
+            ? semantic.error
+            : secondaryText;
 
   return (
     <Box sx={{ display: "grid", gap: formTokens.label.gap, width: "100%" }}>
@@ -283,6 +387,15 @@ function FieldPreview({
         sx={{ color: primaryText, fontWeight: 700 }}
       >
         {label}
+        {required && (
+          <Typography
+            component="span"
+            aria-hidden="true"
+            sx={{ color: semantic.error, ml: 0.25 }}
+          >
+            *
+          </Typography>
+        )}
       </Typography>
       <Box
         sx={{
@@ -292,46 +405,77 @@ function FieldPreview({
           gap: formTokens.field.gap,
           px: multiline ? formTokens.textarea.padding : formTokens.field.paddingX,
           py: multiline ? formTokens.textarea.padding : 0,
-          color: isDisabled ? formTokens.states.disabled.content : primaryText,
+          color: isDisabled ? formStates.disabled.content : primaryText,
           border: `${state === "focus" ? borderWidths.interactive : borderWidths.default} solid ${
             stateToken.border
           }`,
           borderRadius: radius.medium,
-          backgroundColor: isDisabled ? stateToken.background : surface,
-          boxShadow: state === "focus" ? formTokens.field.focusRing : "none",
+          backgroundColor: isDisabled ? formStates.disabled.background : surface,
+          boxShadow: state === "focus" ? formFocusRing : "none",
         }}
       >
-        {icon}
+        {icon && (
+          <Box
+            aria-hidden="true"
+            sx={{
+              width: iconSizes.small,
+              height: iconSizes.small,
+              display: "grid",
+              placeItems: "center",
+              flexShrink: 0,
+              mt: multiline ? "0.1875rem" : 0,
+              color: secondaryText,
+              "& svg": {
+                width: iconSizes.small,
+                height: iconSizes.small,
+                display: "block",
+              },
+            }}
+          >
+            {icon}
+          </Box>
+        )}
         <Typography
           variant="body2"
           sx={{
             flex: 1,
             color: value
               ? isDisabled
-                ? formTokens.states.disabled.content
+                ? formStates.disabled.content
                 : primaryText
-              : secondaryText,
+              : placeholderText,
             lineHeight: multiline ? 1.7 : 1,
           }}
         >
           {value ?? placeholder}
         </Typography>
-        {endIcon}
+        {endIcon && (
+          <Box
+            aria-hidden="true"
+            sx={{
+              width: iconSizes.small,
+              height: iconSizes.small,
+              display: "grid",
+              placeItems: "center",
+              flexShrink: 0,
+              color: secondaryText,
+              "& svg": {
+                width: iconSizes.small,
+                height: iconSizes.small,
+                display: "block",
+              },
+            }}
+          >
+            {endIcon}
+          </Box>
+        )}
       </Box>
       {helper && (
         <Box
           sx={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: formTokens.helperText.gap,
-            color: isError ? colors.semantic.error.main : secondaryText,
+            color: state === "default" || state === "disabled" ? secondaryText : feedbackColor,
           }}
         >
-          {isError ? (
-            <AlertCircle size={iconSizes.small} aria-hidden="true" />
-          ) : (
-            <HelpCircle size={iconSizes.small} aria-hidden="true" />
-          )}
           <Typography variant="caption" sx={{ color: "inherit", lineHeight: 1.5 }}>
             {helper}
           </Typography>
@@ -346,20 +490,19 @@ function FieldPreview({
           }}
         />
       )}
-      {borders.default && null}
     </Box>
   );
 }
 
-function ChoicePreview({ type }: { type: "checkbox" | "radio" }) {
-  const { borders, primaryText, secondaryText, surface, accent } =
+function ChoicePreview({ type, error = false }: { type: "checkbox" | "radio"; error?: boolean }) {
+  const { borders, primaryText, secondaryText, surface, accent, semantic } =
     useDocumentationStyles();
   const isRadio = type === "radio";
 
   return (
     <Box sx={{ display: "grid", gap: spacing.sm }}>
       {["Standard", "Priority"].map((label, index) => {
-        const selected = index === 0;
+        const selected = !error && index === 0;
 
         return (
           <Box
@@ -371,7 +514,7 @@ function ChoicePreview({ type }: { type: "checkbox" | "radio" }) {
               minHeight: formTokens.field.minHeight,
               px: spacing.sm,
               borderRadius: radius.medium,
-              backgroundColor: selected ? colors.primary[50] : surface,
+              backgroundColor: "transparent",
             }}
           >
             <Box
@@ -381,35 +524,51 @@ function ChoicePreview({ type }: { type: "checkbox" | "radio" }) {
                 height: formTokens.choice.size,
                 display: "grid",
                 placeItems: "center",
-                border: `${borderWidths.default} solid ${selected ? accent : borders.default}`,
+                border: `${borderWidths.default} solid ${
+                  error ? semantic.error : selected ? accent : borders.default
+                }`,
                 borderRadius: isRadio ? radius.circle : radius.small,
-                backgroundColor: selected ? accent : surface,
+                backgroundColor: surface,
               }}
             >
               {selected && isRadio ? (
                 <Box
                   sx={{
-                    width: formTokens.choice.indicatorSize,
-                    height: formTokens.choice.indicatorSize,
+                    width: formTokens.choice.indicatorSize + 4,
+                    height: formTokens.choice.indicatorSize + 4,
                     borderRadius: radius.circle,
-                    backgroundColor: colors.semantic.surface,
+                    backgroundColor: accent,
                   }}
                 />
               ) : selected ? (
-                <CheckCircle2 size={13} color={colors.semantic.surface} />
+                <Box
+                  sx={{
+                    width: formTokens.choice.indicatorSize + 4,
+                    height: formTokens.choice.indicatorSize + 4,
+                    borderRadius: radius.small,
+                    backgroundColor: accent,
+                  }}
+                />
               ) : null}
             </Box>
-            <Box>
+            <Box sx={{ display: "grid", gap: 0.25, pt: "0.0625rem" }}>
               <Typography variant="body2" sx={{ color: primaryText, fontWeight: 700 }}>
                 {label}
               </Typography>
-              <Typography variant="caption" sx={{ color: secondaryText }}>
+              <Typography variant="caption" sx={{ color: secondaryText, lineHeight: 1.4 }}>
                 {isRadio ? "Select one option" : "Can be combined with other choices"}
               </Typography>
             </Box>
           </Box>
         );
       })}
+      {error && (
+        <Box sx={{ color: semantic.error }}>
+          <Typography variant="caption" sx={{ color: "inherit" }}>
+            Select at least one option.
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }
@@ -431,7 +590,8 @@ function TogglePreview({
 }
 
 function InteractiveInputPreview() {
-  const { surface, primaryText, secondaryText } = useDocumentationStyles();
+  const { surface, primaryText, secondaryText, placeholderText, formStates, formFocusRing } =
+    useDocumentationStyles();
   const [customerName, setCustomerName] = useState("");
 
   return (
@@ -446,12 +606,12 @@ function InteractiveInputPreview() {
           alignItems: "center",
           gap: formTokens.field.gap,
           px: formTokens.field.paddingX,
-          border: `${borderWidths.interactive} solid ${formTokens.states.focus.border}`,
+          border: `${borderWidths.default} solid ${formStates.focus.border}`,
           borderRadius: radius.medium,
           backgroundColor: surface,
-          boxShadow: formTokens.field.focusRing,
+          boxShadow: formFocusRing,
           "&:focus-within": {
-            borderColor: formTokens.states.focus.border,
+            borderColor: formStates.focus.border,
           },
         }}
       >
@@ -472,7 +632,7 @@ function InteractiveInputPreview() {
             font: "inherit",
             fontSize: formTokens.field.fontSize,
             "&::placeholder": {
-              color: secondaryText,
+              color: placeholderText,
               opacity: 1,
             },
           }}
@@ -486,7 +646,8 @@ function InteractiveInputPreview() {
 }
 
 function InteractiveValidationPreview() {
-  const { surface, primaryText, secondaryText } = useDocumentationStyles();
+  const { surface, primaryText, secondaryText, placeholderText, semantic, formStates } =
+    useDocumentationStyles();
   const [email, setEmail] = useState("sanne@");
   const isInvalid = email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const helperId = "interactive-email-helper";
@@ -504,21 +665,20 @@ function InteractiveValidationPreview() {
           gap: formTokens.field.gap,
           px: formTokens.field.paddingX,
           border: `${borderWidths.default} solid ${
-            isInvalid ? formTokens.states.error.border : formTokens.states.default.border
+            isInvalid ? formStates.error.border : formStates.default.border
           }`,
           borderRadius: radius.medium,
           backgroundColor: surface,
           "&:focus-within": {
-            borderWidth: borderWidths.interactive,
             borderColor: isInvalid
-              ? formTokens.states.error.border
-              : formTokens.states.focus.border,
+              ? formStates.error.border
+              : formStates.focus.border,
           },
         }}
       >
         <Mail
           size={iconSizes.small}
-          color={isInvalid ? colors.semantic.error.main : secondaryText}
+          color={isInvalid ? semantic.error : secondaryText}
           aria-hidden="true"
         />
         <Box
@@ -540,7 +700,7 @@ function InteractiveValidationPreview() {
             font: "inherit",
             fontSize: formTokens.field.fontSize,
             "&::placeholder": {
-              color: secondaryText,
+              color: placeholderText,
               opacity: 1,
             },
           }}
@@ -549,17 +709,9 @@ function InteractiveValidationPreview() {
       <Box
         id={helperId}
         sx={{
-          display: "flex",
-          alignItems: "flex-start",
-          gap: formTokens.helperText.gap,
-          color: isInvalid ? colors.semantic.error.main : secondaryText,
+          color: isInvalid ? semantic.error : secondaryText,
         }}
       >
-        {isInvalid ? (
-          <AlertCircle size={iconSizes.small} aria-hidden="true" />
-        ) : (
-          <CheckCircle2 size={iconSizes.small} aria-hidden="true" />
-        )}
         <Typography variant="caption" sx={{ color: "inherit", lineHeight: 1.5 }}>
           {isInvalid ? "Enter a valid email address." : "Email format looks good."}
         </Typography>
@@ -570,6 +722,91 @@ function InteractiveValidationPreview() {
 
 function InteractiveFormLayoutPreview() {
   return <ContactForm />;
+}
+
+const layoutPlaygroundOptions = [
+  {
+    value: "contact",
+    label: "Contact",
+    description: "Best for a short workflow with required fields and validation feedback.",
+  },
+  {
+    value: "customer",
+    label: "Customer",
+    description: "Shows grouped business fields with a select and action row.",
+  },
+  {
+    value: "settings",
+    label: "Settings",
+    description: "Shows toggles, checkbox choices and radio choices in one flow.",
+  },
+] as const;
+
+function LayoutPlayground() {
+  const { borders, secondaryText, subtleBackground } = useDocumentationStyles();
+  const [activeLayout, setActiveLayout] =
+    useState<(typeof layoutPlaygroundOptions)[number]["value"]>("contact");
+  const activeOption = layoutPlaygroundOptions.find((option) => option.value === activeLayout);
+
+  return (
+    <Surface elevated sx={{ display: "grid", gap: spacing.md }}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr auto" },
+          gap: spacing.md,
+          alignItems: "start",
+        }}
+      >
+        <Box>
+          <CardTitle>Interactive layout playground</CardTitle>
+          <Text tone="secondary" variant="body2" sx={{ mt: spacing.xs }}>
+            Choose one form pattern at a time. This keeps the section readable while the
+            examples stay clickable and editable.
+          </Text>
+        </Box>
+
+        <Tabs
+          ariaLabel="Form layout examples"
+          items={layoutPlaygroundOptions}
+          value={activeLayout}
+          onValueChange={setActiveLayout}
+          sx={{
+            justifySelf: { xs: "start", md: "end" },
+          }}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          p: spacing.md,
+          border: `${borderWidths.default} solid ${borders.subtle}`,
+          borderRadius: radius.large,
+          backgroundColor: subtleBackground,
+        }}
+      >
+        <Text tone="secondary" variant="body2">
+          {activeOption?.description}
+        </Text>
+      </Box>
+
+      <Box
+        sx={{
+          display: "grid",
+          placeItems: "stretch",
+          p: 0,
+        }}
+      >
+        {activeLayout === "contact" && <ContactForm />}
+        {activeLayout === "customer" && <CustomerForm />}
+        {activeLayout === "settings" && <SettingsForm />}
+      </Box>
+
+      <Text tone="secondary" variant="caption" sx={{ color: secondaryText }}>
+        Tip: switch between the patterns and interact with the fields, choices and actions.
+      </Text>
+    </Surface>
+  );
 }
 
 function renderFormCodePreview(code: string) {
@@ -585,6 +822,10 @@ function renderFormCodePreview(code: string) {
     return <InteractiveValidationPreview />;
   }
 
+  if (code.includes("errorText")) {
+    return <InteractiveValidationPreview />;
+  }
+
   if (code.includes("gridTemplateColumns")) {
     return <InteractiveFormLayoutPreview />;
   }
@@ -593,7 +834,8 @@ function renderFormCodePreview(code: string) {
 }
 
 export default function FormsPage() {
-  const { accent } = useDocumentationStyles();
+  const { accent, formStates } = useDocumentationStyles();
+  const stateRows = getStateRows(formStates);
 
   return (
     <Page pageId="forms" sections={sections} maxWidth={980}>
@@ -662,34 +904,36 @@ export default function FormsPage() {
         >
           <ExampleCard
             title="Text and select fields"
-            description="Use consistent height, borders and label spacing."
+            description="Use consistent height, borders, label spacing and muted leading icons."
           >
             <Box sx={{ display: "grid", gap: spacing.md, width: "100%" }}>
               <FieldPreview
                 label="Customer"
+                required
                 placeholder="Search customer"
                 icon={<User size={iconSizes.small} />}
               />
               <FieldPreview
                 label="Status"
                 value="Active"
+                state="success"
+                helper="Status is available for this workflow."
                 endIcon={<ChevronDown size={iconSizes.small} />}
               />
             </Box>
           </ExampleCard>
 
           <ExampleCard
-            title="Choice controls"
-            description="Use checkboxes for independent choices and radio buttons for one required choice."
+            title="Textarea"
+            description="Use a larger field for comments, notes and descriptions."
           >
-            <ChoicePreview type="checkbox" />
-          </ExampleCard>
-
-          <ExampleCard
-            title="Toggle controls"
-            description="Use toggles for immediate on/off settings, not for multi-select choices."
-          >
-            <TogglePreview />
+            <FieldPreview
+              label="Internal note"
+              placeholder="Add context for the implementation team."
+              helper="Keep notes short and relevant."
+              multiline
+              icon={<TextCursorInput size={iconSizes.small} />}
+            />
           </ExampleCard>
         </Box>
       </Section>
@@ -717,25 +961,61 @@ export default function FormsPage() {
             gap: spacing.md,
           }}
         >
-          <StateCard
-            title="Default"
-            description="A resting field uses a neutral border and clear label."
+          {stateExamples.map((item) => (
+            <StateCard
+              key={item.title}
+              title={item.title}
+              description={item.description}
+              state={item.state === "focus" ? "focus" : undefined}
+            >
+              <FieldPreview
+                label={item.label}
+                value={"value" in item ? item.value : undefined}
+                placeholder={"placeholder" in item ? item.placeholder : undefined}
+                state={item.state}
+                helper={"helper" in item ? item.helper : undefined}
+              />
+            </StateCard>
+          ))}
+        </Box>
+      </Section>
+
+      <Section
+        id="choice-controls"
+        title="Choice controls"
+        description="Checkboxes and radio buttons use the same sizing, spacing and validation language."
+      >
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "repeat(2, minmax(0, 1fr))" },
+            gap: spacing.md,
+          }}
+        >
+          <ExampleCard
+            title="Checkboxes"
+            description="Use checkboxes for independent choices that can be combined."
           >
-            <FieldPreview label="Reference" placeholder="SO-1042" />
-          </StateCard>
-          <StateCard
-            title="Focus"
-            description="Focused fields use a stronger border and visible focus ring."
-            state="focus"
+            <ChoicePreview type="checkbox" />
+          </ExampleCard>
+          <ExampleCard
+            title="Checkbox error"
+            description="Show an error when a required confirmation is missing."
           >
-            <FieldPreview label="Reference" value="SO-1042" state="focus" />
-          </StateCard>
-          <StateCard
-            title="Disabled"
-            description="Disabled fields are muted and should not hide important values."
+            <ChoicePreview type="checkbox" error />
+          </ExampleCard>
+          <ExampleCard
+            title="Radio buttons"
+            description="Use radio buttons when users must choose one option."
           >
-            <FieldPreview label="Account number" value="A-20488" state="disabled" />
-          </StateCard>
+            <ChoicePreview type="radio" />
+          </ExampleCard>
+          <ExampleCard
+            title="Radio error"
+            description="Show the same error language for radio groups."
+          >
+            <ChoicePreview type="radio" error />
+          </ExampleCard>
         </Box>
       </Section>
 
@@ -784,60 +1064,7 @@ export default function FormsPage() {
         title="Layout"
         description="Forms should scan from top to bottom, with related fields grouped and actions placed where users expect them."
       >
-        <ContactForm />
-
-        <Box
-          sx={{
-            mt: spacing.md,
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" },
-            gap: spacing.md,
-          }}
-        >
-          <ExampleCard
-            title="Single column"
-            description="Best for complex forms, narrow layouts and content with varied field lengths."
-          >
-            <TokenCode>form.layout.singleColumn</TokenCode>
-          </ExampleCard>
-          <ExampleCard
-            title="Two columns"
-            description="Use only for short related pairs, such as first and last name."
-          >
-            <TokenCode>form.layout.twoColumn</TokenCode>
-          </ExampleCard>
-          <ExampleCard
-            title="Action row"
-            description="Keep one primary action and place secondary actions nearby."
-          >
-            <ButtonGroupExample>
-              <Button variant="secondary">Cancel</Button>
-              <Button>Save</Button>
-            </ButtonGroupExample>
-          </ExampleCard>
-        </Box>
-
-        <Box
-          sx={{
-            mt: spacing.md,
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", lg: "repeat(2, minmax(0, 1fr))" },
-            gap: spacing.md,
-          }}
-        >
-          <ExampleCard
-            title="Customer form organism"
-            description="Combines form fields, select fields, action row and validation summary."
-          >
-            <CustomerForm />
-          </ExampleCard>
-          <ExampleCard
-            title="Settings form organism"
-            description="Combines toggle fields, checkbox fields and a radio group."
-          >
-            <SettingsForm />
-          </ExampleCard>
-        </Box>
+        <LayoutPlayground />
       </Section>
 
       <Section

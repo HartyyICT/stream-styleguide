@@ -1,16 +1,17 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import { Check } from "lucide-react";
-import { borderWidths, colors, formTokens, iconSizes, radius } from "@/app/theme/tokens";
+import { borderWidths, formTokens, radius } from "@/app/theme/tokens";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface CheckboxProps extends Omit<BoxProps<"input">, "component" | "type"> {
   checked?: boolean;
+  error?: boolean;
 }
 
-export default function Checkbox({ checked, disabled, sx, ...props }: CheckboxProps) {
-  const { accent, borders, surface } = useDocumentationStyles();
+export default function Checkbox({ checked, error = false, disabled, sx, ...props }: CheckboxProps) {
+  const { accent, borders, surface, semantic } = useDocumentationStyles();
+  const borderColor = error ? semantic.error : checked ? accent : borders.default;
 
   return (
     <Box sx={{ position: "relative", width: formTokens.choice.size, height: formTokens.choice.size, flexShrink: 0 }}>
@@ -19,6 +20,7 @@ export default function Checkbox({ checked, disabled, sx, ...props }: CheckboxPr
         type="checkbox"
         checked={checked}
         disabled={disabled}
+        aria-invalid={error || undefined}
         {...props}
         sx={{
           position: "absolute",
@@ -36,14 +38,24 @@ export default function Checkbox({ checked, disabled, sx, ...props }: CheckboxPr
           height: formTokens.choice.size,
           display: "grid",
           placeItems: "center",
-          border: `${borderWidths.default} solid ${checked ? accent : borders.default}`,
+          border: `${borderWidths.default} solid ${borderColor}`,
           borderRadius: radius.small,
-          backgroundColor: checked ? accent : surface,
+          backgroundColor: surface,
           opacity: disabled ? formTokens.choice.disabledOpacity : 1,
           pointerEvents: "none",
+          transition: "border-color 160ms ease, background-color 160ms ease",
         }}
       >
-        {checked && <Check size={iconSizes.small} color={colors.semantic.surface} />}
+        {checked && (
+          <Box
+            sx={{
+              width: formTokens.choice.indicatorSize + 4,
+              height: formTokens.choice.indicatorSize + 4,
+              borderRadius: radius.small,
+              backgroundColor: accent,
+            }}
+          />
+        )}
       </Box>
     </Box>
   );

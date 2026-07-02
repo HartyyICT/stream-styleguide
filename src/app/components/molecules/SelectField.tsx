@@ -9,6 +9,7 @@ import ErrorText from "@/app/components/atoms/ErrorText";
 import { formTokens } from "@/app/theme/tokens";
 
 type NativeSelectProps = ComponentProps<typeof Select>;
+type FieldState = "default" | "success" | "warning" | "info" | "error";
 
 interface SelectOption {
   label: string;
@@ -21,6 +22,7 @@ interface SelectFieldProps extends Omit<BoxProps, "onChange"> {
   options: SelectOption[];
   helperText?: string;
   errorText?: string;
+  state?: FieldState;
   required?: boolean;
   selectProps?: NativeSelectProps;
 }
@@ -31,6 +33,7 @@ export default function SelectField({
   options,
   helperText,
   errorText,
+  state = "default",
   required = false,
   selectProps,
   sx,
@@ -39,6 +42,7 @@ export default function SelectField({
   const helperId = helperText ? `${name}-helper` : undefined;
   const errorId = errorText ? `${name}-error` : undefined;
   const describedBy = [helperId, errorId].filter(Boolean).join(" ") || undefined;
+  const activeState = errorText ? "error" : state;
 
   return (
     <Box
@@ -58,6 +62,7 @@ export default function SelectField({
         id={name}
         name={name}
         required={required}
+        state={activeState}
         error={Boolean(errorText)}
         aria-describedby={describedBy}
         {...selectProps}
@@ -68,7 +73,11 @@ export default function SelectField({
           </option>
         ))}
       </Select>
-      {helperText && !errorText && <HelperText id={helperId}>{helperText}</HelperText>}
+      {helperText && !errorText && (
+        <HelperText id={helperId} tone={activeState === "default" ? "default" : activeState}>
+          {helperText}
+        </HelperText>
+      )}
       {errorText && <ErrorText id={errorId}>{errorText}</ErrorText>}
     </Box>
   );

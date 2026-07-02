@@ -2,7 +2,8 @@
 
 import { Box, Typography, type BoxProps } from "@mui/material";
 import { AlertCircle } from "lucide-react";
-import { borderWidths, colors, iconSizes, radius, spacing } from "@/app/theme/tokens";
+import { borderWidths, iconSizes, radius, spacing } from "@/app/theme/tokens";
+import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface ValidationSummaryProps extends BoxProps {
   title?: string;
@@ -15,6 +16,8 @@ export default function ValidationSummary({
   sx,
   ...props
 }: ValidationSummaryProps) {
+  const { surface, semantic } = useDocumentationStyles();
+
   if (errors.length === 0) {
     return null;
   }
@@ -25,15 +28,15 @@ export default function ValidationSummary({
       {...props}
       sx={{
         p: spacing.md,
-        border: `${borderWidths.default} solid ${colors.semantic.error.main}`,
+        border: `${borderWidths.default} solid ${semantic.error}`,
         borderRadius: radius.medium,
-        backgroundColor: colors.semantic.surface,
+        backgroundColor: surface,
         ...sx,
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: spacing.sm, mb: spacing.sm }}>
-        <AlertCircle size={iconSizes.medium} color={colors.semantic.error.main} />
-        <Typography variant="h3" sx={{ color: colors.semantic.error.main }}>
+        <AlertCircle size={iconSizes.medium} color={semantic.error} />
+        <Typography variant="h3" sx={{ color: semantic.error }}>
           {title}
         </Typography>
       </Box>

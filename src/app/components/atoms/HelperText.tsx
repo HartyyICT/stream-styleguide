@@ -1,16 +1,30 @@
 "use client";
 
 import { Box, Typography, type BoxProps } from "@mui/material";
-import { HelpCircle } from "lucide-react";
-import { iconSizes, spacing } from "@/app/theme/tokens";
+import { spacing } from "@/app/theme/tokens";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+
+type HelperTextTone = "default" | "success" | "warning" | "info" | "error";
 
 interface HelperTextProps extends BoxProps {
   children: string;
+  tone?: HelperTextTone;
 }
 
-export default function HelperText({ children, sx, ...props }: HelperTextProps) {
-  const { secondaryText } = useDocumentationStyles();
+export default function HelperText({
+  children,
+  tone = "default",
+  sx,
+  ...props
+}: HelperTextProps) {
+  const { secondaryText, semantic } = useDocumentationStyles();
+  const toneColor = {
+    default: secondaryText,
+    success: semantic.success,
+    warning: semantic.warning,
+    info: semantic.info,
+    error: semantic.error,
+  }[tone];
 
   return (
     <Box
@@ -19,11 +33,10 @@ export default function HelperText({ children, sx, ...props }: HelperTextProps) 
         display: "flex",
         alignItems: "flex-start",
         gap: spacing.xs,
-        color: secondaryText,
+        color: toneColor,
         ...sx,
       }}
     >
-      <HelpCircle size={iconSizes.small} aria-hidden="true" />
       <Typography variant="caption" sx={{ color: "inherit", lineHeight: 1.5 }}>
         {children}
       </Typography>

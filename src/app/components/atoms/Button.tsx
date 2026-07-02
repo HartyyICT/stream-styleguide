@@ -90,7 +90,7 @@ export default function Button({
         boxShadow: shadows.level0,
         fontFamily: "var(--font-poppins), Arial, sans-serif",
         fontSize: sizeStyle.fontSize,
-        fontWeight: 600,
+        fontWeight: buttonTokens.typography.fontWeight,
         lineHeight: 1,
         cursor: isDisabled ? "not-allowed" : "pointer",
         pointerEvents: "auto",

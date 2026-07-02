@@ -2,11 +2,7 @@
 
 import { MenuItem, type MenuItemProps } from "@mui/material";
 import type { ReactNode } from "react";
-import {
-  colors,
-  iconSizes,
-  navbarTokens,
-} from "@/app/theme/tokens";
+import { iconSizes, navbarTokens } from "@/app/theme/tokens";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 type ProfileMenuItemTone = "default" | "danger";
@@ -24,7 +20,7 @@ export default function ProfileMenuItem({
   sx,
   ...props
 }: ProfileMenuItemProps) {
-  const { isDarkMode, primaryText, interaction } = useDocumentationStyles();
+  const { primaryText, interaction, semantic } = useDocumentationStyles();
   const isDanger = tone === "danger";
 
   return (
@@ -37,15 +33,11 @@ export default function ProfileMenuItem({
         display: "grid",
         gridTemplateColumns: `${iconSizes.control}px minmax(0, 1fr)`,
         alignItems: "center",
-        color: isDanger ? colors.semantic.error.main : primaryText,
+        color: isDanger ? semantic.error : primaryText,
         lineHeight: 1,
         "&:hover": {
-          color: isDanger ? colors.semantic.error.dark : interaction.hoverContent,
-          backgroundColor: isDanger
-            ? isDarkMode
-              ? colors.neutral[700]
-              : colors.neutral[100]
-            : interaction.hoverBackground,
+          color: isDanger ? semantic.error : interaction.hoverContent,
+          backgroundColor: interaction.hoverBackground,
         },
         "& svg": {
           display: "block",

@@ -4,6 +4,8 @@ import { Box, Typography, type BoxProps } from "@mui/material";
 import { useState } from "react";
 import Radio from "@/app/components/atoms/Radio";
 import Label from "@/app/components/atoms/Label";
+import ErrorText from "@/app/components/atoms/ErrorText";
+import HelperText from "@/app/components/atoms/HelperText";
 import { formTokens, spacing } from "@/app/theme/tokens";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
@@ -19,6 +21,9 @@ interface RadioGroupProps extends Omit<BoxProps, "onChange"> {
   options: RadioOption[];
   value?: string;
   defaultValue?: string;
+  helperText?: string;
+  errorText?: string;
+  required?: boolean;
   onValueChange?: (value: string) => void;
 }
 
@@ -28,6 +33,9 @@ export default function RadioGroup({
   options,
   value,
   defaultValue,
+  helperText,
+  errorText,
+  required = false,
   onValueChange,
   sx,
   ...props
@@ -56,7 +64,7 @@ export default function RadioGroup({
         ...sx,
       }}
     >
-      <Label component="span">{label}</Label>
+      <Label component="span" required={required}>{label}</Label>
       <Box sx={{ display: "grid", gap: spacing.sm }}>
         {options.map((option) => {
           const checked = selectedValue === option.value;
@@ -76,17 +84,18 @@ export default function RadioGroup({
                 name={name}
                 value={option.value}
                 checked={checked}
+                error={Boolean(errorText)}
                 onChange={() => selectValue(option.value)}
               />
-              <Box>
+              <Box sx={{ display: "grid", gap: 0.25, pt: "0.0625rem" }}>
                 <Typography
                   variant="body2"
-                  sx={{ color: primaryText, fontWeight: 700, lineHeight: 1.4 }}
+                  sx={{ color: primaryText, fontWeight: 700, lineHeight: 1.35 }}
                 >
                   {option.label}
                 </Typography>
                 {option.description && (
-                  <Typography variant="caption" sx={{ color: secondaryText, lineHeight: 1.5 }}>
+                  <Typography variant="caption" sx={{ color: secondaryText, lineHeight: 1.4 }}>
                     {option.description}
                   </Typography>
                 )}
@@ -95,6 +104,11 @@ export default function RadioGroup({
           );
         })}
       </Box>
+      {errorText ? (
+        <ErrorText>{errorText}</ErrorText>
+      ) : helperText ? (
+        <HelperText>{helperText}</HelperText>
+      ) : null}
     </Box>
   );
 }

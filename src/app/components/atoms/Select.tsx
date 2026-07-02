@@ -5,12 +5,27 @@ import { ChevronDown } from "lucide-react";
 import { borderWidths, formTokens, iconSizes, radius } from "@/app/theme/tokens";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
+type SelectState = "default" | "success" | "warning" | "info" | "error";
+
 interface SelectProps extends Omit<BoxProps<"select">, "component"> {
   error?: boolean;
+  state?: SelectState;
 }
 
-export default function Select({ error = false, disabled, children, sx, ...props }: SelectProps) {
-  const { surface, primaryText, borders } = useDocumentationStyles();
+export default function Select({
+  error = false,
+  state = "default",
+  disabled,
+  children,
+  sx,
+  ...props
+}: SelectProps) {
+  const { surface, primaryText, secondaryText, formStates, formFocusRing } =
+    useDocumentationStyles();
+  const activeState = error ? "error" : state;
+  const stateToken = formStates[activeState];
+  const borderColor = stateToken.border;
+  const disabledToken = formStates.disabled;
 
   return (
     <Box sx={{ position: "relative", width: "100%" }}>
@@ -28,20 +43,24 @@ export default function Select({ error = false, disabled, children, sx, ...props
           px: formTokens.field.paddingX,
           py: formTokens.field.paddingY,
           pr: formTokens.field.selectIconPaddingRight,
-          color: disabled ? formTokens.states.disabled.content : primaryText,
-          border: `${borderWidths.default} solid ${
-            error ? formTokens.states.error.border : borders.default
-          }`,
+          color: disabled ? disabledToken.content : primaryText,
+          border: `${borderWidths.default} solid ${borderColor}`,
           borderRadius: radius.medium,
-          backgroundColor: disabled ? formTokens.states.disabled.background : surface,
+          backgroundColor: disabled ? disabledToken.background : surface,
           font: "inherit",
           fontSize: formTokens.field.fontSize,
           lineHeight: formTokens.field.lineHeight,
           outline: 0,
+          "&:hover": !disabled
+            ? {
+                borderColor:
+                  activeState === "default" ? formStates.hover.border : borderColor,
+              }
+            : undefined,
           "&:focus": {
-            borderWidth: borderWidths.interactive,
-            borderColor: error ? formTokens.states.error.border : formTokens.states.focus.border,
-            boxShadow: formTokens.field.focusRing,
+            borderColor:
+              activeState === "default" ? formStates.focus.border : borderColor,
+            boxShadow: formFocusRing,
           },
           ...sx,
         }}
@@ -57,7 +76,7 @@ export default function Select({ error = false, disabled, children, sx, ...props
           right: formTokens.field.selectIconOffsetInline,
           transform: "translateY(-50%)",
           pointerEvents: "none",
-          color: disabled ? formTokens.states.disabled.content : primaryText,
+          color: disabled ? disabledToken.content : secondaryText,
         }}
       />
     </Box>

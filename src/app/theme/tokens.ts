@@ -26,12 +26,27 @@ export const colors = {
   semantic: {
     surface: "#FFFFFF",
     background: "#F8FAFB",
-    success: { light: "#69E89E", main: "#22C35D", dark: "#1A8E46" },
+    success: { light: "#22C35D", main: "#22C35D", dark: "#1A8E46" },
     warning: { light: "#FFBA6B", main: "#FF8800", dark: "#CC6D00" },
     error: { light: "#FF7070", main: "#C32222", dark: "#991B1B" },
     info: { light: "#A3CEFF", main: "#297CD9", dark: "#034B9C" },
   },
 };
+
+export const semanticStateColors = {
+  light: {
+    success: colors.semantic.success.light,
+    warning: colors.semantic.warning.light,
+    error: colors.semantic.error.light,
+    info: colors.semantic.info.light,
+  },
+  dark: {
+    success: colors.semantic.success.dark,
+    warning: colors.semantic.warning.dark,
+    error: colors.semantic.error.dark,
+    info: colors.semantic.info.dark,
+  },
+} as const;
 
 export const spacing = {
   xs: "0.25rem",
@@ -179,6 +194,9 @@ export const borderColors = {
 } as const;
 
 export const buttonTokens = {
+  typography: {
+    fontWeight: 500,
+  },
   types: {
     primary: {
       background: colors.primary[500],
@@ -255,23 +273,23 @@ export const buttonTokens = {
   },
   sizes: {
     sm: {
-      height: "2rem",
-      minWidth: "4rem",
-      padding: "0.375rem 0.75rem",
+      height: "1.75rem",
+      minWidth: "3.5rem",
+      padding: "0.25rem 0.625rem",
       fontSize: "0.875rem",
       iconSize: 14,
     },
     md: {
-      height: "2.5rem",
-      minWidth: "5rem",
-      padding: "0.5rem 1rem",
+      height: "2.25rem",
+      minWidth: "4.5rem",
+      padding: "0.4375rem 0.875rem",
       fontSize: "0.875rem",
       iconSize: 14,
     },
     lg: {
-      height: "3rem",
-      minWidth: "6rem",
-      padding: "0.75rem 1.25rem",
+      height: "2.75rem",
+      minWidth: "5.5rem",
+      padding: "0.625rem 1.125rem",
       fontSize: "1rem",
       iconSize: 16,
     },
@@ -385,6 +403,21 @@ export const formTokens = {
     },
     error: {
       border: colors.semantic.error.main,
+      background: colors.semantic.surface,
+      content: colors.neutral[900],
+    },
+    success: {
+      border: colors.semantic.success.main,
+      background: colors.semantic.surface,
+      content: colors.neutral[900],
+    },
+    warning: {
+      border: colors.semantic.warning.main,
+      background: colors.semantic.surface,
+      content: colors.neutral[900],
+    },
+    info: {
+      border: colors.semantic.info.main,
       background: colors.semantic.surface,
       content: colors.neutral[900],
     },

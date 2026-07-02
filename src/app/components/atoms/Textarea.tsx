@@ -4,12 +4,26 @@ import { Box, type BoxProps } from "@mui/material";
 import { borderWidths, formTokens, radius } from "@/app/theme/tokens";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
+type TextareaState = "default" | "success" | "warning" | "info" | "error";
+
 interface TextareaProps extends Omit<BoxProps<"textarea">, "component"> {
   error?: boolean;
+  state?: TextareaState;
 }
 
-export default function Textarea({ error = false, disabled, sx, ...props }: TextareaProps) {
-  const { surface, primaryText, secondaryText, borders } = useDocumentationStyles();
+export default function Textarea({
+  error = false,
+  state = "default",
+  disabled,
+  sx,
+  ...props
+}: TextareaProps) {
+  const { surface, primaryText, placeholderText, formStates, formFocusRing } =
+    useDocumentationStyles();
+  const activeState = error ? "error" : state;
+  const stateToken = formStates[activeState];
+  const borderColor = stateToken.border;
+  const disabledToken = formStates.disabled;
 
   return (
     <Box
@@ -25,28 +39,27 @@ export default function Textarea({ error = false, disabled, sx, ...props }: Text
         px: formTokens.field.paddingX,
         py: formTokens.textarea.padding,
         resize: "vertical",
-        color: disabled ? formTokens.states.disabled.content : primaryText,
-        border: `${borderWidths.default} solid ${
-          error ? formTokens.states.error.border : borders.default
-        }`,
+        color: disabled ? disabledToken.content : primaryText,
+        border: `${borderWidths.default} solid ${borderColor}`,
         borderRadius: radius.medium,
-        backgroundColor: disabled ? formTokens.states.disabled.background : surface,
+        backgroundColor: disabled ? disabledToken.background : surface,
         font: "inherit",
         fontSize: formTokens.field.fontSize,
         lineHeight: formTokens.textarea.lineHeight,
         outline: 0,
         "&:hover": !disabled
           ? {
-              borderColor: error ? formTokens.states.error.border : formTokens.states.hover.border,
+              borderColor:
+                activeState === "default" ? formStates.hover.border : borderColor,
             }
           : undefined,
         "&:focus": {
-          borderWidth: borderWidths.interactive,
-          borderColor: error ? formTokens.states.error.border : formTokens.states.focus.border,
-          boxShadow: formTokens.field.focusRing,
+          borderColor:
+            activeState === "default" ? formStates.focus.border : borderColor,
+          boxShadow: formFocusRing,
         },
         "&::placeholder": {
-          color: secondaryText,
+          color: placeholderText,
           opacity: 1,
         },
         ...sx,

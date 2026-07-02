@@ -9,12 +9,14 @@ import ErrorText from "@/app/components/atoms/ErrorText";
 import { formTokens } from "@/app/theme/tokens";
 
 type NativeInputProps = ComponentProps<typeof Input>;
+type FieldState = "default" | "success" | "warning" | "info" | "error";
 
 interface FormFieldProps extends Omit<BoxProps, "onChange"> {
   label: string;
   name: string;
   helperText?: string;
   errorText?: string;
+  state?: FieldState;
   required?: boolean;
   inputProps?: NativeInputProps;
 }
@@ -24,6 +26,7 @@ export default function FormField({
   name,
   helperText,
   errorText,
+  state = "default",
   required = false,
   inputProps,
   sx,
@@ -32,6 +35,7 @@ export default function FormField({
   const helperId = helperText ? `${name}-helper` : undefined;
   const errorId = errorText ? `${name}-error` : undefined;
   const describedBy = [helperId, errorId].filter(Boolean).join(" ") || undefined;
+  const activeState = errorText ? "error" : state;
 
   return (
     <Box
@@ -51,11 +55,16 @@ export default function FormField({
         id={name}
         name={name}
         required={required}
+        state={activeState}
         error={Boolean(errorText)}
         aria-describedby={describedBy}
         {...inputProps}
       />
-      {helperText && !errorText && <HelperText id={helperId}>{helperText}</HelperText>}
+      {helperText && !errorText && (
+        <HelperText id={helperId} tone={activeState === "default" ? "default" : activeState}>
+          {helperText}
+        </HelperText>
+      )}
       {errorText && <ErrorText id={errorId}>{errorText}</ErrorText>}
     </Box>
   );

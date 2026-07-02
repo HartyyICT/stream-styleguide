@@ -1,30 +1,19 @@
 "use client";
 
-import { Box, Typography, type BoxProps } from "@mui/material";
-import { AlertCircle } from "lucide-react";
-import { colors, iconSizes, spacing } from "@/app/theme/tokens";
+import HelperText from "@/app/components/atoms/HelperText";
+import type { ComponentProps } from "react";
 
-interface ErrorTextProps extends BoxProps {
-  children: string;
-}
+type ErrorTextProps = Omit<ComponentProps<typeof HelperText>, "tone">;
 
 export default function ErrorText({ children, sx, ...props }: ErrorTextProps) {
   return (
-    <Box
+    <HelperText
       role="alert"
+      tone="error"
       {...props}
-      sx={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: spacing.xs,
-        color: colors.semantic.error.main,
-        ...sx,
-      }}
+      sx={sx}
     >
-      <AlertCircle size={iconSizes.small} aria-hidden="true" />
-      <Typography variant="caption" sx={{ color: "inherit", lineHeight: 1.5 }}>
-        {children}
-      </Typography>
-    </Box>
+      {children}
+    </HelperText>
   );
 }

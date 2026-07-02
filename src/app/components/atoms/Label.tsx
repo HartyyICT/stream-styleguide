@@ -15,7 +15,7 @@ export default function Label({
   sx,
   ...props
 }: LabelProps) {
-  const { primaryText, accent } = useDocumentationStyles();
+  const { primaryText, semantic } = useDocumentationStyles();
 
   return (
     <Typography
@@ -35,7 +35,11 @@ export default function Label({
     >
       {children}
       {required && (
-        <Typography component="span" aria-hidden="true" sx={{ color: accent, font: "inherit" }}>
+        <Typography
+          component="span"
+          aria-hidden="true"
+          sx={{ color: semantic.error, font: "inherit" }}
+        >
           *
         </Typography>
       )}
