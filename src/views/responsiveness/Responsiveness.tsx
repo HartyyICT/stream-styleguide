@@ -339,12 +339,12 @@ export default function ResponsivenessPage() {
         title="Implementation"
         description="Use the shared responsive tokens so pages, documentation examples and application layouts react at the same widths."
       >
-        <CodeBlock>{`import { responsiveGrids, responsiveLayout, spacing } from "@/app/theme/tokens";
+        <CodeBlock>{`import { pageLayoutTokens, responsiveGrids, spacing } from "@/app/theme/tokens";
 
 <Box
   sx={{
     display: "grid",
-    maxWidth: responsiveLayout.contentMaxWidth,
+    maxWidth: pageLayoutTokens.contentMaxWidth,
     gridTemplateColumns: {
       xs: responsiveGrids.oneToThree.mobile,
       sm: responsiveGrids.oneToThree.tablet,

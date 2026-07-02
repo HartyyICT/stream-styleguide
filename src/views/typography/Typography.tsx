@@ -1,13 +1,14 @@
 "use client";
 
-import { Box, Divider, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Card from "@/app/components/atoms/Card";
 import CardTitle from "@/app/components/atoms/CardTitle";
+import Divider from "@/app/components/atoms/Divider";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { radius, shadows } from "@/app/theme/tokens";
+import { pageLayoutTokens, radius, shadows } from "@/app/theme/tokens";
 
 const typographySections = [
   { label: "Overview", href: "#typography" },
@@ -223,7 +224,7 @@ export default function TypographyPage() {
           <Box
             component="section"
             id="font-families"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Font families
@@ -308,12 +309,12 @@ export default function TypographyPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="font-setup"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Font setup
@@ -418,12 +419,12 @@ export default function TypographyPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="typography-scale"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Typography scale
@@ -547,9 +548,9 @@ export default function TypographyPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
-          <Box component="section" id="component" sx={{ scrollMarginTop: 96 }}>
+          <Box component="section" id="component" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Component
             </Typography>
@@ -603,12 +604,12 @@ export default function TypographyPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="code-examples"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Code examples
@@ -646,11 +647,11 @@ export function TypographyExample() {
             />
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           
 
-<Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
+<Box component="section" id="guidelines" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Guidelines
             </Typography>
@@ -685,12 +686,12 @@ export function TypographyExample() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="accessibility"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Accessibility

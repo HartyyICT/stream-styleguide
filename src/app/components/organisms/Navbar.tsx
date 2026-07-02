@@ -9,8 +9,8 @@ import {
   iconSizes,
   interactionStates,
   navbarTokens,
+  pageLayoutTokens,
   radius,
-  responsiveLayout,
 } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
@@ -50,7 +50,7 @@ export default function Navbar({
     <Box
       component="header"
       sx={{
-        height: responsiveLayout.navbarHeight,
+        height: pageLayoutTokens.navbarHeight,
         position: "fixed",
         inset: "0 0 auto 0",
         zIndex: 1200,
@@ -58,8 +58,8 @@ export default function Navbar({
         alignItems: "center",
         justifyContent: "space-between",
         px: {
-          xs: responsiveLayout.pagePaddingX.mobile,
-          md: responsiveLayout.pagePaddingX.tablet,
+          xs: pageLayoutTokens.shellPaddingX.mobile,
+          md: pageLayoutTokens.shellPaddingX.tablet,
         },
         pl: {
           md: 0,

@@ -17,6 +17,7 @@ import {
   ChevronDown,
   ClipboardList,
   Grid3X3,
+  LayoutTemplate,
   ListChecks,
   MousePointer2,
   Navigation,
@@ -40,8 +41,8 @@ import {
   colors,
   iconSizes,
   interactionStates,
+  pageLayoutTokens,
   radius,
-  responsiveLayout,
 } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
 import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
@@ -72,6 +73,7 @@ const navigationGroups: { label: string; ariaLabel: string; items: NavigationIte
       { label: "Elevation & Shadows", icon: Blend, href: "/elevation" },
       { label: "Hover States", icon: MousePointer2, href: "/hover-states" },
       { label: "Iconography", icon: Sparkles, href: "/iconography" },
+      { label: "Page Layout", icon: LayoutTemplate, href: "/page-layout" },
       { label: "Responsiveness", icon: Smartphone, href: "/responsiveness" },
       { label: "Spacing", icon: Grid3X3, href: "/spacing" },
       { label: "Typography", icon: Type, href: "/typography" },
@@ -381,9 +383,9 @@ export default function Sidebar({
           width: collapsed
             ? sidebarMotion.collapsedWidth
             : sidebarMotion.expandedWidth,
-          height: `calc(100vh - ${responsiveLayout.navbarHeight})`,
+          height: `calc(100vh - ${pageLayoutTokens.navbarHeight})`,
           position: "fixed",
-          top: responsiveLayout.navbarHeight,
+          top: pageLayoutTokens.navbarHeight,
           left: 0,
           overflowY: "auto",
           scrollbarWidth: "none",

@@ -19,7 +19,7 @@ import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { borderWidths, radius, spacing } from "@/app/theme/tokens";
+import { borderWidths, pageLayoutTokens, radius, spacing } from "@/app/theme/tokens";
 
 const sections = [
   { label: "Overview", href: "#buttons" },
@@ -319,7 +319,7 @@ export default function ButtonsPage() {
   } = useDocumentationStyles();
 
   return (
-    <Page pageId="buttons" sections={sections} maxWidth={980}>
+    <Page pageId="buttons" sections={sections} maxWidth={pageLayoutTokens.wideContentMaxWidth}>
       <Intro
         title="Buttons"
         description="Buttons make user actions clear and recognizable across Stream Software interfaces. They help users save, cancel, confirm, search and move through enterprise workflows with confidence."

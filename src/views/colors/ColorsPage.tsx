@@ -1,6 +1,7 @@
 "use client";
 
-import { Box, Divider, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
+import Divider from "@/app/components/atoms/Divider";
 import ColorSwatch from "@/app/components/atoms/ColorSwatch";
 import Card from "@/app/components/atoms/Card";
 import CardTitle from "@/app/components/atoms/CardTitle";
@@ -8,7 +9,7 @@ import CodeExample from "@/app/components/patterns/CodeExample";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { colors, radius, shadows } from "@/app/theme/tokens";
+import { colors, pageLayoutTokens, radius, shadows } from "@/app/theme/tokens";
 
 const primaryColors = Object.entries(colors.primary);
 const neutralColors = Object.entries(colors.neutral);
@@ -136,7 +137,7 @@ export default function ColorsPage() {
           <Box
             component="section"
             id="color-categories"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Color categories
@@ -209,12 +210,12 @@ export default function ColorsPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="token-usage"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Token usage
@@ -288,12 +289,12 @@ export default function ColorsPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="primary-colors"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Primary colors
@@ -328,12 +329,12 @@ export default function ColorsPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="neutral-colors"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Neutral colors
@@ -368,12 +369,12 @@ export default function ColorsPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="semantic-colors"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Semantic colors
@@ -405,12 +406,12 @@ export default function ColorsPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="code-examples"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Code examples
@@ -462,11 +463,11 @@ export function PrimaryActionPreview() {
             />
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           
 
-<Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
+<Box component="section" id="guidelines" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Guidelines
             </Typography>
@@ -501,12 +502,12 @@ export function PrimaryActionPreview() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="accessibility"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Accessibility

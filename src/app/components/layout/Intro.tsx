@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { borderWidths } from "@/app/theme/tokens";
+import { borderWidths, pageLayoutTokens } from "@/app/theme/tokens";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 
 interface IntroProps {
@@ -34,7 +34,7 @@ export default function Intro({
       <Typography
         variant="body1"
         sx={{
-          maxWidth: 720,
+          maxWidth: pageLayoutTokens.introDescriptionMaxWidth,
           mb: 3,
           color: secondaryText,
           fontSize: "1.0625rem",
@@ -46,8 +46,8 @@ export default function Intro({
       {note && (
         <Box
           sx={{
-            p: 2.5,
-            mb: 6,
+            p: pageLayoutTokens.notePadding,
+            mb: pageLayoutTokens.noteMarginBottom,
             borderLeft: `${borderWidths.accent} solid ${accent}`,
             backgroundColor: subtleBackground,
           }}

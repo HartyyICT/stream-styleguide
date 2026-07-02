@@ -102,6 +102,33 @@ export const responsiveLayout = {
   },
 } as const;
 
+export const pageLayoutTokens = {
+  navbarHeight: responsiveLayout.navbarHeight,
+  shellMaxWidth: responsiveLayout.shellMaxWidth,
+  contentMaxWidth: responsiveLayout.contentMaxWidth,
+  wideContentMaxWidth: 980,
+  dataContentMaxWidth: 1100,
+  onThisPageWidth: responsiveLayout.onThisPageWidth,
+  articleScrollMarginTop: 96,
+  sectionScrollMarginTop: 96,
+  introDescriptionMaxWidth: 720,
+  contentGridColumns: {
+    mobile: "1fr",
+    desktop: `minmax(0, 1fr) ${responsiveLayout.onThisPageWidth}px`,
+  },
+  shellPaddingX: responsiveLayout.pagePaddingX,
+  shellPaddingY: responsiveLayout.pagePaddingY,
+  sectionGap: responsiveLayout.sectionGap,
+  contentGap: {
+    mobile: responsiveLayout.sectionGap.mobile,
+    desktop: responsiveLayout.sectionGap.desktop,
+  },
+  sectionDividerMarginY: spacing.xxl,
+  sectionDescriptionMarginBottom: spacing.lg,
+  notePadding: spacing.lg,
+  noteMarginBottom: spacing.xxl,
+} as const;
+
 export const navbarTokens = {
   actionSize: "2.375rem",
   actionSlotSize: "2.375rem",

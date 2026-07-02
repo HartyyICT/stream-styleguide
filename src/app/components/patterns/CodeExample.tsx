@@ -47,7 +47,7 @@ export default function CodeExample({
   renderPreview,
   previewMinHeight,
 }: CodeExampleProps) {
-  const { borders, surface, subtleBackground, primaryText, secondaryText, accent } =
+  const { borders, surface, subtleBackground, primaryText, secondaryText, accent, semantic } =
     useDocumentationStyles();
   const currentCode = code;
   const [showCode, setShowCode] = useState(false);
@@ -240,7 +240,7 @@ export default function CodeExample({
               gap: gapToken ? spacing[gapToken] : spacing.sm,
               p: paddingToken ? spacing[paddingToken] : spacing.md,
               border: `${borderWidths.default} solid ${
-                invalidRadius ? colors.semantic.error.main : borders.default
+                invalidRadius ? semantic.error : borders.default
               }`,
               borderRadius: radiusToken ? radius[radiusToken] : radius.medium,
               backgroundColor: surface,
@@ -257,7 +257,7 @@ export default function CodeExample({
             component="code"
             variant="caption"
             sx={{
-              color: invalidRadius ? colors.semantic.error.main : secondaryText,
+              color: invalidRadius ? semantic.error : secondaryText,
               fontFamily: "var(--font-space-mono), monospace",
             }}
           >
@@ -347,7 +347,7 @@ export default function CodeExample({
             variant="caption"
             sx={{
               color: invalidMessages.length
-                ? colors.semantic.error.main
+                ? semantic.error
                 : secondaryText,
               fontFamily: "var(--font-space-mono), monospace",
               textAlign: "center",
@@ -397,7 +397,7 @@ export default function CodeExample({
               border:
                 shadowToken === "level0" || isInvalidShadow
                   ? `${borderWidths.default} solid ${
-                      isInvalidShadow ? colors.semantic.error.main : borders.default
+                      isInvalidShadow ? semantic.error : borders.default
                     }`
                   : "none",
               borderRadius: radius.large,
@@ -413,7 +413,7 @@ export default function CodeExample({
               variant="caption"
               sx={{
                 mt: 2,
-                color: isInvalidShadow ? colors.semantic.error.main : secondaryText,
+                color: isInvalidShadow ? semantic.error : secondaryText,
                 fontFamily: "var(--font-space-mono), monospace",
               }}
             >

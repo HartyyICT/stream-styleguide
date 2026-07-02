@@ -44,6 +44,7 @@ import {
   colors,
   formTokens,
   iconSizes,
+  pageLayoutTokens,
   radius,
   responsiveGrids,
   shadows,
@@ -696,10 +697,10 @@ function WizardExamplePreview() {
 }
 
 export default function WizardsPage() {
-  const { accent } = useDocumentationStyles();
+  const { accent, semantic } = useDocumentationStyles();
 
   return (
-    <Page pageId="wizards" sections={sections} maxWidth={1100}>
+    <Page pageId="wizards" sections={sections} maxWidth={pageLayoutTokens.dataContentMaxWidth}>
       <Intro
         title="Wizards"
         description="Wizards guide users through long workflows by splitting input into clear, ordered steps. They are useful for operational flows where users need to save drafts, validate each step and review before submitting."
@@ -784,7 +785,7 @@ export default function WizardsPage() {
               <Badge tone="success">Complete</Badge>
               <Badge tone="neutral">Upcoming</Badge>
               <Box sx={{ display: "flex", alignItems: "center", gap: spacing.sm }}>
-                <AlertTriangle size={iconSizes.small} color={colors.semantic.error.main} />
+                <AlertTriangle size={iconSizes.small} color={semantic.error} />
                 <Text variant="body2">Error: return to this step</Text>
               </Box>
             </Box>

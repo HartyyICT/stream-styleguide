@@ -1,8 +1,10 @@
 "use client";
 
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type { ReactNode } from "react";
+import Divider from "@/app/components/atoms/Divider";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
+import { pageLayoutTokens } from "@/app/theme/tokens";
 
 interface SectionProps {
   id: string;
@@ -25,17 +27,23 @@ export default function Section({
 
   return (
     <>
-      {divider && <Divider sx={{ my: 6 }} />}
+      {divider && <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />}
       <Box
         component="section"
         id={id}
-        sx={{ scrollMarginTop: 96, pb: last ? 4 : 0 }}
+        sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop, pb: last ? 4 : 0 }}
       >
         <Typography variant="h2" sx={{ mb: 1.5 }}>
           {title}
         </Typography>
         {description && (
-          <Typography sx={{ mb: 3, color: secondaryText, lineHeight: 1.7 }}>
+          <Typography
+            sx={{
+              mb: pageLayoutTokens.sectionDescriptionMarginBottom,
+              color: secondaryText,
+              lineHeight: 1.7,
+            }}
+          >
             {description}
           </Typography>
         )}

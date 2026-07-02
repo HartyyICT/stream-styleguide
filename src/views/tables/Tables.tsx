@@ -33,6 +33,7 @@ import Section from "@/app/components/layout/Section";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
 import {
   iconSizes,
+  pageLayoutTokens,
   responsiveGrids,
   spacing,
   tableTokens,
@@ -221,7 +222,7 @@ export default function TablesPage() {
   const { subtleBackground, accent } = useDocumentationStyles();
 
   return (
-    <Page pageId="tables" sections={sections} maxWidth={980}>
+    <Page pageId="tables" sections={sections} maxWidth={pageLayoutTokens.wideContentMaxWidth}>
       <Intro
         title="Tables"
         description="Tables organise structured information so users can compare rows, scan values and take action without losing context."

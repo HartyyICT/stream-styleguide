@@ -38,6 +38,7 @@ import {
   borderWidths,
   formTokens,
   iconSizes,
+  pageLayoutTokens,
   radius,
   responsiveGrids,
   spacing,
@@ -838,7 +839,7 @@ export default function FormsPage() {
   const stateRows = getStateRows(formStates);
 
   return (
-    <Page pageId="forms" sections={sections} maxWidth={980}>
+    <Page pageId="forms" sections={sections} maxWidth={pageLayoutTokens.wideContentMaxWidth}>
       <Intro
         title="Forms"
         description="Forms collect user input across Stream Software workflows. They must feel predictable, efficient and forgiving, especially in data-heavy enterprise screens."

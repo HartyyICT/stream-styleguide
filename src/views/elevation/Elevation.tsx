@@ -1,15 +1,16 @@
 "use client";
 
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Layers3, MousePointerClick, PanelTop, Rows3 } from "lucide-react";
 import Card from "@/app/components/atoms/Card";
 import CardTitle from "@/app/components/atoms/CardTitle";
 import CodeBlock from "@/app/components/atoms/CodeBlock";
+import Divider from "@/app/components/atoms/Divider";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-import { colors, radius, shadows, spacing } from "@/app/theme/tokens";
+import { colors, pageLayoutTokens, radius, shadows, spacing } from "@/app/theme/tokens";
 
 const elevationSections = [
   { label: "Overview", href: "#elevation" },
@@ -112,7 +113,7 @@ export default function ElevationPage() {
           <Box
             component="section"
             id="elevation-scale"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Elevation scale
@@ -195,9 +196,9 @@ export default function ElevationPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
-          <Box component="section" id="token-usage" sx={{ scrollMarginTop: 96 }}>
+          <Box component="section" id="token-usage" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Token usage
             </Typography>
@@ -215,9 +216,9 @@ export default function ElevationPage() {
 />`}</CodeBlock>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
-          <Box component="section" id="usage-levels" sx={{ scrollMarginTop: 96 }}>
+          <Box component="section" id="usage-levels" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Usage levels
             </Typography>
@@ -286,12 +287,12 @@ export default function ElevationPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="layering-example"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Layering example
@@ -367,12 +368,12 @@ export default function ElevationPage() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="code-examples"
-            sx={{ scrollMarginTop: 96 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Code examples
@@ -420,11 +421,11 @@ export function RaisedSurface() {
             />
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           
 
-<Box component="section" id="guidelines" sx={{ scrollMarginTop: 96 }}>
+<Box component="section" id="guidelines" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Guidelines
             </Typography>
@@ -455,12 +456,12 @@ export function RaisedSurface() {
             </Box>
           </Box>
 
-          <Divider sx={{ my: 6 }} />
+          <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
           <Box
             component="section"
             id="accessibility"
-            sx={{ scrollMarginTop: 96, pb: 4 }}
+            sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop, pb: 4 }}
           >
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               Accessibility

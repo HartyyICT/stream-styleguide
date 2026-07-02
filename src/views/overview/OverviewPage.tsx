@@ -1,6 +1,7 @@
 "use client";
 
-  import { Box, Chip, Divider, Typography } from "@mui/material";
+  import { Box, Chip, Typography } from "@mui/material";
+  import Divider from "@/app/components/atoms/Divider";
   import {
     Accessibility,
     Blocks,
@@ -13,7 +14,7 @@
   } from "lucide-react";
   import Page from "@/app/components/layout/Page";
   import { useDocumentationStyles } from "@/app/hooks/useDocumentationStyles";
-  import { colors, radius, shadows } from "@/app/theme/tokens";
+  import { colors, pageLayoutTokens, radius, shadows } from "@/app/theme/tokens";
 
   const benefits = [
     {
@@ -137,7 +138,7 @@
               </Box>
             </Box>
 
-            <Box component="section" id="introduction" sx={{ scrollMarginTop: 96 }}>
+            <Box component="section" id="introduction" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
               <Typography variant="h2" sx={{ mb: 1.5 }}>
                 Introduction
               </Typography>
@@ -162,9 +163,9 @@
               </Typography>
             </Box>
 
-            <Divider sx={{ my: 6 }} />
+            <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
-            <Box component="section" id="advantages" sx={{ scrollMarginTop: 96 }}>
+            <Box component="section" id="advantages" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
               <Typography variant="h2" sx={{ mb: 1.5 }}>
                 Advantages for Stream Software
               </Typography>
@@ -226,9 +227,9 @@
               </Box>
             </Box>
 
-            <Divider sx={{ my: 6 }} />
+            <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
-            <Box component="section" id="foundations" sx={{ scrollMarginTop: 96 }}>
+            <Box component="section" id="foundations" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
               <Typography variant="h2" sx={{ mb: 1.5 }}>
                 Design foundations
               </Typography>
@@ -262,9 +263,9 @@
               </Box>
             </Box>
 
-            <Divider sx={{ my: 6 }} />
+            <Divider sx={{ my: pageLayoutTokens.sectionDividerMarginY }} />
 
-            <Box component="section" id="author" sx={{ scrollMarginTop: 96 }}>
+            <Box component="section" id="author" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
               <Typography variant="h2" sx={{ mb: 1.5 }}>
                 Author
               </Typography>

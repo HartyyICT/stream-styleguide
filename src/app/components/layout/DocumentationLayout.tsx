@@ -3,7 +3,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import Sidebar from "@/app/components/organisms/Sidebar";
-import { colors, responsiveLayout } from "../../theme/tokens";
+import { colors, pageLayoutTokens } from "../../theme/tokens";
 import { useColorMode } from "../../theme/themeProvider";
 import Navbar from "@/app/components/organisms/Navbar";
 import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
@@ -47,7 +47,7 @@ export default function DocumentationLayout({
       <Box
         component="main"
         sx={{
-          pt: responsiveLayout.navbarHeight,
+          pt: pageLayoutTokens.navbarHeight,
           minHeight: "100vh",
           ml: {
             xs: 0,
@@ -59,18 +59,18 @@ export default function DocumentationLayout({
         }}
       >
         <Box
-        sx={{
+          sx={{
             width: "100%",
-            maxWidth: responsiveLayout.shellMaxWidth,
+            maxWidth: pageLayoutTokens.shellMaxWidth,
             mx: "auto",
             px: {
-              xs: responsiveLayout.pagePaddingX.mobile,
-              sm: responsiveLayout.pagePaddingX.tablet,
-              lg: responsiveLayout.pagePaddingX.desktop,
+              xs: pageLayoutTokens.shellPaddingX.mobile,
+              sm: pageLayoutTokens.shellPaddingX.tablet,
+              lg: pageLayoutTokens.shellPaddingX.desktop,
             },
             py: {
-              xs: responsiveLayout.pagePaddingY.mobile,
-              lg: responsiveLayout.pagePaddingY.desktop,
+              xs: pageLayoutTokens.shellPaddingY.mobile,
+              lg: pageLayoutTokens.shellPaddingY.desktop,
             },
           }}
         >

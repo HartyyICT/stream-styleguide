@@ -6,7 +6,7 @@ import DocumentationLayout from "@/app/components/layout/DocumentationLayout";
 import OnThisPage, {
   type OnThisPageItem,
 } from "@/app/components/patterns/OnThisPage";
-import { responsiveLayout } from "@/app/theme/tokens";
+import { pageLayoutTokens } from "@/app/theme/tokens";
 
 interface PageProps {
   pageId: string;
@@ -19,7 +19,7 @@ export default function Page({
   pageId,
   sections,
   children,
-  maxWidth = responsiveLayout.contentMaxWidth,
+  maxWidth = pageLayoutTokens.contentMaxWidth,
 }: PageProps) {
   return (
     <DocumentationLayout>
@@ -27,12 +27,12 @@ export default function Page({
         sx={{
           display: "grid",
           gridTemplateColumns: {
-            xs: "1fr",
-            xl: `minmax(0, 1fr) ${responsiveLayout.onThisPageWidth}px`,
+            xs: pageLayoutTokens.contentGridColumns.mobile,
+            xl: pageLayoutTokens.contentGridColumns.desktop,
           },
           gap: {
-            xs: responsiveLayout.sectionGap.mobile,
-            xl: responsiveLayout.sectionGap.desktop,
+            xs: pageLayoutTokens.contentGap.mobile,
+            xl: pageLayoutTokens.contentGap.desktop,
           },
           alignItems: "start",
           minWidth: 0,
@@ -41,7 +41,7 @@ export default function Page({
         <Box
           component="article"
           id={pageId}
-          sx={{ maxWidth, scrollMarginTop: 96 }}
+          sx={{ maxWidth, scrollMarginTop: pageLayoutTokens.articleScrollMarginTop }}
         >
           {children}
         </Box>
