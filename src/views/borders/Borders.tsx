@@ -3,13 +3,15 @@
 import { Box, Typography } from "@mui/material";
 import { Card } from "@ssw/ui-library";
 import { CodeBlock } from "@ssw/ui-library";
+import DataTable, { type DataTableColumn } from "@/app/components/organisms/DataTable";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
 import { useSemanticColors } from "@ssw/ui-library";
-import { borderWidths, radius } from "@ssw/ui-library";
+import { borderColors, borderWidths, radius, tableTokens } from "@ssw/ui-library";
+import { TokenCode } from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#borders" },
@@ -61,11 +63,9 @@ const guidelines = [
 
 export default function BordersPage() {
   const {
-    isDarkMode,
     borders,
     interaction,
     surface,
-    primaryText,
     secondaryText,
     accent,
   } = useSemanticColors();
@@ -73,45 +73,120 @@ export default function BordersPage() {
   const borderScale = [
     {
       name: "Subtle",
-      token: `borderColors.${isDarkMode ? "dark" : "light"}.subtle`,
-      color: borders.subtle,
+      token: "borders.subtle",
+      light: borderColors.light.subtle,
+      dark: borderColors.dark.subtle,
       width: borderWidths.subtle,
       use: "Dividers and subtle separation",
     },
     {
       name: "Default",
-      token: `borderColors.${isDarkMode ? "dark" : "light"}.default`,
-      color: borders.default,
+      token: "borders.default",
+      light: borderColors.light.default,
+      dark: borderColors.dark.default,
       width: borderWidths.default,
       use: "Cards, inputs and panels",
     },
     {
       name: "Interactive",
-      token: `borderColors.${isDarkMode ? "dark" : "light"}.interactive`,
-      color: borders.interactive,
+      token: "borders.interactive",
+      light: borderColors.light.interactive,
+      dark: borderColors.dark.interactive,
       width: borderWidths.interactive,
       use: "Hover and interactive outlines",
     },
     {
       name: "Active",
-      token: `borderColors.${isDarkMode ? "dark" : "light"}.active`,
-      color: borders.active,
+      token: "borders.active",
+      light: borderColors.light.active,
+      dark: borderColors.dark.active,
       width: borderWidths.active,
       use: "Active navigation indicators",
     },
     {
       name: "Focus",
-      token: `borderColors.${isDarkMode ? "dark" : "light"}.focus`,
-      color: borders.focus,
+      token: "borders.focus",
+      light: borderColors.light.focus,
+      dark: borderColors.dark.focus,
       width: borderWidths.focus,
       use: "Keyboard focus rings",
     },
     {
       name: "Accent",
-      token: `borderColors.${isDarkMode ? "dark" : "light"}.accent`,
-      color: borders.accent,
+      token: "borders.accent",
+      light: borderColors.light.accent,
+      dark: borderColors.dark.accent,
       width: borderWidths.accent,
       use: "Callouts and highlighted information",
+    },
+  ];
+
+  const renderColorSwatch = (hex: string) => (
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box
+        sx={{
+          width: 24,
+          height: 24,
+          flexShrink: 0,
+          borderRadius: radius.small,
+          backgroundColor: hex,
+          border: `${borderWidths.default} solid ${borders.subtle}`,
+        }}
+      />
+      <Typography
+        variant="caption"
+        sx={{
+          color: secondaryText,
+          fontFamily: "var(--font-space-mono), monospace",
+        }}
+      >
+        {hex}
+      </Typography>
+    </Box>
+  );
+
+  const borderScaleColumns: DataTableColumn<(typeof borderScale)[number]>[] = [
+    {
+      key: "name",
+      header: "Role",
+      render: (item) => (
+        <Typography component="h3" variant="h5">
+          {item.name}
+        </Typography>
+      ),
+    },
+    {
+      key: "token",
+      header: "Token",
+      render: (item) => (
+        <TokenCode sx={{ whiteSpace: "normal", wordBreak: "break-word", width: "100%" }}>
+          {item.token}
+        </TokenCode>
+      ),
+    },
+    {
+      key: "light",
+      header: "Light mode",
+      render: (item) => renderColorSwatch(item.light),
+    },
+    {
+      key: "dark",
+      header: "Dark mode",
+      render: (item) => renderColorSwatch(item.dark),
+    },
+    {
+      key: "width",
+      header: "Width",
+      render: (item) => <TokenCode>{item.width}</TokenCode>,
+    },
+    {
+      key: "use",
+      header: "Use case",
+      render: (item) => (
+        <Typography variant="body2" sx={{ color: secondaryText }}>
+          {item.use}
+        </Typography>
+      ),
     },
   ];
 
@@ -129,69 +204,15 @@ export default function BordersPage() {
         description="The scale progresses from quiet structural separation to stronger interactive, active and focus indicators."
         divider={false}
       >
-        <Box sx={{ display: "grid", gap: 1.5 }}>
-          {borderScale.map((item) => (
-            <Card
-              key={item.name}
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  sm: "0.8fr 1.2fr 0.8fr 0.45fr 1.4fr",
-                },
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              <Typography component="h3" variant="h5">
-                {item.name}
-              </Typography>
-              <Typography
-                component="code"
-                sx={{
-                  color: accent,
-                  fontFamily: "var(--font-space-mono), monospace",
-                  fontSize: "0.8125rem",
-                }}
-              >
-                {item.token}
-              </Typography>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Box
-                  sx={{
-                    width: 28,
-                    height: 28,
-                    flexShrink: 0,
-                    borderRadius: radius.small,
-                    backgroundColor: item.color,
-                  }}
-                />
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: secondaryText,
-                    fontFamily: "var(--font-space-mono), monospace",
-                  }}
-                >
-                  {item.color}
-                </Typography>
-              </Box>
-              <Typography
-                component="code"
-                sx={{
-                  color: primaryText,
-                  fontFamily: "var(--font-space-mono), monospace",
-                  fontSize: "0.8125rem",
-                }}
-              >
-                {item.width}
-              </Typography>
-              <Typography variant="body2" sx={{ color: secondaryText }}>
-                {item.use}
-              </Typography>
-            </Card>
-          ))}
-        </Box>
+        <DataTable
+          columns={borderScaleColumns}
+          rows={borderScale}
+          getRowKey={(row) => row.name}
+          rowHeight={tableTokens.density.comfortable.rowHeight}
+          cellPadding={tableTokens.density.comfortable.cellPadding}
+          columnsTemplate="0.7fr 0.9fr 1fr 1fr 0.6fr 1.3fr"
+          minWidth={820}
+        />
 
         <Card sx={{ mt: 3, p: 3 }}>
           <Typography component="h3" variant="h4" sx={{ mb: 0.75 }}>
@@ -396,15 +417,16 @@ export default function BordersPage() {
         description="Combine semantic border roles with the shared radius scale."
       >
         <CodeBlock>{`import {
-  borderColors,
-  borderWidths,
-  radius,
-} from "@ssw/ui-library";
+            borderColors,
+            borderWidths,
+            radius,
+          } from "@ssw/ui-library";
 
-const cardSx = {
-  border: \`\${borderWidths.default} solid \${borders.default}\`,
-  borderRadius: radius.large,
-};`}</CodeBlock>
+          const cardSx = {
+            border: \`\${borderWidths.default} solid \${borders.default}\`,
+            borderRadius: radius.large,
+          };`}
+        </CodeBlock>
       </Section>
 
       <Section

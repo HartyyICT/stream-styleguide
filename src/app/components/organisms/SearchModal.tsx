@@ -789,7 +789,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         slotProps={{
           backdrop: {
             sx: {
-              backgroundColor: "transparent",
+              backgroundColor: "rgba(15, 23, 42, 0.16)",
               backdropFilter: "blur(8px)",
               WebkitBackdropFilter: "blur(8px)",
             },

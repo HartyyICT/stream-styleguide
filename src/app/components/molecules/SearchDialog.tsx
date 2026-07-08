@@ -20,7 +20,11 @@ const SearchModal = dynamic(() => import("@/app/components/organisms/SearchModal
   ssr: false,
 });
 
-export default function SearchDialog() {
+interface SearchDialogProps {
+  width?: string;
+}
+
+export default function SearchDialog({ width = navbarTokens.searchWidth }: SearchDialogProps) {
   const { mode } = useColorMode();
   const [open, setOpen] = useState(false);
   const isDarkMode = mode === "dark";
@@ -53,7 +57,7 @@ export default function SearchDialog() {
         aria-label="Search documentation"
         onClick={() => setOpen(true)}
         sx={{
-          width: { xs: navbarTokens.actionSize, sm: navbarTokens.searchWidth },
+          width: { xs: navbarTokens.actionSize, sm: width },
           height: navbarTokens.actionSize,
           display: "flex",
           alignItems: "center",

@@ -15,6 +15,7 @@ export { default as Divider } from "./components/Divider";
 export { default as ErrorText } from "./components/ErrorText";
 export { default as HelperText } from "./components/HelperText";
 export { default as IconBox } from "./components/IconBox";
+export { default as InfoBanner } from "./components/InfoBanner";
 export { default as Input } from "./components/Input";
 export type { InputProps, InputState } from "./components/Input";
 export { default as Kbd } from "./components/Kbd";

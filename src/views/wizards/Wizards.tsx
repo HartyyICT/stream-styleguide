@@ -10,7 +10,6 @@ import {
   Circle,
   ClipboardCheck,
   FileCheck2,
-  Info,
   ListChecks,
   PackageCheck,
   Save,
@@ -24,6 +23,7 @@ import { Button } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
 import { IconBox } from "@ssw/ui-library";
+import { InfoBanner } from "@ssw/ui-library";
 import { Surface } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
 import { TokenCode } from "@ssw/ui-library";
@@ -356,7 +356,7 @@ function WizardActionBar({
 }
 
 function WizardExamplePreview() {
-  const { borders, surface, subtleBackground, primaryText, secondaryText, accent } =
+  const { borders, surface, subtleBackground, primaryText, secondaryText } =
     useSemanticColors();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<boolean[]>(
@@ -664,24 +664,10 @@ function WizardExamplePreview() {
 
             <Box sx={{ flex: 1, minHeight: wizardTokens.bodyMinHeight }}>{renderCurrentStepContent()}</Box>
 
-            <Box
-              sx={{
-                mt: wizardSpacing.fieldGap,
-                p: wizardSpacing.fieldGap,
-                display: "flex",
-                gap: spacing.sm,
-                color: accent,
-                borderLeft: `${borderWidths.accent} solid ${accent}`,
-                borderRadius: radius.medium,
-                backgroundColor: colors.primary[50],
-              }}
-            >
-              <Info size={iconSizes.medium} aria-hidden="true" />
-              <Typography variant="body2" sx={{ color: colors.neutral[900], lineHeight: 1.7 }}>
-                Complete this step to unlock the next one. Steps further ahead
-                stay muted until the previous step is finished.
-              </Typography>
-            </Box>
+            <InfoBanner sx={{ mt: wizardSpacing.fieldGap, p: wizardSpacing.fieldGap }}>
+              Complete this step to unlock the next one. Steps further ahead
+              stay muted until the previous step is finished.
+            </InfoBanner>
 
             <WizardActionBar
               canContinue={canContinue}

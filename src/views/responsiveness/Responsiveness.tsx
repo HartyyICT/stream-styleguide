@@ -22,7 +22,6 @@ import Section from "@/app/components/layout/Section";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
-  breakpoints,
   iconSizes,
   radius,
   responsiveGrids,
@@ -44,28 +43,24 @@ const breakpointScale = [
   {
     token: "mobile",
     range: "< 600px",
-    start: breakpoints.mobile,
     use: "Smartphones",
     icon: Smartphone,
   },
   {
     token: "tablet",
     range: "600px - 899px",
-    start: breakpoints.tablet,
     use: "Tablets",
     icon: Tablet,
   },
   {
     token: "laptop",
     range: "900px - 1199px",
-    start: breakpoints.laptop,
     use: "Small desktop screens",
     icon: Laptop,
   },
   {
     token: "desktop",
     range: ">= 1200px",
-    start: breakpoints.desktop,
     use: "Standard work environment",
     icon: Monitor,
   },
@@ -168,7 +163,7 @@ export default function ResponsivenessPage() {
         description="The shared breakpoint scale gives layouts and components one predictable set of transition points."
       >
         <Box sx={{ display: "grid", gap: 1.5 }}>
-          {breakpointScale.map(({ token, range, start, use, icon: Icon }) => (
+          {breakpointScale.map(({ token, range, use, icon: Icon }) => (
             <Card
               key={token}
               sx={{
@@ -193,7 +188,7 @@ export default function ResponsivenessPage() {
                   fontSize: "0.8125rem",
                 }}
               >
-                {range} · starts at {start}px
+                {range}
               </Typography>
               <Typography variant="body2" sx={{ color: secondaryText }}>
                 {use}

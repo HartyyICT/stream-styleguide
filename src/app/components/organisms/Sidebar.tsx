@@ -255,7 +255,7 @@ export default function Sidebar({
                     variant="overline"
                     sx={{
                       ...effectiveLabelSx,
-                      gridColumn: "2",
+                      gridColumn: "1 / 3",
                       gridRow: "1",
                       textAlign: "left",
                       color: "inherit",

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Chip, IconButton, Typography } from "@mui/material";
-import { BookOpen, Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import {
   borderColors,
   borderWidths,
@@ -10,7 +10,6 @@ import {
   interactionStates,
   navbarTokens,
   pageLayoutTokens,
-  radius,
 } from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
@@ -56,7 +55,6 @@ export default function Navbar({
         zIndex: 1200,
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
         px: {
           xs: pageLayoutTokens.shellPaddingX.mobile,
           md: pageLayoutTokens.shellPaddingX.tablet,
@@ -72,7 +70,15 @@ export default function Navbar({
         borderColor: border,
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1.5, md: 0 } }}>
+      <Box
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          display: "flex",
+          alignItems: "center",
+          gap: { xs: 1.5, md: 0 },
+        }}
+      >
         <Box
           sx={{
             width: sidebarMotion.collapsedWidth,
@@ -97,9 +103,9 @@ export default function Navbar({
             }}
           >
             {sidebarCollapsed ? (
-              <PanelLeftOpen size={iconSizes.control} aria-hidden="true" />
+              <PanelLeftOpen size={iconSizes.small} aria-hidden="true" />
             ) : (
-              <PanelLeftClose size={iconSizes.control} aria-hidden="true" />
+              <PanelLeftClose size={iconSizes.small} aria-hidden="true" />
             )}
           </IconButton>
         </Box>
@@ -126,18 +132,16 @@ export default function Navbar({
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
           <Box
+            component="img"
+            src="/brand/mark.svg"
+            alt=""
+            aria-hidden="true"
             sx={{
-              width: { xs: 34, sm: 36 },
-              height: { xs: 34, sm: 36 },
-              display: "grid",
-              placeItems: "center",
-              borderRadius: radius.medium,
-              color: colors.semantic.surface,
-              backgroundColor: colors.primary[500],
+              width: navbarTokens.actionSize,
+              height: navbarTokens.actionSize,
+              display: "block",
             }}
-          >
-            <BookOpen size={20} />
-          </Box>
+          />
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <Typography
@@ -166,8 +170,20 @@ export default function Navbar({
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box sx={{ flexShrink: 0, display: "flex", justifyContent: "center", px: { xs: 1, md: 2 } }}>
         <SearchDialog />
+      </Box>
+
+      <Box
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          gap: 1,
+        }}
+      >
         <UserProfileMenu />
       </Box>
     </Box>

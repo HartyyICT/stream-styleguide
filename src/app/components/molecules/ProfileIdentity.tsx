@@ -54,7 +54,7 @@ export default function ProfileIdentity({
             sx={{
               width: avatarSize,
               height: avatarSize,
-              fontSize: "0.75rem",
+              fontSize: "0.6875rem",
               fontWeight: 700,
               color: avatarColor,
               backgroundColor: avatarBackground,
@@ -104,7 +104,7 @@ export default function ProfileIdentity({
         sx={{
           width: avatarSize,
           height: avatarSize,
-          fontSize: "0.875rem",
+          fontSize: "0.75rem",
           fontWeight: 700,
           color: avatarColor,
           backgroundColor: avatarBackground,
@@ -113,13 +113,14 @@ export default function ProfileIdentity({
         {initials}
       </Avatar>
       <Box sx={{ minWidth: 0, maxWidth: "min(24rem, calc(100vw - 7rem))" }}>
-        <Typography sx={{ color: primaryText, fontWeight: 700, lineHeight: 1.3 }}>
+        <Typography variant="body2" sx={{ color: primaryText, fontWeight: 700, lineHeight: 1.3 }}>
           {name}
         </Typography>
         {email && (
           <Typography
-            variant="body2"
+            variant="caption"
             sx={{
+              display: "block",
               color: secondaryText,
               width: "max-content",
               maxWidth: "100%",

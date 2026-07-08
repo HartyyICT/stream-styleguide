@@ -7,6 +7,7 @@ import {
   borderColors,
   borderWidths,
   colors,
+  Divider,
   iconSizes,
   interactionStates,
   navbarTokens,
@@ -123,6 +124,8 @@ export default function UserProfileMenu({
       >
         <ProfileIdentity name={name} email={email} role={role} />
 
+        <Divider />
+
         <ProfileMenuItem
           onClick={() => setAnchorEl(null)}
           icon={<UserRound size={iconSizes.control} aria-hidden="true" />}
@@ -144,6 +147,8 @@ export default function UserProfileMenu({
         >
           {isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
         </ProfileMenuItem>
+
+        <Divider sx={{ my: 0.5 }} />
 
         <ProfileMenuItem
           onClick={() => setAnchorEl(null)}

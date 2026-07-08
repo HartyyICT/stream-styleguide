@@ -72,6 +72,7 @@ export default function DataTable<Row>({
                 key={column.key}
                 role="columnheader"
                 sx={{
+                  minWidth: 0,
                   p: cellPadding,
                   color: secondaryText,
                   fontFamily: "var(--font-poppins), sans-serif",
@@ -106,6 +107,7 @@ export default function DataTable<Row>({
                   key={column.key}
                   role="cell"
                   sx={{
+                    minWidth: 0,
                     p: cellPadding,
                     textAlign: column.align ?? "left",
                   }}

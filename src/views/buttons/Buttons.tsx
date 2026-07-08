@@ -13,6 +13,7 @@ import {
 import { Card } from "@ssw/ui-library";
 import { Button } from "@ssw/ui-library";
 import { CodeBlock } from "@ssw/ui-library";
+import { InfoBanner } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
@@ -308,13 +309,10 @@ function renderEditableButtonPreview(code: string) {
 export default function ButtonsPage() {
   const {
     borders,
-    interaction,
     surface,
-    primaryText,
     secondaryText,
     accent,
     subtleBackground,
-    selectedBackground,
   } = useSemanticColors();
 
   return (
@@ -888,24 +886,11 @@ const mediumButton = {
           <GuidelineList items={accessibilityGuidelines} />
         </Card>
 
-        <Box
-          sx={{
-            mt: 2,
-            p: 2.5,
-            borderLeft: `${borderWidths.accent} solid ${interaction.activeIndicator}`,
-            borderRadius: radius.medium,
-            backgroundColor: selectedBackground,
-          }}
-        >
-          <Typography variant="h3" sx={{ mb: 1, color: accent }}>
-            Minimum interactive area
-          </Typography>
-          <Typography variant="body2" sx={{ color: primaryText, lineHeight: 1.7 }}>
-            Use the small button size only for compact areas. Forms, dialogs and
-            primary workflows should generally use medium or large buttons so
-            the clickable area remains comfortable.
-          </Typography>
-        </Box>
+        <InfoBanner title="Minimum interactive area" sx={{ mt: 2 }}>
+          Use the small button size only for compact areas. Forms, dialogs and
+          primary workflows should generally use medium or large buttons so
+          the clickable area remains comfortable.
+        </InfoBanner>
 
         <Box
           aria-hidden="true"

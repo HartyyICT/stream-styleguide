@@ -83,7 +83,6 @@ const guidelines = [
 export default function ColorsPage() {
   const theme = useTheme();
   const {
-    isDarkMode,
     borders,
     surface,
     primaryText,
@@ -93,38 +92,28 @@ export default function ColorsPage() {
   } = useSemanticColors();
   const border = borders.default;
 
-  const semanticVariant = isDarkMode ? "Dark" : "Light";
-
-  const semanticColors = [
+  const semanticColorGroups = [
     {
-      name: `Success ${semanticVariant}`,
-      color: isDarkMode
-        ? colors.semantic.success.dark
-        : colors.semantic.success.light,
+      status: "Success",
       description: "Completed actions and positive states",
+      variants: colors.semantic.success,
     },
     {
-      name: `Warning ${semanticVariant}`,
-      color: isDarkMode
-        ? colors.semantic.warning.dark
-        : colors.semantic.warning.light,
+      status: "Warning",
       description: "Important attention and caution states",
+      variants: colors.semantic.warning,
     },
     {
-      name: `Error ${semanticVariant}`,
-      color: isDarkMode
-        ? colors.semantic.error.dark
-        : colors.semantic.error.light,
+      status: "Error",
       description: "Errors, destructive actions and failures",
+      variants: colors.semantic.error,
     },
     {
-      name: `Info ${semanticVariant}`,
-      color: isDarkMode
-        ? colors.semantic.info.dark
-        : colors.semantic.info.light,
+      status: "Info",
       description: "Informative messages and system guidance",
+      variants: colors.semantic.info,
     },
-  ];
+  ] as const;
 
   return (
     <Page pageId="colors" sections={colorSections}>
@@ -397,11 +386,35 @@ export default function ColorsPage() {
                   sm: "repeat(2, minmax(0, 1fr))",
                   lg: "repeat(4, minmax(0, 1fr))",
                 },
-                gap: 2,
+                gap: 3,
               }}
             >
-              {semanticColors.map((token) => (
-                <ColorSwatch key={token.name} {...token} />
+              {semanticColorGroups.map((group) => (
+                <Box key={group.status} sx={{ display: "grid", gap: 1.5 }}>
+                  <Box>
+                    <Typography variant="h3" sx={{ fontSize: "0.9375rem" }}>
+                      {group.status}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        display: "block",
+                        minHeight: "2.1rem",
+                        color: secondaryText,
+                        mt: 0.25,
+                      }}
+                    >
+                      {group.description}
+                    </Typography>
+                  </Box>
+                  {Object.entries(group.variants).map(([variant, color]) => (
+                    <ColorSwatch
+                      key={variant}
+                      name={`${group.status} ${variant[0].toUpperCase()}${variant.slice(1)}`}
+                      color={color}
+                    />
+                  ))}
+                </Box>
               ))}
             </Box>
           </Box>

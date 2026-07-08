@@ -5,13 +5,14 @@ import { PackageCheck, PackagePlus, Terminal, Wrench } from "lucide-react";
 import { Button } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CodeBlock } from "@ssw/ui-library";
+import { InfoBanner } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
 import { useSemanticColors } from "@ssw/ui-library";
-import { borderWidths, radius, spacing } from "@ssw/ui-library";
+import { radius, spacing } from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#installation" },
@@ -60,8 +61,6 @@ const setupSteps = [
 
 export default function InstallationPage() {
   const {
-    borders,
-    surface,
     secondaryText,
     accent,
     selectedBackground,
@@ -184,23 +183,11 @@ import { Check } from "lucide-react";`}</CodeBlock>
           ))}
         </Box>
 
-        <Box
-          sx={{
-            mt: 2,
-            p: 2.5,
-            borderLeft: `${borderWidths.accent} solid ${accent}`,
-            backgroundColor: selectedBackground,
-          }}
-        >
-          <Typography variant="h3" sx={{ mb: 1, color: accent }}>
-            Important distinction
-          </Typography>
-          <Typography variant="body2" sx={{ color: secondaryText, lineHeight: 1.7 }}>
-            The styleguide documents the system. The UI library provides the
-            reusable code. Eventually this styleguide should consume the UI
-            library, just like other Stream applications.
-          </Typography>
-        </Box>
+        <InfoBanner title="Important distinction" sx={{ mt: 2 }}>
+          The styleguide documents the system. The UI library provides the
+          reusable code. Eventually this styleguide should consume the UI
+          library, just like other Stream applications.
+        </InfoBanner>
       </Section>
 
       <Section
@@ -232,9 +219,7 @@ export function SaveAction() {
         description="These rules keep installation and usage predictable for Stream teams."
         last
       >
-        <Card sx={{ backgroundColor: surface, borderColor: borders.default }}>
-          <GuidelineList items={guidelines} />
-        </Card>
+        <GuidelineList items={guidelines} />
       </Section>
     </Page>
   );

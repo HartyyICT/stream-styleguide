@@ -28,12 +28,14 @@ export default function ProfileMenuItem({
       {...props}
       sx={{
         minHeight: navbarTokens.menuItemMinHeight,
-        px: 2,
+        px: navbarTokens.menuItemPaddingX,
         gap: 1.25,
         display: "grid",
         gridTemplateColumns: `${iconSizes.control}px minmax(0, 1fr)`,
         alignItems: "center",
         color: isDanger ? semantic.error : primaryText,
+        fontSize: "0.875rem",
+        fontWeight: 500,
         lineHeight: 1,
         "&:hover": {
           color: isDanger ? semantic.error : interaction.hoverContent,

@@ -1,7 +1,7 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
-import { borderWidths, pageLayoutTokens } from "@ssw/ui-library";
+import { Typography } from "@mui/material";
+import { InfoBanner, pageLayoutTokens } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 
 interface IntroProps {
@@ -17,8 +17,7 @@ export default function Intro({
   note,
   eyebrow = "Design foundations",
 }: IntroProps) {
-  const { accent, primaryText, secondaryText, subtleBackground } =
-    useSemanticColors();
+  const { accent, secondaryText } = useSemanticColors();
 
   return (
     <>
@@ -44,18 +43,9 @@ export default function Intro({
         {description}
       </Typography>
       {note && (
-        <Box
-          sx={{
-            p: pageLayoutTokens.notePadding,
-            mb: pageLayoutTokens.noteMarginBottom,
-            borderLeft: `${borderWidths.accent} solid ${accent}`,
-            backgroundColor: subtleBackground,
-          }}
-        >
-          <Typography variant="body2" sx={{ color: primaryText }}>
-            {note}
-          </Typography>
-        </Box>
+        <InfoBanner sx={{ mb: pageLayoutTokens.noteMarginBottom }}>
+          {note}
+        </InfoBanner>
       )}
     </>
   );

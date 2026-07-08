@@ -139,8 +139,7 @@ export default function HoverStatesPage() {
                     width: 28,
                     height: 28,
                     flexShrink: 0,
-                    border: borderWidths.subtle,
-                    borderColor: borders.subtle,
+                    border: `${borderWidths.subtle} solid ${borders.subtle}`,
                     borderRadius: radius.small,
                     backgroundColor: item.value,
                   }}

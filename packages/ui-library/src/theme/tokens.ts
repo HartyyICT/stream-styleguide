@@ -134,8 +134,8 @@ export const navbarTokens = {
   actionSlotSize: "2.375rem",
   actionEdgeInset: "0.8125rem",
   actionGap: spacing.sm,
-  searchWidth: "18rem",
-  searchTextMaxWidth: "10rem",
+  searchWidth: "32rem",
+  searchTextMaxWidth: "19rem",
   shortcutPaddingX: "0.375rem",
   shortcutPaddingY: "0.125rem",
   profileAvatarSize: "1.5rem",
@@ -143,7 +143,8 @@ export const navbarTokens = {
   profileTextMaxWidth: "9rem",
   profileMenuWidth: "17.5rem",
   profileMenuAvatarSize: "2.5rem",
-  menuItemMinHeight: "2.625rem",
+  menuItemMinHeight: "2.25rem",
+  menuItemPaddingX: "1.125rem",
 } as const;
 
 export const responsiveGrids = {

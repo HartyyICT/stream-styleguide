@@ -2,10 +2,10 @@
 
   import { Box, Chip, Typography } from "@mui/material";
   import { Divider } from "@ssw/ui-library";
+  import { InfoBanner } from "@ssw/ui-library";
   import {
     Accessibility,
     Blocks,
-    BookOpen,
     Braces,
     Gauge,
     Layers3,
@@ -82,7 +82,6 @@
       primaryText,
       secondaryText,
       accent,
-      subtleBackground,
       selectedBackground,
     } = useSemanticColors();
     const border = borders.default;
@@ -119,24 +118,11 @@
               within Stream Software.
             </Typography>
 
-            <Box
-              sx={{
-                p: 2.5,
-                mb: 6,
-                borderLeft: 4,
-                borderColor: accent,
-                backgroundColor: subtleBackground,
-              }}
-            >
-              <Box sx={{ display: "flex", gap: 1.5, alignItems: "flex-start" }}>
-                <BookOpen size={20} />
-                <Typography variant="body2" sx={{ color: primaryText }}>
-                  This styleguide translates the research, UI audit and Design
-                  Foundations into practical tokens, guidelines and reusable
-                  front-end patterns.
-                </Typography>
-              </Box>
-            </Box>
+            <InfoBanner sx={{ mb: 6 }}>
+              This styleguide translates the research, UI audit and Design
+              Foundations into practical tokens, guidelines and reusable
+              front-end patterns.
+            </InfoBanner>
 
             <Box component="section" id="introduction" sx={{ scrollMarginTop: pageLayoutTokens.sectionScrollMarginTop }}>
               <Typography variant="h2" sx={{ mb: 1.5 }}>

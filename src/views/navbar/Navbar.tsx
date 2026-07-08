@@ -1,18 +1,28 @@
 "use client";
 
-import { Box, Chip, Typography } from "@mui/material";
-import { BookOpen } from "lucide-react";
+import { Box, Chip, MenuList, Typography } from "@mui/material";
+import { LogOut, Moon, Search, UserRound, X } from "lucide-react";
+import ProfileIdentity from "@/app/components/molecules/ProfileIdentity";
+import ProfileMenuItem from "@/app/components/molecules/ProfileMenuItem";
+import RecentSearchItem from "@/app/components/molecules/RecentSearchItem";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
 import { Card } from "@ssw/ui-library";
 import { CodeBlock } from "@ssw/ui-library";
+import { Divider } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
 import GuidelineList from "@/app/components/patterns/GuidelineList";
 import Intro from "@/app/components/layout/Intro";
 import Page from "@/app/components/layout/Page";
 import Section from "@/app/components/layout/Section";
 import { useSemanticColors } from "@ssw/ui-library";
-import { borderWidths, colors, radius, shadows } from "@ssw/ui-library";
+import {
+  borderWidths,
+  iconSizes,
+  navbarTokens,
+  radius,
+  shadows,
+} from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#navbar" },
@@ -26,10 +36,21 @@ const sections = [
 ] as const;
 
 const anatomy = [
-  "Brand area with icon, product name and version context.",
-  "Version indicator for the current design system release.",
-  "Search entry point for finding pages and component documentation.",
-  "User profile menu with account details, theme switching and logout actions.",
+  { number: 1, description: "Brand area with icon and product name." },
+  {
+    number: 2,
+    description: "Version indicator for the current design system release.",
+  },
+  {
+    number: 3,
+    description:
+      "Search entry point for finding pages and component documentation.",
+  },
+  {
+    number: 4,
+    description:
+      "User profile menu with account details, theme switching and logout actions.",
+  },
 ] as const;
 
 const guidelines = [
@@ -41,10 +62,39 @@ const guidelines = [
   "Keep height, border, icon size and typography consistent across products.",
 ] as const;
 
+function AnatomyMarker({ number }: { number: number }) {
+  const { primaryText, surface } = useSemanticColors();
+
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        top: -8,
+        right: -8,
+        width: 20,
+        height: 20,
+        display: "grid",
+        placeItems: "center",
+        borderRadius: "50%",
+        backgroundColor: primaryText,
+        color: surface,
+        fontSize: "0.6875rem",
+        fontWeight: 700,
+        boxShadow: shadows.level1,
+        zIndex: 1,
+      }}
+    >
+      {number}
+    </Box>
+  );
+}
+
 function StyleguideNavbarPreview({
   state = "default",
+  annotated = false,
 }: {
   state?: "default" | "search" | "profile";
+  annotated?: boolean;
 }) {
   const {
     borders,
@@ -56,93 +106,178 @@ function StyleguideNavbarPreview({
 
   return (
     <Box sx={{ width: "100%", display: "grid", gap: 1.5 }}>
-      <Box
-        sx={{
-          height: 64,
-          px: { xs: 2, md: 3 },
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 1.5,
-          backgroundColor: surface,
-          border: `${borderWidths.subtle} solid ${borders.subtle}`,
-          borderRadius: radius.medium,
-          boxShadow: shadows.level1,
-        }}
-      >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <Box
-            sx={{
-              width: 36,
-              height: 36,
-              display: "grid",
-              placeItems: "center",
-              borderRadius: radius.medium,
-              color: colors.semantic.surface,
-              backgroundColor: colors.primary[500],
-            }}
-          >
-            <BookOpen size={20} aria-hidden="true" />
+      <Box sx={{ overflowX: "auto" }}>
+        <Box
+          sx={{
+            minWidth: "fit-content",
+            height: 64,
+            px: { xs: 2, md: 3 },
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 1.5,
+            backgroundColor: surface,
+            border: `${borderWidths.subtle} solid ${borders.subtle}`,
+            borderRadius: radius.medium,
+            boxShadow: shadows.level1,
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flexShrink: 0 }}>
+            <Box sx={{ position: "relative", display: "flex", alignItems: "center", gap: 1.5 }}>
+              {annotated && <AnatomyMarker number={1} />}
+              <Box
+                component="img"
+                src="/brand/mark.svg"
+                alt=""
+                aria-hidden="true"
+                sx={{
+                  width: navbarTokens.actionSize,
+                  height: navbarTokens.actionSize,
+                  display: "block",
+                }}
+              />
+
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color: primaryText,
+                  fontFamily: "var(--font-poppins), sans-serif",
+                  fontWeight: 600,
+                  lineHeight: 1.2,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Stream Design System
+              </Typography>
+            </Box>
+
+            <Box sx={{ position: "relative" }}>
+              {annotated && <AnatomyMarker number={2} />}
+              <Chip
+                label="v0.1"
+                size="small"
+                sx={{
+                  backgroundColor: selectedBackground,
+                  color: accent,
+                  fontWeight: 700,
+                }}
+              />
+            </Box>
           </Box>
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                color: primaryText,
-                fontFamily: "var(--font-poppins), sans-serif",
-                fontWeight: 600,
-                lineHeight: 1.2,
-              }}
-            >
-              Stream Design System
-            </Typography>
-
-            <Chip
-              label="v0.1"
-              size="small"
-              sx={{
-                display: { xs: "none", sm: "inline-flex" },
-                backgroundColor: selectedBackground,
-                color: accent,
-                fontWeight: 700,
-              }}
-            />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 }}>
+            <Box sx={{ position: "relative" }}>
+              {annotated && <AnatomyMarker number={3} />}
+              <SearchDialog width="300px" />
+            </Box>
+            <Box sx={{ position: "relative" }}>
+              {annotated && <AnatomyMarker number={4} />}
+              <UserProfileMenu />
+            </Box>
           </Box>
-        </Box>
-
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <SearchDialog />
-          <UserProfileMenu />
         </Box>
       </Box>
 
       {state === "search" && (
-        <Box
-          sx={{
-            p: 1.5,
-            border: `${borderWidths.default} solid ${borders.default}`,
-            borderRadius: radius.medium,
-            backgroundColor: selectedBackground,
-          }}
-        >
-          <Typography variant="caption" sx={{ color: accent, fontWeight: 700 }}>
-            Search modal opens from this exact searchbar pattern.
+        <Box>
+          <Typography
+            variant="caption"
+            sx={{ display: "block", mb: 1, color: accent, fontWeight: 700 }}
+          >
+            Illustration only — this is what opens when the searchbar is clicked.
           </Typography>
+          <Box
+            sx={{
+              border: `${borderWidths.default} solid ${borders.default}`,
+              borderRadius: radius.medium,
+              backgroundColor: surface,
+              boxShadow: shadows.level2,
+              overflow: "hidden",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                px: 2,
+                py: 1.5,
+                borderBottom: `${borderWidths.default} solid ${borders.default}`,
+              }}
+            >
+              <Search size={20} color={accent} aria-hidden="true" />
+              <Typography variant="body1" sx={{ flex: 1, color: primaryText }}>
+                What are you looking for?
+              </Typography>
+              <Box
+                sx={{
+                  width: 28,
+                  height: 28,
+                  flexShrink: 0,
+                  display: "grid",
+                  placeItems: "center",
+                  border: `${borderWidths.subtle} solid ${borders.subtle}`,
+                  borderRadius: radius.small,
+                }}
+              >
+                <X size={16} aria-hidden="true" />
+              </Box>
+            </Box>
+            <Box sx={{ p: 2, display: "grid", gap: 1 }}>
+              <Typography
+                variant="overline"
+                sx={{ color: accent, fontWeight: 700, letterSpacing: "0.08em" }}
+              >
+                Recent
+              </Typography>
+              <RecentSearchItem label="Buttons" />
+              <RecentSearchItem label="Forms" />
+            </Box>
+          </Box>
         </Box>
       )}
       {state === "profile" && (
-        <Box
-          sx={{
-            p: 1.5,
-            border: `${borderWidths.default} solid ${borders.default}`,
-            borderRadius: radius.medium,
-            backgroundColor: selectedBackground,
-          }}
-        >
-          <Typography variant="caption" sx={{ color: accent, fontWeight: 700 }}>
-            The user menu groups profile details, theme switching and logout actions.
+        <Box>
+          <Typography
+            variant="caption"
+            sx={{ display: "block", mb: 1, color: accent, fontWeight: 700 }}
+          >
+            Illustration only — this is what opens when the profile button is clicked.
           </Typography>
+          <Box
+            sx={{
+              width: "max-content",
+              minWidth: navbarTokens.profileMenuWidth,
+              ml: "auto",
+              border: `${borderWidths.default} solid ${borders.default}`,
+              borderRadius: radius.medium,
+              backgroundColor: surface,
+              boxShadow: shadows.level2,
+              overflow: "hidden",
+            }}
+          >
+            <ProfileIdentity
+              name="Hartiessan Asep"
+              email="hartiessan.asep@streamsoftware.nl"
+              role="Administrator"
+            />
+            <Divider />
+            <MenuList sx={{ p: 0 }}>
+              <ProfileMenuItem icon={<UserRound size={iconSizes.control} aria-hidden="true" />}>
+                Profile
+              </ProfileMenuItem>
+              <ProfileMenuItem icon={<Moon size={iconSizes.control} aria-hidden="true" />}>
+                Switch to dark mode
+              </ProfileMenuItem>
+              <Divider sx={{ my: 0.5 }} />
+              <ProfileMenuItem
+                tone="danger"
+                icon={<LogOut size={iconSizes.control} aria-hidden="true" />}
+              >
+                Logout
+              </ProfileMenuItem>
+            </MenuList>
+          </Box>
         </Box>
       )}
     </Box>
@@ -150,14 +285,7 @@ function StyleguideNavbarPreview({
 }
 
 export default function NavbarPage() {
-  const {
-    borders,
-    surface,
-    primaryText,
-    secondaryText,
-    accent,
-    selectedBackground,
-  } = useSemanticColors();
+  const { primaryText, surface, secondaryText } = useSemanticColors();
 
   return (
     <Page pageId="navbar" sections={sections}>
@@ -173,55 +301,7 @@ export default function NavbarPage() {
         description="The Stream navbar is built from the exact regions used in the current styleguide shell."
         divider={false}
       >
-        <Card sx={{ p: 0, overflow: "hidden" }}>
-          <Box
-            sx={{
-              height: 64,
-              px: { xs: 2, md: 3 },
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 1.5,
-              borderBottom: `${borderWidths.subtle} solid ${borders.subtle}`,
-              backgroundColor: surface,
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Box
-                sx={{
-                  width: 36,
-                  height: 36,
-                  display: "grid",
-                  placeItems: "center",
-                  color: colors.semantic.surface,
-                  backgroundColor: colors.primary[500],
-                  borderRadius: radius.medium,
-                }}
-              >
-                <BookOpen size={20} />
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                <Typography variant="subtitle1" sx={{ color: primaryText }}>
-                  Stream Design System
-                </Typography>
-                <Chip
-                  label="v0.1"
-                  size="small"
-                  sx={{
-                    color: accent,
-                    backgroundColor: selectedBackground,
-                    fontWeight: 700,
-                  }}
-                />
-              </Box>
-            </Box>
-
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <SearchDialog />
-              <UserProfileMenu />
-            </Box>
-          </Box>
-        </Card>
+        <StyleguideNavbarPreview annotated />
 
         <Box
           sx={{
@@ -232,12 +312,28 @@ export default function NavbarPage() {
           }}
         >
           {anatomy.map((item) => (
-            <Card key={item}>
+            <Card key={item.number} sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
+              <Box
+                sx={{
+                  width: 24,
+                  height: 24,
+                  flexShrink: 0,
+                  display: "grid",
+                  placeItems: "center",
+                  borderRadius: "50%",
+                  backgroundColor: primaryText,
+                  color: surface,
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                }}
+              >
+                {item.number}
+              </Box>
               <Typography
                 variant="body2"
                 sx={{ color: secondaryText, lineHeight: 1.7 }}
               >
-                {item}
+                {item.description}
               </Typography>
             </Card>
           ))}
