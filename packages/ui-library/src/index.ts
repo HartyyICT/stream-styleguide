@@ -37,9 +37,19 @@ export { default as InfoBanner } from "./components/feedback/InfoBanner";
 
 export { default as DataTable } from "./components/data/DataTable";
 export type { DataTableColumn } from "./components/data/DataTable";
+export { default as DataGrid } from "./components/data/DataGrid";
+export type {
+  DataGridColumn,
+  DataGridFilter,
+  DataGridFilterOption,
+  DataGridDensity,
+} from "./components/data/DataGrid";
 
 export { default as Card } from "./components/layout/Card";
 export { default as CardTitle } from "./components/layout/CardTitle";
+export { default as DetailPanel } from "./components/layout/DetailPanel";
+export { default as DetailRow } from "./components/layout/DetailRow";
+export { default as DetailSection } from "./components/layout/DetailSection";
 export { default as Dialog } from "./components/layout/Dialog";
 export { default as Divider } from "./components/layout/Divider";
 export { default as IconBox } from "./components/layout/IconBox";

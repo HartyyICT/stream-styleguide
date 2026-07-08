@@ -7,6 +7,7 @@ import {
   Palette,
   Type,
 } from "lucide-react";
+import { useState } from "react";
 import SidebarNavItem from "@/app/components/molecules/SidebarNavItem";
 import { sidebarMotion, sidebarTransition } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
@@ -16,6 +17,7 @@ import { GuidelineList } from "@ssw/ui-library";
 import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
 import { Section } from "@ssw/ui-library";
+import { Toggle } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
@@ -52,50 +54,71 @@ const exampleItems = [
 ] as const;
 
 function SidebarPreview({
-  collapsed = false,
+  defaultCollapsed = false,
+  showToggle = true,
 }: {
-  collapsed?: boolean;
+  defaultCollapsed?: boolean;
+  showToggle?: boolean;
 }) {
-  const { borders, surface } = useSemanticColors();
-  const previewCollapsed = collapsed;
+  const { borders, surface, secondaryText } = useSemanticColors();
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const [activeLabel, setActiveLabel] = useState<string>(
+    exampleItems.find((item) => item.active)?.label ?? exampleItems[0].label,
+  );
 
   return (
-    <Box
-      sx={{
-        width: previewCollapsed
-          ? sidebarMotion.collapsedWidth
-          : sidebarMotion.expandedWidth,
-        maxWidth: "100%",
-        minHeight: 300,
-        px: previewCollapsed ? 1.25 : 2,
-        py: 3,
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: surface,
-        border: `${borderWidths.subtle} solid ${borders.subtle}`,
-        borderRadius: radius.medium,
-        overflow: "hidden",
-        transition: `width ${sidebarTransition}, padding ${sidebarTransition}`,
-      }}
-    >
+    <Box sx={{ display: "grid", justifyItems: "center", gap: spacing.md }}>
       <Box
         sx={{
-          width: "100%",
-          display: "grid",
-          gap: 0.5,
-          alignContent: "start",
+          width: collapsed
+            ? sidebarMotion.collapsedWidth
+            : sidebarMotion.expandedWidth,
+          maxWidth: "100%",
+          minHeight: 300,
+          px: collapsed ? 1.25 : 2,
+          py: 3,
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: surface,
+          border: `${borderWidths.subtle} solid ${borders.subtle}`,
+          borderRadius: radius.medium,
+          overflow: "hidden",
+          transition: `width ${sidebarTransition}, padding ${sidebarTransition}`,
         }}
       >
-        {exampleItems.map(({ label, icon: Icon, active }) => (
-          <SidebarNavItem
-            key={label}
-            label={label}
-            icon={Icon}
-            active={active}
-            collapsed={previewCollapsed}
-          />
-        ))}
+        <Box
+          sx={{
+            width: "100%",
+            display: "grid",
+            gap: 0.5,
+            alignContent: "start",
+          }}
+        >
+          {exampleItems.map(({ label, icon: Icon }) => (
+            <SidebarNavItem
+              key={label}
+              label={label}
+              icon={Icon}
+              active={label === activeLabel}
+              collapsed={collapsed}
+              onClick={() => setActiveLabel(label)}
+            />
+          ))}
+        </Box>
       </Box>
+
+      {showToggle && (
+        <Box sx={{ display: "flex", alignItems: "center", gap: spacing.sm }}>
+          <Toggle
+            checked={collapsed}
+            onCheckedChange={setCollapsed}
+            aria-label="Collapse sidebar"
+          />
+          <Typography variant="body2" sx={{ color: secondaryText }}>
+            Collapsed
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }
@@ -154,7 +177,7 @@ export default function SidebarPage() {
             <Typography variant="h3" sx={{ mb: 2 }}>
               Collapsed
             </Typography>
-            <SidebarPreview collapsed />
+            <SidebarPreview defaultCollapsed showToggle={false} />
           </Card>
 
           <Card sx={{ minHeight: 148 }}>
@@ -232,11 +255,7 @@ const activeItem = {
         <CodeExample
           title="Documentation sidebar"
           preview={<SidebarPreview />}
-          renderPreview={(code) => (
-            <SidebarPreview
-              collapsed={/collapsed=\{true\}|collapsed={true}/.test(code)}
-            />
-          )}
+          renderPreview={() => <SidebarPreview />}
           previewMinHeight={300}
           code={`"use client";
 

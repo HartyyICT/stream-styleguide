@@ -2,9 +2,8 @@
 
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
-import { borderWidths, radius, spacing, tablePreviewTokens } from "../../theme/tokens";
+import { borderWidths, radius, tablePreviewTokens } from "../../theme/tokens";
 import { useSemanticColors } from "../../theme/useSemanticColors";
-import Surface from "../layout/Surface";
 
 export type DataTableColumn<Row> = {
   key: string;
@@ -21,7 +20,9 @@ type DataTableProps<Row> = {
   cellPadding: string;
   minWidth?: number;
   columnsTemplate?: string;
-  subtle?: boolean;
+  /** Set to false when the table is already placed inside another bordered
+   * container (e.g. a Card) so the two don't stack into nested borders. */
+  bordered?: boolean;
 };
 
 export default function DataTable<Row>({
@@ -32,30 +33,24 @@ export default function DataTable<Row>({
   cellPadding,
   minWidth = 560,
   columnsTemplate = tablePreviewTokens.columns,
-  subtle = true,
+  bordered = true,
 }: DataTableProps<Row>) {
   const { borders, surface, subtleBackground, secondaryText } =
     useSemanticColors();
 
   return (
-    <Surface
-      subtle={subtle}
-      sx={{
-        width: "100%",
-        overflowX: "auto",
-        p: spacing.md,
-        border: 0,
-      }}
-    >
+    <Box sx={{ width: "100%", overflowX: "auto" }}>
       <Box
         role="table"
         sx={{
           width: "100%",
           minWidth,
           overflow: "hidden",
-          border: `${borderWidths.default} solid ${borders.default}`,
-          borderRadius: radius.medium,
-          backgroundColor: surface,
+          ...(bordered && {
+            border: `${borderWidths.default} solid ${borders.default}`,
+            borderRadius: radius.medium,
+            backgroundColor: surface,
+          }),
         }}
       >
         <Box role="rowgroup" sx={{ backgroundColor: subtleBackground }}>
@@ -119,6 +114,6 @@ export default function DataTable<Row>({
           ))}
         </Box>
       </Box>
-    </Surface>
+    </Box>
   );
 }

@@ -103,6 +103,10 @@ export default function RecentSearchItem({
         sx={{
           width: 30,
           height: 30,
+          p: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           flexShrink: 0,
           color: secondaryText,
           border: 1,

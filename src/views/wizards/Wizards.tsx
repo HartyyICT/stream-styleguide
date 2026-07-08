@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Boxes,
   CheckCircle2,
-  Circle,
   ClipboardCheck,
   FileCheck2,
   ListChecks,
@@ -22,7 +21,6 @@ import { Badge } from "@ssw/ui-library";
 import { Button } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
-import { IconBox } from "@ssw/ui-library";
 import { InfoBanner } from "@ssw/ui-library";
 import { Surface } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
@@ -840,25 +838,19 @@ export default function WizardsPage() {
         description="Wizard progress, validation and navigation must remain understandable for keyboard and assistive technology users."
         last
       >
-        <Surface elevated>
-          <Box sx={{ display: "flex", gap: spacing.md, alignItems: "flex-start" }}>
-            <IconBox>
-              <Circle size={iconSizes.medium} aria-hidden="true" />
-            </IconBox>
-            <Box>
-              <CardTitle sx={{ mb: spacing.xs }}>Make progress semantic</CardTitle>
-              <Text tone="secondary" variant="body2">
-                The active step should use aria-current, validation should be connected
-                to fields, and navigation actions should remain reachable in the same order.
-              </Text>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: spacing.sm, mt: spacing.md }}>
-                <TokenCode>{'aria-current="step"'}</TokenCode>
-                <TokenCode>{"aria-describedby"}</TokenCode>
-                <TokenCode>{"role=\"alert\""}</TokenCode>
-              </Box>
-            </Box>
-          </Box>
-        </Surface>
+        <InfoBanner
+          title="Make progress semantic"
+          footer={
+            <>
+              <TokenCode>{'aria-current="step"'}</TokenCode>
+              <TokenCode>{"aria-describedby"}</TokenCode>
+              <TokenCode>{"role=\"alert\""}</TokenCode>
+            </>
+          }
+        >
+          The active step should use aria-current, validation should be connected to fields, and
+          navigation actions should remain reachable in the same order.
+        </InfoBanner>
 
         <Card sx={{ mt: spacing.md }}>
           <CardTitle sx={{ mb: spacing.sm }}>Accessibility checklist</CardTitle>

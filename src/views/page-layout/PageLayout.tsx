@@ -196,7 +196,7 @@ export default function PageLayoutPage() {
           <PageLayoutRegion
             title="Grid"
             description="Switches from one column on small screens to content plus aside on desktop."
-            token="pageLayoutTokens.contentGridColumns"
+            token="contentGridColumns"
             icon={<Columns3 size={iconSizes.medium} color={accent} />}
           />
         </Box>

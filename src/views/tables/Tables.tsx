@@ -3,7 +3,6 @@
 import { Box, Typography } from "@mui/material";
 import {
   ArrowUpDown,
-  CheckCircle2,
   Columns3,
   ListFilter,
   MoreHorizontal,
@@ -13,12 +12,11 @@ import { Badge } from "@ssw/ui-library";
 import { Button } from "@ssw/ui-library";
 import { Divider } from "@ssw/ui-library";
 import { KeyboardKey } from "@ssw/ui-library";
-import { Surface } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
 import { TokenCode } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
-import { IconBox } from "@ssw/ui-library";
+import { InfoBanner } from "@ssw/ui-library";
 import { AnatomyItem } from "@ssw/ui-library";
 import { ButtonGroupExample } from "@ssw/ui-library";
 import { ExampleCard } from "@ssw/ui-library";
@@ -75,6 +73,14 @@ const guidelines = [
   "Use comfortable density as the default for enterprise workflows.",
   "Avoid hiding important actions behind icon-only controls without labels or tooltips.",
   "Use horizontal scrolling inside the table container when columns cannot safely collapse.",
+] as const;
+
+const accessibilityGuidelines = [
+  "Use real table markup, or the DataTable/DataGrid components, so assistive technology can navigate rows and columns.",
+  "Keep column headers connected to their cells so screen readers announce the right header for each value.",
+  "Give icon-only row actions an accessible label, such as aria-label on the button.",
+  "Keep a visible focus state on sortable headers, filters and row actions.",
+  "Announce sort direction and active filters so keyboard and screen-reader users know the current state.",
 ] as const;
 
 const tableExampleCode = `import { Button } from "@ssw/ui-library";
@@ -162,7 +168,7 @@ function getTableRowsFromCode(code: string): TablePreviewRow[] {
   }));
 }
 
-function TablePreview({ code }: { code: string }) {
+function TablePreview({ code, bordered = true }: { code: string; bordered?: boolean }) {
   const density = getDensityFromCode(code) ?? "comfortable";
   const densityToken = tableTokens.density[density];
   const rows = getTableRowsFromCode(code);
@@ -210,6 +216,7 @@ function TablePreview({ code }: { code: string }) {
         getRowKey={(row) => `${row.customer}-${row.status}-${row.amount}`}
         rowHeight={densityToken.rowHeight}
         cellPadding={densityToken.cellPadding}
+        bordered={bordered}
       />
       <Text tone="accent" variant="caption" sx={{ display: "block", mt: spacing.sm }}>
         Current density: tableTokens.density.{density}
@@ -364,7 +371,7 @@ export default function TablesPage() {
             </Text>
           </Box>
           <Divider />
-          <TablePreview code="tableTokens.density.comfortable" />
+          <TablePreview code="tableTokens.density.comfortable" bordered={false} />
         </Card>
       </Section>
 
@@ -395,25 +402,24 @@ export default function TablesPage() {
         description="Tables need meaningful headers, visible focus states and predictable keyboard access."
         last
       >
-        <Surface elevated>
-          <Box sx={{ display: "flex", gap: spacing.md, alignItems: "flex-start" }}>
-            <IconBox>
-              <CheckCircle2 size={iconSizes.medium} aria-hidden="true" />
-            </IconBox>
-            <Box>
-              <CardTitle sx={{ mb: spacing.xs }}>Keep table structure semantic</CardTitle>
-              <Text tone="secondary" variant="body2">
-                Use real table elements for data tables, keep headers connected to cells and
-                ensure icon-only actions have accessible labels.
-              </Text>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: spacing.sm, mt: spacing.md }}>
-                <TokenCode>{"<table>"}</TokenCode>
-                <TokenCode>{"<th>"}</TokenCode>
-                <TokenCode>{"aria-label"}</TokenCode>
-              </Box>
-            </Box>
-          </Box>
-        </Surface>
+        <InfoBanner
+          title="Keep table structure semantic"
+          footer={
+            <>
+              <TokenCode>{"<table>"}</TokenCode>
+              <TokenCode>{"<th>"}</TokenCode>
+              <TokenCode>{"aria-label"}</TokenCode>
+            </>
+          }
+        >
+          Use real table elements for data tables, keep headers connected to cells and ensure
+          icon-only actions have accessible labels.
+        </InfoBanner>
+
+        <Card sx={{ mt: spacing.md }}>
+          <CardTitle sx={{ mb: spacing.sm }}>Accessibility checklist</CardTitle>
+          <GuidelineList items={accessibilityGuidelines} />
+        </Card>
       </Section>
     </Page>
   );

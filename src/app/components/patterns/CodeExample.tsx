@@ -376,51 +376,41 @@ export default function CodeExample({
       return (
         <Box
           sx={{
-            width: "100%",
-            height: "100%",
-            display: "grid",
-            placeItems: "center",
-            p: spacing.lg,
-            backgroundColor: colors.neutral[100],
-            borderRadius: radius.medium,
+            width: 220,
+            minHeight: 96,
+            p: spacing.md,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            border:
+              shadowToken === "level0" || isInvalidShadow
+                ? `${borderWidths.default} solid ${
+                    isInvalidShadow
+                      ? colors.semantic.error.main
+                      : borderColors.light.default
+                  }`
+                : "none",
+            borderRadius: radius.large,
+            backgroundColor: colors.semantic.surface,
+            boxShadow: shadowToken ? shadows[shadowToken] : shadows.level0,
           }}
         >
-          <Box
+          <Typography variant="body2" sx={{ fontWeight: 700, color: colors.neutral[900] }}>
+            Raised surface
+          </Typography>
+          <Typography
+            component="code"
+            variant="caption"
             sx={{
-              width: 220,
-              minHeight: 96,
-              p: spacing.md,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              border:
-                shadowToken === "level0" || isInvalidShadow
-                  ? `${borderWidths.default} solid ${
-                      isInvalidShadow ? semantic.error : borders.default
-                    }`
-                  : "none",
-              borderRadius: radius.large,
-              backgroundColor: colors.semantic.surface,
-              boxShadow: shadowToken ? shadows[shadowToken] : shadows.level0,
+              mt: 2,
+              color: isInvalidShadow ? colors.semantic.error.main : colors.neutral[600],
+              fontFamily: "var(--font-space-mono), monospace",
             }}
           >
-            <Typography variant="body2" sx={{ fontWeight: 700 }}>
-              Raised surface
-            </Typography>
-            <Typography
-              component="code"
-              variant="caption"
-              sx={{
-                mt: 2,
-                color: isInvalidShadow ? semantic.error : secondaryText,
-                fontFamily: "var(--font-space-mono), monospace",
-              }}
-            >
-              {isInvalidShadow
-                ? `Unknown token: shadows.${shadowName}`
-                : `shadows.${shadowToken}`}
-            </Typography>
-          </Box>
+            {isInvalidShadow
+              ? `Unknown token: shadows.${shadowName}`
+              : `shadows.${shadowToken}`}
+          </Typography>
         </Box>
       );
     }

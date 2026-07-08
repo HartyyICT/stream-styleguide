@@ -5,7 +5,9 @@ import {
   ChevronsRight,
   ClipboardList,
   Grid3X3,
+  LayoutGrid,
   LayoutTemplate,
+  PanelRight,
   ListChecks,
   MousePointer2,
   Navigation,
@@ -54,6 +56,8 @@ export const siteNavigationGroups: SidebarNavigationGroup[] = [
     ariaLabel: "Components",
     items: [
       { label: "Breadcrumbs", icon: ChevronsRight, href: "/breadcrumbs" },
+      { label: "DataGrid", icon: LayoutGrid, href: "/data-grid" },
+      { label: "Detail Panel", icon: PanelRight, href: "/detail-panel" },
       { label: "Dialog", icon: AppWindow, href: "/dialog" },
       { label: "Navbar", icon: Navigation, href: "/navbar" },
       { label: "Forms", icon: ClipboardList, href: "/forms" },

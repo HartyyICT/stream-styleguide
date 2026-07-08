@@ -13,6 +13,7 @@ import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
 import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
+import { spacing } from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#dialog" },
@@ -99,7 +100,15 @@ export default function DialogPage() {
         description="A dialog has an optional title and description, a content area, and an actions row for buttons."
         divider={false}
       >
-        <Card>
+        <Card
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: 160,
+            py: spacing.xl,
+          }}
+        >
           <BasicDialogExample />
         </Card>
       </Section>
@@ -109,7 +118,15 @@ export default function DialogPage() {
         title="Variants"
         description="Use a smaller maxWidth and a destructive action for confirmation dialogs."
       >
-        <Card>
+        <Card
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: 160,
+            py: spacing.xl,
+          }}
+        >
           <ConfirmDialogExample />
         </Card>
       </Section>
@@ -122,6 +139,7 @@ export default function DialogPage() {
         <CodeExample
           title="Invite user dialog"
           preview={<BasicDialogExample />}
+          renderPreview={() => <BasicDialogExample />}
           code={`import { useState } from "react";
 import { Button, CancelButton, Dialog } from "@ssw/ui-library";
 

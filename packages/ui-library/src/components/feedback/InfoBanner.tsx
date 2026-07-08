@@ -9,9 +9,11 @@ import { useSemanticColors } from "../../theme/useSemanticColors";
 interface InfoBannerProps extends BoxProps {
   title?: string;
   children: ReactNode;
+  /** Optional trailing content below the description, e.g. a row of TokenCode chips. */
+  footer?: ReactNode;
 }
 
-export default function InfoBanner({ title, children, sx, ...props }: InfoBannerProps) {
+export default function InfoBanner({ title, children, footer, sx, ...props }: InfoBannerProps) {
   const { borders, secondaryText, subtleBackground } = useSemanticColors();
 
   return (
@@ -34,7 +36,7 @@ export default function InfoBanner({ title, children, sx, ...props }: InfoBanner
         aria-hidden="true"
         style={{ flexShrink: 0 }}
       />
-      <Box>
+      <Box sx={{ minWidth: 0 }}>
         {title && (
           <Typography variant="h3" sx={{ mb: 0.5, color: borders.accent }}>
             {title}
@@ -43,6 +45,11 @@ export default function InfoBanner({ title, children, sx, ...props }: InfoBanner
         <Typography variant="body2" sx={{ color: secondaryText, lineHeight: 1.7 }}>
           {children}
         </Typography>
+        {footer && (
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: spacing.sm, mt: spacing.md }}>
+            {footer}
+          </Box>
+        )}
       </Box>
     </Box>
   );

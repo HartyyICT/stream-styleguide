@@ -10,6 +10,7 @@ import {
   radius,
   semanticStateColors,
   shadows,
+  tablePreviewTokens,
 } from "./tokens";
 
 declare module "@mui/material/styles" {
@@ -292,7 +293,7 @@ export const createAppTheme = (mode: PaletteMode) =>
               mode === "light"
                 ? interactionStates.light.hoverContent
                 : interactionStates.dark.hoverContent,
-            border: `${borderWidths.interactive} solid ${
+            border: `${borderWidths.subtle} solid ${
               mode === "light"
                 ? interactionStates.light.hoverBorder
                 : interactionStates.dark.hoverBorder
@@ -527,6 +528,66 @@ export const createAppTheme = (mode: PaletteMode) =>
           },
         },
       ],
+    },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          borderRadius: radius.medium,
+          border: `${borderWidths.default} solid ${formBorders.default}`,
+          backgroundColor: formSurface,
+        },
+      },
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          backgroundColor: formInteraction.hoverBackground,
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            backgroundColor: formInteraction.hoverBackground,
+          },
+          "&:last-of-type td, &:last-of-type th": {
+            borderBottom: 0,
+          },
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          borderBottom: `${borderWidths.default} solid ${formBorders.subtle}`,
+          color: formContent,
+          fontSize: formTokens.field.fontSize,
+        },
+        head: {
+          color: mode === "light" ? colors.neutral[600] : colors.neutral[300],
+          fontFamily: fontFamilies.heading,
+          fontWeight: 700,
+          fontSize: tablePreviewTokens.headerFontSize,
+          borderBottom: `${borderWidths.default} solid ${formBorders.default}`,
+        },
+      },
+    },
+    MuiTableSortLabel: {
+      styleOverrides: {
+        root: {
+          color: mode === "light" ? colors.neutral[600] : colors.neutral[300],
+          "&:hover": {
+            color: formContent,
+          },
+          "&.Mui-active": {
+            color: formContent,
+          },
+        },
+        icon: {
+          color: `${formInteraction.activeIndicator} !important`,
+        },
+      },
     },
     };
   })(),

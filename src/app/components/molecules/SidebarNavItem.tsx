@@ -20,6 +20,7 @@ type SidebarNavItemProps = {
   active?: boolean;
   collapsed?: boolean;
   state?: "default" | "hover";
+  onClick?: () => void;
 };
 
 export default function SidebarNavItem({
@@ -29,6 +30,7 @@ export default function SidebarNavItem({
   active = false,
   collapsed = false,
   state = "default",
+  onClick,
 }: SidebarNavItemProps) {
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
@@ -60,6 +62,7 @@ export default function SidebarNavItem({
     <Tooltip title={collapsed ? label : ""} placement="right">
       <ButtonBase
         {...componentProps}
+        onClick={onClick}
         aria-label={label}
         aria-current={active ? "page" : undefined}
         sx={{

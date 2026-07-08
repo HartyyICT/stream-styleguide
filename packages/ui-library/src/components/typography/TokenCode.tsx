@@ -17,6 +17,7 @@ export default function TokenCode({ children, sx, ...props }: TokenCodeProps) {
       {...props}
       sx={{
         width: "fit-content",
+        maxWidth: "100%",
         px: 0.75,
         py: 0.25,
         display: "inline-flex",
@@ -29,6 +30,8 @@ export default function TokenCode({ children, sx, ...props }: TokenCodeProps) {
         fontSize: "0.8125rem",
         lineHeight: 1.4,
         whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
         ...sx,
       }}
     >

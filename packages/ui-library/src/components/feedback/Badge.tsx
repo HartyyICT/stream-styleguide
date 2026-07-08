@@ -12,8 +12,15 @@ interface BadgeProps extends BoxProps {
 }
 
 export default function Badge({ tone = "neutral", children, sx, ...props }: BadgeProps) {
-  const { borders, subtleBackground, accent, secondaryText } = useSemanticColors();
-  const color = tone === "accent" ? accent : secondaryText;
+  const { borders, subtleBackground, accent, secondaryText, semantic } = useSemanticColors();
+  const toneColor = {
+    neutral: secondaryText,
+    accent,
+    success: semantic.success,
+    warning: semantic.warning,
+    error: semantic.error,
+  }[tone];
+  const toneBorder = tone === "neutral" ? borders.subtle : toneColor;
 
   return (
     <Box
@@ -24,9 +31,9 @@ export default function Badge({ tone = "neutral", children, sx, ...props }: Badg
         px: 1,
         display: "inline-flex",
         alignItems: "center",
-        border: `${borderWidths.default} solid ${tone === "accent" ? accent : borders.subtle}`,
+        border: `${borderWidths.default} solid ${toneBorder}`,
         borderRadius: radius.extraLarge,
-        color,
+        color: toneColor,
         backgroundColor: subtleBackground,
         fontFamily: "var(--font-poppins), sans-serif",
         fontSize: "0.75rem",

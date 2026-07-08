@@ -4,7 +4,6 @@ import { Box, Typography } from "@mui/material";
 import {
   AlertCircle,
   ChevronDown,
-  CircleDot,
   ListChecks,
   Mail,
   TextCursorInput,
@@ -15,7 +14,7 @@ import { useState } from "react";
 import { Badge } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
-import { IconBox } from "@ssw/ui-library";
+import { InfoBanner } from "@ssw/ui-library";
 import { Surface } from "@ssw/ui-library";
 import { Tabs } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
@@ -1124,26 +1123,20 @@ export default function FormsPage() {
         description="Accessible forms make labels, instructions and errors available to every user."
         last
       >
-        <Surface elevated>
-          <Box sx={{ display: "flex", gap: spacing.md, alignItems: "flex-start" }}>
-            <IconBox>
-              <CircleDot size={iconSizes.medium} aria-hidden="true" />
-            </IconBox>
-            <Box>
-              <CardTitle sx={{ mb: spacing.xs }}>Keep every field understandable</CardTitle>
-              <Text tone="secondary" variant="body2">
-                Labels, helper text and errors should be programmatically connected to the
-                field. The visual state and the semantic state need to tell the same story.
-              </Text>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: spacing.sm, mt: spacing.md }}>
-                <TokenCode>{"<label>"}</TokenCode>
-                <TokenCode>{"aria-describedby"}</TokenCode>
-                <TokenCode>{"aria-invalid"}</TokenCode>
-                <TokenCode>{"autocomplete"}</TokenCode>
-              </Box>
-            </Box>
-          </Box>
-        </Surface>
+        <InfoBanner
+          title="Keep every field understandable"
+          footer={
+            <>
+              <TokenCode>{"<label>"}</TokenCode>
+              <TokenCode>{"aria-describedby"}</TokenCode>
+              <TokenCode>{"aria-invalid"}</TokenCode>
+              <TokenCode>{"autocomplete"}</TokenCode>
+            </>
+          }
+        >
+          Labels, helper text and errors should be programmatically connected to the field. The
+          visual state and the semantic state need to tell the same story.
+        </InfoBanner>
 
         <Card sx={{ mt: spacing.md }}>
           <CardTitle sx={{ mb: spacing.sm }}>Accessibility checklist</CardTitle>
