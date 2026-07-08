@@ -1,10 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Section from "@/app/components/layout/Section";
-import TokenTable, {
-  type TokenTableRow,
-} from "@/app/components/molecules/TokenTable";
+import Section from "../layout/Section";
+import TokenTable, { type TokenTableRow } from "./TokenTable";
 
 interface TokenSectionProps {
   id: string;

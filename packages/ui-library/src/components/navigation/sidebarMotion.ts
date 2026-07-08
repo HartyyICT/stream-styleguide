@@ -1,4 +1,4 @@
-import { iconSizes } from "@ssw/ui-library";
+import { iconSizes } from "../../theme/tokens";
 
 export const sidebarMotion = {
   collapsedWidth: 64,

@@ -2,7 +2,7 @@
 
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@ssw/ui-library";
+import Button from "../buttons/Button";
 
 interface CopyActionProps {
   value: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface GuidelineListProps {
   items: readonly string[];

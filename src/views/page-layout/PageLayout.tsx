@@ -14,14 +14,14 @@ import { CardTitle } from "@ssw/ui-library";
 import { Surface } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
 import { TokenCode } from "@ssw/ui-library";
-import PageLayoutRegion from "@/app/components/molecules/PageLayoutRegion";
-import TokenTable from "@/app/components/molecules/TokenTable";
+import { PageLayoutRegion } from "@ssw/ui-library";
+import { TokenTable } from "@ssw/ui-library";
 import FixedPageLayout from "@/app/components/organisms/FixedPageLayout";
 import CodeExample from "@/app/components/patterns/CodeExample";
-import GuidelineList from "@/app/components/patterns/GuidelineList";
-import Intro from "@/app/components/layout/Intro";
+import { GuidelineList } from "@ssw/ui-library";
+import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
-import Section from "@/app/components/layout/Section";
+import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   iconSizes,
@@ -103,9 +103,8 @@ const accessibilityGuidelines = [
   "Avoid horizontal page scrolling on mobile and tablet widths.",
 ] as const;
 
-const pageCode = `import Intro from "@/app/components/layout/Intro";
+const pageCode = `import { Intro, Section } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
-import Section from "@/app/components/layout/Section";
 
 const sections = [
   { label: "Overview", href: "#example-page" },

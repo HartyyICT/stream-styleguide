@@ -1,8 +1,8 @@
 "use client";
 
 import { Box } from "@mui/material";
-import { radius } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { radius } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface CodeBlockProps {
   children: string;

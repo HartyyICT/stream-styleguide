@@ -6,7 +6,7 @@ import Input from "./Input";
 import Label from "./Label";
 import HelperText from "./HelperText";
 import ErrorText from "./ErrorText";
-import { formTokens } from "../theme/tokens";
+import { formTokens } from "../../theme/tokens";
 
 type InputComponentProps = ComponentProps<typeof Input>;
 type FieldState = "default" | "success" | "warning" | "info" | "error";

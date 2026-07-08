@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, Typography, type BoxProps } from "@mui/material";
-import { borderWidths, radius, spacing } from "@ssw/ui-library";
-import { TokenCode } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, radius, spacing } from "../../theme/tokens";
+import TokenCode from "../typography/TokenCode";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 export type TokenRowColumn = {
   label?: string;

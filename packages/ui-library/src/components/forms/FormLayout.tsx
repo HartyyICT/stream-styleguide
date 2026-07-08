@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import { formTokens } from "@ssw/ui-library";
+import { formTokens } from "../../theme/tokens";
 
 export default function FormLayout({ sx, ...props }: BoxProps<"form">) {
   return (

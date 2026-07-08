@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography, type TypographyProps } from "@mui/material";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 type TextTone = "primary" | "secondary" | "accent";
 

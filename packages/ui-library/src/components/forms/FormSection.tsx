@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, Typography, type BoxProps } from "@mui/material";
-import { Surface } from "@ssw/ui-library";
-import { spacing } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import Surface from "../layout/Surface";
+import { spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface FormSectionProps extends BoxProps {
   title: string;

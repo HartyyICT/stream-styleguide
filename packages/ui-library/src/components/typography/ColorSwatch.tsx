@@ -2,7 +2,7 @@
 
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { borderColors, colors, radius, shadows } from "../theme/tokens";
+import { borderColors, colors, radius, shadows } from "../../theme/tokens";
 
 interface ColorSwatchProps {
   name: string;

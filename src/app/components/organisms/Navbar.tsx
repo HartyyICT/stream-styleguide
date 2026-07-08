@@ -14,7 +14,7 @@ import {
 import { useColorMode } from "../../theme/themeProvider";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
-import { sidebarMotion } from "@/app/components/organisms/sidebarMotion";
+import { sidebarMotion } from "@ssw/ui-library";
 
 interface NavbarProps {
   onMenuClick: () => void;

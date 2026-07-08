@@ -11,7 +11,7 @@ import {
   radius,
 } from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
-import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
+import { sidebarMotion, sidebarTransition } from "@ssw/ui-library";
 
 type SidebarNavItemProps = {
   label: string;

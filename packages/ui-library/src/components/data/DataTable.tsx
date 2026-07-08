@@ -2,9 +2,9 @@
 
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
-import { borderWidths, radius, spacing, tablePreviewTokens } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
-import { Surface } from "@ssw/ui-library";
+import { borderWidths, radius, spacing, tablePreviewTokens } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
+import Surface from "../layout/Surface";
 
 export type DataTableColumn<Row> = {
   key: string;

@@ -2,8 +2,8 @@
 
 import { ButtonBase, type ButtonBaseProps } from "@mui/material";
 import { useState } from "react";
-import { borderWidths, colors, formTokens, radius } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths, colors, formTokens, radius } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface ToggleProps extends Omit<ButtonBaseProps, "onChange"> {
   checked?: boolean;

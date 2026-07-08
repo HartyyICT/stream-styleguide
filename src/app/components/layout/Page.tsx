@@ -3,9 +3,7 @@
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
 import DocumentationLayout from "@/app/components/layout/DocumentationLayout";
-import OnThisPage, {
-  type OnThisPageItem,
-} from "@/app/components/patterns/OnThisPage";
+import { OnThisPage, type OnThisPageItem } from "@ssw/ui-library";
 import { pageLayoutTokens } from "@ssw/ui-library";
 
 interface PageProps {

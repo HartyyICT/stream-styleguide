@@ -27,17 +27,17 @@ import { InfoBanner } from "@ssw/ui-library";
 import { Surface } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
 import { TokenCode } from "@ssw/ui-library";
-import AnatomyItem from "@/app/components/molecules/AnatomyItem";
-import ExampleCard from "@/app/components/molecules/ExampleCard";
+import { AnatomyItem } from "@ssw/ui-library";
+import { ExampleCard } from "@ssw/ui-library";
 import { FormActionRow } from "@ssw/ui-library";
 import { FormField } from "@ssw/ui-library";
 import { SelectField } from "@ssw/ui-library";
 import { ToggleField } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
-import GuidelineList from "@/app/components/patterns/GuidelineList";
-import Intro from "@/app/components/layout/Intro";
+import { GuidelineList } from "@ssw/ui-library";
+import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
-import Section from "@/app/components/layout/Section";
+import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,

@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import { borderWidths, radius, shadows } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths, radius, shadows } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface CardProps extends BoxProps {
   elevated?: boolean;

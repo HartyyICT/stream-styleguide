@@ -1,11 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
-import { Text } from "@ssw/ui-library";
-import { borderWidths, spacing } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import Card from "../layout/Card";
+import CardTitle from "../layout/CardTitle";
+import Text from "../typography/Text";
+import { borderWidths, spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface StateCardProps {
   title: string;

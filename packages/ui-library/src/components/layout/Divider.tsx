@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import { borderWidths } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 export default function Divider({ sx, ...props }: BoxProps) {
   const { borders } = useSemanticColors();

@@ -6,7 +6,7 @@ import { ColorSwatch } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
-import Intro from "@/app/components/layout/Intro";
+import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
 import { useSemanticColors } from "@ssw/ui-library";
 import { colors, pageLayoutTokens, radius, shadows } from "@ssw/ui-library";

@@ -28,7 +28,7 @@ import {
 } from "@ssw/ui-library";
 import { Button } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
-import CodeExampleToolbar from "@/app/components/molecules/CodeExampleToolbar";
+import { CodeExampleToolbar } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 
 interface CodeExampleProps {

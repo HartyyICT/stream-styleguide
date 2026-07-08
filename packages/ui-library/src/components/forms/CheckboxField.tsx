@@ -3,8 +3,8 @@
 import { Box, Typography, type BoxProps } from "@mui/material";
 import Checkbox from "./Checkbox";
 import ErrorText from "./ErrorText";
-import { spacing } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface CheckboxFieldProps extends Omit<BoxProps, "onChange"> {
   label: string;

@@ -1,14 +1,14 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import { borderWidths, radius } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths, radius } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
-interface KbdProps extends BoxProps {
+interface KeyboardKeyProps extends BoxProps {
   children: string;
 }
 
-export default function Kbd({ children, sx, ...props }: KbdProps) {
+export default function KeyboardKey({ children, sx, ...props }: KeyboardKeyProps) {
   const { borders, subtleBackground, secondaryText } = useSemanticColors();
 
   return (

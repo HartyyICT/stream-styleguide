@@ -1,7 +1,7 @@
 "use client";
 
 import { Check } from "lucide-react";
-import Button from "../Button";
+import Button from "./Button";
 import type { ComponentProps } from "react";
 
 type SaveButtonProps = Omit<ComponentProps<typeof Button>, "children" | "startIcon"> & {

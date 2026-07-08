@@ -7,7 +7,7 @@ import { CardTitle } from "@ssw/ui-library";
 import { CodeBlock } from "@ssw/ui-library";
 import { Divider } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
-import Intro from "@/app/components/layout/Intro";
+import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
 import { useSemanticColors } from "@ssw/ui-library";
 import { pageLayoutTokens, radius, shadows, spacing } from "@ssw/ui-library";

@@ -9,121 +9,65 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { ChevronDown, type LucideIcon } from "lucide-react";
+import { useState, type ElementType } from "react";
 import {
-  Accessibility,
-  Blend,
-  ChevronDown,
-  ClipboardList,
-  Grid3X3,
-  LayoutTemplate,
-  ListChecks,
-  MousePointer2,
-  Navigation,
-  Palette,
-  PanelTop,
-  PanelLeftOpen,
-  PackagePlus,
-  ScanText,
-  Search,
-  Smartphone,
-  Sparkles,
-  SquareMousePointer,
-  Table2,
-  Type,
-  type LucideIcon,
-} from "lucide-react";
-import { useState } from "react";
-import {
-  borderColors,
   borderWidths,
-  colors,
   iconSizes,
-  interactionStates,
   pageLayoutTokens,
   radius,
-} from "@ssw/ui-library";
-import { useColorMode } from "../../theme/themeProvider";
-import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
+} from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
+import { sidebarMotion, sidebarTransition } from "./sidebarMotion";
 
-type NavigationItem = {
+export type SidebarNavigationItem = {
   label: string;
   icon: LucideIcon;
   href: string;
 };
 
-const navigationGroups: { label: string; ariaLabel: string; items: NavigationItem[] }[] = [
-  {
-    label: "Getting started",
-    ariaLabel: "Getting started",
-    items: [
-      { label: "Overview", icon: ScanText, href: "/" },
-      { label: "Installation", icon: PackagePlus, href: "/installation" },
-    ],
-  },
-  {
-    label: "Foundations",
-    ariaLabel: "Design foundations",
-    items: [
-      { label: "Accessibility", icon: Accessibility, href: "/accessibility" },
-      { label: "Borders", icon: PanelTop, href: "/borders" },
-      { label: "Buttons", icon: SquareMousePointer, href: "/buttons" },
-      { label: "Colors", icon: Palette, href: "/colors" },
-      { label: "Elevation & Shadows", icon: Blend, href: "/elevation" },
-      { label: "Hover States", icon: MousePointer2, href: "/hover-states" },
-      { label: "Iconography", icon: Sparkles, href: "/iconography" },
-      { label: "Page Layout", icon: LayoutTemplate, href: "/page-layout" },
-      { label: "Responsiveness", icon: Smartphone, href: "/responsiveness" },
-      { label: "Spacing", icon: Grid3X3, href: "/spacing" },
-      { label: "Typography", icon: Type, href: "/typography" },
-    ],
-  },
-  {
-    label: "Components",
-    ariaLabel: "Components",
-    items: [
-      { label: "Navbar", icon: Navigation, href: "/navbar" },
-      { label: "Forms", icon: ClipboardList, href: "/forms" },
-      { label: "Searchbar", icon: Search, href: "/searchbar" },
-      { label: "Sidebar", icon: PanelLeftOpen, href: "/sidebar" },
-      { label: "Tables", icon: Table2, href: "/tables" },
-      { label: "Wizards", icon: ListChecks, href: "/wizards" },
-    ],
-  },
-];
+export type SidebarNavigationGroup = {
+  label: string;
+  ariaLabel: string;
+  items: SidebarNavigationItem[];
+};
 
-function createDefaultOpenGroups() {
-  return Object.fromEntries(navigationGroups.map((group) => [group.label, true]));
+function createDefaultOpenGroups(groups: SidebarNavigationGroup[]) {
+  return Object.fromEntries(groups.map((group) => [group.label, true]));
 }
 
 let persistedOpenGroups: Record<string, boolean> | null = null;
 
 interface SidebarProps {
+  groups: SidebarNavigationGroup[];
+  activeHref: string;
   collapsed: boolean;
   mobileOpen?: boolean;
   onMobileClose?: () => void;
+  linkComponent?: ElementType;
 }
 
 export default function Sidebar({
+  groups,
+  activeHref,
   collapsed,
   mobileOpen = false,
   onMobileClose,
+  linkComponent = "a",
 }: SidebarProps) {
-  const pathname = usePathname();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
-    persistedOpenGroups ?? createDefaultOpenGroups(),
+    persistedOpenGroups ?? createDefaultOpenGroups(groups),
   );
-  const { mode } = useColorMode();
-  const isDarkMode = mode === "dark";
-  const surface = isDarkMode ? colors.neutral[800] : colors.semantic.surface;
-  const pageBackground = isDarkMode ? colors.neutral[900] : colors.semantic.background;
-  const borders = isDarkMode ? borderColors.dark : borderColors.light;
-  const interaction = isDarkMode ? interactionStates.dark : interactionStates.light;
+  const {
+    borders,
+    surface,
+    pageBackground,
+    interaction,
+    secondaryText,
+    accent,
+    selectedBackground,
+  } = useSemanticColors();
   const border = borders.subtle;
-  const secondaryText = isDarkMode ? colors.neutral[300] : colors.neutral[600];
-  const accent = interaction.activeIndicator;
-  const selectedBackground = interaction.activeBackground;
   const hoverBackground = interaction.hoverBackground;
 
   const labelSx = {
@@ -200,7 +144,7 @@ export default function Sidebar({
 
     return (
       <>
-        {navigationGroups.map((group, groupIndex) => (
+        {groups.map((group, groupIndex) => (
           <Box key={group.label}>
             {groupIndex > 0 && <Divider sx={{ my: 2.5 }} />}
             {(() => {
@@ -306,7 +250,7 @@ export default function Sidebar({
             >
               <Box component="nav" aria-label={group.ariaLabel}>
                 {group.items.map(({ label, icon: Icon, href }) => {
-                  const active = pathname === href;
+                  const active = href === activeHref;
 
                   return (
                     <Tooltip
@@ -315,7 +259,7 @@ export default function Sidebar({
                       placement="right"
                     >
                       <ButtonBase
-                        component={Link}
+                        component={linkComponent}
                         href={href}
                         aria-label={label}
                         aria-current={active ? "page" : undefined}

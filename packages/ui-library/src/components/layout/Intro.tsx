@@ -1,8 +1,9 @@
 "use client";
 
 import { Typography } from "@mui/material";
-import { InfoBanner, pageLayoutTokens } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import InfoBanner from "../feedback/InfoBanner";
+import { pageLayoutTokens } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface IntroProps {
   title: string;

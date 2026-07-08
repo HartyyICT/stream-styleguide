@@ -2,8 +2,8 @@
 
 import { MenuItem, type MenuItemProps } from "@mui/material";
 import type { ReactNode } from "react";
-import { iconSizes, navbarTokens } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import { iconSizes, navbarTokens } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 type ProfileMenuItemTone = "default" | "danger";
 

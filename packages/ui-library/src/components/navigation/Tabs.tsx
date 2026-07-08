@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, ButtonBase, type BoxProps } from "@mui/material";
-import { borderWidths, radius, spacing } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths, radius, spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface TabItem<TValue extends string> {
   value: TValue;

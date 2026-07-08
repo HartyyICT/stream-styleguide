@@ -6,7 +6,7 @@ import Select from "./Select";
 import Label from "./Label";
 import HelperText from "./HelperText";
 import ErrorText from "./ErrorText";
-import { formTokens } from "../theme/tokens";
+import { formTokens } from "../../theme/tokens";
 
 type SelectComponentProps = ComponentProps<typeof Select>;
 type FieldState = "default" | "success" | "warning" | "info" | "error";

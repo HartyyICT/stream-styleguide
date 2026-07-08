@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import { borderWidths, radius } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths, radius } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 type BadgeTone = "neutral" | "accent" | "success" | "warning" | "error";
 

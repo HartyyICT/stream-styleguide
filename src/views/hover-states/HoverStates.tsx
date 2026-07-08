@@ -5,10 +5,10 @@ import { ExternalLink, MousePointer2, Search } from "lucide-react";
 import { Card } from "@ssw/ui-library";
 import { CodeBlock } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
-import GuidelineList from "@/app/components/patterns/GuidelineList";
-import Intro from "@/app/components/layout/Intro";
+import { GuidelineList } from "@ssw/ui-library";
+import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
-import Section from "@/app/components/layout/Section";
+import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,

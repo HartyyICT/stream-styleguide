@@ -12,24 +12,24 @@ import {
 import { Badge } from "@ssw/ui-library";
 import { Button } from "@ssw/ui-library";
 import { Divider } from "@ssw/ui-library";
-import { Kbd } from "@ssw/ui-library";
+import { KeyboardKey } from "@ssw/ui-library";
 import { Surface } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
 import { TokenCode } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
 import { IconBox } from "@ssw/ui-library";
-import AnatomyItem from "@/app/components/molecules/AnatomyItem";
-import ButtonGroupExample from "@/app/components/molecules/ButtonGroupExample";
-import ExampleCard from "@/app/components/molecules/ExampleCard";
-import StateCard from "@/app/components/molecules/StateCard";
-import TokenTable from "@/app/components/molecules/TokenTable";
-import DataTable, { type DataTableColumn } from "@/app/components/organisms/DataTable";
+import { AnatomyItem } from "@ssw/ui-library";
+import { ButtonGroupExample } from "@ssw/ui-library";
+import { ExampleCard } from "@ssw/ui-library";
+import { StateCard } from "@ssw/ui-library";
+import { TokenTable } from "@ssw/ui-library";
+import { DataTable, type DataTableColumn } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
-import GuidelineList from "@/app/components/patterns/GuidelineList";
-import Intro from "@/app/components/layout/Intro";
+import { GuidelineList } from "@ssw/ui-library";
+import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
-import Section from "@/app/components/layout/Section";
+import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   iconSizes,
@@ -342,7 +342,7 @@ export default function TablesPage() {
           >
             <ButtonGroupExample>
               <Button variant="secondary" startIcon={<ArrowUpDown />}>Sort by date</Button>
-              <Kbd>Shift</Kbd>
+              <KeyboardKey>Shift</KeyboardKey>
             </ButtonGroupExample>
           </ExampleCard>
           <ExampleCard

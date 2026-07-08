@@ -1,12 +1,15 @@
 "use client";
 
 import { Box } from "@mui/material";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import Sidebar from "@/app/components/organisms/Sidebar";
+import { Sidebar } from "@ssw/ui-library";
 import { colors, pageLayoutTokens } from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
 import Navbar from "@/app/components/organisms/Navbar";
-import { sidebarMotion, sidebarTransition } from "@/app/components/organisms/sidebarMotion";
+import { siteNavigationGroups } from "@/app/components/layout/siteNavigation";
+import { sidebarMotion, sidebarTransition } from "@ssw/ui-library";
 
 let persistedSidebarCollapsed = false;
 
@@ -19,6 +22,7 @@ export default function DocumentationLayout({
     persistedSidebarCollapsed,
   );
   const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
+  const pathname = usePathname();
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
   const pageBackground = isDarkMode
@@ -39,9 +43,12 @@ export default function DocumentationLayout({
         }
       />
       <Sidebar
+        groups={siteNavigationGroups}
+        activeHref={pathname}
         collapsed={sidebarCollapsed}
         mobileOpen={mobileNavigationOpen}
         onMobileClose={() => setMobileNavigationOpen(false)}
+        linkComponent={Link}
       />
 
       <Box

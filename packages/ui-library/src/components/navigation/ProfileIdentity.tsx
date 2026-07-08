@@ -1,11 +1,8 @@
 "use client";
 
 import { Avatar, Box, Typography } from "@mui/material";
-import {
-  colors,
-  navbarTokens,
-} from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import { colors, navbarTokens } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 type ProfileIdentityProps = {
   name: string;

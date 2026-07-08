@@ -11,12 +11,12 @@ import {
   iconSizes,
   interactionStates,
   navbarTokens,
+  ProfileIdentity,
+  ProfileMenuItem,
   radius,
   shadows,
 } from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
-import ProfileIdentity from "./ProfileIdentity";
-import ProfileMenuItem from "./ProfileMenuItem";
 
 type UserProfileMenuProps = {
   name?: string;

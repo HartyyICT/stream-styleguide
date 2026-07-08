@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Box } from "@mui/material";
-import { spacing } from "@ssw/ui-library";
+import { spacing } from "../../theme/tokens";
 
 interface ButtonGroupExampleProps {
   children: ReactNode;

@@ -3,8 +3,8 @@
 import { Box, Typography, type BoxProps } from "@mui/material";
 import { useState } from "react";
 import Toggle from "./Toggle";
-import { borderWidths, colors, formTokens, radius, spacing } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths, colors, formTokens, radius, spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface ToggleFieldProps extends Omit<BoxProps, "onChange"> {
   label: string;

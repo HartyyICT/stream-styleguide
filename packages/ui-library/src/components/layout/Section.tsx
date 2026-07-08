@@ -2,9 +2,9 @@
 
 import { Box, Typography } from "@mui/material";
 import type { ReactNode } from "react";
-import { Divider } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
-import { pageLayoutTokens } from "@ssw/ui-library";
+import Divider from "./Divider";
+import { useSemanticColors } from "../../theme/useSemanticColors";
+import { pageLayoutTokens } from "../../theme/tokens";
 
 interface SectionProps {
   id: string;

@@ -2,13 +2,8 @@
 
 import { Box, ButtonBase, Typography } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  borderColors,
-  borderWidths,
-  colors,
-  interactionStates,
-} from "@ssw/ui-library";
-import { useColorMode } from "../../theme/themeProvider";
+import { borderWidths } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 export interface OnThisPageItem {
   label: string;
@@ -29,20 +24,9 @@ export default function OnThisPage({
     [],
   );
   const animationFrame = useRef(0);
-  const { mode } = useColorMode();
-  const isDarkMode = mode === "dark";
-  const borders = isDarkMode ? borderColors.dark : borderColors.light;
-  const interaction = isDarkMode
-    ? interactionStates.dark
-    : interactionStates.light;
+  const { borders, interaction, pageBackground, secondaryText, accent } =
+    useSemanticColors();
   const border = borders.subtle;
-  const pageBackground = isDarkMode
-    ? colors.neutral[900]
-    : colors.semantic.background;
-  const secondaryText = isDarkMode
-    ? colors.neutral[300]
-    : colors.neutral[600];
-  const accent = interaction.activeIndicator;
 
   const measureSections = useCallback(() => {
     sectionOffsets.current = items.flatMap(({ href }) => {

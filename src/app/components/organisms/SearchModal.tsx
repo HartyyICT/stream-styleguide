@@ -40,6 +40,7 @@ import {
   borderColors,
   colors,
   interactionStates,
+  overlayTokens,
   radius,
   shadows,
 } from "@ssw/ui-library";
@@ -789,9 +790,9 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         slotProps={{
           backdrop: {
             sx: {
-              backgroundColor: "rgba(15, 23, 42, 0.16)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
+              backgroundColor: overlayTokens.backdropColor,
+              backdropFilter: overlayTokens.backdropBlur,
+              WebkitBackdropFilter: overlayTokens.backdropBlur,
             },
           },
           paper: {

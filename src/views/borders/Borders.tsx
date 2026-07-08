@@ -3,12 +3,12 @@
 import { Box, Typography } from "@mui/material";
 import { Card } from "@ssw/ui-library";
 import { CodeBlock } from "@ssw/ui-library";
-import DataTable, { type DataTableColumn } from "@/app/components/organisms/DataTable";
+import { DataTable, type DataTableColumn } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
-import GuidelineList from "@/app/components/patterns/GuidelineList";
-import Intro from "@/app/components/layout/Intro";
+import { GuidelineList } from "@ssw/ui-library";
+import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
-import Section from "@/app/components/layout/Section";
+import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import { borderColors, borderWidths, radius, tableTokens } from "@ssw/ui-library";
 import { TokenCode } from "@ssw/ui-library";

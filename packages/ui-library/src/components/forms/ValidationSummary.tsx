@@ -2,8 +2,8 @@
 
 import { Box, Typography, type BoxProps } from "@mui/material";
 import { AlertCircle } from "lucide-react";
-import { borderWidths, iconSizes, radius, spacing } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, iconSizes, radius, spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface ValidationSummaryProps extends BoxProps {
   title?: string;

@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Typography, type BoxProps } from "@mui/material";
-import { spacing } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 type HelperTextTone = "default" | "success" | "warning" | "info" | "error";
 

@@ -2,8 +2,8 @@
 
 import { Box, type BoxProps } from "@mui/material";
 import { type ReactNode } from "react";
-import { radius } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { radius } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface IconBoxProps extends BoxProps {
   children: ReactNode;

@@ -2,12 +2,12 @@
 
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { FormActionRow } from "@ssw/ui-library";
-import { FormField } from "@ssw/ui-library";
-import { SelectField } from "@ssw/ui-library";
-import FormLayout from "@/app/components/organisms/FormLayout";
-import FormSection from "@/app/components/organisms/FormSection";
-import { formTokens, spacing } from "@ssw/ui-library";
+import FormActionRow from "../forms/FormActionRow";
+import FormField from "../forms/FormField";
+import SelectField from "../forms/SelectField";
+import FormLayout from "../forms/FormLayout";
+import FormSection from "../forms/FormSection";
+import { formTokens, spacing } from "../../theme/tokens";
 
 export default function CustomerForm() {
   const [customerName, setCustomerName] = useState("Van Dijk Logistics");

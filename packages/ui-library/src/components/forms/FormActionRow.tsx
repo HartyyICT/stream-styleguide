@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import Button from "./Button";
-import { borderWidths, spacing } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import Button from "../buttons/Button";
+import { borderWidths, spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface FormActionRowProps extends BoxProps {
   primaryLabel?: string;

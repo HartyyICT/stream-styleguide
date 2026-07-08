@@ -2,10 +2,10 @@
 
 import type { ReactNode } from "react";
 import { Box } from "@mui/material";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
-import { Text } from "@ssw/ui-library";
-import { spacing } from "@ssw/ui-library";
+import Card from "../layout/Card";
+import CardTitle from "../layout/CardTitle";
+import Text from "../typography/Text";
+import { spacing } from "../../theme/tokens";
 
 interface ExampleCardProps {
   title: string;

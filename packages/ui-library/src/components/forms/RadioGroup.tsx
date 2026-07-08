@@ -6,8 +6,8 @@ import Radio from "./Radio";
 import Label from "./Label";
 import ErrorText from "./ErrorText";
 import HelperText from "./HelperText";
-import { formTokens, spacing } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { formTokens, spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface RadioOption {
   label: string;

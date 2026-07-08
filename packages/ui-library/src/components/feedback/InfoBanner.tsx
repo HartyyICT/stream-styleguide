@@ -3,8 +3,8 @@
 import { Box, Typography, type BoxProps } from "@mui/material";
 import type { ReactNode } from "react";
 import { Info } from "lucide-react";
-import { borderWidths, iconSizes, spacing } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths, iconSizes, spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface InfoBannerProps extends BoxProps {
   title?: string;

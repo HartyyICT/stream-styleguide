@@ -172,6 +172,11 @@ export const shadows = {
   level4: "0 8px 24px rgba(0,0,0,0.12)",
 };
 
+export const overlayTokens = {
+  backdropColor: "rgba(15, 23, 42, 0.16)",
+  backdropBlur: "blur(8px)",
+} as const;
+
 export const interactionStates = {
   light: {
     default: colors.semantic.surface,

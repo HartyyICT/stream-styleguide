@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Typography, type BoxProps } from "@mui/material";
-import { borderWidths, radius, spacing } from "../theme/tokens";
-import { useSemanticColors } from "../theme/useSemanticColors";
+import { borderWidths, radius, spacing } from "../../theme/tokens";
+import { useSemanticColors } from "../../theme/useSemanticColors";
 
 interface PageRegionProps extends BoxProps {
   label: string;

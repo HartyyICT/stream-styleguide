@@ -2,8 +2,8 @@
 
 import { Box, Chip, MenuList, Typography } from "@mui/material";
 import { LogOut, Moon, Search, UserRound, X } from "lucide-react";
-import ProfileIdentity from "@/app/components/molecules/ProfileIdentity";
-import ProfileMenuItem from "@/app/components/molecules/ProfileMenuItem";
+import { ProfileIdentity } from "@ssw/ui-library";
+import { ProfileMenuItem } from "@ssw/ui-library";
 import RecentSearchItem from "@/app/components/molecules/RecentSearchItem";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
@@ -11,10 +11,10 @@ import { Card } from "@ssw/ui-library";
 import { CodeBlock } from "@ssw/ui-library";
 import { Divider } from "@ssw/ui-library";
 import CodeExample from "@/app/components/patterns/CodeExample";
-import GuidelineList from "@/app/components/patterns/GuidelineList";
-import Intro from "@/app/components/layout/Intro";
+import { GuidelineList } from "@ssw/ui-library";
+import { Intro } from "@ssw/ui-library";
 import Page from "@/app/components/layout/Page";
-import Section from "@/app/components/layout/Section";
+import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,

@@ -1,0 +1,66 @@
+import {
+  Accessibility,
+  AppWindow,
+  Blend,
+  ChevronsRight,
+  ClipboardList,
+  Grid3X3,
+  LayoutTemplate,
+  ListChecks,
+  MousePointer2,
+  Navigation,
+  Palette,
+  PanelTop,
+  PanelLeftOpen,
+  PackagePlus,
+  ScanText,
+  Search,
+  Smartphone,
+  Sparkles,
+  SquareMousePointer,
+  Table2,
+  Type,
+} from "lucide-react";
+import type { SidebarNavigationGroup } from "@ssw/ui-library";
+
+export const siteNavigationGroups: SidebarNavigationGroup[] = [
+  {
+    label: "Getting started",
+    ariaLabel: "Getting started",
+    items: [
+      { label: "Overview", icon: ScanText, href: "/" },
+      { label: "Installation", icon: PackagePlus, href: "/installation" },
+    ],
+  },
+  {
+    label: "Foundations",
+    ariaLabel: "Design foundations",
+    items: [
+      { label: "Accessibility", icon: Accessibility, href: "/accessibility" },
+      { label: "Borders", icon: PanelTop, href: "/borders" },
+      { label: "Buttons", icon: SquareMousePointer, href: "/buttons" },
+      { label: "Colors", icon: Palette, href: "/colors" },
+      { label: "Elevation & Shadows", icon: Blend, href: "/elevation" },
+      { label: "Hover States", icon: MousePointer2, href: "/hover-states" },
+      { label: "Iconography", icon: Sparkles, href: "/iconography" },
+      { label: "Page Layout", icon: LayoutTemplate, href: "/page-layout" },
+      { label: "Responsiveness", icon: Smartphone, href: "/responsiveness" },
+      { label: "Spacing", icon: Grid3X3, href: "/spacing" },
+      { label: "Typography", icon: Type, href: "/typography" },
+    ],
+  },
+  {
+    label: "Components",
+    ariaLabel: "Components",
+    items: [
+      { label: "Breadcrumbs", icon: ChevronsRight, href: "/breadcrumbs" },
+      { label: "Dialog", icon: AppWindow, href: "/dialog" },
+      { label: "Navbar", icon: Navigation, href: "/navbar" },
+      { label: "Forms", icon: ClipboardList, href: "/forms" },
+      { label: "Searchbar", icon: Search, href: "/searchbar" },
+      { label: "Sidebar", icon: PanelLeftOpen, href: "/sidebar" },
+      { label: "Tables", icon: Table2, href: "/tables" },
+      { label: "Wizards", icon: ListChecks, href: "/wizards" },
+    ],
+  },
+];
