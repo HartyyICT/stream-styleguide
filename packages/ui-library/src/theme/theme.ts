@@ -129,37 +129,21 @@ export const createAppTheme = (mode: PaletteMode) =>
     },
     success: {
       ...colors.semantic.success,
-      main:
-        mode === "light"
-          ? colors.semantic.success.light
-          : colors.semantic.success.dark,
       contrastText:
         mode === "light" ? colors.neutral[900] : colors.semantic.surface,
     },
     warning: {
       ...colors.semantic.warning,
-      main:
-        mode === "light"
-          ? colors.semantic.warning.light
-          : colors.semantic.warning.dark,
       contrastText:
         mode === "light" ? colors.neutral[900] : colors.semantic.surface,
     },
     error: {
       ...colors.semantic.error,
-      main:
-        mode === "light"
-          ? colors.semantic.error.light
-          : colors.semantic.error.dark,
       contrastText:
         mode === "light" ? colors.neutral[900] : colors.semantic.surface,
     },
     info: {
       ...colors.semantic.info,
-      main:
-        mode === "light"
-          ? colors.semantic.info.light
-          : colors.semantic.info.dark,
       contrastText:
         mode === "light" ? colors.neutral[900] : colors.semantic.surface,
     },

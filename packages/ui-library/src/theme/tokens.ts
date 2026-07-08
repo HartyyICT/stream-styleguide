@@ -35,16 +35,16 @@ export const colors = {
 
 export const semanticStateColors = {
   light: {
-    success: colors.semantic.success.light,
-    warning: colors.semantic.warning.light,
-    error: colors.semantic.error.light,
-    info: colors.semantic.info.light,
+    success: colors.semantic.success.main,
+    warning: colors.semantic.warning.main,
+    error: colors.semantic.error.main,
+    info: colors.semantic.info.main,
   },
   dark: {
-    success: colors.semantic.success.dark,
-    warning: colors.semantic.warning.dark,
-    error: colors.semantic.error.dark,
-    info: colors.semantic.info.dark,
+    success: colors.semantic.success.main,
+    warning: colors.semantic.warning.main,
+    error: colors.semantic.error.main,
+    info: colors.semantic.info.main,
   },
 } as const;
 
