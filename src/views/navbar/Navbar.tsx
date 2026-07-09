@@ -18,6 +18,7 @@ import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,
+  colors,
   iconSizes,
   navbarTokens,
   radius,
@@ -56,14 +57,14 @@ const anatomy = [
 const guidelines = [
   "Keep the navbar persistent at the top of documentation and application shells.",
   "Use the brand area for product identity, not page-specific titles.",
-  "Keep search and account actions grouped on the right side.",
-  "Do not add page navigation or hamburger menus to the navbar; navigation belongs in the sidebar.",
+  "Keep search and account actions seperated.",
   "Preserve enough spacing between search, user profile and future global actions.",
   "Keep height, border, icon size and typography consistent across products.",
 ] as const;
 
 function AnatomyMarker({ number }: { number: number }) {
-  const { primaryText, surface } = useSemanticColors();
+  const { isDarkMode, accent } = useSemanticColors();
+  const accentContrastText = isDarkMode ? colors.neutral[900] : colors.semantic.surface;
 
   return (
     <Box
@@ -76,8 +77,8 @@ function AnatomyMarker({ number }: { number: number }) {
         display: "grid",
         placeItems: "center",
         borderRadius: "50%",
-        backgroundColor: primaryText,
-        color: surface,
+        backgroundColor: accent,
+        color: accentContrastText,
         fontSize: "0.6875rem",
         fontWeight: 700,
         boxShadow: shadows.level1,
@@ -285,7 +286,8 @@ function StyleguideNavbarPreview({
 }
 
 export default function NavbarPage() {
-  const { primaryText, surface, secondaryText } = useSemanticColors();
+  const { isDarkMode, accent, secondaryText } = useSemanticColors();
+  const accentContrastText = isDarkMode ? colors.neutral[900] : colors.semantic.surface;
 
   return (
     <Page pageId="navbar" sections={sections}>
@@ -321,8 +323,8 @@ export default function NavbarPage() {
                   display: "grid",
                   placeItems: "center",
                   borderRadius: "50%",
-                  backgroundColor: primaryText,
-                  color: surface,
+                  backgroundColor: accent,
+                  color: accentContrastText,
                   fontSize: "0.75rem",
                   fontWeight: 700,
                 }}

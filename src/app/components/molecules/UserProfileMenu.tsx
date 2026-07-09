@@ -124,7 +124,7 @@ export default function UserProfileMenu({
       >
         <ProfileIdentity name={name} email={email} role={role} />
 
-        <Divider />
+        <Divider sx={{ borderTopColor: borders.default }} />
 
         <ProfileMenuItem
           onClick={() => setAnchorEl(null)}
@@ -148,7 +148,7 @@ export default function UserProfileMenu({
           {isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
         </ProfileMenuItem>
 
-        <Divider sx={{ my: 0.5 }} />
+        <Divider sx={{ my: 0.5, borderTopColor: borders.default }} />
 
         <ProfileMenuItem
           onClick={() => setAnchorEl(null)}
