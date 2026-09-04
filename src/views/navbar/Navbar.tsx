@@ -8,13 +8,15 @@ import RecentSearchItem from "@/app/components/molecules/RecentSearchItem";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
 import { Card } from "@ssw/ui-library";
-import { CodeBlock } from "@ssw/ui-library";
 import { Divider } from "@ssw/ui-library";
-import CodeExample from "@/app/components/patterns/CodeExample";
-import { GuidelineList } from "@ssw/ui-library";
-import { Intro } from "@ssw/ui-library";
+import {
+  CodeBlock,
+  CodeExample,
+  GuidelineList,
+  Intro,
+  Section,
+} from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   borderWidths,

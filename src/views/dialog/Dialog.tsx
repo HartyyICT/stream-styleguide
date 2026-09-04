@@ -5,13 +5,15 @@ import { Typography } from "@mui/material";
 import { Button } from "@ssw/ui-library";
 import { CancelButton } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
-import CodeExample from "@/app/components/patterns/CodeExample";
 import { DeleteButton } from "@ssw/ui-library";
 import { Dialog } from "@ssw/ui-library";
-import { GuidelineList } from "@ssw/ui-library";
-import { Intro } from "@ssw/ui-library";
+import {
+  CodeExample,
+  GuidelineList,
+  Intro,
+  Section,
+} from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import { spacing } from "@ssw/ui-library";
 

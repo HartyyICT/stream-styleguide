@@ -3,7 +3,10 @@
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
 import DocumentationLayout from "@/app/components/layout/DocumentationLayout";
-import { OnThisPage, type OnThisPageItem } from "@ssw/ui-library";
+import {
+  OnThisPage,
+  type OnThisPageItem,
+} from "@/app/components/documentation";
 import { pageLayoutTokens } from "@ssw/ui-library";
 
 interface PageProps {
@@ -39,7 +42,7 @@ export default function Page({
         <Box
           component="article"
           id={pageId}
-          sx={{ maxWidth, scrollMarginTop: pageLayoutTokens.articleScrollMarginTop }}
+          sx={{ maxWidth, minWidth: 0, scrollMarginTop: pageLayoutTokens.articleScrollMarginTop }}
         >
           {children}
         </Box>

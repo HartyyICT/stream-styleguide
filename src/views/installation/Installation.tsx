@@ -4,13 +4,15 @@ import { Box, Typography } from "@mui/material";
 import { PackageCheck, PackagePlus, Terminal, Wrench } from "lucide-react";
 import { Button } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
-import { CodeBlock } from "@ssw/ui-library";
 import { InfoBanner } from "@ssw/ui-library";
-import CodeExample from "@/app/components/patterns/CodeExample";
-import { GuidelineList } from "@ssw/ui-library";
-import { Intro } from "@ssw/ui-library";
+import {
+  CodeBlock,
+  CodeExample,
+  GuidelineList,
+  Intro,
+  Section,
+} from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import { radius, spacing } from "@ssw/ui-library";
 
@@ -26,35 +28,35 @@ const sections = [
 
 const guidelines = [
   "Install the shared UI library instead of copying components from the styleguide app.",
-  "Import components from @ssw/ui-library once the package exists and is published internally.",
+  "Import product components from @ssw/ui-library after it is published internally.",
   "Keep tokens, theme configuration and reusable components inside the package.",
-  "Use the styleguide app as documentation and examples, not as the source of reusable production components.",
+  "Keep documentation helpers and preview-only examples inside the styleguide app.",
   "When a component changes, update the package first and then update this styleguide to use the package version.",
 ] as const;
 
 const setupSteps = [
   {
-    title: "1. Create the package",
+    title: "1. Install the package",
     description:
-      "The reusable components move into a package named @ssw/ui-library.",
+      "Applications add @ssw/ui-library alongside their compatible React and MUI versions.",
     icon: PackagePlus,
   },
   {
-    title: "2. Export components",
+    title: "2. Apply the theme",
     description:
-      "The package exports shared components such as Button, Card and future form controls.",
+      "The shared theme and tokens remain the visual source of truth for every component.",
     icon: PackageCheck,
   },
   {
-    title: "3. Install in apps",
+    title: "3. Import product UI",
     description:
-      "Stream applications install the package and import components from one central place.",
+      "Applications import stable product components from one public package entry point.",
     icon: Terminal,
   },
   {
-    title: "4. Document in styleguide",
+    title: "4. Keep examples local",
     description:
-      "The styleguide installs @ssw/ui-library too, so documentation always shows the real package components.",
+      "The styleguide reuses local documentation helpers while its previews render real package components.",
     icon: Wrench,
   },
 ] as const;
@@ -101,9 +103,9 @@ export default function InstallationPage() {
             variant="body2"
             sx={{ mt: 2, color: secondaryText, lineHeight: 1.7 }}
           >
-            Later, the package can define these as peer dependencies so every
-            application uses its own React and MUI versions while sharing the
-            same Stream components.
+            React 19 and MUI 7.3.7 through 9.x are supported peer versions. The
+            package keeps using the shared Stream theme and tokens in every
+            compatible application.
           </Typography>
         </Card>
       </Section>
@@ -185,8 +187,8 @@ import { Check } from "lucide-react";`}</CodeBlock>
 
         <InfoBanner title="Important distinction" sx={{ mt: 2 }}>
           The styleguide documents the system. The UI library provides the
-          reusable code. Eventually this styleguide should consume the UI
-          library, just like other Stream applications.
+          reusable product code. Documentation components and preview-only
+          examples stay local to the styleguide.
         </InfoBanner>
       </Section>
 
@@ -202,8 +204,6 @@ import { Check } from "lucide-react";`}</CodeBlock>
 import { Check } from "lucide-react";
 
 export function SaveAction() {
-  // Change the import once the package is officially published.
-  // Examples: Button, Card, Sidebar or Searchbar from @ssw/ui-library.
   return (
     <Button startIcon={<Check />}>
       Save changes

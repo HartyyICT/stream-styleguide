@@ -2,11 +2,13 @@
 
 import { Box, Typography, useTheme } from "@mui/material";
 import { Divider } from "@ssw/ui-library";
-import { ColorSwatch } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
-import CodeExample from "@/app/components/patterns/CodeExample";
-import { Intro } from "@ssw/ui-library";
+import {
+  CodeExample,
+  ColorSwatch,
+  Intro,
+} from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
 import { useSemanticColors } from "@ssw/ui-library";
 import { colors, pageLayoutTokens, radius, shadows } from "@ssw/ui-library";

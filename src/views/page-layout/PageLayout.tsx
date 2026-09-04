@@ -13,15 +13,17 @@ import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
 import { Surface } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
-import { TokenCode } from "@ssw/ui-library";
-import { PageLayoutRegion } from "@ssw/ui-library";
-import { TokenTable } from "@ssw/ui-library";
-import FixedPageLayout from "@/app/components/organisms/FixedPageLayout";
-import CodeExample from "@/app/components/patterns/CodeExample";
-import { GuidelineList } from "@ssw/ui-library";
-import { Intro } from "@ssw/ui-library";
+import {
+  CodeExample,
+  GuidelineList,
+  Intro,
+  PageLayoutRegion,
+  Section,
+  TokenCode,
+  TokenTable,
+} from "@/app/components/documentation";
+import { FixedPageLayout } from "@/app/components/examples";
 import Page from "@/app/components/layout/Page";
-import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   iconSizes,
@@ -103,7 +105,7 @@ const accessibilityGuidelines = [
   "Avoid horizontal page scrolling on mobile and tablet widths.",
 ] as const;
 
-const pageCode = `import { Intro, Section } from "@ssw/ui-library";
+const pageCode = `import { Intro, Section } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
 
 const sections = [

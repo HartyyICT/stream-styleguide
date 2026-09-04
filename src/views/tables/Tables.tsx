@@ -11,23 +11,25 @@ import {
 import { Badge } from "@ssw/ui-library";
 import { Button } from "@ssw/ui-library";
 import { Divider } from "@ssw/ui-library";
-import { KeyboardKey } from "@ssw/ui-library";
 import { Text } from "@ssw/ui-library";
-import { TokenCode } from "@ssw/ui-library";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
 import { InfoBanner } from "@ssw/ui-library";
-import { AnatomyItem } from "@ssw/ui-library";
-import { ButtonGroupExample } from "@ssw/ui-library";
-import { ExampleCard } from "@ssw/ui-library";
-import { StateCard } from "@ssw/ui-library";
-import { TokenTable } from "@ssw/ui-library";
 import { DataTable, type DataTableColumn } from "@ssw/ui-library";
-import CodeExample from "@/app/components/patterns/CodeExample";
-import { GuidelineList } from "@ssw/ui-library";
-import { Intro } from "@ssw/ui-library";
+import {
+  AnatomyItem,
+  CodeExample,
+  ExampleCard,
+  GuidelineList,
+  Intro,
+  KeyboardKey,
+  Section,
+  StateCard,
+  TokenCode,
+  TokenTable,
+} from "@/app/components/documentation";
+import { ButtonGroupExample } from "@/app/components/examples";
 import Page from "@/app/components/layout/Page";
-import { Section } from "@ssw/ui-library";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
   iconSizes,

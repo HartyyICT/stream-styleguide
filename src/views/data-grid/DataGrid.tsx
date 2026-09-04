@@ -4,50 +4,113 @@ import { Box, Typography } from "@mui/material";
 import {
   Badge,
   Card,
-  CodeBlock,
   DataGrid,
-  GuidelineList,
   InfoBanner,
-  Intro,
+  pageLayoutTokens,
+  spacing,
   useSemanticColors,
   type DataGridColumn,
   type DataGridFilter,
+  type DataGridSearch,
 } from "@ssw/ui-library";
-import CodeExample from "@/app/components/patterns/CodeExample";
+import {
+  CodeBlock,
+  CodeExample,
+  GuidelineList,
+  Intro,
+  Section,
+} from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { Section } from "@ssw/ui-library";
-import { pageLayoutTokens, spacing } from "@ssw/ui-library";
 
 const sections = [
   { label: "Overview", href: "#data-grid" },
-  { label: "Columns & sorting", href: "#columns-sorting" },
-  { label: "Filters", href: "#filters" },
-  { label: "Example", href: "#example" },
-  { label: "Code examples", href: "#code-examples" },
+  { label: "Responsiveness", href: "#responsiveness" },
+  { label: "Column order", href: "#column-order" },
+  { label: "Simple filters", href: "#simple-filters" },
+  { label: "Complex filters", href: "#complex-filters" },
+  { label: "Combined example", href: "#combined-example" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
 
 type CustomerStatus = "active" | "trial" | "churned";
 type CustomerPlan = "starter" | "pro" | "enterprise";
+type CustomerRegion = "Benelux" | "DACH" | "Nordics";
 
 interface CustomerRow {
   id: string;
   name: string;
   status: CustomerStatus;
   plan: CustomerPlan;
+  region: CustomerRegion;
   mrr: number;
 }
 
 const customers: CustomerRow[] = [
-  { id: "1", name: "Van Dijk Logistics", status: "active", plan: "enterprise", mrr: 4200 },
-  { id: "2", name: "Nova Retail", status: "trial", plan: "pro", mrr: 890 },
-  { id: "3", name: "Stream Support", status: "active", plan: "pro", mrr: 1260 },
-  { id: "4", name: "Northwind Energy", status: "churned", plan: "starter", mrr: 0 },
-  { id: "5", name: "Polder Data", status: "active", plan: "starter", mrr: 320 },
-  { id: "6", name: "Harbor Transport", status: "trial", plan: "enterprise", mrr: 0 },
-  { id: "7", name: "Rhine Valley Group", status: "active", plan: "pro", mrr: 1580 },
-  { id: "8", name: "Green Delta", status: "churned", plan: "pro", mrr: 0 },
+  {
+    id: "1",
+    name: "Van Dijk Logistics",
+    status: "active",
+    plan: "enterprise",
+    region: "Benelux",
+    mrr: 4200,
+  },
+  {
+    id: "2",
+    name: "Nova Retail",
+    status: "trial",
+    plan: "pro",
+    region: "DACH",
+    mrr: 890,
+  },
+  {
+    id: "3",
+    name: "Stream Support",
+    status: "active",
+    plan: "pro",
+    region: "Benelux",
+    mrr: 1260,
+  },
+  {
+    id: "4",
+    name: "Northwind Energy",
+    status: "churned",
+    plan: "starter",
+    region: "Nordics",
+    mrr: 0,
+  },
+  {
+    id: "5",
+    name: "Polder Data",
+    status: "active",
+    plan: "starter",
+    region: "Benelux",
+    mrr: 320,
+  },
+  {
+    id: "6",
+    name: "Harbor Transport",
+    status: "trial",
+    plan: "enterprise",
+    region: "DACH",
+    mrr: 0,
+  },
+  {
+    id: "7",
+    name: "Rhine Valley Group",
+    status: "active",
+    plan: "pro",
+    region: "DACH",
+    mrr: 1580,
+  },
+  {
+    id: "8",
+    name: "Green Delta",
+    status: "churned",
+    plan: "pro",
+    region: "Nordics",
+    mrr: 0,
+  },
 ];
 
 const statusLabel: Record<CustomerStatus, string> = {
@@ -79,38 +142,55 @@ const customerColumns: DataGridColumn<CustomerRow>[] = [
     key: "name",
     header: "Customer",
     sortable: true,
+    minWidth: 220,
     render: (row) => row.name,
   },
   {
     key: "status",
     header: "Status",
+    minWidth: 120,
     render: (row) => <Badge tone={statusTone[row.status]}>{statusLabel[row.status]}</Badge>,
   },
   {
     key: "plan",
     header: "Plan",
+    minWidth: 120,
+    hideBelow: 620,
     render: (row) => planLabel[row.plan],
+  },
+  {
+    key: "region",
+    header: "Region",
+    minWidth: 120,
+    hideBelow: 760,
+    render: (row) => row.region,
   },
   {
     key: "mrr",
     header: "MRR",
     align: "right",
     sortable: true,
+    minWidth: 100,
+    hideBelow: 480,
     render: (row) => currencyFormatter.format(row.mrr),
   },
 ];
 
+const customerColumnOrder = ["status", "name", "plan", "mrr", "region"] as const;
+
+const statusFilter: DataGridFilter<CustomerRow> = {
+  key: "status",
+  label: "Status",
+  options: [
+    { label: "Active", value: "active" },
+    { label: "Trial", value: "trial" },
+    { label: "Churned", value: "churned" },
+  ],
+  predicate: (row, value) => row.status === value,
+};
+
 const customerFilters: DataGridFilter<CustomerRow>[] = [
-  {
-    key: "status",
-    label: "Status",
-    options: [
-      { label: "Active", value: "active" },
-      { label: "Trial", value: "trial" },
-      { label: "Churned", value: "churned" },
-    ],
-    predicate: (row, value) => row.status === value,
-  },
+  statusFilter,
   {
     key: "plan",
     label: "Plan",
@@ -121,50 +201,95 @@ const customerFilters: DataGridFilter<CustomerRow>[] = [
     ],
     predicate: (row, value) => row.plan === value,
   },
+  {
+    key: "region",
+    label: "Region",
+    options: [
+      { label: "Benelux", value: "Benelux" },
+      { label: "DACH", value: "DACH" },
+      { label: "Nordics", value: "Nordics" },
+    ],
+    predicate: (row, value) => row.region === value,
+  },
 ];
 
-const columnCode = `const columns: DataGridColumn<CustomerRow>[] = [
-  { key: "name", header: "Customer", sortable: true, render: (row) => row.name },
-  { key: "status", header: "Status", render: (row) => <Badge tone={...}>{row.status}</Badge> },
-  { key: "mrr", header: "MRR", align: "right", sortable: true, render: (row) => format(row.mrr) },
+const customerSearch: DataGridSearch<CustomerRow> = {
+  label: "Customer search",
+  placeholder: "Search customer or region",
+  predicate: (row, query) =>
+    `${row.name} ${row.region}`.toLowerCase().includes(query.toLowerCase()),
+};
+
+const responsiveCode = `const columns: DataGridColumn<Customer>[] = [
+  { key: "name", header: "Customer", minWidth: 220, render: (row) => row.name },
+  { key: "status", header: "Status", minWidth: 120, render: renderStatus },
+  { key: "plan", header: "Plan", minWidth: 120, hideBelow: 620, render: renderPlan },
+  { key: "region", header: "Region", minWidth: 120, hideBelow: 760, render: renderRegion },
 ];`;
 
-const filterCode = `const filters: DataGridFilter<CustomerRow>[] = [
-  {
-    key: "status",
-    label: "Status",
-    options: [
-      { label: "Active", value: "active" },
-      { label: "Trial", value: "trial" },
-      { label: "Churned", value: "churned" },
-    ],
-    predicate: (row, value) => row.status === value,
-  },
-];`;
-
-const usageCode = `import { DataGrid } from "@ssw/ui-library";
+const columnOrderCode = `const columnOrder = ["status", "name", "plan", "mrr", "region"];
 
 <DataGrid
   columns={columns}
+  columnOrder={columnOrder}
+  rows={customers}
+  getRowKey={(row) => row.id}
+/>`;
+
+const simpleFilterCode = `const filters: DataGridFilter<Customer>[] = [
+  {
+    key: "status",
+    label: "Status",
+    options: statusOptions,
+    predicate: (row, value) => row.status === value,
+  },
+];
+
+<DataGrid columns={columns} filters={filters} rows={customers} getRowKey={getRowKey} />`;
+
+const complexFilterCode = `const search: DataGridSearch<Customer> = {
+  label: "Customer search",
+  placeholder: "Search customer or region",
+  predicate: (row, query) =>
+    \`\${row.name} \${row.region}\`.toLowerCase().includes(query.toLowerCase()),
+};
+
+const filters = [statusFilter, planFilter, regionFilter];
+
+<DataGrid
+  columns={columns}
+  search={search}
   filters={filters}
+  rows={customers}
+  getRowKey={(row) => row.id}
+/>`;
+
+const combinedUsageCode = `import { DataGrid } from "@ssw/ui-library";
+
+<DataGrid
+  columns={customerColumns}
+  columnOrder={["status", "name", "plan", "mrr", "region"]}
+  search={customerSearch}
+  filters={customerFilters}
   rows={customers}
   getRowKey={(row) => row.id}
   defaultSort={{ key: "mrr", direction: "desc" }}
 />`;
 
 const guidelines = [
-  "Keep the number of fixed filters small — pick only the fields users actually want to narrow down by.",
-  "Only mark a column as sortable when its order carries real meaning.",
-  "Right-align numeric columns and left-align text columns.",
-  "Always show a clear empty state when a filter combination returns no results.",
-  "Use short, scannable column headers instead of full sentences.",
+  "Measure the grid container, not the viewport. Side navigation and detail panels can reduce the available width without changing the viewport breakpoint.",
+  "Keep the primary identifier and essential status visible; give optional columns a hideBelow threshold and remove the least useful information first.",
+  "Configure column order around the user's task. Put the fields used to identify and decide before supporting metadata.",
+  "Use a simple filter for one common question. Use complex filters only when users regularly combine several criteria.",
+  "Keep applied complex filters visible as removable chips, even when the filter controls are elsewhere or collapsed.",
+  "For server-paginated datasets, apply search and filters in the API query and reuse the same visible filter-summary pattern.",
 ] as const;
 
 const accessibilityGuidelines = [
-  "The grid uses native table/thead/tbody elements, so screen readers recognize the structure automatically.",
-  "Sortable column headers are keyboard-operable and announce the current sort direction.",
-  "Filters are plain Select elements — fully keyboard- and screen-reader-accessible without extra work.",
-  "Give every filter a clear, unique label so its purpose stays obvious with screen-reader navigation.",
+  "The grid uses native table, thead and tbody elements, so assistive technology receives the correct structure.",
+  "Sortable headers remain keyboard-operable and expose the active sort direction.",
+  "Search and select controls have visible or programmatic labels, and active filter chips can be removed with the keyboard.",
+  "Do not hide the only path to important data. Responsive columns should contain supporting information that is also available in a row detail view.",
 ] as const;
 
 export default function DataGridPage() {
@@ -174,74 +299,76 @@ export default function DataGridPage() {
     <Page pageId="data-grid" sections={sections} maxWidth={pageLayoutTokens.dataContentMaxWidth}>
       <Intro
         title="DataGrid"
-        description="DataGrid displays datasets with fixed, developer-defined columns and filters. End users can sort columns and use the fixed filters to narrow down rows — the set of columns and filters itself stays fixed."
-        note="DataGrid is built on the standard MUI table primitives and fully styled through the shared theme, just like Button, Input and Select."
+        description="DataGrid presents operational datasets with responsive columns, deliberate column ordering, sorting, and simple or combined filters. The configuration stays close to the column and filter definitions so every screen can prioritize the information its users need."
       />
 
       <Section
-        id="columns-sorting"
-        title="Columns & sorting"
-        description="Columns are fixed via the columns prop. Each column decides how its cell renders and whether it's sortable."
+        id="responsiveness"
+        title="Responsiveness"
+        description="Use hideBelow for supporting columns that should disappear when the DataGrid itself becomes too narrow. Columns without hideBelow remain visible; horizontal scrolling is the final fallback."
         divider={false}
       >
-        <CodeBlock>{columnCode}</CodeBlock>
+        <CodeBlock>{responsiveCode}</CodeBlock>
       </Section>
 
       <Section
-        id="filters"
-        title="Filters"
-        description="Filters are fixed as well: each filter has a label, a fixed list of options and a predicate function that decides which rows stay visible."
+        id="column-order"
+        title="Column order"
+        description="The columns array is the default order. Pass columnOrder when a screen needs a different task-focused order without duplicating its render definitions. Unknown keys are ignored and unlisted columns stay in their original order at the end."
       >
-        <CodeBlock>{filterCode}</CodeBlock>
+        <CodeBlock>{columnOrderCode}</CodeBlock>
       </Section>
 
       <Section
-        id="example"
-        title="Example"
-        description="Click a sortable column header to toggle its direction, or use the filters to narrow down the list."
+        id="simple-filters"
+        title="Simple filters"
+        description="A simple filter answers one frequent question, such as showing customers by status. Keep the control immediately understandable and avoid opening a separate advanced panel for a single criterion."
       >
-        <DataGrid
-          columns={customerColumns}
-          filters={customerFilters}
-          rows={customers}
-          getRowKey={(row) => row.id}
-          defaultSort={{ key: "mrr", direction: "desc" }}
-        />
-      </Section>
-
-      <Section
-        id="code-examples"
-        title="Code examples"
-        description="Use DataGrid by passing columns, filters and rows."
-      >
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(2, minmax(0, 1fr))" },
-            gap: 2,
-          }}
-        >
-          <CodeExample
-            title="Sortable, filterable grid"
-            code={usageCode}
-            preview={
-              <DataGrid
-                columns={customerColumns}
-                filters={customerFilters}
-                rows={customers.slice(0, 4)}
-                getRowKey={(row) => row.id}
-                defaultSort={{ key: "name", direction: "asc" }}
-              />
-            }
-            previewMinHeight={260}
+        <Box sx={{ display: "grid", gap: spacing.lg }}>
+          <CodeBlock>{simpleFilterCode}</CodeBlock>
+          <DataGrid
+            columns={customerColumns}
+            filters={[statusFilter]}
+            rows={customers.slice(0, 5)}
+            getRowKey={(row) => row.id}
           />
         </Box>
       </Section>
 
       <Section
+        id="complex-filters"
+        title="Complex filters"
+        description="Combine search with multiple fixed criteria when users need to narrow data from several directions. Criteria use AND logic, and every applied value remains visible in the summary with an individual remove action and one Reset all action."
+      >
+        <CodeBlock>{complexFilterCode}</CodeBlock>
+      </Section>
+
+      <Section
+        id="combined-example"
+        title="Combined example"
+        description="This example combines responsive priority, configured column order, search, fixed filters and sorting. Resize the page to see Region, Plan and MRR leave in priority order."
+      >
+        <CodeExample
+          title="Responsive, ordered and filterable grid"
+          code={combinedUsageCode}
+          preview={
+            <DataGrid
+              columns={customerColumns}
+              columnOrder={customerColumnOrder}
+              search={customerSearch}
+              filters={customerFilters}
+              rows={customers}
+              getRowKey={(row) => row.id}
+              defaultSort={{ key: "mrr", direction: "desc" }}
+            />
+          }
+        />
+      </Section>
+
+      <Section
         id="guidelines"
         title="Guidelines"
-        description="These guidelines keep fixed filters and columns predictable in data-heavy screens."
+        description="These rules keep data-heavy screens predictable as their available space and filter complexity change."
       >
         <GuidelineList items={guidelines} />
       </Section>
@@ -249,23 +376,24 @@ export default function DataGridPage() {
       <Section
         id="accessibility"
         title="Accessibility"
-        description="DataGrid stays usable with keyboard and screen readers without extra configuration."
+        description="Responsive behavior and richer filtering should preserve the table's meaning and keep every active state understandable."
         last
       >
         <Card>
           <Typography variant="h3" sx={{ mb: 1.5 }}>
-            Semantic table structure
+            Preserve meaning at every width
           </Typography>
           <Typography sx={{ color: secondaryText, lineHeight: 1.7, mb: 2.5 }}>
-            Because DataGrid builds on the standard MUI table primitives, every grid gets the
-            right ARIA roles and keyboard support automatically.
+            Hiding a supporting column is safe only when the essential row context remains visible
+            and the complete record can still be opened elsewhere.
           </Typography>
           <GuidelineList items={accessibilityGuidelines} />
         </Card>
 
-        <InfoBanner title="Empty state" sx={{ mt: spacing.md }}>
-          Always show a recognizable message when a filter combination returns no rows, instead
-          of rendering an empty table with no explanation.
+        <InfoBanner title="Client-side scope" sx={{ mt: spacing.md }}>
+          This component filters the rows passed to it. Large or server-paginated datasets should
+          keep filter state in the screen, request filtered data from the API, and retain the same
+          applied-filter summary.
         </InfoBanner>
       </Section>
     </Page>

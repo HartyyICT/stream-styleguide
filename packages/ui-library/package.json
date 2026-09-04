@@ -2,6 +2,7 @@
   "name": "@ssw/ui-library",
   "version": "0.1.0",
   "description": "SSW design system: MUI theme, design tokens and reusable components.",
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -26,7 +27,7 @@
   "peerDependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/material": "^9.1.1",
+    "@mui/material": ">=7.3.7 <10",
     "react": "^19",
     "react-dom": "^19"
   },

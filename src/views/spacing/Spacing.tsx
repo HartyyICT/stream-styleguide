@@ -4,10 +4,12 @@ import { Box, Typography } from "@mui/material";
 import { Braces, Grid3X3, LayoutPanelTop, Rows3 } from "lucide-react";
 import { Card } from "@ssw/ui-library";
 import { CardTitle } from "@ssw/ui-library";
-import { CodeBlock } from "@ssw/ui-library";
 import { Divider } from "@ssw/ui-library";
-import CodeExample from "@/app/components/patterns/CodeExample";
-import { Intro } from "@ssw/ui-library";
+import {
+  CodeBlock,
+  CodeExample,
+  Intro,
+} from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
 import { useSemanticColors } from "@ssw/ui-library";
 import { pageLayoutTokens, radius, shadows, spacing } from "@ssw/ui-library";

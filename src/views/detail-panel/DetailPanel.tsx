@@ -18,19 +18,21 @@ import {
   Badge,
   Button,
   Card,
-  CopyAction,
   DetailPanel,
   DetailRow,
   DetailSection,
-  GuidelineList,
   IconBox,
-  Intro,
   Surface,
   useSemanticColors,
 } from "@ssw/ui-library";
-import CodeExample from "@/app/components/patterns/CodeExample";
+import {
+  CodeExample,
+  CopyAction,
+  GuidelineList,
+  Intro,
+  Section,
+} from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { Section } from "@ssw/ui-library";
 import { borderWidths, radius, spacing } from "@ssw/ui-library";
 
 const sections = [
