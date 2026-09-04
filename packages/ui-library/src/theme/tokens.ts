@@ -129,6 +129,20 @@ export const pageLayoutTokens = {
   noteMarginBottom: spacing.xxl,
 } as const;
 
+export const appLayoutTokens = {
+  minimumSupportedWidth: 1024,
+  minimumWidthNoticeMinHeight: 260,
+  headerPaddingX: {
+    xs: spacing.lg,
+    md: spacing.xl,
+  },
+  headerPaddingY: spacing.md,
+  contentPadding: {
+    xs: spacing.lg,
+    md: spacing.xl,
+  },
+} as const;
+
 export const navbarTokens = {
   actionSize: "2.375rem",
   actionSlotSize: "2.375rem",

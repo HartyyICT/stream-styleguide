@@ -22,10 +22,18 @@ import {
   TokenCode,
   TokenTable,
 } from "@/app/components/documentation";
-import { FixedPageLayout } from "@/app/components/examples";
+import {
+  BusinessUnitBannerExample,
+  CardColumnsExample,
+  FixedPageLayout,
+  MinimumWidthNoticeExample,
+  PageStateWrapperExample,
+  ProductPageLayoutExample,
+} from "@/app/components/examples";
 import Page from "@/app/components/layout/Page";
 import { useSemanticColors } from "@ssw/ui-library";
 import {
+  appLayoutTokens,
   iconSizes,
   pageLayoutTokens,
   responsiveGrids,
@@ -37,7 +45,12 @@ const sections = [
   { label: "Anatomy", href: "#anatomy" },
   { label: "Layout tokens", href: "#layout-tokens" },
   { label: "Fixed structure", href: "#fixed-structure" },
-  { label: "Code examples", href: "#code-examples" },
+  { label: "Product page", href: "#product-page" },
+  { label: "Business unit", href: "#business-unit" },
+  { label: "Card columns", href: "#card-columns" },
+  { label: "Page states", href: "#page-states" },
+  { label: "Minimum width", href: "#minimum-width" },
+  { label: "Documentation page", href: "#documentation-page" },
   { label: "Guidelines", href: "#guidelines" },
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
@@ -79,6 +92,13 @@ const layoutTokenRows = [
     ],
   },
   {
+    token: "appLayoutTokens.minimumSupportedWidth",
+    columns: [
+      { value: `${appLayoutTokens.minimumSupportedWidth}px`, code: true },
+      { value: "Default lower viewport boundary for desktop applications." },
+    ],
+  },
+  {
     token: "pageLayoutTokens.sectionDividerMarginY",
     columns: [
       { value: pageLayoutTokens.sectionDividerMarginY, code: true },
@@ -88,13 +108,15 @@ const layoutTokenRows = [
 ] as const;
 
 const guidelines = [
-  "Use the shared Page component for every documentation page.",
+  "Use PageLayout from the package for product screens and the local Page component for styleguide documentation.",
   "Start every page with Intro so title, description and note spacing stay consistent.",
   "Use Section for each scroll target that appears in On this page.",
   "Keep one main content column and one optional in-page navigation column.",
   "Use the default content width for text-heavy pages and the wide width only when examples need it.",
   "Never hardcode shell padding, section gaps or scroll margins inside individual pages.",
-  "Place code examples before guidelines so users can see implementation before rules.",
+  "Pass business-unit data and callbacks into the package instead of coupling the component to application context.",
+  "Keep rendered page content mounted during refetches so local filter, tab and expansion state survives.",
+  "Use a minimum-width notice only when the complete workflow genuinely cannot be made responsive.",
 ] as const;
 
 const accessibilityGuidelines = [
@@ -133,6 +155,61 @@ export default function ExamplePage() {
   );
 }`;
 
+const productPageCode = `import {
+  BusinessUnitBanner,
+  Button,
+  PageLayout,
+} from "@ssw/ui-library";
+
+<PageLayout
+  title="Declarations"
+  description="Review, filter and manage customs declarations."
+  breadcrumbs={[{ label: "Home", href: "/" }, { label: "Declarations" }]}
+  actions={<Button>New declaration</Button>}
+  contextBanner={
+    <BusinessUnitBanner
+      businessUnit={selectedBusinessUnit}
+      availableBusinessUnits={availableBusinessUnits}
+      onSelect={selectBusinessUnit}
+      onClear={clearBusinessUnit}
+    />
+  }
+>
+  {children}
+</PageLayout>`;
+
+const businessUnitCode = `const [businessUnit, setBusinessUnit] = useState<BusinessUnitOption | null>(
+  businessUnits[0],
+);
+
+<BusinessUnitBanner
+  businessUnit={businessUnit}
+  availableBusinessUnits={businessUnits}
+  onSelect={setBusinessUnit}
+  onClear={() => setBusinessUnit(null)}
+/>`;
+
+const cardColumnsCode = `<CardColumns columns={2}>
+  <Card title="Shipment">...</Card>
+  <Card title="Customs status">...</Card>
+  <Card title="Parties">...</Card>
+  <Card title="Documents">...</Card>
+</CardColumns>`;
+
+const pageStateCode = `<PageStateWrapper
+  isLoading={query.isLoading}
+  isError={query.isError}
+  isForbidden={query.error?.status === 403}
+  error={query.error}
+>
+  <DeclarationsGrid rows={query.data} />
+</PageStateWrapper>`;
+
+const minimumWidthCode = `<MinimumWidthNotice
+  minimumWidth={appLayoutTokens.minimumSupportedWidth}
+  title="This workspace needs a wider screen"
+/>`;
+
 function renderPageLayoutPreview() {
   return <FixedPageLayout sx={{ width: "100%" }} />;
 }
@@ -144,8 +221,8 @@ export default function PageLayoutPage() {
     <Page pageId="page-layout" sections={sections}>
       <Intro
         title="Page layout"
-        description="The fixed page layout defines how every Stream documentation page is structured: navbar, sidebar, main content, page intro, sections and in-page navigation."
-        note="Use this foundation whenever a new page is added. It keeps spacing, scroll behaviour and responsive structure predictable across the full styleguide."
+        description="Page layout covers both product screens and styleguide documentation: page headers, context banners, stable card columns, loading and error states, and the minimum supported viewport."
+        note="Product layouts come from the UI package. Documentation layout helpers stay local to the styleguide, while both continue to use the same theme and tokens."
       />
 
       <Section
@@ -225,8 +302,73 @@ export default function PageLayoutPage() {
       </Section>
 
       <Section
-        id="code-examples"
-        title="Code examples"
+        id="product-page"
+        title="Product page"
+        description="PageLayout combines breadcrumbs, page identity, actions, an optional context banner and the content surface. Application data remains outside the component and is passed through props."
+      >
+        <CodeExample
+          title="Application page shell"
+          code={productPageCode}
+          preview={<ProductPageLayoutExample />}
+          previewMinHeight={420}
+        />
+      </Section>
+
+      <Section
+        id="business-unit"
+        title="Business unit banner"
+        description="Keep the active business unit visible when it changes the scope of every action on the page. The application owns workspace state; the package renders the current selection and switching interaction."
+      >
+        <CodeExample
+          title="Selectable business unit"
+          code={businessUnitCode}
+          preview={<BusinessUnitBannerExample />}
+          previewMinHeight={220}
+        />
+      </Section>
+
+      <Section
+        id="card-columns"
+        title="Card columns"
+        description="CardColumns assigns cards to stable tracks by their original index. Expanding one card only moves the cards underneath it in the same track, which prevents unrelated content from jumping between columns."
+      >
+        <CodeExample
+          title="Stable two-column details"
+          code={cardColumnsCode}
+          preview={<CardColumnsExample />}
+          previewMinHeight={360}
+        />
+      </Section>
+
+      <Section
+        id="page-states"
+        title="Page states"
+        description="PageStateWrapper replaces content during the initial load or initial failure. After content has rendered, refetches keep it mounted so search text, selected tabs, expanded rows and DataGrid state are preserved."
+      >
+        <CodeExample
+          title="Initial and retained page state"
+          code={pageStateCode}
+          preview={<PageStateWrapperExample />}
+          previewMinHeight={380}
+        />
+      </Section>
+
+      <Section
+        id="minimum-width"
+        title="Minimum width"
+        description="MinimumWidthNotice provides an explicit fallback for desktop-only workflows below the supported viewport. The default boundary comes from the shared layout tokens and the text remains configurable per application."
+      >
+        <CodeExample
+          title="Unsupported viewport notice"
+          code={minimumWidthCode}
+          preview={<MinimumWidthNoticeExample />}
+          previewMinHeight={300}
+        />
+      </Section>
+
+      <Section
+        id="documentation-page"
+        title="Documentation page"
         description="New pages should use the shared page layout components instead of rebuilding spacing and anchors manually."
       >
         <CodeExample
