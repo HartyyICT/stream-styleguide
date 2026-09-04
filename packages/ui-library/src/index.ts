@@ -13,15 +13,25 @@ export { default as DeleteButton } from "./components/buttons/DeleteButton";
 export { default as Checkbox } from "./components/forms/Checkbox";
 export type { CheckboxProps } from "./components/forms/Checkbox";
 export { default as CheckboxField } from "./components/forms/CheckboxField";
+export { default as Combobox } from "./components/forms/Combobox";
+export type { ComboboxOption, ComboboxProps } from "./components/forms/Combobox";
 export { default as ErrorText } from "./components/forms/ErrorText";
 export { default as FormActionRow } from "./components/forms/FormActionRow";
 export { default as FormField } from "./components/forms/FormField";
 export { default as FormLayout } from "./components/forms/FormLayout";
 export { default as FormSection } from "./components/forms/FormSection";
+export { default as FileUpload } from "./components/forms/FileUpload";
+export type { FileUploadProps } from "./components/forms/FileUpload";
 export { default as HelperText } from "./components/forms/HelperText";
 export { default as Input } from "./components/forms/Input";
 export type { InputProps, InputState } from "./components/forms/Input";
 export { default as Label } from "./components/forms/Label";
+export { default as MultiSelect } from "./components/forms/MultiSelect";
+export type { MultiSelectProps } from "./components/forms/MultiSelect";
+export { default as MultiValueInput } from "./components/forms/MultiValueInput";
+export type { MultiValueInputProps } from "./components/forms/MultiValueInput";
+export { default as NumberField } from "./components/forms/NumberField";
+export type { NumberFieldMode, NumberFieldProps } from "./components/forms/NumberField";
 export { default as Radio } from "./components/forms/Radio";
 export type { RadioProps } from "./components/forms/Radio";
 export { default as RadioGroup } from "./components/forms/RadioGroup";
@@ -46,6 +56,12 @@ export type { EmptyStateProps } from "./components/feedback/EmptyState";
 export { default as InfoBanner } from "./components/feedback/InfoBanner";
 export { default as Loading } from "./components/feedback/Loading";
 export type { LoadingProps } from "./components/feedback/Loading";
+export { default as ResultState } from "./components/feedback/ResultState";
+export type {
+  ResultStateAction,
+  ResultStateProps,
+  ResultStateTone,
+} from "./components/feedback/ResultState";
 export { default as StatusChip } from "./components/feedback/StatusChip";
 export type { StatusChipProps, StatusChipTone } from "./components/feedback/StatusChip";
 
