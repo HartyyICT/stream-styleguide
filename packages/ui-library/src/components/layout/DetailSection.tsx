@@ -5,16 +5,16 @@ import type { ReactNode } from "react";
 import { spacing } from "../../theme/tokens";
 import Divider from "./Divider";
 
-interface DetailSectionProps {
+export interface DetailSectionProps {
   title: string;
   children?: ReactNode;
 }
 
 export default function DetailSection({ title, children }: DetailSectionProps) {
   return (
-    <Box sx={{ display: "grid", gap: spacing.md }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: spacing.md }}>
       <Divider />
-      <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+      <Typography variant="h6" sx={{ fontWeight: 500 }}>
         {title}
       </Typography>
       {children}

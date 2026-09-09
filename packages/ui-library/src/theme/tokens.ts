@@ -26,10 +26,10 @@ export const colors = {
   semantic: {
     surface: "#FFFFFF",
     background: "#F8FAFB",
-    success: { light: "#22C35D", main: "#22C35D", dark: "#1A8E46" },
-    warning: { light: "#FFBA6B", main: "#FF8800", dark: "#CC6D00" },
-    error: { light: "#FF7070", main: "#C32222", dark: "#991B1B" },
-    info: { light: "#A3CEFF", main: "#297CD9", dark: "#034B9C" },
+    success: { light: "#CCF2DC", main: "#22C35D", dark: "#1A9C4B" },
+    warning: { light: "#FFDFBF", main: "#FF8800", dark: "#CC6D00" },
+    error: { light: "#F8D4D4", main: "#E23636", dark: "#B92A2A" },
+    info: { light: "#E3F2FD", main: "#1976D2", dark: "#0D47A1" },
   },
 };
 
@@ -191,6 +191,18 @@ export const overlayTokens = {
   backdropBlur: "blur(8px)",
 } as const;
 
+export const detailPanelTokens = {
+  width: "30vw",
+  maxWidth: "28.125rem",
+  headerPadding: "1.125rem",
+  bodyPadding: spacing.lg,
+  contentGap: spacing.lg,
+  footerGap: spacing.sm,
+  backdropColor: "transparent",
+  backdropBlur: "blur(3px)",
+  closeHoverOpacity: 0.08,
+} as const;
+
 export const interactionStates = {
   light: {
     default: colors.semantic.surface,
@@ -219,6 +231,32 @@ export const borderWidths = {
   active: "3px",
   focus: "2px",
   accent: "4px",
+} as const;
+
+export const feedbackTokens = {
+  banner: {
+    gap: "0.75rem",
+    paddingX: spacing.md,
+    paddingY: spacing.md,
+    densePaddingY: spacing.sm,
+    borderWidth: borderWidths.accent,
+    borderRadius: radius.small,
+    iconSize: iconSizes.medium,
+    denseIconSize: iconSizes.small,
+    lightBackgroundOpacity: 0.5,
+    darkBackgroundOpacity: 0.16,
+    shadow: shadows.level1,
+  },
+  statusChip: {
+    height: 24,
+    dotSize: 10,
+    fontSize: "0.675rem",
+    fontWeight: 500,
+    backgroundOpacity: 0.12,
+    neutralBackgroundOpacity: 0.1,
+    textDarken: 0.4,
+    deleteOpacity: 0.6,
+  },
 } as const;
 
 export const borderColors = {

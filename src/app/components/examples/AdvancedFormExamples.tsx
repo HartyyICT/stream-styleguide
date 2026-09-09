@@ -152,7 +152,7 @@ export function CodebookAdapterExample() {
           <Typography variant="h3">Adapter output</Typography>
           <StatusChip
             status={status}
-            tone={status === "ready" ? "success" : status === "error" ? "error" : "info"}
+            color={status === "ready" ? "success" : status === "error" ? "error" : "info"}
           />
         </Box>
         <KeyValueList>

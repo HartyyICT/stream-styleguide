@@ -1,12 +1,16 @@
 "use client";
 
+import { alpha } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import {
   borderColors,
   colors,
+  feedbackTokens,
   interactionStates,
   semanticStateColors,
 } from "./tokens";
+
+type FeedbackSeverity = "info" | "success" | "warning" | "error";
 
 export function useSemanticColors() {
   const theme = useTheme();
@@ -21,6 +25,31 @@ export function useSemanticColors() {
   const primaryText = isDarkMode ? colors.neutral[50] : colors.neutral[900];
   const secondaryText = isDarkMode ? colors.neutral[300] : colors.neutral[600];
   const selectedBackground = interaction.activeBackground;
+  const feedbackBackground = (severity: FeedbackSeverity) =>
+    alpha(
+      isDarkMode ? colors.semantic[severity].main : colors.semantic[severity].light,
+      isDarkMode
+        ? feedbackTokens.banner.darkBackgroundOpacity
+        : feedbackTokens.banner.lightBackgroundOpacity,
+    );
+  const feedbackStates = {
+    info: {
+      color: semantic.info,
+      backgroundColor: feedbackBackground("info"),
+    },
+    success: {
+      color: semantic.success,
+      backgroundColor: feedbackBackground("success"),
+    },
+    warning: {
+      color: semantic.warning,
+      backgroundColor: feedbackBackground("warning"),
+    },
+    error: {
+      color: semantic.error,
+      backgroundColor: feedbackBackground("error"),
+    },
+  };
 
   return {
     mode,
@@ -38,6 +67,7 @@ export function useSemanticColors() {
     accent: interaction.activeIndicator,
     subtleBackground: interaction.hoverBackground,
     selectedBackground,
+    feedbackStates,
     formFocusRing: `0 0 0 3px ${selectedBackground}`,
     formStates: {
       default: {

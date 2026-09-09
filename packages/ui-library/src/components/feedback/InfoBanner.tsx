@@ -3,54 +3,49 @@
 import { Box, Typography, type BoxProps } from "@mui/material";
 import type { ReactNode } from "react";
 import { Info } from "lucide-react";
-import { borderWidths, iconSizes, spacing } from "../../theme/tokens";
+import { feedbackTokens, spacing } from "../../theme/tokens";
 import { useSemanticColors } from "../../theme/useSemanticColors";
+import FeedbackBanner from "./FeedbackBanner";
 
 interface InfoBannerProps extends BoxProps {
   title?: string;
   children: ReactNode;
-  /** Optional trailing content below the description, e.g. a row of TokenCode chips. */
   footer?: ReactNode;
 }
 
 export default function InfoBanner({ title, children, footer, sx, ...props }: InfoBannerProps) {
-  const { borders, secondaryText, subtleBackground } = useSemanticColors();
+  const { feedbackStates, secondaryText } = useSemanticColors();
+  const { color, backgroundColor } = feedbackStates.info;
 
   return (
-    <Box
+    <FeedbackBanner
       role="note"
+      toneColor={color}
+      toneBackground={backgroundColor}
+      leading={
+        <Info
+          size={feedbackTokens.banner.iconSize}
+          color={color}
+          aria-hidden="true"
+          style={{ flexShrink: 0, alignSelf: "center" }}
+        />
+      }
       {...props}
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: spacing.sm,
-        p: spacing.lg,
-        borderLeft: `${borderWidths.accent} solid ${borders.accent}`,
-        backgroundColor: subtleBackground,
-        ...sx,
-      }}
+      sx={sx}
     >
-      <Info
-        size={iconSizes.medium}
-        color={borders.accent}
-        aria-hidden="true"
-        style={{ flexShrink: 0 }}
-      />
-      <Box sx={{ minWidth: 0 }}>
-        {title && (
-          <Typography variant="h3" sx={{ mb: 0.5, color: borders.accent }}>
-            {title}
-          </Typography>
-        )}
-        <Typography variant="body2" sx={{ color: secondaryText, lineHeight: 1.7 }}>
-          {children}
+      {title && (
+        <Typography variant="h3" sx={{ mb: 0.5, color }}>
+          {title}
         </Typography>
-        {footer && (
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: spacing.sm, mt: spacing.md }}>
-            {footer}
-          </Box>
-        )}
-      </Box>
-    </Box>
+      )}
+      <Typography variant="body2" sx={{ color: secondaryText, lineHeight: 1.7 }}>
+        {children}
+      </Typography>
+      {footer && (
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: spacing.sm, mt: spacing.md }}>
+          {footer}
+        </Box>
+      )}
+    </FeedbackBanner>
   );
 }

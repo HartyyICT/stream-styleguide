@@ -2,12 +2,12 @@
 
 import { Box, Typography } from "@mui/material";
 import {
-  Badge,
   Card,
   DataGrid,
   InfoBanner,
   pageLayoutTokens,
   spacing,
+  StatusChip,
   useSemanticColors,
   type DataGridColumn,
   type DataGridFilter,
@@ -119,10 +119,10 @@ const statusLabel: Record<CustomerStatus, string> = {
   churned: "Churned",
 };
 
-const statusTone: Record<CustomerStatus, "success" | "warning" | "error"> = {
-  active: "success",
-  trial: "warning",
-  churned: "error",
+const statusColor: Record<CustomerStatus, "info" | "primary" | "inherit"> = {
+  active: "info",
+  trial: "primary",
+  churned: "inherit",
 };
 
 const planLabel: Record<CustomerPlan, string> = {
@@ -149,7 +149,12 @@ const customerColumns: DataGridColumn<CustomerRow>[] = [
     key: "status",
     header: "Status",
     minWidth: 120,
-    render: (row) => <Badge tone={statusTone[row.status]}>{statusLabel[row.status]}</Badge>,
+    render: (row) => (
+      <StatusChip
+        status={statusLabel[row.status]}
+        color={statusColor[row.status]}
+      />
+    ),
   },
   {
     key: "plan",
@@ -300,6 +305,7 @@ export default function DataGridPage() {
       <Intro
         title="DataGrid"
         description="DataGrid presents operational datasets with responsive columns, deliberate column ordering, sorting, and simple or combined filters. The configuration stays close to the column and filter definitions so every screen can prioritize the information its users need."
+        note="Configure column priority, ordering and filters around the task users need to complete. Keep server queries and persisted user preferences in the application while the DataGrid owns their consistent presentation and interaction."
       />
 
       <Section

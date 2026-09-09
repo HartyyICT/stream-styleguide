@@ -12,6 +12,7 @@ import { siteNavigationGroups } from "@/app/components/layout/siteNavigation";
 import { sidebarMotion, sidebarTransition } from "@ssw/ui-library";
 
 let persistedSidebarCollapsed = false;
+let persistedSidebarScrollTop = 0;
 
 export default function DocumentationLayout({
   children,
@@ -49,6 +50,10 @@ export default function DocumentationLayout({
         mobileOpen={mobileNavigationOpen}
         onMobileClose={() => setMobileNavigationOpen(false)}
         linkComponent={Link}
+        initialScrollTop={persistedSidebarScrollTop}
+        onScrollTopChange={(scrollTop) => {
+          persistedSidebarScrollTop = scrollTop;
+        }}
       />
 
       <Box

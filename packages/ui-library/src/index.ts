@@ -63,7 +63,8 @@ export type {
   ResultStateTone,
 } from "./components/feedback/ResultState";
 export { default as StatusChip } from "./components/feedback/StatusChip";
-export type { StatusChipProps, StatusChipTone } from "./components/feedback/StatusChip";
+export { useStatusPalette } from "./components/feedback/StatusChip";
+export type { StatusChipProps, StatusColor } from "./components/feedback/StatusChip";
 
 export { default as DataTable } from "./components/data/DataTable";
 export type { DataTableColumn } from "./components/data/DataTable";
@@ -105,8 +106,11 @@ export type { ColumnFlexBoxProps } from "./components/layout/ColumnFlexBox";
 export { default as ConfirmDialog } from "./components/layout/ConfirmDialog";
 export type { ConfirmDialogProps } from "./components/layout/ConfirmDialog";
 export { default as DetailPanel } from "./components/layout/DetailPanel";
+export type { DetailPanelProps } from "./components/layout/DetailPanel";
 export { default as DetailRow } from "./components/layout/DetailRow";
+export type { DetailRowProps } from "./components/layout/DetailRow";
 export { default as DetailSection } from "./components/layout/DetailSection";
+export type { DetailSectionProps } from "./components/layout/DetailSection";
 export { default as Dialog, default as AppDialog } from "./components/layout/Dialog";
 export type { DialogProps } from "./components/layout/Dialog";
 export { default as Divider } from "./components/layout/Divider";
@@ -136,6 +140,7 @@ export { default as ProfileIdentity } from "./components/navigation/ProfileIdent
 export { default as ProfileMenuItem } from "./components/navigation/ProfileMenuItem";
 export { default as Sidebar } from "./components/navigation/Sidebar";
 export type {
+  SidebarProps,
   SidebarNavigationGroup,
   SidebarNavigationItem,
 } from "./components/navigation/Sidebar";

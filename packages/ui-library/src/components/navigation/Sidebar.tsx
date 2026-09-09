@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ChevronDown, type LucideIcon } from "lucide-react";
-import { useState, type ElementType } from "react";
+import { useLayoutEffect, useRef, useState, type ElementType } from "react";
 import {
   borderWidths,
   iconSizes,
@@ -38,13 +38,15 @@ function createDefaultOpenGroups(groups: SidebarNavigationGroup[]) {
 
 let persistedOpenGroups: Record<string, boolean> | null = null;
 
-interface SidebarProps {
+export interface SidebarProps {
   groups: SidebarNavigationGroup[];
   activeHref: string;
   collapsed: boolean;
   mobileOpen?: boolean;
   onMobileClose?: () => void;
   linkComponent?: ElementType;
+  initialScrollTop?: number;
+  onScrollTopChange?: (scrollTop: number) => void;
 }
 
 export default function Sidebar({
@@ -54,7 +56,10 @@ export default function Sidebar({
   mobileOpen = false,
   onMobileClose,
   linkComponent = "a",
+  initialScrollTop = 0,
+  onScrollTopChange,
 }: SidebarProps) {
+  const desktopScrollRef = useRef<HTMLElement | null>(null);
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
     persistedOpenGroups ?? createDefaultOpenGroups(groups),
   );
@@ -69,6 +74,14 @@ export default function Sidebar({
   } = useSemanticColors();
   const border = borders.subtle;
   const hoverBackground = interaction.hoverBackground;
+
+  useLayoutEffect(() => {
+    const sidebar = desktopScrollRef.current;
+
+    if (sidebar && sidebar.scrollTop !== initialScrollTop) {
+      sidebar.scrollTop = initialScrollTop;
+    }
+  }, [initialScrollTop]);
 
   const labelSx = {
     minWidth: 0,
@@ -323,6 +336,8 @@ export default function Sidebar({
     <>
       <Box
         component="aside"
+        ref={desktopScrollRef}
+        onScroll={(event) => onScrollTopChange?.(event.currentTarget.scrollTop)}
         sx={{
           width: collapsed
             ? sidebarMotion.collapsedWidth

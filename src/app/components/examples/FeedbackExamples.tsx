@@ -47,11 +47,12 @@ export function DismissibleAlertExample() {
 export function StatusChipExamples() {
   return (
     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: spacing.sm }}>
-      <StatusChip status="Draft" />
-      <StatusChip status="In review" tone="info" />
-      <StatusChip status="Accepted" tone="success" />
-      <StatusChip status="Attention" tone="warning" />
-      <StatusChip status="Rejected" tone="error" />
+      <StatusChip status="Pending" color="info" />
+      <StatusChip status="Active" color="info" />
+      <StatusChip status="Ready to submit" color="primary" />
+      <StatusChip status="Completed" color="success" />
+      <StatusChip status="Needs attention" color="warning" />
+      <StatusChip status="Rejected" color="error" />
     </Box>
   );
 }

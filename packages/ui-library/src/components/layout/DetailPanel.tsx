@@ -1,18 +1,25 @@
 "use client";
 
 import { Box, Drawer, IconButton, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
-import { borderWidths, overlayTokens, radius, shadows, spacing } from "../../theme/tokens";
+import {
+  borderWidths,
+  detailPanelTokens,
+  iconSizes,
+  shadows,
+} from "../../theme/tokens";
 import { useSemanticColors } from "../../theme/useSemanticColors";
 
-interface DetailPanelProps {
+export interface DetailPanelProps {
   open: boolean;
   onClose: () => void;
   title: string;
   children?: ReactNode;
   footer?: ReactNode;
   width?: number | string;
+  maxWidth?: number | string;
 }
 
 export default function DetailPanel({
@@ -21,9 +28,10 @@ export default function DetailPanel({
   title,
   children,
   footer,
-  width = 420,
+  width = detailPanelTokens.width,
+  maxWidth = detailPanelTokens.maxWidth,
 }: DetailPanelProps) {
-  const { surface, borders, primaryText, secondaryText } = useSemanticColors();
+  const { surface, borders, primaryText, semantic } = useSemanticColors();
 
   return (
     <Drawer
@@ -33,17 +41,16 @@ export default function DetailPanel({
       slotProps={{
         backdrop: {
           sx: {
-            backgroundColor: overlayTokens.backdropColor,
-            backdropFilter: overlayTokens.backdropBlur,
-            WebkitBackdropFilter: overlayTokens.backdropBlur,
+            backgroundColor: detailPanelTokens.backdropColor,
+            backdropFilter: detailPanelTokens.backdropBlur,
+            WebkitBackdropFilter: detailPanelTokens.backdropBlur,
           },
         },
         paper: {
           sx: {
             width: { xs: "100%", sm: width },
-            maxWidth: "100vw",
+            maxWidth: { xs: "100vw", sm: maxWidth },
             backgroundColor: surface,
-            borderLeft: `${borderWidths.default} solid ${borders.default}`,
             boxShadow: shadows.level4,
             display: "flex",
             flexDirection: "column",
@@ -54,14 +61,14 @@ export default function DetailPanel({
       <Box
         sx={{
           display: "flex",
-          alignItems: "flex-start",
+          alignItems: "center",
           justifyContent: "space-between",
-          gap: spacing.md,
-          p: spacing.lg,
+          gap: detailPanelTokens.contentGap,
+          p: detailPanelTokens.headerPadding,
           borderBottom: `${borderWidths.default} solid ${borders.subtle}`,
         }}
       >
-        <Typography variant="h3" sx={{ color: primaryText }}>
+        <Typography variant="h6" sx={{ color: primaryText, fontWeight: 500 }}>
           {title}
         </Typography>
         <IconButton
@@ -70,31 +77,56 @@ export default function DetailPanel({
           size="small"
           sx={{
             flexShrink: 0,
-            color: secondaryText,
-            border: `${borderWidths.subtle} solid ${borders.subtle}`,
-            borderRadius: radius.small,
+            color: semantic.error,
+            border: `${borderWidths.default} solid transparent`,
+            backgroundColor: "transparent",
+            "&:hover": {
+              borderColor: "transparent",
+              backgroundColor: alpha(semantic.error, detailPanelTokens.closeHoverOpacity),
+            },
           }}
         >
-          <X size={16} />
+          <X size={iconSizes.small} />
         </IconButton>
       </Box>
 
-      <Box sx={{ flex: 1, overflowY: "auto", p: spacing.lg, display: "grid", gap: spacing.lg }}>
-        {children}
-      </Box>
-
-      {footer && (
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflow: "hidden",
+          p: detailPanelTokens.bodyPadding,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Box
           sx={{
-            p: spacing.lg,
-            borderTop: `${borderWidths.default} solid ${borders.subtle}`,
-            display: "grid",
-            gap: spacing.sm,
+            flex: 1,
+            minHeight: 0,
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "stretch",
+            gap: detailPanelTokens.contentGap,
           }}
         >
-          {footer}
+          {children}
         </Box>
-      )}
+
+        {footer && (
+          <Box
+            sx={{
+              flexShrink: 0,
+              pt: detailPanelTokens.bodyPadding,
+              display: "grid",
+              gap: detailPanelTokens.footerGap,
+            }}
+          >
+            {footer}
+          </Box>
+        )}
+      </Box>
     </Drawer>
   );
 }

@@ -128,6 +128,7 @@ export default function AdvancedFormControlsPage() {
       <Intro
         title="Advanced form controls"
         description="Advanced controls support searchable codebooks, multiple selections, locale-aware numbers, repeated free-form values and document uploads while keeping application data and services outside the UI package."
+        note="Use an advanced control only when a standard input or select cannot represent the task clearly. The package handles interaction and accessibility while the application keeps data fetching, validation and payload mapping."
       />
 
       <Section

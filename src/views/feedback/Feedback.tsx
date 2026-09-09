@@ -45,11 +45,12 @@ const dismissibleAlertCode = `<Alert
   onClose={handleClose}
 />`;
 
-const statusCode = `<StatusChip status="Draft" />
-<StatusChip status="In review" tone="info" />
-<StatusChip status="Accepted" tone="success" />
-<StatusChip status="Attention" tone="warning" />
-<StatusChip status="Rejected" tone="error" />`;
+const statusCode = `<StatusChip status="Pending" color="info" />
+<StatusChip status="Active" color="info" />
+<StatusChip status="Ready to submit" color="primary" />
+<StatusChip status="Completed" color="success" />
+<StatusChip status="Needs attention" color="warning" />
+<StatusChip status="Rejected" color="error" />`;
 
 const loadingCode = `<Loading />
 <Loading size={32} label="Loading declarations" />`;
@@ -73,6 +74,7 @@ const resultStateCode = `<ResultState
 const guidelines = [
   "Use Alert for feedback that belongs to the current task or content area.",
   "Use StatusChip for compact persistent state, not for a temporary notification.",
+  "Use info or primary during normal processing and reserve success, warning and error for completed or exceptional outcomes.",
   "Show Loading during the first request; retain existing content during background refetches.",
   "Choose a specific empty-state message that explains why nothing is shown and what the user can do next.",
   "Use ResultState when the entire page or workflow cannot continue.",
@@ -95,6 +97,7 @@ export default function FeedbackPage() {
       <Intro
         title="Feedback & states"
         description="Feedback components explain what happened, what is currently happening and what users can do next. They cover contextual alerts, compact statuses, loading, empty content and complete-page results."
+        note="Choose feedback by scope: use a StatusChip for persistent record state, an Alert for contextual feedback and a ResultState when the complete workflow cannot continue."
       />
 
       <Section
@@ -112,7 +115,7 @@ export default function FeedbackPage() {
       <Section
         id="status-chips"
         title="Status chips"
-        description="StatusChip represents state beside a record, title or table value. Every tone includes a text label and visible marker."
+        description="StatusChip represents state beside a record, title or table value. Stream uses info and primary for normal progression and reserves semantic colors for meaningful outcomes."
       >
         <CodeExample title="Operational statuses" code={statusCode} preview={<StatusChipExamples />} previewMinHeight={160} />
       </Section>
