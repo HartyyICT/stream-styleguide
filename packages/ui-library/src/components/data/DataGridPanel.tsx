@@ -161,25 +161,23 @@ export default function DataGridPanel<TValue extends string = string>({
       <Box sx={{ width: "100%", minWidth: 0 }}>{children}</Box>
 
       {bulkActions && (
-        <Fade in={selectedCount > 0}>
+        <Fade in={selectedCount > 0} mountOnEnter unmountOnExit>
           <Box
             sx={{
-              position: "absolute",
-              left: "50%",
-              bottom: spacing.md,
-              transform: "translateX(-50%)",
-              minWidth: 320,
-              maxWidth: "calc(100% - 2rem)",
+              mx: spacing.md,
+              mb: spacing.md,
+              minWidth: 0,
               px: spacing.md,
               py: spacing.sm,
               display: "flex",
               alignItems: "center",
+              flexWrap: "wrap",
               gap: spacing.md,
-              color: surface,
-              backgroundColor: primaryText,
+              color: primaryText,
+              backgroundColor: surface,
+              border: `${borderWidths.default} solid ${borders.default}`,
               borderRadius: radius.medium,
-              boxShadow: shadows.level4,
-              zIndex: 2,
+              boxShadow: shadows.level1,
             }}
           >
             <Text variant="body2" sx={{ color: "inherit", fontWeight: 700 }}>
@@ -189,9 +187,10 @@ export default function DataGridPanel<TValue extends string = string>({
             <Button
               variant="icon"
               size="sm"
+              iconOnly
               aria-label="Clear selection"
               onClick={onClearSelection}
-              sx={{ ml: "auto", color: "inherit" }}
+              sx={{ ml: "auto" }}
             >
               <X size={iconSizes.small} aria-hidden="true" />
             </Button>

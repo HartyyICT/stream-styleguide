@@ -1,9 +1,12 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
+import { useState } from "react";
 import {
+  Button,
   Card,
   DataGrid,
+  DataGridPanel,
   InfoBanner,
   pageLayoutTokens,
   spacing,
@@ -11,6 +14,7 @@ import {
   useSemanticColors,
   type DataGridColumn,
   type DataGridFilter,
+  type DataGridRowKey,
   type DataGridSearch,
 } from "@ssw/ui-library";
 import {
@@ -26,6 +30,7 @@ const sections = [
   { label: "Overview", href: "#data-grid" },
   { label: "Responsiveness", href: "#responsiveness" },
   { label: "Column order", href: "#column-order" },
+  { label: "Server pagination", href: "#server-pagination" },
   { label: "Simple filters", href: "#simple-filters" },
   { label: "Complex filters", href: "#complex-filters" },
   { label: "Combined example", href: "#combined-example" },
@@ -281,19 +286,102 @@ const combinedUsageCode = `import { DataGrid } from "@ssw/ui-library";
   defaultSort={{ key: "mrr", direction: "desc" }}
 />`;
 
+const serverPaginationCode = `const [page, setPage] = useState(0);
+const [pageSize, setPageSize] = useState(3);
+const [selectedRows, setSelectedRows] = useState([]);
+
+<DataGridPanel
+  selectedCount={selectedRows.length}
+  onClearSelection={() => setSelectedRows([])}
+  bulkActions={<Button variant="secondary">Assign selected</Button>}
+>
+  <DataGrid
+    processingMode="server"
+    columns={columns}
+    rows={serverRows}
+    getRowKey={(row) => row.id}
+    pagination={{
+      page,
+      pageSize,
+      rowCount: totalRowCount,
+      pageSizeOptions: [3, 5],
+      onPageChange: setPage,
+      onPageSizeChange: setPageSize,
+    }}
+    rowSelection={{
+      selectedRowKeys: selectedRows,
+      onSelectedRowKeysChange: setSelectedRows,
+    }}
+  />
+</DataGridPanel>`;
+
+const serverColumns = customerColumns.map((column) => ({
+  ...column,
+  sortable: false,
+}));
+
+function ServerPaginationExample() {
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(3);
+  const [selectedRows, setSelectedRows] = useState<DataGridRowKey[]>([]);
+  const pageRows = customers.slice(page * pageSize, page * pageSize + pageSize);
+
+  return (
+    <DataGridPanel
+      selectedCount={selectedRows.length}
+      onClearSelection={() => setSelectedRows([])}
+      bulkSelectionLabel={(count) => `${count} ${count === 1 ? "customer" : "customers"} selected`}
+      bulkActions={
+        <Box sx={{ display: "flex", gap: spacing.sm }}>
+          <Button variant="secondary" size="sm" onClick={() => setSelectedRows([])}>
+            Assign selected
+          </Button>
+          <Button variant="secondary" size="sm" onClick={() => setSelectedRows([])}>
+            Export selected
+          </Button>
+        </Box>
+      }
+    >
+      <DataGrid
+        processingMode="server"
+        columns={serverColumns}
+        columnOrder={customerColumnOrder}
+        rows={pageRows}
+        getRowKey={(row) => row.id}
+        pagination={{
+          page,
+          pageSize,
+          rowCount: customers.length,
+          pageSizeOptions: [3, 5],
+          onPageChange: setPage,
+          onPageSizeChange: setPageSize,
+        }}
+        rowSelection={{
+          selectedRowKeys: selectedRows,
+          onSelectedRowKeysChange: setSelectedRows,
+          getRowLabel: (row) => row.name,
+        }}
+      />
+    </DataGridPanel>
+  );
+}
+
 const guidelines = [
   "Measure the grid container, not the viewport. Side navigation and detail panels can reduce the available width without changing the viewport breakpoint.",
   "Keep the primary identifier and essential status visible; give optional columns a hideBelow threshold and remove the least useful information first.",
   "Configure column order around the user's task. Put the fields used to identify and decide before supporting metadata.",
   "Use a simple filter for one common question. Use complex filters only when users regularly combine several criteria.",
   "Keep applied complex filters visible as removable chips, even when the filter controls are elsewhere or collapsed.",
-  "For server-paginated datasets, apply search and filters in the API query and reuse the same visible filter-summary pattern.",
+  "For server-paginated datasets, keep page, page size, sorting and filter state in the application and pass the current rows back to the DataGrid.",
+  "Keep selections controlled so they can remain selected while users move between server pages.",
+  "Show bulk actions only while one or more rows are selected and always provide a clear-selection action.",
 ] as const;
 
 const accessibilityGuidelines = [
   "The grid uses native table, thead and tbody elements, so assistive technology receives the correct structure.",
   "Sortable headers remain keyboard-operable and expose the active sort direction.",
   "Search and select controls have visible or programmatic labels, and active filter chips can be removed with the keyboard.",
+  "Selection checkboxes name the row they control, and the header checkbox selects only the rows visible on the current page.",
   "Do not hide the only path to important data. Responsive columns should contain supporting information that is also available in a row detail view.",
 ] as const;
 
@@ -305,7 +393,7 @@ export default function DataGridPage() {
       <Intro
         title="DataGrid"
         description="DataGrid presents operational datasets with responsive columns, deliberate column ordering, sorting, and simple or combined filters. The configuration stays close to the column and filter definitions so every screen can prioritize the information its users need."
-        note="Configure column priority, ordering and filters around the task users need to complete. Keep server queries and persisted user preferences in the application while the DataGrid owns their consistent presentation and interaction."
+        note="Configure column priority, ordering and filters around the task users need to complete. Keep server queries and persisted user preferences in the application while the DataGrid owns pagination, selection and their consistent presentation."
       />
 
       <Section
@@ -323,6 +411,18 @@ export default function DataGridPage() {
         description="The columns array is the default order. Pass columnOrder when a screen needs a different task-focused order without duplicating its render definitions. Unknown keys are ignored and unlisted columns stay in their original order at the end."
       >
         <CodeBlock>{columnOrderCode}</CodeBlock>
+      </Section>
+
+      <Section
+        id="server-pagination"
+        title="Server pagination, selection and bulk actions"
+        description="The application owns the current server page and total row count. DataGrid renders that page, keeps row selection controlled across pages and exposes the selection to the reusable bulk-action bar."
+      >
+        <CodeExample
+          title="Server-controlled data grid"
+          code={serverPaginationCode}
+          preview={<ServerPaginationExample />}
+        />
       </Section>
 
       <Section
@@ -396,10 +496,10 @@ export default function DataGridPage() {
           <GuidelineList items={accessibilityGuidelines} />
         </Card>
 
-        <InfoBanner title="Client-side scope" sx={{ mt: spacing.md }}>
-          This component filters the rows passed to it. Large or server-paginated datasets should
-          keep filter state in the screen, request filtered data from the API, and retain the same
-          applied-filter summary.
+        <InfoBanner title="Application-owned data" sx={{ mt: spacing.md }}>
+          In server mode the application requests the correct page and passes its rows, total count
+          and controlled query state to DataGrid. The component keeps the controls and interaction
+          consistent without taking ownership of API calls.
         </InfoBanner>
       </Section>
     </Page>

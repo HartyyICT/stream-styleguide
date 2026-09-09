@@ -2,23 +2,34 @@
 
 import {
   Box,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TableSortLabel,
 } from "@mui/material";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { borderWidths, spacing, tableTokens } from "../../theme/tokens";
+import {
+  borderWidths,
+  formTokens,
+  radius,
+  spacing,
+  tableTokens,
+} from "../../theme/tokens";
 import { useSemanticColors } from "../../theme/useSemanticColors";
-import Surface from "../layout/Surface";
-import Text from "../typography/Text";
+import Checkbox from "../forms/Checkbox";
 import Label from "../forms/Label";
 import SearchField from "../forms/SearchField";
 import Select from "../forms/Select";
+import Surface from "../layout/Surface";
+import Text from "../typography/Text";
 import FilterSummary, { FilterChip } from "./FilterSummary";
+
+export type DataGridRowKey = string | number;
 
 export interface DataGridColumn<Row> {
   key: string;
@@ -50,17 +61,52 @@ export interface DataGridSearch<Row> {
   predicate: (row: Row, query: string) => boolean;
 }
 
+export interface DataGridSort {
+  key: string;
+  direction: "asc" | "desc";
+}
+
+export interface DataGridQuery {
+  search: string;
+  filters: Record<string, string>;
+  sort: DataGridSort | null;
+}
+
+export interface DataGridPagination {
+  page: number;
+  pageSize: number;
+  rowCount?: number;
+  pageSizeOptions?: readonly number[];
+  onPageChange: (page: number) => void;
+  onPageSizeChange?: (pageSize: number) => void;
+}
+
+export interface DataGridRowSelection<Row> {
+  selectedRowKeys: readonly DataGridRowKey[];
+  onSelectedRowKeysChange: (keys: DataGridRowKey[]) => void;
+  isRowSelectable?: (row: Row) => boolean;
+  getRowLabel?: (row: Row) => string;
+}
+
 export type DataGridDensity = keyof typeof tableTokens.density;
+export type DataGridProcessingMode = "client" | "server";
 
 export interface DataGridProps<Row> {
   columns: DataGridColumn<Row>[];
   rows: Row[];
-  getRowKey: (row: Row) => string | number;
+  getRowKey: (row: Row) => DataGridRowKey;
   columnOrder?: readonly string[];
   search?: DataGridSearch<Row>;
   filters?: DataGridFilter<Row>[];
   density?: DataGridDensity;
-  defaultSort?: { key: string; direction: "asc" | "desc" };
+  defaultSort?: DataGridSort;
+  query?: DataGridQuery;
+  onQueryChange?: (query: DataGridQuery) => void;
+  processingMode?: DataGridProcessingMode;
+  pagination?: DataGridPagination;
+  rowSelection?: DataGridRowSelection<Row>;
+  loading?: boolean;
+  loadingLabel?: string;
   emptyState?: ReactNode;
 }
 
@@ -82,12 +128,22 @@ export default function DataGrid<Row>({
   filters,
   density = "comfortable",
   defaultSort,
+  query,
+  onQueryChange,
+  processingMode = "client",
+  pagination,
+  rowSelection,
+  loading = false,
+  loadingLabel = "Loading rows",
   emptyState,
 }: DataGridProps<Row>) {
-  const { borders, subtleBackground } = useSemanticColors();
-  const [sort, setSort] = useState(defaultSort ?? null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterValues, setFilterValues] = useState<Record<string, string>>({});
+  const { borders, subtleBackground, formStates } = useSemanticColors();
+  const [internalQuery, setInternalQuery] = useState<DataGridQuery>({
+    search: "",
+    filters: {},
+    sort: defaultSort ?? null,
+  });
+  const activeQuery = query ?? internalQuery;
   const gridRef = useRef<HTMLDivElement>(null);
   const [gridWidth, setGridWidth] = useState<number>();
   const densityTokens = tableTokens.density[density];
@@ -137,7 +193,11 @@ export default function DataGrid<Row>({
   }, [gridWidth, orderedColumns]);
 
   const filteredRows = useMemo(() => {
-    const normalizedQuery = searchQuery.trim();
+    if (processingMode === "server") {
+      return rows;
+    }
+
+    const normalizedQuery = activeQuery.search.trim();
     const searchedRows =
       search && normalizedQuery
         ? rows.filter((row) => search.predicate(row, normalizedQuery))
@@ -149,18 +209,18 @@ export default function DataGrid<Row>({
 
     return searchedRows.filter((row) =>
       filters.every((filter) => {
-        const value = filterValues[filter.key];
+        const value = activeQuery.filters[filter.key];
         return !value || filter.predicate(row, value);
       }),
     );
-  }, [rows, search, searchQuery, filters, filterValues]);
+  }, [rows, search, filters, activeQuery.search, activeQuery.filters, processingMode]);
 
   const sortedRows = useMemo(() => {
-    if (!sort) {
+    if (processingMode === "server" || !activeQuery.sort) {
       return filteredRows;
     }
 
-    const column = columns.find((candidate) => candidate.key === sort.key);
+    const column = columns.find((candidate) => candidate.key === activeQuery.sort?.key);
 
     if (!column) {
       return filteredRows;
@@ -177,30 +237,65 @@ export default function DataGrid<Row>({
       return String(valueA).localeCompare(String(valueB));
     });
 
-    return sort.direction === "desc" ? sorted.reverse() : sorted;
-  }, [filteredRows, sort, columns]);
+    return activeQuery.sort.direction === "desc" ? sorted.reverse() : sorted;
+  }, [filteredRows, activeQuery.sort, columns, processingMode]);
+
+  const displayedRows = useMemo(() => {
+    if (!pagination || processingMode === "server") {
+      return sortedRows;
+    }
+
+    const start = pagination.page * pagination.pageSize;
+    return sortedRows.slice(start, start + pagination.pageSize);
+  }, [sortedRows, pagination, processingMode]);
+
+  useEffect(() => {
+    if (!pagination || processingMode === "server") {
+      return;
+    }
+
+    const lastPage = Math.max(Math.ceil(sortedRows.length / pagination.pageSize) - 1, 0);
+    if (pagination.page > lastPage) {
+      pagination.onPageChange(lastPage);
+    }
+  }, [pagination, processingMode, sortedRows.length]);
+
+  function updateQuery(nextQuery: DataGridQuery, resetPage = false) {
+    if (!query) {
+      setInternalQuery(nextQuery);
+    }
+    onQueryChange?.(nextQuery);
+
+    if (resetPage && pagination && pagination.page !== 0) {
+      pagination.onPageChange(0);
+    }
+  }
 
   function handleSort(key: string) {
-    setSort((current) =>
-      current?.key === key
-        ? { key, direction: current.direction === "asc" ? "desc" : "asc" }
-        : { key, direction: "asc" },
-    );
+    const nextSort: DataGridSort =
+      activeQuery.sort?.key === key
+        ? {
+            key,
+            direction: activeQuery.sort.direction === "asc" ? "desc" : "asc",
+          }
+        : { key, direction: "asc" };
+
+    updateQuery({ ...activeQuery, sort: nextSort }, true);
   }
 
   const activeFilters = [
-    ...(searchQuery.trim()
+    ...(activeQuery.search.trim()
       ? [
           {
             key: "data-grid-search",
             label: search?.label ?? "Search",
-            value: searchQuery.trim(),
-            clear: () => setSearchQuery(""),
+            value: activeQuery.search.trim(),
+            clear: () => updateQuery({ ...activeQuery, search: "" }, true),
           },
         ]
       : []),
     ...(filters ?? []).flatMap((filter) => {
-      const value = filterValues[filter.key];
+      const value = activeQuery.filters[filter.key];
       const option = filter.options.find((candidate) => candidate.value === value);
 
       return value && option
@@ -210,7 +305,13 @@ export default function DataGrid<Row>({
               label: filter.label,
               value: option.label,
               clear: () =>
-                setFilterValues((current) => ({ ...current, [filter.key]: "" })),
+                updateQuery(
+                  {
+                    ...activeQuery,
+                    filters: { ...activeQuery.filters, [filter.key]: "" },
+                  },
+                  true,
+                ),
             },
           ]
         : [];
@@ -218,9 +319,51 @@ export default function DataGrid<Row>({
   ];
 
   function resetFilters() {
-    setSearchQuery("");
-    setFilterValues({});
+    updateQuery({ ...activeQuery, search: "", filters: {} }, true);
   }
+
+  const selectedKeys = new Set(rowSelection?.selectedRowKeys ?? []);
+  const selectableRows = rowSelection
+    ? displayedRows.filter((row) => rowSelection.isRowSelectable?.(row) ?? true)
+    : [];
+  const selectableKeys = selectableRows.map(getRowKey);
+  const selectedVisibleCount = selectableKeys.filter((key) => selectedKeys.has(key)).length;
+  const allVisibleSelected = selectableKeys.length > 0 && selectedVisibleCount === selectableKeys.length;
+
+  function setSelectedKeys(keys: Set<DataGridRowKey>) {
+    rowSelection?.onSelectedRowKeysChange([...keys]);
+  }
+
+  function toggleVisibleRows() {
+    const next = new Set(selectedKeys);
+
+    if (allVisibleSelected) {
+      selectableKeys.forEach((key) => next.delete(key));
+    } else {
+      selectableKeys.forEach((key) => next.add(key));
+    }
+
+    setSelectedKeys(next);
+  }
+
+  function toggleRow(row: Row) {
+    const key = getRowKey(row);
+    const next = new Set(selectedKeys);
+
+    if (next.has(key)) {
+      next.delete(key);
+    } else {
+      next.add(key);
+    }
+
+    setSelectedKeys(next);
+  }
+
+  const columnCount = visibleColumns.length + (rowSelection ? 1 : 0);
+  const rowCount =
+    pagination && processingMode === "server"
+      ? pagination.rowCount ?? rows.length
+      : sortedRows.length;
 
   return (
     <Box ref={gridRef} sx={{ width: "100%", minWidth: 0 }}>
@@ -247,8 +390,10 @@ export default function DataGrid<Row>({
               >
                 <Label component="span">{search.label ?? "Search"}</Label>
                 <SearchField
-                  value={searchQuery}
-                  onSearch={setSearchQuery}
+                  value={activeQuery.search}
+                  onSearch={(searchValue) =>
+                    updateQuery({ ...activeQuery, search: searchValue }, true)
+                  }
                   placeholder={search.placeholder}
                   label={search.label}
                   debounceMs={search.debounceMs}
@@ -259,12 +404,18 @@ export default function DataGrid<Row>({
               <Box key={filter.key} sx={{ display: "grid", gap: 0.5, minWidth: 160 }}>
                 <Label component="span">{filter.label}</Label>
                 <Select
-                  value={filterValues[filter.key] ?? ""}
+                  value={activeQuery.filters[filter.key] ?? ""}
                   onChange={(event) =>
-                    setFilterValues((current) => ({
-                      ...current,
-                      [filter.key]: event.target.value,
-                    }))
+                    updateQuery(
+                      {
+                        ...activeQuery,
+                        filters: {
+                          ...activeQuery.filters,
+                          [filter.key]: event.target.value,
+                        },
+                      },
+                      true,
+                    )
                   }
                   aria-label={filter.label}
                 >
@@ -300,10 +451,29 @@ export default function DataGrid<Row>({
             </FilterSummary>
           </Box>
         )}
-        <TableContainer sx={{ border: 0, borderRadius: 0 }}>
+        <TableContainer sx={{ border: 0, borderRadius: 0 }} aria-busy={loading}>
           <Table>
             <TableHead>
               <TableRow>
+                {rowSelection && (
+                  <TableCell
+                    padding="none"
+                    sx={{
+                      width: `calc(${spacing.md} + ${spacing.sm} + ${formTokens.choice.size}px)`,
+                      height: densityTokens.rowHeight,
+                      pl: spacing.md,
+                      pr: spacing.sm,
+                    }}
+                  >
+                    <Checkbox
+                      checked={allVisibleSelected}
+                      indeterminate={selectedVisibleCount > 0 && !allVisibleSelected}
+                      disabled={selectableKeys.length === 0}
+                      onChange={toggleVisibleRows}
+                      slotProps={{ input: { "aria-label": "Select all visible rows" } }}
+                    />
+                  </TableCell>
+                )}
                 {visibleColumns.map((column) => (
                   <TableCell
                     key={column.key}
@@ -316,8 +486,12 @@ export default function DataGrid<Row>({
                   >
                     {column.sortable ? (
                       <TableSortLabel
-                        active={sort?.key === column.key}
-                        direction={sort?.key === column.key ? sort.direction : "asc"}
+                        active={activeQuery.sort?.key === column.key}
+                        direction={
+                          activeQuery.sort?.key === column.key
+                            ? activeQuery.sort.direction
+                            : "asc"
+                        }
                         onClick={() => handleSort(column.key)}
                       >
                         {column.header}
@@ -330,10 +504,19 @@ export default function DataGrid<Row>({
               </TableRow>
             </TableHead>
             <TableBody>
-              {sortedRows.length === 0 ? (
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={Math.max(columnCount, 1)} align="center" sx={{ py: spacing.xl }}>
+                    <Box sx={{ display: "inline-flex", alignItems: "center", gap: spacing.sm }}>
+                      <CircularProgress size={20} />
+                      <Text tone="secondary">{loadingLabel}</Text>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ) : displayedRows.length === 0 ? (
                 <TableRow>
                   <TableCell
-                    colSpan={Math.max(visibleColumns.length, 1)}
+                    colSpan={Math.max(columnCount, 1)}
                     align="center"
                     sx={{ py: spacing.xl }}
                   >
@@ -341,23 +524,110 @@ export default function DataGrid<Row>({
                   </TableCell>
                 </TableRow>
               ) : (
-                sortedRows.map((row) => (
-                  <TableRow key={getRowKey(row)}>
-                    {visibleColumns.map((column) => (
-                      <TableCell
-                        key={column.key}
-                        align={column.align}
-                        sx={{ padding: densityTokens.cellPadding }}
-                      >
-                        {column.render(row)}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
+                displayedRows.map((row) => {
+                  const rowKey = getRowKey(row);
+                  const selected = selectedKeys.has(rowKey);
+                  const selectable = rowSelection?.isRowSelectable?.(row) ?? true;
+
+                  return (
+                    <TableRow key={rowKey} selected={selected}>
+                      {rowSelection && (
+                        <TableCell
+                          padding="none"
+                          sx={{
+                            width: `calc(${spacing.md} + ${spacing.sm} + ${formTokens.choice.size}px)`,
+                            pl: spacing.md,
+                            pr: spacing.sm,
+                          }}
+                        >
+                          <Checkbox
+                            checked={selected}
+                            disabled={!selectable}
+                            onChange={() => toggleRow(row)}
+                            slotProps={{
+                              input: {
+                                "aria-label": `Select ${rowSelection.getRowLabel?.(row) ?? rowKey}`,
+                              },
+                            }}
+                          />
+                        </TableCell>
+                      )}
+                      {visibleColumns.map((column) => (
+                        <TableCell
+                          key={column.key}
+                          align={column.align}
+                          sx={{ padding: densityTokens.cellPadding }}
+                        >
+                          {column.render(row)}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  );
+                })
               )}
             </TableBody>
           </Table>
         </TableContainer>
+        {pagination && (
+          <TablePagination
+            component="div"
+            count={rowCount}
+            page={pagination.page}
+            rowsPerPage={pagination.pageSize}
+            rowsPerPageOptions={[
+              ...(pagination.pageSizeOptions ?? [10, 25, 50]),
+            ]}
+            onPageChange={(_event, page) => pagination.onPageChange(page)}
+            onRowsPerPageChange={(event) => {
+              pagination.onPageSizeChange?.(Number(event.target.value));
+              pagination.onPageChange(0);
+            }}
+            sx={{
+              borderTop: `${borderWidths.default} solid ${borders.subtle}`,
+              "& .MuiTablePagination-toolbar": {
+                minHeight: 56,
+                px: spacing.md,
+                gap: spacing.sm,
+                flexWrap: "wrap",
+                justifyContent: "flex-end",
+              },
+              "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": {
+                m: 0,
+              },
+              "& .MuiTablePagination-input": {
+                width: "4.5rem",
+                minWidth: "4.5rem",
+                height: "2.25rem",
+                m: 0,
+                color: formStates.default.content,
+                backgroundColor: formStates.default.background,
+                border: `${borderWidths.default} solid ${formStates.default.border}`,
+                borderRadius: radius.medium,
+              },
+              "& .MuiTablePagination-select": {
+                height: "100%",
+                minHeight: 0,
+                py: 0,
+                pl: spacing.sm,
+                pr: "2.25rem !important",
+                display: "flex",
+                alignItems: "center",
+                textAlign: "left",
+                textAlignLast: "left",
+              },
+              "& .MuiTablePagination-selectIcon": {
+                top: "50%",
+                right: spacing.sm,
+                transform: "translateY(-50%)",
+              },
+              "& .MuiTablePagination-actions": {
+                ml: spacing.sm,
+                display: "flex",
+                gap: spacing.xs,
+              },
+            }}
+          />
+        )}
       </Surface>
     </Box>
   );

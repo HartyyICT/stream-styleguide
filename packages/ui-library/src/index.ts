@@ -71,6 +71,13 @@ export type { DataTableColumn } from "./components/data/DataTable";
 export { default as DataGrid } from "./components/data/DataGrid";
 export type {
   DataGridColumn,
+  DataGridPagination,
+  DataGridProcessingMode,
+  DataGridProps,
+  DataGridQuery,
+  DataGridRowKey,
+  DataGridRowSelection,
+  DataGridSort,
   DataGridFilter,
   DataGridFilterOption,
   DataGridSearch,
