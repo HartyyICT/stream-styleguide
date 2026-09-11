@@ -17,6 +17,7 @@ import {
   shadows,
 } from "@ssw/ui-library";
 import { useColorMode } from "../../theme/themeProvider";
+import { useAuthentication } from "@/core/auth/AuthenticationProvider";
 
 type UserProfileMenuProps = {
   name?: string;
@@ -25,14 +26,27 @@ type UserProfileMenuProps = {
 };
 
 export default function UserProfileMenu({
-  name = "Hartiessan Asep",
-  email = "hartiessan.asep@streamsoftware.nl",
-  role = "Administrator",
+  name,
+  email,
+  role,
 }: UserProfileMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const { mode, toggleColorMode } = useColorMode();
+  const {
+    enabled,
+    configured,
+    authenticated,
+    account,
+    signOut,
+  } = useAuthentication();
   const isDarkMode = mode === "dark";
   const open = Boolean(anchorEl);
+  const claims = account?.idTokenClaims as { roles?: string[] } | undefined;
+  const resolvedName = name ?? account?.name ?? "Hartiessan Asep";
+  const resolvedEmail =
+    email ?? account?.username ?? "hartiessan.asep@streamsoftware.nl";
+  const resolvedRole = role ?? claims?.roles?.[0] ?? "Administrator";
+  const canSignOut = enabled && configured && authenticated;
 
   const surface = isDarkMode ? colors.neutral[800] : colors.semantic.surface;
   const raisedSurface = isDarkMode ? colors.neutral[800] : colors.semantic.surface;
@@ -70,7 +84,7 @@ export default function UserProfileMenu({
           },
         }}
       >
-        <ProfileIdentity name={name} compact />
+        <ProfileIdentity name={resolvedName} compact />
 
         <Box
           sx={{
@@ -122,7 +136,11 @@ export default function UserProfileMenu({
           },
         }}
       >
-        <ProfileIdentity name={name} email={email} role={role} />
+        <ProfileIdentity
+          name={resolvedName}
+          email={resolvedEmail}
+          role={resolvedRole}
+        />
 
         <Divider sx={{ borderTopColor: borders.default }} />
 
@@ -148,15 +166,22 @@ export default function UserProfileMenu({
           {isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
         </ProfileMenuItem>
 
-        <Divider sx={{ my: 0.5, borderTopColor: borders.default }} />
+        {canSignOut && (
+          <>
+            <Divider sx={{ my: 0.5, borderTopColor: borders.default }} />
 
-        <ProfileMenuItem
-          onClick={() => setAnchorEl(null)}
-          tone="danger"
-          icon={<LogOut size={iconSizes.control} aria-hidden="true" />}
-        >
-          Logout
-        </ProfileMenuItem>
+            <ProfileMenuItem
+              onClick={() => {
+                setAnchorEl(null);
+                void signOut();
+              }}
+              tone="danger"
+              icon={<LogOut size={iconSizes.control} aria-hidden="true" />}
+            >
+              Logout
+            </ProfileMenuItem>
+          </>
+        )}
       </Menu>
     </>
   );

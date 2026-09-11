@@ -11,6 +11,7 @@ import {
   PanelRight,
   ListChecks,
   ListPlus,
+  ShieldCheck,
   MousePointer2,
   Navigation,
   Palette,
@@ -57,6 +58,7 @@ export const siteNavigationGroups: SidebarNavigationGroup[] = [
     label: "Components",
     ariaLabel: "Components",
     items: [
+      { label: "Authentication", icon: ShieldCheck, href: "/authentication" },
       { label: "Breadcrumbs", icon: ChevronsRight, href: "/breadcrumbs" },
       { label: "DataGrid", icon: LayoutGrid, href: "/data-grid" },
       { label: "Detail Panel", icon: PanelRight, href: "/detail-panel" },

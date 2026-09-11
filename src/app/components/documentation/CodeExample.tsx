@@ -13,7 +13,7 @@ import CodeExampleToolbar from "./CodeExampleToolbar";
 interface CodeExampleProps {
   title?: string;
   code: string;
-  preview: ReactNode;
+  preview?: ReactNode;
   renderPreview?: (code: string) => ReactNode;
   editable?: boolean;
   previewMinHeight?: number | string;
@@ -34,6 +34,7 @@ export default function CodeExample({
     code.includes("borderWidths") ||
     (code.includes("spacing.") && !code.includes("gridTemplateColumns"));
   const codePanelHeight = Math.max(220, code.split(/\r\n|\r|\n/).length * 22 + 32);
+  const hasPreview = Boolean(renderPreview) || (preview !== null && preview !== undefined);
 
   return (
     <Card
@@ -57,21 +58,23 @@ export default function CodeExample({
         </Box>
       )}
 
-      <Box
-        sx={{
-          minHeight: previewMinHeight ?? (needsTallPreview ? 160 : 112),
-          height: "auto",
-          p: 3,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 1.5,
-          flexWrap: "wrap",
-          backgroundColor: subtleBackground,
-        }}
-      >
-        {renderPreview ? renderPreview(code) : preview}
-      </Box>
+      {hasPreview && (
+        <Box
+          sx={{
+            minHeight: previewMinHeight ?? (needsTallPreview ? 160 : 112),
+            height: "auto",
+            p: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 1.5,
+            flexWrap: "wrap",
+            backgroundColor: subtleBackground,
+          }}
+        >
+          {renderPreview ? renderPreview(code) : preview}
+        </Box>
+      )}
 
       <Box
         sx={{

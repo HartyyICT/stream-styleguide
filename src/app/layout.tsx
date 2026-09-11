@@ -3,6 +3,7 @@ import { Open_Sans, Poppins, Space_Mono } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import "./globals.css";
 import ThemeProvider from "./theme/themeProvider";
+import AuthenticationProvider from "@/core/auth/AuthenticationProvider";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -38,7 +39,9 @@ export default function RootLayout({
     >
       <body>
         <AppRouterCacheProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <AuthenticationProvider>{children}</AuthenticationProvider>
+          </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

@@ -186,6 +186,29 @@ export const shadows = {
   level4: "0 8px 24px rgba(0,0,0,0.12)",
 };
 
+export const authenticationTokens = {
+  pageMinHeight: "100dvh",
+  contentMaxWidth: pageLayoutTokens.dataContentMaxWidth,
+  cardWidth: 400,
+  cardPaddingX: {
+    xs: spacing.xl,
+    sm: spacing.xxl,
+  },
+  cardPaddingY: {
+    xs: spacing.xl,
+    sm: spacing.xxl,
+  },
+  cardGap: spacing.xl,
+  contentGap: {
+    xs: spacing.xl,
+    md: "5rem",
+  },
+  productCopyMaxWidth: 480,
+  logoHeight: 44,
+  productTextColor: "rgba(255, 255, 255, 0.78)",
+  background: `linear-gradient(135deg, ${colors.primary[900]} 0%, ${colors.primary[500]} 52%, ${colors.primary[800]} 100%)`,
+} as const;
+
 export const overlayTokens = {
   backdropColor: "rgba(15, 23, 42, 0.16)",
   backdropBlur: "blur(8px)",

@@ -126,6 +126,8 @@ export { default as GridBox } from "./components/layout/GridBox";
 export type { GridBoxProps } from "./components/layout/GridBox";
 export { default as MinimumWidthNotice } from "./components/layout/MinimumWidthNotice";
 export type { MinimumWidthNoticeProps } from "./components/layout/MinimumWidthNotice";
+export { default as LoginPage } from "./components/layout/LoginPage";
+export type { LoginPageProps } from "./components/layout/LoginPage";
 export { default as PageLayout } from "./components/layout/PageLayout";
 export type { PageLayoutProps } from "./components/layout/PageLayout";
 export { default as PageStateWrapper } from "./components/layout/PageStateWrapper";

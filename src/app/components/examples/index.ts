@@ -25,4 +25,8 @@ export {
   PageStateWrapperExample,
   ProductPageLayoutExample,
 } from "./LayoutPatternExamples";
+export {
+  AuthenticationFlowExample,
+  AuthenticationLoginExample,
+} from "./AuthenticationExamples";
 export { default as SettingsForm } from "./SettingsForm";

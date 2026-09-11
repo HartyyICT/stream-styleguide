@@ -28,6 +28,7 @@ import {
   PackagePlus,
   PanelTop,
   Search,
+  ShieldCheck,
   Smartphone,
   Sparkles,
   SquareMousePointer,
@@ -329,6 +330,27 @@ const searchGroups: SearchGroup[] = [
   {
     label: "Components",
     items: [
+      {
+        title: "Authentication",
+        description: "Login page, Microsoft authentication flow and protected routes.",
+        href: "/authentication",
+        category: "Components",
+        icon: ShieldCheck,
+      },
+      {
+        title: "Login page",
+        description: "Reusable Stream login layout with a provider-owned sign-in action.",
+        href: "/authentication#login-page",
+        category: "Authentication",
+        icon: ShieldCheck,
+      },
+      {
+        title: "Authentication flow",
+        description: "MSAL provider, route gate, token acquisition and session expiry.",
+        href: "/authentication#auth-flow",
+        category: "Authentication",
+        icon: ShieldCheck,
+      },
       {
         title: "Navbar",
         description: "Persistent global navigation with brand, search and theme controls.",
