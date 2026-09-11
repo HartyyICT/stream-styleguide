@@ -19,7 +19,7 @@ function LoginLayout({
     <LoginPage
       logo={<StreamLogo />}
       title="Welcome back"
-      description="Sign in to continue to the Stream Design System"
+      description="Sign in to your account"
       productName="Stream Design System"
       productDescription="One shared foundation for consistent Stream Software applications."
       signInAction={action}

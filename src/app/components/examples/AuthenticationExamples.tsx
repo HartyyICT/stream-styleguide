@@ -18,7 +18,7 @@ export function AuthenticationLoginExample({ sessionExpired = false }: { session
     <LoginPage
       logo={<StreamLogo />}
       title="Welcome back"
-      description="Sign in to your account to continue"
+      description="Sign in to your account"
       productName="Streamliner Customs"
       productDescription="Simplify customs operations with intelligent consignment and transport management."
       signInAction={
