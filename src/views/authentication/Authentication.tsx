@@ -36,8 +36,8 @@ const sections = [
 const environmentCode = `NEXT_PUBLIC_AUTH_ENABLED=true
 NEXT_PUBLIC_AZURE_AD_CLIENT_ID=your-client-id
 NEXT_PUBLIC_AZURE_AD_TENANT_ENDPOINT=https://login.microsoftonline.com/your-tenant-id
-NEXT_PUBLIC_AZURE_AD_REDIRECT_URI=http://localhost:3000/login
-NEXT_PUBLIC_AZURE_AD_POST_LOGOUT_REDIRECT_URI=http://localhost:3000/login
+NEXT_PUBLIC_AZURE_AD_REDIRECT_URI=http://localhost:3000/
+NEXT_PUBLIC_AZURE_AD_POST_LOGOUT_REDIRECT_URI=http://localhost:3000/
 NEXT_PUBLIC_AZURE_AD_LOGIN_SCOPES=openid,profile,email`;
 
 const loginPageCode = `import { Button, LoginPage } from "@ssw/ui-library";
