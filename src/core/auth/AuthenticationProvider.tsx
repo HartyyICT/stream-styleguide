@@ -82,7 +82,10 @@ function AuthenticationLoading() {
 function AuthenticationSession({ children }: PropsWithChildren) {
   const { instance, accounts, inProgress } = useMsal();
   const authenticated = useIsAuthenticated();
-  const pathname = usePathname();
+  // `trailingSlash` is on for the static export, so usePathname() returns
+  // "/login/". Normalize it before comparing, or the login page counts as a
+  // protected route and renders the loading state forever.
+  const pathname = usePathname().replace(/\/+$/, "") || "/";
   const router = useRouter();
   const account = accounts[0] ?? null;
   const initializing = inProgress !== InteractionStatus.None;

@@ -38,6 +38,16 @@ function createDefaultOpenGroups(groups: SidebarNavigationGroup[]) {
 
 let persistedOpenGroups: Record<string, boolean> | null = null;
 
+/**
+ * Compares two paths ignoring a trailing slash, so a host configured with
+ * `trailingSlash` still matches nav items written as "/borders". Root stays "/".
+ */
+function samePath(a: string, b: string) {
+  const normalize = (path: string) => path.replace(/\/+$/, "") || "/";
+
+  return normalize(a) === normalize(b);
+}
+
 export interface SidebarProps {
   groups: SidebarNavigationGroup[];
   activeHref: string;
@@ -263,7 +273,7 @@ export default function Sidebar({
             >
               <Box component="nav" aria-label={group.ariaLabel}>
                 {group.items.map(({ label, icon: Icon, href }) => {
-                  const active = href === activeHref;
+                  const active = samePath(href, activeHref);
 
                   return (
                     <Tooltip

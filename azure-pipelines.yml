@@ -1,0 +1,55 @@
+# Builds the styleguide and deploys it to Azure Static Web Apps.
+#
+# The site is a static export: route protection lives in AuthenticationProvider
+# (client-side MSAL), and security headers come from public/staticwebapp.config.json.
+#
+# Required pipeline variables:
+#   AZURE_STATIC_WEB_APPS_API_TOKEN  - deployment token from the Static Web App
+#                                      (Overview > Manage deployment token). Mark as secret.
+#   NEXT_PUBLIC_*                    - see .env.example. These are read by `next build`,
+#                                      NOT at runtime, so they must be present in this job.
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: NodeTool@0
+    displayName: Use Node 22
+    inputs:
+      versionSpec: "22.x"
+
+  - script: npm ci
+    displayName: Install dependencies
+
+  - script: npm run lint
+    displayName: Lint
+
+  - script: npm run typecheck
+    displayName: Typecheck
+
+  # Builds @ssw/ui-library first (its dist/ is gitignored), then exports the site to out/.
+  - script: npm run build
+    displayName: Build package and export site
+    env:
+      NEXT_PUBLIC_AUTH_ENABLED: $(NEXT_PUBLIC_AUTH_ENABLED)
+      NEXT_PUBLIC_AZURE_AD_CLIENT_ID: $(NEXT_PUBLIC_AZURE_AD_CLIENT_ID)
+      NEXT_PUBLIC_AZURE_AD_TENANT_ENDPOINT: $(NEXT_PUBLIC_AZURE_AD_TENANT_ENDPOINT)
+      NEXT_PUBLIC_AZURE_AD_REDIRECT_URI: $(NEXT_PUBLIC_AZURE_AD_REDIRECT_URI)
+      NEXT_PUBLIC_AZURE_AD_POST_LOGOUT_REDIRECT_URI: $(NEXT_PUBLIC_AZURE_AD_POST_LOGOUT_REDIRECT_URI)
+      NEXT_PUBLIC_AZURE_AD_LOGIN_SCOPES: $(NEXT_PUBLIC_AZURE_AD_LOGIN_SCOPES)
+
+  - task: AzureStaticWebApp@0
+    displayName: Deploy to Static Web Apps
+    inputs:
+      # out/ is already built above; the task must not try to build it again.
+      app_location: "out"
+      skip_app_build: true
+      skip_api_build: true
+      azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
