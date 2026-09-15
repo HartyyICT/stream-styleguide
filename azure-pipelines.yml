@@ -8,6 +8,23 @@
 #                                      (Overview > Manage deployment token). Mark as secret.
 #   NEXT_PUBLIC_*                    - see .env.example. These are read by `next build`,
 #                                      NOT at runtime, so they must be present in this job.
+#
+# The deployment token belongs in a Key Vault rather than in a pipeline variable.
+# Once someone with subscription rights has created a service connection to the
+# vault, replace the variable with the step below and delete
+# AZURE_STATIC_WEB_APPS_API_TOKEN from this pipeline's variables — the task
+# exposes each retrieved secret under its own name, so nothing else changes.
+#
+#   - task: AzureKeyVault@2
+#     displayName: Fetch deployment token
+#     inputs:
+#       azureSubscription: "<service connection name>"
+#       KeyVaultName: "<vault name>"
+#       SecretsFilter: "AZURE-STATIC-WEB-APPS-API-TOKEN"
+#       RunAsPreJob: true
+#
+# Key Vault secret names cannot contain underscores, hence the dashes; reference
+# it afterwards as $(AZURE-STATIC-WEB-APPS-API-TOKEN).
 
 trigger:
   branches:
@@ -20,13 +37,19 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  - task: NodeTool@0
+  - task: UseNode@1
     displayName: Use Node 22
     inputs:
-      versionSpec: "22.x"
+      version: "22.x"
 
   - script: npm ci
     displayName: Install dependencies
+
+  # @ssw/ui-library is a workspace whose "types" field points into dist/, and
+  # dist/ is gitignored. On a fresh clone it does not exist yet, so lint, typecheck
+  # and next build all fail to resolve the package until this has run.
+  - script: npm run build --workspace=@ssw/ui-library
+    displayName: Build UI library
 
   - script: npm run lint
     displayName: Lint
@@ -34,9 +57,8 @@ steps:
   - script: npm run typecheck
     displayName: Typecheck
 
-  # Builds @ssw/ui-library first (its dist/ is gitignored), then exports the site to out/.
-  - script: npm run build
-    displayName: Build package and export site
+  - script: npx next build
+    displayName: Export site
     env:
       NEXT_PUBLIC_AUTH_ENABLED: $(NEXT_PUBLIC_AUTH_ENABLED)
       NEXT_PUBLIC_AZURE_AD_CLIENT_ID: $(NEXT_PUBLIC_AZURE_AD_CLIENT_ID)
