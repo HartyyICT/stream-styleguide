@@ -11,14 +11,14 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { Badge } from "@ssw/ui-library";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
-import { InfoBanner } from "@ssw/ui-library";
-import { Surface } from "@ssw/ui-library";
-import { Tabs } from "@ssw/ui-library";
-import { Text } from "@ssw/ui-library";
-import { ToggleField } from "@ssw/ui-library";
+import { Badge } from "@ssw/design-system";
+import { Card } from "@ssw/design-system";
+import { CardTitle } from "@ssw/design-system";
+import { InfoBanner } from "@ssw/design-system";
+import { Surface } from "@ssw/design-system";
+import { Tabs } from "@ssw/design-system";
+import { Text } from "@ssw/design-system";
+import { ToggleField } from "@ssw/design-system";
 import {
   AnatomyItem,
   CodeExample,
@@ -36,7 +36,7 @@ import {
   SettingsForm,
 } from "@/app/components/examples";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   borderWidths,
   formTokens,
@@ -45,7 +45,7 @@ import {
   radius,
   responsiveGrids,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#forms" },
@@ -266,7 +266,7 @@ const accessibilityGuidelines = [
   "Make checkbox and radio targets large enough to click comfortably.",
 ] as const;
 
-const textInputCode = `import { FormField } from "@ssw/ui-library";
+const textInputCode = `import { FormField } from "@ssw/design-system";
 import { User } from "lucide-react";
 
 export function CustomerNameField() {
@@ -285,7 +285,7 @@ export function CustomerNameField() {
   );
 }`;
 
-const validationCode = `import { FormField } from "@ssw/ui-library";
+const validationCode = `import { FormField } from "@ssw/design-system";
 import { Mail } from "lucide-react";
 
 export function EmailField() {
@@ -304,8 +304,8 @@ export function EmailField() {
   );
 }`;
 
-const formLayoutCode = `import { Button } from "@ssw/ui-library";
-import { formTokens, spacing } from "@ssw/ui-library";
+const formLayoutCode = `import { Button } from "@ssw/design-system";
+import { formTokens, spacing } from "@ssw/design-system";
 
 export function ContactForm() {
   return (
@@ -321,7 +321,7 @@ export function ContactForm() {
 }`;
 
 const toggleCode = `import { useState } from "react";
-import { ToggleField } from "@ssw/ui-library";
+import { ToggleField } from "@ssw/design-system";
 
 export function NotificationToggle() {
   const [enabled, setEnabled] = useState(true);

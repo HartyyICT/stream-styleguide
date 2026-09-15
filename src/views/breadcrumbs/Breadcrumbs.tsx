@@ -2,8 +2,8 @@
 
 import { Typography } from "@mui/material";
 import type { ComponentProps } from "react";
-import { Breadcrumbs } from "@ssw/ui-library";
-import { Card } from "@ssw/ui-library";
+import { Breadcrumbs } from "@ssw/design-system";
+import { Card } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -12,8 +12,8 @@ import {
   Section,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
-import { spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
+import { spacing } from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#breadcrumbs" },
@@ -97,7 +97,7 @@ export default function BreadcrumbsPage() {
         title="Token usage"
         description="Breadcrumbs use the same secondary text, primary text and interaction tokens as the rest of the interface."
       >
-        <CodeBlock>{`import { useSemanticColors } from "@ssw/ui-library";
+        <CodeBlock>{`import { useSemanticColors } from "@ssw/design-system";
 
 const { secondaryText, primaryText, interaction } = useSemanticColors();
 
@@ -114,7 +114,7 @@ const { secondaryText, primaryText, interaction } = useSemanticColors();
           title="Customer invoice breadcrumb"
           preview={<Breadcrumbs items={basicExample} linkComponent={PreviewLink} />}
           code={`import Link from "next/link";
-import { Breadcrumbs } from "@ssw/ui-library";
+import { Breadcrumbs } from "@ssw/design-system";
 
 export function InvoicePage() {
   return (

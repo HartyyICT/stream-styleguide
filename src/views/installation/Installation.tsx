@@ -2,9 +2,9 @@
 
 import { Box, Typography } from "@mui/material";
 import { PackageCheck, PackagePlus, Terminal, Wrench } from "lucide-react";
-import { Button } from "@ssw/ui-library";
-import { Card } from "@ssw/ui-library";
-import { InfoBanner } from "@ssw/ui-library";
+import { Button } from "@ssw/design-system";
+import { Card } from "@ssw/design-system";
+import { InfoBanner } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -13,8 +13,8 @@ import {
   Section,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
-import { radius, spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
+import { radius, spacing } from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#installation" },
@@ -28,7 +28,7 @@ const sections = [
 
 const guidelines = [
   "Install the shared UI library instead of copying components from the styleguide app.",
-  "Import product components from @ssw/ui-library after it is published internally.",
+  "Import product components from @ssw/design-system after it is published internally.",
   "Keep tokens, theme configuration and reusable components inside the package.",
   "Keep documentation helpers and preview-only examples inside the styleguide app.",
   "When a component changes, update the package first and then update this styleguide to use the package version.",
@@ -38,7 +38,7 @@ const setupSteps = [
   {
     title: "1. Install the package",
     description:
-      "Applications add @ssw/ui-library alongside their compatible React and MUI versions.",
+      "Applications add @ssw/design-system alongside their compatible React and MUI versions.",
     icon: PackagePlus,
   },
   {
@@ -85,7 +85,7 @@ export default function InstallationPage() {
           <Typography variant="h3" sx={{ mb: 1.5 }}>
             npm
           </Typography>
-          <CodeBlock>{`npm install @ssw/ui-library`}</CodeBlock>
+          <CodeBlock>{`npm install @ssw/design-system`}</CodeBlock>
         </Card>
       </Section>
 
@@ -113,7 +113,7 @@ export default function InstallationPage() {
       <Section
         id="use-components"
         title="Use components"
-        description="After installation, developers import components from @ssw/ui-library instead of local styleguide files."
+        description="After installation, developers import components from @ssw/design-system instead of local styleguide files."
       >
         <Box
           sx={{
@@ -126,7 +126,7 @@ export default function InstallationPage() {
             <Typography variant="h3" sx={{ mb: 1.5 }}>
               Import
             </Typography>
-            <CodeBlock>{`import { Button } from "@ssw/ui-library";
+            <CodeBlock>{`import { Button } from "@ssw/design-system";
 import { Check } from "lucide-react";`}</CodeBlock>
           </Card>
 
@@ -200,7 +200,7 @@ import { Check } from "lucide-react";`}</CodeBlock>
         <CodeExample
           title="Install and use a package component"
           preview={<Button startIcon={<PackageCheck />}>Install library</Button>}
-          code={`import { Button } from "@ssw/ui-library";
+          code={`import { Button } from "@ssw/design-system";
 import { Check } from "lucide-react";
 
 export function SaveAction() {

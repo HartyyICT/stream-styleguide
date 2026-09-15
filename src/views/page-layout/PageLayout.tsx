@@ -9,10 +9,10 @@ import {
   PanelRight,
   Rows3,
 } from "lucide-react";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
-import { Surface } from "@ssw/ui-library";
-import { Text } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
+import { CardTitle } from "@ssw/design-system";
+import { Surface } from "@ssw/design-system";
+import { Text } from "@ssw/design-system";
 import {
   CodeExample,
   GuidelineList,
@@ -31,14 +31,14 @@ import {
   ProductPageLayoutExample,
 } from "@/app/components/examples";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   appLayoutTokens,
   iconSizes,
   pageLayoutTokens,
   responsiveGrids,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#page-layout" },
@@ -159,7 +159,7 @@ const productPageCode = `import {
   BusinessUnitBanner,
   Button,
   PageLayout,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 <PageLayout
   title="Declarations"

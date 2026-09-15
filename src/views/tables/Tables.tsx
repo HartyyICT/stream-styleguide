@@ -8,14 +8,14 @@ import {
   MoreHorizontal,
   Table2,
 } from "lucide-react";
-import { Badge } from "@ssw/ui-library";
-import { Button } from "@ssw/ui-library";
-import { Divider } from "@ssw/ui-library";
-import { Text } from "@ssw/ui-library";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
-import { InfoBanner } from "@ssw/ui-library";
-import { DataTable, type DataTableColumn } from "@ssw/ui-library";
+import { Badge } from "@ssw/design-system";
+import { Button } from "@ssw/design-system";
+import { Divider } from "@ssw/design-system";
+import { Text } from "@ssw/design-system";
+import { Card } from "@ssw/design-system";
+import { CardTitle } from "@ssw/design-system";
+import { InfoBanner } from "@ssw/design-system";
+import { DataTable, type DataTableColumn } from "@ssw/design-system";
 import {
   AnatomyItem,
   CodeExample,
@@ -30,14 +30,14 @@ import {
 } from "@/app/components/documentation";
 import { ButtonGroupExample } from "@/app/components/examples";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   iconSizes,
   pageLayoutTokens,
   responsiveGrids,
   spacing,
   tableTokens,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#tables" },
@@ -85,9 +85,9 @@ const accessibilityGuidelines = [
   "Announce sort direction and active filters so keyboard and screen-reader users know the current state.",
 ] as const;
 
-const tableExampleCode = `import { Button } from "@ssw/ui-library";
-import { Badge } from "@ssw/ui-library";
-import { tableTokens } from "@ssw/ui-library";
+const tableExampleCode = `import { Button } from "@ssw/design-system";
+import { Badge } from "@ssw/design-system";
+import { tableTokens } from "@ssw/design-system";
 import { MoreHorizontal } from "lucide-react";
 
 export function CustomerTable() {

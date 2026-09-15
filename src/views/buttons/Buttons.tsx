@@ -10,9 +10,9 @@ import {
   Settings,
   Trash2,
 } from "lucide-react";
-import { Card } from "@ssw/ui-library";
-import { Button } from "@ssw/ui-library";
-import { InfoBanner } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
+import { Button } from "@ssw/design-system";
+import { InfoBanner } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -21,8 +21,8 @@ import {
   Section,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
-import { borderWidths, pageLayoutTokens, radius, spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
+import { borderWidths, pageLayoutTokens, radius, spacing } from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#buttons" },
@@ -206,7 +206,7 @@ const accessibilityGuidelines = [
   "Important or destructive actions should not rely on color alone.",
 ] as const;
 
-const primaryButtonCode = `import { Button } from "@ssw/ui-library";
+const primaryButtonCode = `import { Button } from "@ssw/design-system";
 import { Check } from "lucide-react";
 
 // Change the text or startIcon to show a different action.
@@ -215,7 +215,7 @@ import { Check } from "lucide-react";
   Save changes
 </Button>`;
 
-const secondaryButtonCode = `import { Button } from "@ssw/ui-library";
+const secondaryButtonCode = `import { Button } from "@ssw/design-system";
 
 // Change the variant to adjust the visual emphasis.
 // Examples: "secondary", "tertiary", "disabled".
@@ -223,7 +223,7 @@ const secondaryButtonCode = `import { Button } from "@ssw/ui-library";
   Cancel
 </Button>`;
 
-const iconButtonCode = `import { Button } from "@ssw/ui-library";
+const iconButtonCode = `import { Button } from "@ssw/design-system";
 import { Search } from "lucide-react";
 
 // Change aria-label and the icon so the action stays clear.
@@ -232,7 +232,7 @@ import { Search } from "lucide-react";
   <Search />
 </Button>`;
 
-const destructiveButtonCode = `import { Button } from "@ssw/ui-library";
+const destructiveButtonCode = `import { Button } from "@ssw/design-system";
 import { Trash2 } from "lucide-react";
 
 // Use destructive only for actions with negative impact.
@@ -780,7 +780,7 @@ export default function ButtonsPage() {
             >
               Use primary tokens for the main call to action.
             </Typography>
-            <CodeBlock>{`import { colors, radius } from "@ssw/ui-library";
+            <CodeBlock>{`import { colors, radius } from "@ssw/design-system";
 
 const primaryButton = {
   backgroundColor: colors.primary[500],
@@ -799,7 +799,7 @@ const primaryButton = {
             >
               Keep dimensions and padding predictable across products.
             </Typography>
-            <CodeBlock>{`import { buttonTokens } from "@ssw/ui-library";
+            <CodeBlock>{`import { buttonTokens } from "@ssw/design-system";
 
 const mediumButton = {
   minHeight: "2.5rem",

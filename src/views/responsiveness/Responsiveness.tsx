@@ -10,8 +10,8 @@ import {
   Smartphone,
   Tablet,
 } from "lucide-react";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
+import { CardTitle } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -19,16 +19,16 @@ import {
   Intro,
   Section,
 } from "@/app/components/documentation";
-import { IconBox } from "@ssw/ui-library";
+import { IconBox } from "@ssw/design-system";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   borderWidths,
   iconSizes,
   radius,
   responsiveGrids,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#responsiveness" },
@@ -336,7 +336,7 @@ export default function ResponsivenessPage() {
         title="Implementation"
         description="Use the shared responsive tokens so pages, documentation examples and application layouts react at the same widths."
       >
-        <CodeBlock>{`import { pageLayoutTokens, responsiveGrids, spacing } from "@ssw/ui-library";
+        <CodeBlock>{`import { pageLayoutTokens, responsiveGrids, spacing } from "@ssw/design-system";
 
 <Box
   sx={{
@@ -393,7 +393,7 @@ export default function ResponsivenessPage() {
             </Box>
           }
           code={`import { Box } from "@mui/material";
-import { responsiveGrids, spacing } from "@ssw/ui-library";
+import { responsiveGrids, spacing } from "@ssw/design-system";
 
 export function ResponsiveGridExample() {
   return (

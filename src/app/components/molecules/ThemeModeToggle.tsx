@@ -10,7 +10,7 @@ import {
   iconSizes,
   interactionStates,
   radius,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 export default function ThemeModeToggle() {
   const { mode, toggleColorMode } = useColorMode();

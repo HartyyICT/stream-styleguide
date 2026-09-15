@@ -8,7 +8,7 @@ import {
   borderWidths,
   spacing,
   useSemanticColors,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 interface StateCardProps {
   title: string;

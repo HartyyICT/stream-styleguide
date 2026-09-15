@@ -46,7 +46,7 @@ import {
   overlayTokens,
   radius,
   shadows,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import { useColorMode } from "@/app/theme/themeProvider";
 
 type SearchItem = {
@@ -75,7 +75,7 @@ const searchGroups: SearchGroup[] = [
       },
       {
         title: "Installation",
-        description: "Install and use the future @ssw/ui-library package.",
+        description: "Install and use the future @ssw/design-system package.",
         href: "/installation",
         category: "Getting started",
         icon: PackagePlus,
@@ -89,7 +89,7 @@ const searchGroups: SearchGroup[] = [
       },
       {
         title: "Use components",
-        description: "Import components from @ssw/ui-library.",
+        description: "Import components from @ssw/design-system.",
         href: "/installation#use-components",
         category: "Installation",
         icon: PackagePlus,

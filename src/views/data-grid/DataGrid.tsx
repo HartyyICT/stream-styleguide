@@ -16,7 +16,7 @@ import {
   type DataGridFilter,
   type DataGridRowKey,
   type DataGridSearch,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -274,7 +274,7 @@ const filters = [statusFilter, planFilter, regionFilter];
   getRowKey={(row) => row.id}
 />`;
 
-const combinedUsageCode = `import { DataGrid } from "@ssw/ui-library";
+const combinedUsageCode = `import { DataGrid } from "@ssw/design-system";
 
 <DataGrid
   columns={customerColumns}

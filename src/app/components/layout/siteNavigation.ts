@@ -26,7 +26,7 @@ import {
   Table2,
   Type,
 } from "lucide-react";
-import type { SidebarNavigationGroup } from "@ssw/ui-library";
+import type { SidebarNavigationGroup } from "@ssw/design-system";
 
 export const siteNavigationGroups: SidebarNavigationGroup[] = [
   {

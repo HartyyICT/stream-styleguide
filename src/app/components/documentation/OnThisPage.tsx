@@ -2,7 +2,7 @@
 
 import { Box, ButtonBase, Typography } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { borderWidths, useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, useSemanticColors } from "@ssw/design-system";
 
 export interface OnThisPageItem {
   label: string;

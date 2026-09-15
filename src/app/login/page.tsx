@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, LoginPage } from "@ssw/ui-library";
+import { Alert, Button, LoginPage } from "@ssw/design-system";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { useEffect, useState } from "react";
 import { MicrosoftMark, StreamLogo } from "@/app/components/layout/StreamBrand";

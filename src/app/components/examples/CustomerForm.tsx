@@ -10,7 +10,7 @@ import {
   SelectField,
   formTokens,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 export default function CustomerForm() {
   const [customerName, setCustomerName] = useState("Van Dijk Logistics");

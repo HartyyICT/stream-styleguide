@@ -2,7 +2,7 @@
 
 import { Box, Typography } from "@mui/material";
 import { ExternalLink, MousePointer2, Search } from "lucide-react";
-import { Card } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -11,11 +11,11 @@ import {
   Section,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   borderWidths,
   radius,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#hover-states" },
@@ -169,7 +169,7 @@ export default function HoverStatesPage() {
         title="Token usage"
         description="Select the light or dark interaction set once and reuse its semantic state names throughout components."
       >
-        <CodeBlock>{`import { interactionStates } from "@ssw/ui-library";
+        <CodeBlock>{`import { interactionStates } from "@ssw/design-system";
 
 const interaction =
   mode === "dark"
@@ -361,7 +361,7 @@ const interactiveSx = {
               </Typography>
             </Card>
           }
-          code={`import { Card } from "@ssw/ui-library";
+          code={`import { Card } from "@ssw/design-system";
 import { MousePointer2 } from "lucide-react";
 
 export function HoverSurfaceExample() {

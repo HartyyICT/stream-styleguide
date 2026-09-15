@@ -1,8 +1,8 @@
 "use client";
 
   import { Box, Chip, Typography } from "@mui/material";
-  import { Divider } from "@ssw/ui-library";
-  import { InfoBanner } from "@ssw/ui-library";
+  import { Divider } from "@ssw/design-system";
+  import { InfoBanner } from "@ssw/design-system";
   import {
     Accessibility,
     Blocks,
@@ -13,8 +13,8 @@
     Users,
   } from "lucide-react";
   import Page from "@/app/components/layout/Page";
-  import { useSemanticColors } from "@ssw/ui-library";
-  import { colors, pageLayoutTokens, radius, shadows } from "@ssw/ui-library";
+  import { useSemanticColors } from "@ssw/design-system";
+  import { colors, pageLayoutTokens, radius, shadows } from "@ssw/design-system";
 
   const benefits = [
     {

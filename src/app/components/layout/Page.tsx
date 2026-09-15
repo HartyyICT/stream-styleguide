@@ -7,7 +7,7 @@ import {
   OnThisPage,
   type OnThisPageItem,
 } from "@/app/components/documentation";
-import { pageLayoutTokens } from "@ssw/ui-library";
+import { pageLayoutTokens } from "@ssw/design-system";
 
 interface PageProps {
   pageId: string;

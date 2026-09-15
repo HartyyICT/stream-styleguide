@@ -4,8 +4,8 @@ import { Box, Typography } from "@mui/material";
 import { Search, X } from "lucide-react";
 import RecentSearchItem from "@/app/components/molecules/RecentSearchItem";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
-import { Button } from "@ssw/ui-library";
-import { Card } from "@ssw/ui-library";
+import { Button } from "@ssw/design-system";
+import { Card } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -14,13 +14,13 @@ import {
   Section,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   borderWidths,
   radius,
   shadows,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#searchbar" },
@@ -307,7 +307,7 @@ export default function SearchbarPage() {
   interactionStates,
   radius,
   shadows,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const searchbar = {
   height: 40,

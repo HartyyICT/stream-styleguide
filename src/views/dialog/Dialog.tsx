@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { Typography } from "@mui/material";
-import { Button } from "@ssw/ui-library";
-import { CancelButton } from "@ssw/ui-library";
-import { Card } from "@ssw/ui-library";
-import { DeleteButton } from "@ssw/ui-library";
-import { Dialog } from "@ssw/ui-library";
+import { Button } from "@ssw/design-system";
+import { CancelButton } from "@ssw/design-system";
+import { Card } from "@ssw/design-system";
+import { DeleteButton } from "@ssw/design-system";
+import { Dialog } from "@ssw/design-system";
 import {
   CodeExample,
   GuidelineList,
@@ -14,8 +14,8 @@ import {
   Section,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
-import { spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
+import { spacing } from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#dialog" },
@@ -143,7 +143,7 @@ export default function DialogPage() {
           preview={<BasicDialogExample />}
           renderPreview={() => <BasicDialogExample />}
           code={`import { useState } from "react";
-import { Button, CancelButton, Dialog } from "@ssw/ui-library";
+import { Button, CancelButton, Dialog } from "@ssw/design-system";
 
 export function InviteUserAction() {
   const [open, setOpen] = useState(false);

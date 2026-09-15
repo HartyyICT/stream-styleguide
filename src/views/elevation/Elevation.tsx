@@ -2,17 +2,17 @@
 
 import { Box, Typography } from "@mui/material";
 import { Layers3, MousePointerClick, PanelTop, Rows3 } from "lucide-react";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
-import { Divider } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
+import { CardTitle } from "@ssw/design-system";
+import { Divider } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
   Intro,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
-import { colors, pageLayoutTokens, radius, shadows, spacing } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
+import { colors, pageLayoutTokens, radius, shadows, spacing } from "@ssw/design-system";
 
 const elevationSections = [
   { label: "Overview", href: "#elevation" },
@@ -209,7 +209,7 @@ export default function ElevationPage() {
               directly.
             </Typography>
 
-            <CodeBlock>{`import { shadows } from "@ssw/ui-library";
+            <CodeBlock>{`import { shadows } from "@ssw/design-system";
 
 <Box
   sx={{
@@ -399,7 +399,7 @@ export default function ElevationPage() {
                   </Typography>
                 </Box>
               }
-              code={`import { radius, shadows, spacing } from "@ssw/ui-library";
+              code={`import { radius, shadows, spacing } from "@ssw/design-system";
 
 export function RaisedSurface() {
   return (

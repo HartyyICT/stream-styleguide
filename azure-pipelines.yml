@@ -45,11 +45,11 @@ steps:
   - script: npm ci
     displayName: Install dependencies
 
-  # @ssw/ui-library is a workspace whose "types" field points into dist/, and
+  # @ssw/design-system is a workspace whose "types" field points into dist/, and
   # dist/ is gitignored. On a fresh clone it does not exist yet, so lint, typecheck
   # and next build all fail to resolve the package until this has run.
-  - script: npm run build --workspace=@ssw/ui-library
-    displayName: Build UI library
+  - script: npm run build --workspace=@ssw/design-system
+    displayName: Build design system
 
   - script: npm run lint
     displayName: Lint

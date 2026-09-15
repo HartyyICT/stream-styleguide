@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { Box, ButtonBase } from "@mui/material";
 import type { LucideIcon } from "lucide-react";
-import { IconBox } from "@ssw/ui-library";
-import { Text } from "@ssw/ui-library";
-import { borderWidths, radius, spacing } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import { IconBox } from "@ssw/design-system";
+import { Text } from "@ssw/design-system";
+import { borderWidths, radius, spacing } from "@ssw/design-system";
+import { useSemanticColors } from "@ssw/design-system";
 
 interface SearchResultItemProps {
   title: string;

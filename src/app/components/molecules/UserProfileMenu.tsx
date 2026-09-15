@@ -15,7 +15,7 @@ import {
   ProfileMenuItem,
   radius,
   shadows,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import { useColorMode } from "../../theme/themeProvider";
 import { useAuthentication } from "@/core/auth/AuthenticationProvider";
 

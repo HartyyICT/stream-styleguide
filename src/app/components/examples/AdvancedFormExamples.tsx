@@ -16,7 +16,7 @@ import {
   StatusChip,
   Surface,
   type ComboboxOption,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 interface CountryCodebookRecord {
   code: string;

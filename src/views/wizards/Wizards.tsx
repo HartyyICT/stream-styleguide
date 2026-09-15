@@ -17,17 +17,17 @@ import {
   Upload,
 } from "lucide-react";
 import { useState } from "react";
-import { Badge } from "@ssw/ui-library";
-import { Button } from "@ssw/ui-library";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
-import { InfoBanner } from "@ssw/ui-library";
-import { Surface } from "@ssw/ui-library";
-import { Text } from "@ssw/ui-library";
-import { FormActionRow } from "@ssw/ui-library";
-import { FormField } from "@ssw/ui-library";
-import { SelectField } from "@ssw/ui-library";
-import { ToggleField } from "@ssw/ui-library";
+import { Badge } from "@ssw/design-system";
+import { Button } from "@ssw/design-system";
+import { Card } from "@ssw/design-system";
+import { CardTitle } from "@ssw/design-system";
+import { InfoBanner } from "@ssw/design-system";
+import { Surface } from "@ssw/design-system";
+import { Text } from "@ssw/design-system";
+import { FormActionRow } from "@ssw/design-system";
+import { FormField } from "@ssw/design-system";
+import { SelectField } from "@ssw/design-system";
+import { ToggleField } from "@ssw/design-system";
 import {
   AnatomyItem,
   CodeExample,
@@ -38,7 +38,7 @@ import {
   TokenCode,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   borderWidths,
   colors,
@@ -50,7 +50,7 @@ import {
   shadows,
   spacing,
   wizardTokens,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#wizards" },
@@ -153,9 +153,9 @@ const accessibilityGuidelines = [
   "Use semantic headings so assistive technology can navigate between wizard areas.",
 ] as const;
 
-const wizardCode = `import { FormField } from "@ssw/ui-library";
-import { SelectField } from "@ssw/ui-library";
-import { FormActionRow } from "@ssw/ui-library";
+const wizardCode = `import { FormField } from "@ssw/design-system";
+import { SelectField } from "@ssw/design-system";
+import { FormActionRow } from "@ssw/design-system";
 
 export function ExampleWizardStep() {
   return (

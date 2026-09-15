@@ -17,7 +17,7 @@ import {
   useEffect,
   useMemo,
 } from "react";
-import { spacing, useSemanticColors } from "@ssw/ui-library";
+import { spacing, useSemanticColors } from "@ssw/design-system";
 import {
   authenticationConfigured,
   authenticationEnabled,

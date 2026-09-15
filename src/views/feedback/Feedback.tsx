@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { Card, pageLayoutTokens, spacing, useSemanticColors } from "@ssw/ui-library";
+import { Card, pageLayoutTokens, spacing, useSemanticColors } from "@ssw/design-system";
 import {
   CodeExample,
   GuidelineList,
@@ -29,7 +29,7 @@ const sections = [
   { label: "Accessibility", href: "#accessibility" },
 ] as const;
 
-const alertCode = `import { Alert } from "@ssw/ui-library";
+const alertCode = `import { Alert } from "@ssw/design-system";
 
 <Alert
   severity="warning"

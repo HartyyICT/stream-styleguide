@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography, type BoxProps } from "@mui/material";
-import { borderWidths, radius, spacing, useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, radius, spacing, useSemanticColors } from "@ssw/design-system";
 import TokenRow, { type TokenRowColumn } from "./TokenRow";
 
 export type TokenTableRow = {

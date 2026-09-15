@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Box } from "@mui/material";
-import { Card, Text, spacing } from "@ssw/ui-library";
+import { Card, Text, spacing } from "@ssw/design-system";
 import TokenCode from "./TokenCode";
 
 interface AnatomyItemProps {

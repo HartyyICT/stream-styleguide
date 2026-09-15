@@ -2,7 +2,7 @@
 
 import { Box, Typography, type BoxProps } from "@mui/material";
 import type { ReactNode } from "react";
-import { borderWidths, radius, spacing, useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, radius, spacing, useSemanticColors } from "@ssw/design-system";
 import TokenCode from "./TokenCode";
 
 interface PageLayoutRegionProps extends BoxProps {

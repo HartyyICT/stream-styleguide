@@ -7,7 +7,7 @@ import {
   Card,
   borderWidths,
   useSemanticColors,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import CodeExampleToolbar from "./CodeExampleToolbar";
 
 interface CodeExampleProps {

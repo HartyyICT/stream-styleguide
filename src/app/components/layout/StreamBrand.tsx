@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { spacing } from "@ssw/ui-library";
+import { spacing } from "@ssw/design-system";
 
 export function StreamLogo() {
   return (

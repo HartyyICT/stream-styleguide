@@ -26,7 +26,7 @@ import {
   radius,
   spacing,
   useSemanticColors,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import {
   CodeExample,
   CopyAction,
@@ -161,7 +161,7 @@ import {
   Button,
   DetailPanel,
   DetailRow,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import { Calendar, ExternalLink, FileText, UserPlus } from "lucide-react";
 
 export function TaskDetailsAction() {

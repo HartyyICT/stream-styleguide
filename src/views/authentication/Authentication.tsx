@@ -7,7 +7,7 @@ import {
   pageLayoutTokens,
   spacing,
   useSemanticColors,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import {
   CodeExample,
   GuidelineList,
@@ -40,7 +40,7 @@ NEXT_PUBLIC_AZURE_AD_REDIRECT_URI=http://localhost:3000/
 NEXT_PUBLIC_AZURE_AD_POST_LOGOUT_REDIRECT_URI=http://localhost:3000/
 NEXT_PUBLIC_AZURE_AD_LOGIN_SCOPES=openid,profile,email`;
 
-const loginPageCode = `import { Button, LoginPage } from "@ssw/ui-library";
+const loginPageCode = `import { Button, LoginPage } from "@ssw/design-system";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 
 export default function Login() {

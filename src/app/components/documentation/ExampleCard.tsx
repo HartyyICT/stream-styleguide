@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Box } from "@mui/material";
-import { Card, CardTitle, Text, spacing } from "@ssw/ui-library";
+import { Card, CardTitle, Text, spacing } from "@ssw/design-system";
 
 interface ExampleCardProps {
   title: string;

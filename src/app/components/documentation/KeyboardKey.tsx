@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import { borderWidths, radius, useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, radius, useSemanticColors } from "@ssw/design-system";
 
 interface KeyboardKeyProps extends BoxProps {
   children: string;

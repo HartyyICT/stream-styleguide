@@ -9,9 +9,9 @@ import {
   iconSizes,
   interactionStates,
   radius,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import { useColorMode } from "../../theme/themeProvider";
-import { sidebarMotion, sidebarTransition } from "@ssw/ui-library";
+import { sidebarMotion, sidebarTransition } from "@ssw/design-system";
 
 type SidebarNavItemProps = {
   label: string;

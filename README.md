@@ -9,7 +9,7 @@ examples for consistent enterprise interfaces.
 ```bash
 npm install
 cp .env.example .env.local
-npm run build --workspace=@ssw/ui-library
+npm run build --workspace=@ssw/design-system
 npm run dev
 ```
 
@@ -21,8 +21,8 @@ neither file:
 - `.env.local` holds the Azure AD configuration. `.env*` is gitignored, so copy
   it from `.env.example` on every machine. Without it the login page reports
   that authentication is not configured.
-- `packages/ui-library/dist/` is gitignored as well. Without it, imports from
-  `@ssw/ui-library` fail to resolve.
+- `packages/design-system/dist/` is gitignored as well. Without it, imports from
+  `@ssw/design-system` fail to resolve.
 
 ## Deployment
 
@@ -50,8 +50,8 @@ This runs ESLint, TypeScript and the optimized Next.js production build.
 
 ## Project structure
 
-- `packages/ui-library/src/theme` - shared design tokens and MUI theme configuration
-- `packages/ui-library/src/components` - reusable product components grouped by purpose
+- `packages/design-system/src/theme` - shared design tokens and MUI theme configuration
+- `packages/design-system/src/components` - reusable product components grouped by purpose
 - `src/app/components/documentation` - reusable styleguide-only documentation components
 - `src/app/components/examples` - interactive previews used only by the styleguide
 - `src/app/components/layout` - the styleguide application shell
@@ -60,4 +60,4 @@ This runs ESLint, TypeScript and the optimized Next.js production build.
 - `src/views` - content for each documentation page
 - `src/app/(routes)` - grouped Next.js routes
 
-All shared visual values must come from `packages/ui-library/src/theme/tokens.ts`.
+All shared visual values must come from `packages/design-system/src/theme/tokens.ts`.

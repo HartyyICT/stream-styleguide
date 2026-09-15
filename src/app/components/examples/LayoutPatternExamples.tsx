@@ -17,7 +17,7 @@ import {
   spacing,
   useSemanticColors,
   type BusinessUnitOption,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const businessUnits: BusinessUnitOption[] = [
   { id: "nl", name: "Stream Netherlands", code: "NL01" },

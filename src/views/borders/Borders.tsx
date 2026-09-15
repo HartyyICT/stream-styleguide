@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { Card } from "@ssw/ui-library";
-import { DataTable, type DataTableColumn } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
+import { DataTable, type DataTableColumn } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -12,8 +12,8 @@ import {
   TokenCode,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
-import { borderColors, borderWidths, radius, tableTokens } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
+import { borderColors, borderWidths, radius, tableTokens } from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#borders" },
@@ -422,7 +422,7 @@ export default function BordersPage() {
             borderColors,
             borderWidths,
             radius,
-          } from "@ssw/ui-library";
+          } from "@ssw/design-system";
 
           const cardSx = {
             border: \`\${borderWidths.default} solid \${borders.default}\`,
@@ -521,7 +521,7 @@ export default function BordersPage() {
               </Typography>
             </Box>
           }
-          code={`import { borderColors, borderWidths, colors, radius } from "@ssw/ui-library";
+          code={`import { borderColors, borderWidths, colors, radius } from "@ssw/design-system";
 
 export function InteractiveBorderExample() {
   return (

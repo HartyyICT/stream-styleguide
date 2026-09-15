@@ -1,5 +1,5 @@
 {
-  "name": "@ssw/ui-library",
+  "name": "@ssw/design-system",
   "version": "0.1.0",
   "description": "SSW design system: MUI theme, design tokens and reusable components.",
   "sideEffects": false,

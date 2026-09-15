@@ -1,13 +1,13 @@
 "use client";
 
 import { Box, Typography, useTheme } from "@mui/material";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
-import { Divider } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
+import { CardTitle } from "@ssw/design-system";
+import { Divider } from "@ssw/design-system";
 import { CodeExample, Intro } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
-import { pageLayoutTokens, radius, shadows } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
+import { pageLayoutTokens, radius, shadows } from "@ssw/design-system";
 
 const typographySections = [
   { label: "Overview", href: "#typography" },

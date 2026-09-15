@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { Card, InfoBanner, pageLayoutTokens, spacing, useSemanticColors } from "@ssw/ui-library";
+import { Card, InfoBanner, pageLayoutTokens, spacing, useSemanticColors } from "@ssw/design-system";
 import {
   CodeExample,
   GuidelineList,

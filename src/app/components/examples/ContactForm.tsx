@@ -14,7 +14,7 @@ import {
   Textarea,
   formTokens,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 export default function ContactForm() {
   const [firstName, setFirstName] = useState("");

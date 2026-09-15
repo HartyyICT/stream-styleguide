@@ -10,7 +10,7 @@ import {
   RadioGroup,
   ToggleField,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 export default function SettingsForm() {
   const [emailNotifications, setEmailNotifications] = useState(true);

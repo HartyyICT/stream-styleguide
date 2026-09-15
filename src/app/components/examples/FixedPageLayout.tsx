@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, type BoxProps } from "@mui/material";
-import { borderWidths, pageLayoutTokens, radius, spacing } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import { borderWidths, pageLayoutTokens, radius, spacing } from "@ssw/design-system";
+import { useSemanticColors } from "@ssw/design-system";
 import PageRegion from "../documentation/PageRegion";
 
 export default function FixedPageLayout({ sx, ...props }: BoxProps) {

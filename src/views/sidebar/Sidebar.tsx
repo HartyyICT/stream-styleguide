@@ -9,8 +9,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import SidebarNavItem from "@/app/components/molecules/SidebarNavItem";
-import { sidebarMotion, sidebarTransition } from "@ssw/ui-library";
-import { Card } from "@ssw/ui-library";
+import { sidebarMotion, sidebarTransition } from "@ssw/design-system";
+import { Card } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -19,13 +19,13 @@ import {
   Section,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { Toggle } from "@ssw/ui-library";
-import { useSemanticColors } from "@ssw/ui-library";
+import { Toggle } from "@ssw/design-system";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   borderWidths,
   radius,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#sidebar" },
@@ -239,7 +239,7 @@ export default function SidebarPage() {
         title="Token usage"
         description="Sidebar navigation uses border, radius, spacing and interaction tokens."
       >
-        <CodeBlock>{`import { borderWidths, interactionStates, radius } from "@ssw/ui-library";
+        <CodeBlock>{`import { borderWidths, interactionStates, radius } from "@ssw/design-system";
 
 const activeItem = {
   border: \`\${borderWidths.interactive} solid transparent\`,
@@ -264,7 +264,7 @@ const activeItem = {
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sidebar } from "@ssw/ui-library";
+import { Sidebar } from "@ssw/design-system";
 import { siteNavigationGroups } from "@/app/components/layout/siteNavigation";
 import Navbar from "@/app/components/organisms/Navbar";
 

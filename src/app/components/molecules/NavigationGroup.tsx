@@ -3,8 +3,8 @@
 import { Box } from "@mui/material";
 import type { LucideIcon } from "lucide-react";
 import SidebarNavItem from "@/app/components/molecules/SidebarNavItem";
-import { Text } from "@ssw/ui-library";
-import { spacing } from "@ssw/ui-library";
+import { Text } from "@ssw/design-system";
+import { spacing } from "@ssw/design-system";
 
 export type NavigationGroupItem = {
   label: string;

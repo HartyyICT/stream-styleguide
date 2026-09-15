@@ -12,7 +12,7 @@ import {
   StatusChip,
   Surface,
   spacing,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 export function AlertExamples() {
   return (

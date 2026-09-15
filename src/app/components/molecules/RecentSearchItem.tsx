@@ -8,7 +8,7 @@ import {
   colors,
   interactionStates,
   radius,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import { useColorMode } from "@/app/theme/themeProvider";
 
 type RecentSearchItemProps = {

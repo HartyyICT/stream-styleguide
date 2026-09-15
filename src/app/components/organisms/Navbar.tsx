@@ -10,11 +10,11 @@ import {
   interactionStates,
   navbarTokens,
   pageLayoutTokens,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import { useColorMode } from "../../theme/themeProvider";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
-import { sidebarMotion } from "@ssw/ui-library";
+import { sidebarMotion } from "@ssw/design-system";
 
 interface NavbarProps {
   onMenuClick: () => void;

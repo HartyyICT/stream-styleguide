@@ -4,12 +4,12 @@ import { Box } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Sidebar } from "@ssw/ui-library";
-import { colors, pageLayoutTokens } from "@ssw/ui-library";
+import { Sidebar } from "@ssw/design-system";
+import { colors, pageLayoutTokens } from "@ssw/design-system";
 import { useColorMode } from "../../theme/themeProvider";
 import Navbar from "@/app/components/organisms/Navbar";
 import { siteNavigationGroups } from "@/app/components/layout/siteNavigation";
-import { sidebarMotion, sidebarTransition } from "@ssw/ui-library";
+import { sidebarMotion, sidebarTransition } from "@ssw/design-system";
 
 let persistedSidebarCollapsed = false;
 let persistedSidebarScrollTop = 0;

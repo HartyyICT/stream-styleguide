@@ -9,8 +9,8 @@ import {
   ScanSearch,
   ShieldCheck,
 } from "lucide-react";
-import { Card } from "@ssw/ui-library";
-import { CardTitle } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
+import { CardTitle } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -18,14 +18,14 @@ import {
   Intro,
   Section,
 } from "@/app/components/documentation";
-import { IconBox } from "@ssw/ui-library";
+import { IconBox } from "@ssw/design-system";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   borderWidths,
   iconSizes,
   radius,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#accessibility" },
@@ -321,7 +321,7 @@ export default function AccessibilityPage() {
               </Typography>
             </Box>
           }
-          code={`import { Button } from "@ssw/ui-library";
+          code={`import { Button } from "@ssw/design-system";
 import { Settings } from "lucide-react";
 
 export function AccessibleIconAction() {

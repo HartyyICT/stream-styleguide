@@ -10,7 +10,7 @@ import {
   radius,
   spacing,
   useSemanticColors,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 import { MicrosoftMark, StreamLogo } from "@/app/components/layout/StreamBrand";
 
 export function AuthenticationLoginExample({ sessionExpired = false }: { sessionExpired?: boolean }) {

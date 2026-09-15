@@ -1,7 +1,7 @@
 "use client";
 
 import { Box } from "@mui/material";
-import { radius, useSemanticColors } from "@ssw/ui-library";
+import { radius, useSemanticColors } from "@ssw/design-system";
 
 interface CodeBlockProps {
   children: string;

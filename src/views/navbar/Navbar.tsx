@@ -2,13 +2,13 @@
 
 import { Box, Chip, MenuList, Typography } from "@mui/material";
 import { LogOut, Moon, Search, UserRound, X } from "lucide-react";
-import { ProfileIdentity } from "@ssw/ui-library";
-import { ProfileMenuItem } from "@ssw/ui-library";
+import { ProfileIdentity } from "@ssw/design-system";
+import { ProfileMenuItem } from "@ssw/design-system";
 import RecentSearchItem from "@/app/components/molecules/RecentSearchItem";
 import SearchDialog from "@/app/components/molecules/SearchDialog";
 import UserProfileMenu from "@/app/components/molecules/UserProfileMenu";
-import { Card } from "@ssw/ui-library";
-import { Divider } from "@ssw/ui-library";
+import { Card } from "@ssw/design-system";
+import { Divider } from "@ssw/design-system";
 import {
   CodeBlock,
   CodeExample,
@@ -17,7 +17,7 @@ import {
   Section,
 } from "@/app/components/documentation";
 import Page from "@/app/components/layout/Page";
-import { useSemanticColors } from "@ssw/ui-library";
+import { useSemanticColors } from "@ssw/design-system";
 import {
   borderWidths,
   colors,
@@ -25,7 +25,7 @@ import {
   navbarTokens,
   radius,
   shadows,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const sections = [
   { label: "Overview", href: "#navbar" },
@@ -403,7 +403,7 @@ export default function NavbarPage() {
   navbarTokens,
   radius,
   shadows,
-} from "@ssw/ui-library";
+} from "@ssw/design-system";
 
 const navbar = {
   height: 64,
