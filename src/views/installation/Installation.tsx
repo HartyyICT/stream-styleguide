@@ -78,15 +78,48 @@ export default function InstallationPage() {
       <Section
         id="install-package"
         title="Install package"
-        description="Once the package is available internally, Stream applications can install it with the package manager used in the project."
+        description="The package lives in a private Azure Artifacts feed, so npm has to be told where the @ssw scope comes from before it can resolve it."
         divider={false}
       >
-        <Card>
-          <Typography variant="h3" sx={{ mb: 1.5 }}>
-            npm
-          </Typography>
-          <CodeBlock>{`npm install @ssw/design-system`}</CodeBlock>
-        </Card>
+        <Box sx={{ display: "grid", gap: 2 }}>
+          <Card>
+            <Typography variant="h3" sx={{ mb: 1.5 }}>
+              1. Point the @ssw scope at the feed
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ mb: 2, color: secondaryText, lineHeight: 1.7 }}
+            >
+              Add this to the .npmrc in the root of the consuming project. Only
+              the @ssw scope is routed to the feed, so every other dependency
+              keeps resolving from npmjs.com as before.
+            </Typography>
+            <CodeBlock>{`@ssw:registry=https://pkgs.dev.azure.com/stream-software/_packaging/ssw-design-system/npm/registry/
+always-auth=true`}</CodeBlock>
+          </Card>
+
+          <Card>
+            <Typography variant="h3" sx={{ mb: 1.5 }}>
+              2. Authenticate
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ mb: 2, color: secondaryText, lineHeight: 1.7 }}
+            >
+              Credentials are personal: they belong in your user-level .npmrc and
+              must never be committed. Build pipelines authenticate through the
+              npmAuthenticate task instead.
+            </Typography>
+            <CodeBlock>{`npx vsts-npm-auth -config .npmrc`}</CodeBlock>
+          </Card>
+
+          <Card>
+            <Typography variant="h3" sx={{ mb: 1.5 }}>
+              3. Install
+            </Typography>
+            <CodeBlock>{`npm install @ssw/design-system`}</CodeBlock>
+          </Card>
+        </Box>
       </Section>
 
       <Section

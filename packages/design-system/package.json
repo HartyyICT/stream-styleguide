@@ -16,6 +16,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://pkgs.dev.azure.com/stream-software/_packaging/ssw-design-system/npm/registry/"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
